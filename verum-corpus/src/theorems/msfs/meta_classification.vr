@@ -40,6 +40,11 @@
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
     lifecycle: Lifecycle.Theorem("v0.1"),
+    cve_closure: CveClosure {
+        constructive: Maybe.Some("lib.theorems.msfs.meta_classification.msfs_definition_9_1_meta_cls"),
+        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
+        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
+    },
 )
 module lib.theorems.msfs.meta_classification;
 

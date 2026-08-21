@@ -21,6 +21,11 @@
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
     lifecycle: Lifecycle.Theorem("v0.1"),
+    cve_closure: CveClosure {
+        constructive: Maybe.Some("lib.theorems.msfs.categorical_preliminaries.msfs_lemma_A_1_kelly_2_categorical"),
+        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
+        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
+    },
 )
 module lib.theorems.msfs.categorical_preliminaries;
 

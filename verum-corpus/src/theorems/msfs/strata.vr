@@ -15,6 +15,11 @@
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
     lifecycle: Lifecycle.Theorem("v0.1"),
+    cve_closure: CveClosure {
+        constructive: Maybe.Some("lib.theorems.msfs.strata.msfs_proposition_2_2_iv_l_abs_empty"),
+        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
+        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
+    },
 )
 module lib.theorems.msfs.strata;
 

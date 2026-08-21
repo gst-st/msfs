@@ -16,6 +16,11 @@
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
     lifecycle: Lifecycle.Theorem("v0.1"),
+    cve_closure: CveClosure {
+        constructive: Maybe.Some("lib.theorems.msfs.paraconsistent.msfs_definition_B_1_paraconsistent_rich_s"),
+        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
+        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
+    },
 )
 module lib.theorems.msfs.paraconsistent;
 

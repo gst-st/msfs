@@ -50,7 +50,7 @@
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
+    lifecycle: Lifecycle.Definition("v0.1"),
 )
 module lib.theorems.msfs.introduction;
 
