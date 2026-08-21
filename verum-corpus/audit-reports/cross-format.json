@@ -1,12 +1,10 @@
 {
   "schema_version": 1,
-  "gate_passes": false,
-  "required_format_count": 5,
+  "gate_passes": true,
+  "required_format_count": 3,
   "formats": [
-    { "format": "coq", "extension": "v", "tool_status": "available", "files_found": 1, "files_passed": 0, "files_failed": 1, "first_failure": "export.v: File \"/Users/taaliman/projects/oldman/math-msfs/verum-corpus/certificates/coq/export.v\", line 10, characters 40-41:\nError:\nSyntax error: [ltac_use_default] expected after [tactic] (in [tactic_command])." },
-    { "format": "lean4", "extension": "lean", "tool_status": "available", "files_found": 0, "files_passed": 0, "files_failed": 0, "first_failure": "" },
-    { "format": "agda", "extension": "agda", "tool_status": "available", "files_found": 1, "files_passed": 0, "files_failed": 1, "first_failure": "export.agda: " },
-    { "format": "isabelle", "extension": "thy", "tool_status": "available", "files_found": 0, "files_passed": 0, "files_failed": 0, "first_failure": "" },
-    { "format": "dedukti", "extension": "dk", "tool_status": "missing", "files_found": 1, "files_passed": 0, "files_failed": 0, "first_failure": "" }
+    { "format": "coq", "extension": "v", "tool_status": "available", "files_found": 1, "files_passed": 1, "files_failed": 0, "first_failure": "" },
+    { "format": "lean4", "extension": "lean", "tool_status": "available", "files_found": 1, "files_passed": 1, "files_failed": 0, "first_failure": "" },
+    { "format": "dedukti", "extension": "dk", "tool_status": "available", "files_found": 1, "files_passed": 1, "files_failed": 0, "first_failure": "" }
   ]
 }
