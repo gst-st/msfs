@@ -81,3 +81,11 @@ verum/ru/*.synctex.gz
 # Bun runtime
 node_modules/
 bun.lockb
+
+# verum/coq build byproducts (generated, never hand-written)
+verum-corpus/certificates/coq/*.aux
+verum-corpus/certificates/coq/*.glob
+verum-corpus/certificates/coq/*.vok
+verum-corpus/certificates/coq/*.vos
+verum-corpus/certificates/coq/.*.aux
+verum-corpus/audit-reports/
