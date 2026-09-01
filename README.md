@@ -2,7 +2,7 @@
 
 *The Moduli Space of Formal Systems: Classification, Stabilization, and a No-Go Theorem for Absolute Foundations.*
 
-Max Sereda, 2026 · [Zenodo DOI 10.5281/zenodo.19755781](https://doi.org/10.5281/zenodo.19755781) · 44 pages · 65 structural results (21 definitions, 7 lemmas, 20 theorems, 9 corollaries, 6 propositions, 2 conventions) · every result machine-checked in the [Verum corpus](./verum-corpus/)
+Max Sereda, 2026 · [Zenodo DOI 10.5281/zenodo.19755781](https://doi.org/10.5281/zenodo.19755781) · 41 pages as deposited (`paper-en/zenodo/`; the current build in `paper-en/` is 44, the Russian edition 48) · 65 structural results (21 definitions, 7 lemmas, 20 theorems, 9 corollaries, 6 propositions, 2 conventions) · every result machine-checked in the [Verum corpus](./verum-corpus/)
 
 ## The question this work changes
 
