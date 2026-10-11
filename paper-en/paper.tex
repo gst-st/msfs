@@ -802,6 +802,24 @@ This is the component of $\tpi I\simeq\pi$ at $F$.
 \end{proof}
 Constancy of a selected quotient does not prove that a refinement adds no mathematical, computational, or resource-sensitive structure.
 
+\paragraph{Finite observational quotients.}
+For an executable language, representation identity compares complete programs,
+including local library bindings and output selectors. A finite observational
+quotient additionally fixes the interpreter, library meanings, all evidence
+consulted by admission, and the allowed continuations. Equality of complete
+register traces with a separate undefined outcome gives a contextual congruence
+only when all continuation and admission metadata are retained and their
+updates respect that equality. Such metadata can include constant-use and
+selection flags, register layout, and resource allowances. Induction on a
+shared continuation proves preservation of the specified observations and
+admission predicate; it does not prove equality on new inputs or equal physical
+cost. A hash only indexes exact comparisons. Completed fitting witnesses,
+merged representations, and unexamined search frontiers therefore require
+separate reporting. Budget exhaustion is \texttt{Unknown}, distinct from
+semantic undefinedness or a completed refutation. These elementary operational
+distinctions do not construct the higher intensional refinement or discharge
+the four obligations (I-1) through (I-4).
+
 \subsection{The Intensional Grading}\label{sec:intensional-grading}
 
 The former generating rule began with equivalences and used operations that preserve equivalences. It therefore cannot yield a nontrivial measure of distance from equivalence. A useful filtration needs explicitly chosen additional generators.
