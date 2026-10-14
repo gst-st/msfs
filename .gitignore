@@ -89,3 +89,6 @@ verum-corpus/certificates/coq/*.vok
 verum-corpus/certificates/coq/*.vos
 verum-corpus/certificates/coq/.*.aux
 verum-corpus/audit-reports/
+
+# Generated complete Markdown attachments (scripts/build-markdown.py)
+/output/
