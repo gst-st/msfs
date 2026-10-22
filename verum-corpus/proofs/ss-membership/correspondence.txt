@@ -1,0 +1,132 @@
+INDEPENDENT SOURCE-CORRESPONDENCE REVIEW
+MSFS syntactic-presentation membership lemma
+Source-correspondence review. The paper has not been changed to fit the proof.
+
+1. Original source and scope
+
+Repository: /Users/taaliman/projects/oldman/math-msfs
+Source: paper-en/paper.tex
+Anchor: lem:SS-membership, lines 458--463 of the audited revision.
+
+Original statement:
+  If X is a formally S-definable object -- meaning X is specified by a
+  formula phi_X in S expressing its characteristic properties -- then
+  X belongs to S_S.
+
+Load-bearing source definitions:
+  * Convention conv:notation, line 187: an object presented by phi_X is
+    represented as the pointing (Syn(S), [phi_X]).
+  * Definition def:strcat, line 203, repeats the pointing convention.
+  * Definition def:SS, line 440: the local base explicitly includes every
+    (Syn(S), X) for X an object of Syn(S), in addition to model pointings.
+  * Definition def:SS, line 453: S_S is local union global.
+  * The actual proof at line 463 introduces the syntactic local branch.
+
+This verification concerns exactly that representation-level inclusion.
+It neither assumes nor verifies the subsequent proper-subtheory claim in
+parentheses at line 463. In particular, it does not assert that the F-3
+equivalence Syn(F)[phi_X] equivalent to X at lines 485--490 induces literal
+membership of a semantic X in the syntactic local base over S.
+
+2. Universe-correct mathematical formula
+
+For every fixed universe level u, let:
+  Obj, Syn : U_u;
+  point : Syn -> Obj;
+  SemanticLocal, Global : Obj -> U_u.
+
+Syn is the carrier of syntactic presentations for a fixed S.  Obj is the
+chosen carrier of represented pointed structures at the relevant level.
+point(phi) denotes (Syn(S), [phi]).  SemanticLocal represents the other
+local branch and Global represents the derived branch.  They are arbitrary
+families because this lemma is valid independently of the contents of those
+branches, not because they have been proved to exist with every claimed
+categorical/accessibility property in the paper.
+
+For X : Obj and R : U_u put
+  SynCase(X,R) = Pi(phi : Syn). Id_Obj(point(phi), X) -> R.
+
+Define the following elimination representations:
+  Formal(X) = Pi(R : U_u). SynCase(X,R) -> R;
+
+  SS(X) = Pi(R : U_u).
+            SynCase(X,R) ->
+            (SemanticLocal(X) -> R) ->
+            (Global(X) -> R) -> R.
+
+SynCase(X,R) : U_u.
+Formal(X), SS(X) : U_(u+1), because R ranges over U_u : U_(u+1).
+No impredicative universe or Type : Type principle occurs.
+
+Primary, explicit-presentation theorem:
+  Pi(Obj : U_u). Pi(Syn : U_u).
+  Pi(point : Syn -> Obj).
+  Pi(SemanticLocal : Obj -> U_u). Pi(Global : Obj -> U_u).
+  Pi(X : Obj). Pi(phi : Syn).
+  Pi(p : Id_Obj(point(phi), X)). SS(X).
+
+Closed proof term:
+  lambda Obj Syn point SemanticLocal Global X phi p R syntactic semantic global.
+    syntactic(phi)(p).
+
+For the literal source pointing X = point(phi), p is reflexivity.  The
+identity-witness form permits the same represented object under an explicit
+identification, without confusing identification with categorical equivalence.
+
+Additional proof-production interface using the encoded formal witness:
+  Pi(Obj : U_u). Pi(Syn : U_u).
+  Pi(point : Syn -> Obj).
+  Pi(SemanticLocal : Obj -> U_u). Pi(Global : Obj -> U_u).
+  Pi(X : Obj). Formal(X) -> SS(X).
+
+Closed proof term:
+  lambda Obj Syn point SemanticLocal Global X definition R syntactic semantic global.
+    definition(R)(syntactic).
+
+All free-looking identifiers above are universally bound parameters in the
+actual certificate. There are no free variables, framework axioms, membership
+assumptions, axioms identifying theory interpretations, or pre-assumed targets.
+
+3. What the encoding establishes
+
+The theorem introduces the syntactic branch of the union of local and global
+membership evidence. This is precisely the introduction used by the source
+proof. Given explicit phi and p, its result routes every case analysis to the
+syntactic branch with exactly those data.
+
+Only this introduction and its elimination behavior are certified. The result
+does not claim a universe-preserving equivalence between the Church encoding
+and all sets/classes in the MSFS metatheory, a parametricity theorem, full
+categorical semantics, construction of all global operations, or proof of
+the claimed universe and accessibility bounds. The witness form is the most
+direct source-correspondence object and should remain available for review.
+
+The operations defining Global are deliberately not used in the proof: local
+membership implies membership of local union global for any Global. This is
+mathematical generality of the source introduction rule, not a replacement of
+the original source conclusion by an unrelated tautology.
+
+4. Separation from unverified claims
+
+Do not attach this certificate as complete proof of:
+  thm:afnt-alpha or cor:level6-empty-alpha;
+  F_S -> formal S-definability under arbitrary F-3 equivalence;
+  lem:SS-membership-E or dual AFN-T;
+  any full closure, accessibility, universe-size, categoricity, or stabilization
+  assertion.
+
+Specifically, Syn(F)[phi] belongs to the local syntax over F, whereas def:SS
+for S lists syntax over S and models of S. The interpretation Syn(F)->Syn(S)
+from a subtheory inclusion is not, without further hypotheses, an equivalence
+onto its image. An axiom supplying this bridge would not close the source gap.
+
+5. Reproducible evidence
+
+Run scripts/verify_source_membership.py with an explicit source-checker binary and
+Noesis CLI. The named-AST oracle in scripts/membership_oracle.py is independent
+of the production parser/elaborator. It compares the entire native statement,
+claimed type and proof term for both forms at universe levels 0, 1 and 2.
+The source worker replays both native algorithms. Noesis separately reconstructs
+the statement from the complete telescope and repeats native replay. Corrupted
+proofs must be rejected. Exact source quotes/revisions survive archive restoration.
+The generated report records actual checker identities and executed checks.

@@ -1,0 +1,15 @@
+public theorem ss_formal_membership(
+    obj: Type, syn: Type,
+    point: fn(syn) -> obj,
+    semantic_local: fn(obj) -> Type,
+    global: fn(obj) -> Type,
+    x: obj,
+    formal: fn<r: meta Type>(fn<phi: meta syn>(Path<obj>(point(phi), x)) -> r) -> r
+): forall (r: Type).
+   forall (syntactic: fn<phi: meta syn>(Path<obj>(point(phi), x)) -> r).
+   forall (semantic: fn(semantic_local(x)) -> r).
+   forall (global_case: fn(global(x)) -> r). r
+proof = |r: Type|
+    |syntactic: fn<phi: meta syn>(Path<obj>(point(phi), x)) -> r|
+    |semantic: fn(semantic_local(x)) -> r|
+    |global_case: fn(global(x)) -> r| formal(r, syntactic);

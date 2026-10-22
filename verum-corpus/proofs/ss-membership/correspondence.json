@@ -1,0 +1,54 @@
+{
+  "profile": "msfs-source-correspondence/1",
+  "source": {
+    "path": "paper-en/paper.tex",
+    "sha256": "7be4a39fae1f0791b7da1e90c1e48d4ec723f581c1fdafbf178607e18b5b3590",
+    "fragments": [
+      {
+        "anchor": "lem:SS-membership",
+        "start": 45147,
+        "end": 45385,
+        "quote": "\\begin{lemma}[$S$-definability lemma]\\label{lem:SS-membership}\nIf $X$ is a formally $S$-definable object --- meaning $X$ is specified by a formula $\\phi_X \\in S$ expressing its characteristic properties --- then $X \\in \\cS_S$.\n\\end{lemma}",
+        "sha256": "78b139cfed0d45d662f167a269d7bcbb345ba5bc51ccf7e2c5aa70dfb0b027df"
+      },
+      {
+        "anchor": "def:SS",
+        "start": 43339,
+        "end": 45008,
+        "quote": "\\begin{definition}[$S$-definable categorical structures]\\label{def:SS}\nLet $S \\in \\RS$. Define inductively:\n\\begin{align*}\n\\cS_S^{\\mathrm{local}} &:= \\{(\\cM, Y) : \\cM \\models S,\\ Y \\in \\Ob(\\cM)\\} \\;\\cup\\; \\{(\\Syn(S), X) : X \\in \\Ob(\\Syn(S))\\}, \\\\\n\\cS_S^{(0)} &:= \\cS_S^{\\mathrm{local}}, \\\\\n\\cS_S^{(k+1)} &:= \\cS_S^{(k)} \\,\\cup\\, \\mathcal{O}\\bigl(\\cS_S^{(k)}\\bigr),\n\\end{align*}\nwhere $\\mathcal{O}$ is the closure under the following fixed list of $(\\infty, n)$-categorical operations, each taking $\\cS_S^{(k)}$-objects as input and producing objects in $\\cS_S^{(k+1)}$:\n\\begin{enumerate}[nosep,label=\\textrm{(O\\arabic*)}]\n\\item Left and right Kan extensions along $\\cS_S^{(k)}$-morphisms;\n\\item Grothendieck constructions $\\int F$ for Cartesian fibrations $F : I \\to \\cS_S^{(k)}$ with $I \\in \\cS_S^{(k)}$;\n\\item Limits and colimits of small diagrams (throughout, ``small'' for a diagram means: indexed by an $(\\infty, n)$-category that is $\\mathbf{U}_2$-small) valued in $\\cS_S^{(k)}$;\n\\item Slice/comma/opposite categories built from $\\cS_S^{(k)}$-data;\n\\item Derived functors (Quillen sense) between $\\cS_S^{(k)}$-objects equipped with model-category structure (when applicable; vacuous on objects without model structure);\n\\item Symmetric monoidal tensor products and internal hom in closed monoidal $\\cS_S^{(k)}$-objects.\n\\end{enumerate}\nSet $\\cS_S^{\\mathrm{global}} := \\bigcup_{k < \\omega} \\cS_S^{(k)}$ and $\\cS_S := \\cS_S^{\\mathrm{local}} \\cup \\cS_S^{\\mathrm{global}}$. All operations (O1)--(O6) are $\\kappa_1$-accessible (Ad\\'amek--Rosick\\'y~\\cite{AdamekRosicky1994}); $\\cS_S^{\\mathrm{global}}$ is $\\kappa_1$-accessible and $\\mathbf{U}_2$-small.\n\\end{definition}",
+        "sha256": "67a61c195912ddd0845c4088da8d26ccffdbde8489d1ba2b5a466d9674a1a7ad"
+      },
+      {
+        "anchor": "conv:notation",
+        "start": 10007,
+        "end": 14985,
+        "quote": "\\begin{convention}[Key symbols]\\label{conv:notation}\n\\begin{itemize}\n\\item $\\cF$ denotes the $2$-category of \\emph{Rich-foundations} ($\\LFnd$): objects are foundational theories in the sense formalised in \\S\\ref{sec:rs} below (conditions (R1)--(R5)); $1$-morphisms are faithful interpretations; $2$-morphisms are provable natural equivalences between interpretations.\n\\item $\\rho : \\cF \\to (\\infty, n)\\text{-}\\Cat$ denotes the \\emph{classification functor} assigning to each $F \\in \\cF$ its category of models (or, for type-theoretic $F$, the syntactic $(\\infty, n)$-category $\\Syn(F)$).\n\\item A \\emph{gauge transformation} $\\tau : F_1 \\to F_2$ is a $1$-morphism in $\\cF$ accompanied by a distinguished $2$-equivalence $\\rho(F_1) \\simeq \\rho(F_2)$ at the model-categorical level. Two foundations are \\emph{gauge-equivalent} if there is an invertible gauge transformation between them. \\emph{Relation to Morita equivalence.} Gauge-equivalence at the $\\cF$-level corresponds, via the $\\fM := \\cF/\\text{gauge}$ quotient, to Morita equivalence at the stack level: $F_1, F_2 \\in \\cF$ are gauge-equivalent iff $[F_1] = [F_2]$ in $\\fM$, which by construction is the Morita-equivalence class. Throughout the paper, ``gauge'' (1-morphism level) and ``Morita'' (stack level) name the same underlying equivalence relation at their respective categorical strata, related by the $\\cF \\to \\fM$ quotient functor; no distinct third relation is introduced.\n\\item \\emph{Morita-reducibility at the $(\\infty, n)$-level}: a $\\LAbs$ candidate $X$ and any $Y \\in \\cS_S$ are each viewed as pointed $(\\infty, n)$-categorical structures via the canonical Yoneda embedding into the total $(\\infty, n)$-category $\\mathbf{StrCat}_{S, n}$ of $S$-structured $(\\infty, n)$-categories (Definition~\\ref{def:strcat}, stated immediately below). Concretely, $X$ presented by a formula $\\phi_X$ corresponds to the pair $(\\Syn(S), [\\phi_X])$ where $[\\phi_X]$ is the isomorphism class of the object defined by $\\phi_X$ in the syntactic category; $Y \\in \\Ob(\\cM) \\subseteq \\cS_S^{\\mathrm{local}}$ corresponds to $(\\cM, Y)$. I write $X \\to_{M, n} Y$, and say $X$ is \\emph{Morita-reducible at the $(\\infty, n)$-level} to $Y$, if there exists an $(\\infty, n)$-functor $\\Phi : \\Syn(S) \\to \\cM$ in $\\mathbf{StrCat}_{S, n}$ sending $[\\phi_X]$ to the isomorphism class of $Y$, with the restriction $\\Phi |_{[\\phi_X]}$ an $(\\infty, n)$-equivalence onto its image. This extends classical ring-Morita equivalence (which compares $\\Mod(X)$ and $\\Mod(Y)$ as $1$-categories) by incorporating the full $(\\infty, n)$-categorical structure; the two notions coincide when $X, Y$ are $1$-categorical and $n = 1$. I use the shorthand ``Morita-equivalent'' for the symmetric notion and ``Morita-reducible'' for the directed version.\n\\item $\\fM$ denotes the \\emph{classifying $2$-stack} of $\\cF$: the quotient $\\fM := \\cF / \\text{gauge}$, regarded as an $(\\infty, 2)$-stack of Morita-equivalence classes of Rich-foundations. Formally, $\\fM$ is the straightening of the Cartesian fibration $\\int \\rho \\to \\mathrm{R\\text{-}S}$ whose fiber over $S$ is the $2$-groupoid $\\rho^{-1}(S)$ of foundations over $S$ modulo gauge. The construction follows Lurie HTT~\\cite{LurieHTT} \\S 3.2 (straightening--unstraightening of Cartesian fibrations).\n\\item For a $2$-category $\\mathbf{F}$, $\\mathrm{Aut}_2(\\mathbf{F})$ denotes the $2$-group of $2$-autoequivalences $\\mathbf{F} \\xrightarrow{\\simeq_2} \\mathbf{F}$ (monoidal under composition, with invertible $1$-morphisms and coherent $2$-cells).\n\\item $\\Sint$ denotes the $2$-category of display $2$-categories (rigorous definition deferred to Appendix~\\ref{app:categorical} below).\n\\item All $2$-categories are locally small and $\\kappa_1$-accessible unless stated otherwise. (For specific Rich-foundations $S$ whose consistency strength requires the second inaccessible, the $\\Syn(S)$-accessibility parameter generalizes to $\\kappa_S \\in \\{\\kappa_1, \\kappa_2\\}$ per the accessibility clause (R5a) of the Rich-metatheory definition, formalised in \\S\\ref{sec:rs} below; subsequent $\\kappa_1$-statements should be read uniformly as $\\kappa_S$-statements where $S$ is indexed by the specific $\\LFnd$-point under consideration. All proofs in this paper are stable under this uniform reading, since the accessibility arguments invoke only regularity of the cardinal, not its specific value.)\n\\item \\emph{Truncation and comparison across depths}: $\\Syn^{(\\infty,n)}(S)$ denotes a presentation in an explicitly chosen model at depth $n$, when such a presentation and its comparison maps have been supplied. Changing depth requires functors with stated universal properties and coherent transition maps; a reference to left Kan extension alone does not construct a lift of a single syntactic category. The notation $n=\\infty$ requires a separately specified unbounded-depth model. No equality of this model with an unspecified colimit, or stabilization under enrichment, is assumed.\n\\end{itemize}\n\\end{convention}",
+        "sha256": "7942620c02f1d259b6034d0d9dc1abc7f29f36e8e500ee9166484d708a63a7e2"
+      }
+    ]
+  },
+  "formalizations": [
+    {
+      "path": "proofs/ss-membership/witness.vr",
+      "declaration": "ss_witness_membership",
+      "sha256": "018dd68567238b5cfb46a86ab1d475f251dc21a27c77f31ee00a8cd6c2c18767"
+    },
+    {
+      "path": "proofs/ss-membership/formal.vr",
+      "declaration": "ss_formal_membership",
+      "sha256": "6e6a29794106733821855eeab6dd40c404a5b7c315e734e1185d0ad23fa5d15f"
+    }
+  ],
+  "scope": "representation-level introduction into the syntactic branch of the local/global union",
+  "review": "proofs/ss-membership/correspondence.txt",
+  "review_sha256": "502517d82c29479c0fabcdeed72734bbf17f32bf7a5703caf75c9543c79b8226",
+  "prose_alignment": "human_review_required; source edge is exact provenance, not an equivalence proof",
+  "not_covered": [
+    "proper-subtheory equivalence in proof parenthesis",
+    "AFNT-alpha",
+    "dual AFNT",
+    "global closure existence/accessibility",
+    "universe-preserving equivalence of encoding and classes",
+    "legacy core.math marker axioms"
+  ]
+}

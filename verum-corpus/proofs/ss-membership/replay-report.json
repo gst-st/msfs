@@ -1,0 +1,1962 @@
+{
+  "profile": "msfs-source-replay/1",
+  "checker_binary_sha256": "bdea9a912043fdaa10da70d8d98a941563aaa00f68d8d4817eacc78185fdd166",
+  "noesis_binary_sha256": "601ecf2a0aecb556df3d00a88fa8e16d65a53c6832139d17c473f1c4a82ae99b",
+  "source_elaborations": [
+    {
+      "declaration": "ss_witness_membership",
+      "universe": 0,
+      "source": {
+        "sha256": "018dd68567238b5cfb46a86ab1d475f251dc21a27c77f31ee00a8cd6c2c18767",
+        "declaration": "ss_witness_membership",
+        "span": {
+          "start": 0,
+          "end": 615,
+          "sha256": "b9093128c671f885b9835dbcef137045dd91ce889e0d9991b4791a7aed057938"
+        }
+      },
+      "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+      "native": {
+        "profile": "verum-native/1",
+        "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+        "accepted": true,
+        "diagnostic": null
+      },
+      "exact_independent_oracle": true
+    },
+    {
+      "declaration": "ss_witness_membership",
+      "universe": 1,
+      "source": {
+        "sha256": "b86f2d8d4b896c56ea22ee9baaa39cbfb4455394f7ac2f6b33d655d979e3ce1d",
+        "declaration": "ss_witness_membership",
+        "span": {
+          "start": 0,
+          "end": 633,
+          "sha256": "e7b7a058a0fdc1c2fc90eb725bfe03ca295d54b7e145e6f848a2b4c8fe7275a0"
+        }
+      },
+      "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+      "native": {
+        "profile": "verum-native/1",
+        "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+        "accepted": true,
+        "diagnostic": null
+      },
+      "exact_independent_oracle": true
+    },
+    {
+      "declaration": "ss_witness_membership",
+      "universe": 2,
+      "source": {
+        "sha256": "28cd9384ce7573e8318d793d779ac476e340b707260dd6a79a728c78645ba9e9",
+        "declaration": "ss_witness_membership",
+        "span": {
+          "start": 0,
+          "end": 633,
+          "sha256": "1c1f2f422e2618cf53bcf2a068f1ef3a5ff0c18d178807b156d3766431b333fb"
+        }
+      },
+      "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+      "native": {
+        "profile": "verum-native/1",
+        "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+        "accepted": true,
+        "diagnostic": null
+      },
+      "exact_independent_oracle": true
+    },
+    {
+      "declaration": "ss_formal_membership",
+      "universe": 0,
+      "source": {
+        "sha256": "6e6a29794106733821855eeab6dd40c404a5b7c315e734e1185d0ad23fa5d15f",
+        "declaration": "ss_formal_membership",
+        "span": {
+          "start": 0,
+          "end": 629,
+          "sha256": "948f9564c915992ef019a8ead0658e46e1bd84ed91465de1fb950b26c183c522"
+        }
+      },
+      "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+      "native": {
+        "profile": "verum-native/1",
+        "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+        "accepted": true,
+        "diagnostic": null
+      },
+      "exact_independent_oracle": true
+    },
+    {
+      "declaration": "ss_formal_membership",
+      "universe": 1,
+      "source": {
+        "sha256": "e60c884b3e0bbb609351c5c6086adda5085ca557815865822fe98af3ee1ec0ec",
+        "declaration": "ss_formal_membership",
+        "span": {
+          "start": 0,
+          "end": 650,
+          "sha256": "c6647b228efc335d28c72cca7af5cbcc1993089352e267b1bd069cff67b13a8b"
+        }
+      },
+      "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+      "native": {
+        "profile": "verum-native/1",
+        "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+        "accepted": true,
+        "diagnostic": null
+      },
+      "exact_independent_oracle": true
+    },
+    {
+      "declaration": "ss_formal_membership",
+      "universe": 2,
+      "source": {
+        "sha256": "b7841fefb03e685b65a30473fbb91e10a1d7d768f1596dc28e52c905f48709b8",
+        "declaration": "ss_formal_membership",
+        "span": {
+          "start": 0,
+          "end": 650,
+          "sha256": "8d566aeb6716071e66fe2b9a8062d47e86ba1064a9e2e97a81e6a25af5ee4ab2"
+        }
+      },
+      "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+      "native": {
+        "profile": "verum-native/1",
+        "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+        "accepted": true,
+        "diagnostic": null
+      },
+      "exact_independent_oracle": true
+    }
+  ],
+  "negative_controls": [
+    {
+      "declaration": "ss_witness_membership",
+      "mutation": "same statement; replace proof with object x",
+      "status": "rejected",
+      "code": "ill_typed_source"
+    },
+    {
+      "declaration": "ss_formal_membership",
+      "mutation": "same statement; replace proof with object x",
+      "status": "rejected",
+      "code": "ill_typed_source"
+    }
+  ],
+  "prose_alignment": "reviewed_representation_inclusion_only",
+  "not_covered": [
+    "proper-subtheory equivalence in proof parenthesis",
+    "AFNT-alpha",
+    "dual AFNT",
+    "global closure existence/accessibility",
+    "universe-preserving equivalence of encoding and classes",
+    "legacy core.math marker axioms"
+  ],
+  "noesis": {
+    "source_sha256": "7be4a39fae1f0791b7da1e90c1e48d4ec723f581c1fdafbf178607e18b5b3590",
+    "original_and_restored_proofs": 2,
+    "proof_mutations_rejected": 2,
+    "reports": [
+      {
+        "dependency_semantics": "not_used",
+        "elaboration": {
+          "diagnostic": null,
+          "report": {
+            "conclusion": {
+              "Pi": [
+                {
+                  "Universe": {
+                    "Concrete": 0
+                  }
+                },
+                {
+                  "Pi": [
+                    {
+                      "Pi": [
+                        {
+                          "Var": 7
+                        },
+                        {
+                          "Pi": [
+                            {
+                              "Id": {
+                                "lhs": {
+                                  "App": [
+                                    {
+                                      "Var": 7
+                                    },
+                                    {
+                                      "Var": 0
+                                    }
+                                  ]
+                                },
+                                "rhs": {
+                                  "Var": 4
+                                },
+                                "ty": {
+                                  "Var": 9
+                                }
+                              }
+                            },
+                            {
+                              "Var": 2
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "Pi": [
+                        {
+                          "Pi": [
+                            {
+                              "App": [
+                                {
+                                  "Var": 6
+                                },
+                                {
+                                  "Var": 4
+                                }
+                              ]
+                            },
+                            {
+                              "Var": 2
+                            }
+                          ]
+                        },
+                        {
+                          "Pi": [
+                            {
+                              "Pi": [
+                                {
+                                  "App": [
+                                    {
+                                      "Var": 6
+                                    },
+                                    {
+                                      "Var": 5
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Var": 3
+                                }
+                              ]
+                            },
+                            {
+                              "Var": 3
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "diagnostic": null,
+            "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+            "judgment": {
+              "certificate": {
+                "claimed_type": {
+                  "Pi": [
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    },
+                    {
+                      "Pi": [
+                        {
+                          "Universe": {
+                            "Concrete": 0
+                          }
+                        },
+                        {
+                          "Pi": [
+                            {
+                              "Pi": [
+                                {
+                                  "Var": 0
+                                },
+                                {
+                                  "Var": 2
+                                }
+                              ]
+                            },
+                            {
+                              "Pi": [
+                                {
+                                  "Pi": [
+                                    {
+                                      "Var": 2
+                                    },
+                                    {
+                                      "Universe": {
+                                        "Concrete": 0
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Pi": [
+                                    {
+                                      "Pi": [
+                                        {
+                                          "Var": 3
+                                        },
+                                        {
+                                          "Universe": {
+                                            "Concrete": 0
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "Pi": [
+                                        {
+                                          "Var": 4
+                                        },
+                                        {
+                                          "Pi": [
+                                            {
+                                              "Var": 4
+                                            },
+                                            {
+                                              "Pi": [
+                                                {
+                                                  "Id": {
+                                                    "lhs": {
+                                                      "App": [
+                                                        {
+                                                          "Var": 4
+                                                        },
+                                                        {
+                                                          "Var": 0
+                                                        }
+                                                      ]
+                                                    },
+                                                    "rhs": {
+                                                      "Var": 1
+                                                    },
+                                                    "ty": {
+                                                      "Var": 6
+                                                    }
+                                                  }
+                                                },
+                                                {
+                                                  "Pi": [
+                                                    {
+                                                      "Universe": {
+                                                        "Concrete": 0
+                                                      }
+                                                    },
+                                                    {
+                                                      "Pi": [
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Var": 7
+                                                            },
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "Id": {
+                                                                    "lhs": {
+                                                                      "App": [
+                                                                        {
+                                                                          "Var": 7
+                                                                        },
+                                                                        {
+                                                                          "Var": 0
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "rhs": {
+                                                                      "Var": 4
+                                                                    },
+                                                                    "ty": {
+                                                                      "Var": 9
+                                                                    }
+                                                                  }
+                                                                },
+                                                                {
+                                                                  "Var": 2
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 6
+                                                                    },
+                                                                    {
+                                                                      "Var": 4
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "Var": 2
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "Pi": [
+                                                                    {
+                                                                      "App": [
+                                                                        {
+                                                                          "Var": 6
+                                                                        },
+                                                                        {
+                                                                          "Var": 5
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "Var": 3
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "Var": 3
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "metadata": {
+                  "declaration": "ss_witness_membership",
+                  "profile": "verum-source-pi-id/1"
+                },
+                "term": {
+                  "Lam": [
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    },
+                    {
+                      "Lam": [
+                        {
+                          "Universe": {
+                            "Concrete": 0
+                          }
+                        },
+                        {
+                          "Lam": [
+                            {
+                              "Pi": [
+                                {
+                                  "Var": 0
+                                },
+                                {
+                                  "Var": 2
+                                }
+                              ]
+                            },
+                            {
+                              "Lam": [
+                                {
+                                  "Pi": [
+                                    {
+                                      "Var": 2
+                                    },
+                                    {
+                                      "Universe": {
+                                        "Concrete": 0
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Lam": [
+                                    {
+                                      "Pi": [
+                                        {
+                                          "Var": 3
+                                        },
+                                        {
+                                          "Universe": {
+                                            "Concrete": 0
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "Lam": [
+                                        {
+                                          "Var": 4
+                                        },
+                                        {
+                                          "Lam": [
+                                            {
+                                              "Var": 4
+                                            },
+                                            {
+                                              "Lam": [
+                                                {
+                                                  "Id": {
+                                                    "lhs": {
+                                                      "App": [
+                                                        {
+                                                          "Var": 4
+                                                        },
+                                                        {
+                                                          "Var": 0
+                                                        }
+                                                      ]
+                                                    },
+                                                    "rhs": {
+                                                      "Var": 1
+                                                    },
+                                                    "ty": {
+                                                      "Var": 6
+                                                    }
+                                                  }
+                                                },
+                                                {
+                                                  "Lam": [
+                                                    {
+                                                      "Universe": {
+                                                        "Concrete": 0
+                                                      }
+                                                    },
+                                                    {
+                                                      "Lam": [
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Var": 7
+                                                            },
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "Id": {
+                                                                    "lhs": {
+                                                                      "App": [
+                                                                        {
+                                                                          "Var": 7
+                                                                        },
+                                                                        {
+                                                                          "Var": 0
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    "rhs": {
+                                                                      "Var": 4
+                                                                    },
+                                                                    "ty": {
+                                                                      "Var": 9
+                                                                    }
+                                                                  }
+                                                                },
+                                                                {
+                                                                  "Var": 2
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "Lam": [
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 6
+                                                                    },
+                                                                    {
+                                                                      "Var": 4
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "Var": 2
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "Lam": [
+                                                                {
+                                                                  "Pi": [
+                                                                    {
+                                                                      "App": [
+                                                                        {
+                                                                          "Var": 6
+                                                                        },
+                                                                        {
+                                                                          "Var": 5
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "Var": 3
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "App": [
+                                                                    {
+                                                                      "App": [
+                                                                        {
+                                                                          "Var": 2
+                                                                        },
+                                                                        {
+                                                                          "Var": 5
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "Var": 4
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "profile": "verum-native/1",
+              "statement": {
+                "Pi": [
+                  {
+                    "Universe": {
+                      "Concrete": 0
+                    }
+                  },
+                  {
+                    "Pi": [
+                      {
+                        "Universe": {
+                          "Concrete": 0
+                        }
+                      },
+                      {
+                        "Pi": [
+                          {
+                            "Pi": [
+                              {
+                                "Var": 0
+                              },
+                              {
+                                "Var": 2
+                              }
+                            ]
+                          },
+                          {
+                            "Pi": [
+                              {
+                                "Pi": [
+                                  {
+                                    "Var": 2
+                                  },
+                                  {
+                                    "Universe": {
+                                      "Concrete": 0
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "Pi": [
+                                  {
+                                    "Pi": [
+                                      {
+                                        "Var": 3
+                                      },
+                                      {
+                                        "Universe": {
+                                          "Concrete": 0
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "Pi": [
+                                      {
+                                        "Var": 4
+                                      },
+                                      {
+                                        "Pi": [
+                                          {
+                                            "Var": 4
+                                          },
+                                          {
+                                            "Pi": [
+                                              {
+                                                "Id": {
+                                                  "lhs": {
+                                                    "App": [
+                                                      {
+                                                        "Var": 4
+                                                      },
+                                                      {
+                                                        "Var": 0
+                                                      }
+                                                    ]
+                                                  },
+                                                  "rhs": {
+                                                    "Var": 1
+                                                  },
+                                                  "ty": {
+                                                    "Var": 6
+                                                  }
+                                                }
+                                              },
+                                              {
+                                                "Pi": [
+                                                  {
+                                                    "Universe": {
+                                                      "Concrete": 0
+                                                    }
+                                                  },
+                                                  {
+                                                    "Pi": [
+                                                      {
+                                                        "Pi": [
+                                                          {
+                                                            "Var": 7
+                                                          },
+                                                          {
+                                                            "Pi": [
+                                                              {
+                                                                "Id": {
+                                                                  "lhs": {
+                                                                    "App": [
+                                                                      {
+                                                                        "Var": 7
+                                                                      },
+                                                                      {
+                                                                        "Var": 0
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  "rhs": {
+                                                                    "Var": 4
+                                                                  },
+                                                                  "ty": {
+                                                                    "Var": 9
+                                                                  }
+                                                                }
+                                                              },
+                                                              {
+                                                                "Var": 2
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "Pi": [
+                                                          {
+                                                            "Pi": [
+                                                              {
+                                                                "App": [
+                                                                  {
+                                                                    "Var": 6
+                                                                  },
+                                                                  {
+                                                                    "Var": 4
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "Var": 2
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "Pi": [
+                                                              {
+                                                                "Pi": [
+                                                                  {
+                                                                    "App": [
+                                                                      {
+                                                                        "Var": 6
+                                                                      },
+                                                                      {
+                                                                        "Var": 5
+                                                                      }
+                                                                    ]
+                                                                  },
+                                                                  {
+                                                                    "Var": 3
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "Var": 3
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "native": {
+              "accepted": true,
+              "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+              "diagnostic": null,
+              "profile": "verum-native/1"
+            },
+            "profile": "verum-source-pi-id/1",
+            "source": {
+              "declaration": "ss_witness_membership",
+              "sha256": "018dd68567238b5cfb46a86ab1d475f251dc21a27c77f31ee00a8cd6c2c18767",
+              "span": {
+                "end": 615,
+                "sha256": "b9093128c671f885b9835dbcef137045dd91ce889e0d9991b4791a7aed057938",
+                "start": 0
+              }
+            },
+            "status": "verified",
+            "telescope": [
+              {
+                "domain": {
+                  "Universe": {
+                    "Concrete": 0
+                  }
+                },
+                "id": 0,
+                "name": "obj",
+                "role": "type"
+              },
+              {
+                "domain": {
+                  "Universe": {
+                    "Concrete": 0
+                  }
+                },
+                "id": 1,
+                "name": "syn",
+                "role": "type"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Var": 0
+                    },
+                    {
+                      "Var": 2
+                    }
+                  ]
+                },
+                "id": 3,
+                "name": "point",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Var": 2
+                    },
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    }
+                  ]
+                },
+                "id": 5,
+                "name": "semantic_local",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Var": 3
+                    },
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    }
+                  ]
+                },
+                "id": 7,
+                "name": "global",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Var": 4
+                },
+                "id": 8,
+                "name": "x",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Var": 4
+                },
+                "id": 9,
+                "name": "phi",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Id": {
+                    "lhs": {
+                      "App": [
+                        {
+                          "Var": 4
+                        },
+                        {
+                          "Var": 0
+                        }
+                      ]
+                    },
+                    "rhs": {
+                      "Var": 1
+                    },
+                    "ty": {
+                      "Var": 6
+                    }
+                  }
+                },
+                "id": 10,
+                "name": "presentation",
+                "role": "value"
+              }
+            ],
+            "universe_bindings": []
+          },
+          "status": "verified"
+        },
+        "native": {
+          "accepted": true,
+          "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+          "diagnostic": null,
+          "profile": "verum-native/1"
+        },
+        "profile": "noesis-verum/1",
+        "scope": "closed_formal_judgment",
+        "source_alignment": "not_checked",
+        "status": "verified",
+        "subject": {
+          "blob": "666ecb80c136a98a38acbc835f4488f4d962fd3e13f4bb14a3992972c60aec99",
+          "corpus": "msfs",
+          "object": "proofs/ss_witness_membership.json",
+          "revision": "afe9bf80dd9c641a7e30516a20b7ad70abb1adc5c91afeb6acfbfd01ab9ddd20"
+        }
+      },
+      {
+        "dependency_semantics": "not_used",
+        "elaboration": {
+          "diagnostic": null,
+          "report": {
+            "conclusion": {
+              "Pi": [
+                {
+                  "Universe": {
+                    "Concrete": 0
+                  }
+                },
+                {
+                  "Pi": [
+                    {
+                      "Pi": [
+                        {
+                          "Var": 6
+                        },
+                        {
+                          "Pi": [
+                            {
+                              "Id": {
+                                "lhs": {
+                                  "App": [
+                                    {
+                                      "Var": 6
+                                    },
+                                    {
+                                      "Var": 0
+                                    }
+                                  ]
+                                },
+                                "rhs": {
+                                  "Var": 3
+                                },
+                                "ty": {
+                                  "Var": 8
+                                }
+                              }
+                            },
+                            {
+                              "Var": 2
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "Pi": [
+                        {
+                          "Pi": [
+                            {
+                              "App": [
+                                {
+                                  "Var": 5
+                                },
+                                {
+                                  "Var": 3
+                                }
+                              ]
+                            },
+                            {
+                              "Var": 2
+                            }
+                          ]
+                        },
+                        {
+                          "Pi": [
+                            {
+                              "Pi": [
+                                {
+                                  "App": [
+                                    {
+                                      "Var": 5
+                                    },
+                                    {
+                                      "Var": 4
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Var": 3
+                                }
+                              ]
+                            },
+                            {
+                              "Var": 3
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "diagnostic": null,
+            "elaborator": "9b7199801724061c2aebef93b6ac4148d44b003666ef4aa27572a16689373440",
+            "judgment": {
+              "certificate": {
+                "claimed_type": {
+                  "Pi": [
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    },
+                    {
+                      "Pi": [
+                        {
+                          "Universe": {
+                            "Concrete": 0
+                          }
+                        },
+                        {
+                          "Pi": [
+                            {
+                              "Pi": [
+                                {
+                                  "Var": 0
+                                },
+                                {
+                                  "Var": 2
+                                }
+                              ]
+                            },
+                            {
+                              "Pi": [
+                                {
+                                  "Pi": [
+                                    {
+                                      "Var": 2
+                                    },
+                                    {
+                                      "Universe": {
+                                        "Concrete": 0
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Pi": [
+                                    {
+                                      "Pi": [
+                                        {
+                                          "Var": 3
+                                        },
+                                        {
+                                          "Universe": {
+                                            "Concrete": 0
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "Pi": [
+                                        {
+                                          "Var": 4
+                                        },
+                                        {
+                                          "Pi": [
+                                            {
+                                              "Pi": [
+                                                {
+                                                  "Universe": {
+                                                    "Concrete": 0
+                                                  }
+                                                },
+                                                {
+                                                  "Pi": [
+                                                    {
+                                                      "Pi": [
+                                                        {
+                                                          "Var": 5
+                                                        },
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Id": {
+                                                                "lhs": {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 5
+                                                                    },
+                                                                    {
+                                                                      "Var": 0
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                "rhs": {
+                                                                  "Var": 2
+                                                                },
+                                                                "ty": {
+                                                                  "Var": 7
+                                                                }
+                                                              }
+                                                            },
+                                                            {
+                                                              "Var": 2
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "Var": 1
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "Pi": [
+                                                {
+                                                  "Universe": {
+                                                    "Concrete": 0
+                                                  }
+                                                },
+                                                {
+                                                  "Pi": [
+                                                    {
+                                                      "Pi": [
+                                                        {
+                                                          "Var": 6
+                                                        },
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Id": {
+                                                                "lhs": {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 6
+                                                                    },
+                                                                    {
+                                                                      "Var": 0
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                "rhs": {
+                                                                  "Var": 3
+                                                                },
+                                                                "ty": {
+                                                                  "Var": 8
+                                                                }
+                                                              }
+                                                            },
+                                                            {
+                                                              "Var": 2
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "Pi": [
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "App": [
+                                                                {
+                                                                  "Var": 5
+                                                                },
+                                                                {
+                                                                  "Var": 3
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "Var": 2
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 5
+                                                                    },
+                                                                    {
+                                                                      "Var": 4
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "Var": 3
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "Var": 3
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "metadata": {
+                  "declaration": "ss_formal_membership",
+                  "profile": "verum-source-pi-id/1"
+                },
+                "term": {
+                  "Lam": [
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    },
+                    {
+                      "Lam": [
+                        {
+                          "Universe": {
+                            "Concrete": 0
+                          }
+                        },
+                        {
+                          "Lam": [
+                            {
+                              "Pi": [
+                                {
+                                  "Var": 0
+                                },
+                                {
+                                  "Var": 2
+                                }
+                              ]
+                            },
+                            {
+                              "Lam": [
+                                {
+                                  "Pi": [
+                                    {
+                                      "Var": 2
+                                    },
+                                    {
+                                      "Universe": {
+                                        "Concrete": 0
+                                      }
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Lam": [
+                                    {
+                                      "Pi": [
+                                        {
+                                          "Var": 3
+                                        },
+                                        {
+                                          "Universe": {
+                                            "Concrete": 0
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "Lam": [
+                                        {
+                                          "Var": 4
+                                        },
+                                        {
+                                          "Lam": [
+                                            {
+                                              "Pi": [
+                                                {
+                                                  "Universe": {
+                                                    "Concrete": 0
+                                                  }
+                                                },
+                                                {
+                                                  "Pi": [
+                                                    {
+                                                      "Pi": [
+                                                        {
+                                                          "Var": 5
+                                                        },
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Id": {
+                                                                "lhs": {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 5
+                                                                    },
+                                                                    {
+                                                                      "Var": 0
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                "rhs": {
+                                                                  "Var": 2
+                                                                },
+                                                                "ty": {
+                                                                  "Var": 7
+                                                                }
+                                                              }
+                                                            },
+                                                            {
+                                                              "Var": 2
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "Var": 1
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "Lam": [
+                                                {
+                                                  "Universe": {
+                                                    "Concrete": 0
+                                                  }
+                                                },
+                                                {
+                                                  "Lam": [
+                                                    {
+                                                      "Pi": [
+                                                        {
+                                                          "Var": 6
+                                                        },
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "Id": {
+                                                                "lhs": {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 6
+                                                                    },
+                                                                    {
+                                                                      "Var": 0
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                "rhs": {
+                                                                  "Var": 3
+                                                                },
+                                                                "ty": {
+                                                                  "Var": 8
+                                                                }
+                                                              }
+                                                            },
+                                                            {
+                                                              "Var": 2
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "Lam": [
+                                                        {
+                                                          "Pi": [
+                                                            {
+                                                              "App": [
+                                                                {
+                                                                  "Var": 5
+                                                                },
+                                                                {
+                                                                  "Var": 3
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "Var": 2
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "Lam": [
+                                                            {
+                                                              "Pi": [
+                                                                {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 5
+                                                                    },
+                                                                    {
+                                                                      "Var": 4
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "Var": 3
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "App": [
+                                                                {
+                                                                  "App": [
+                                                                    {
+                                                                      "Var": 4
+                                                                    },
+                                                                    {
+                                                                      "Var": 3
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "Var": 2
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "profile": "verum-native/1",
+              "statement": {
+                "Pi": [
+                  {
+                    "Universe": {
+                      "Concrete": 0
+                    }
+                  },
+                  {
+                    "Pi": [
+                      {
+                        "Universe": {
+                          "Concrete": 0
+                        }
+                      },
+                      {
+                        "Pi": [
+                          {
+                            "Pi": [
+                              {
+                                "Var": 0
+                              },
+                              {
+                                "Var": 2
+                              }
+                            ]
+                          },
+                          {
+                            "Pi": [
+                              {
+                                "Pi": [
+                                  {
+                                    "Var": 2
+                                  },
+                                  {
+                                    "Universe": {
+                                      "Concrete": 0
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "Pi": [
+                                  {
+                                    "Pi": [
+                                      {
+                                        "Var": 3
+                                      },
+                                      {
+                                        "Universe": {
+                                          "Concrete": 0
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "Pi": [
+                                      {
+                                        "Var": 4
+                                      },
+                                      {
+                                        "Pi": [
+                                          {
+                                            "Pi": [
+                                              {
+                                                "Universe": {
+                                                  "Concrete": 0
+                                                }
+                                              },
+                                              {
+                                                "Pi": [
+                                                  {
+                                                    "Pi": [
+                                                      {
+                                                        "Var": 5
+                                                      },
+                                                      {
+                                                        "Pi": [
+                                                          {
+                                                            "Id": {
+                                                              "lhs": {
+                                                                "App": [
+                                                                  {
+                                                                    "Var": 5
+                                                                  },
+                                                                  {
+                                                                    "Var": 0
+                                                                  }
+                                                                ]
+                                                              },
+                                                              "rhs": {
+                                                                "Var": 2
+                                                              },
+                                                              "ty": {
+                                                                "Var": 7
+                                                              }
+                                                            }
+                                                          },
+                                                          {
+                                                            "Var": 2
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "Var": 1
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "Pi": [
+                                              {
+                                                "Universe": {
+                                                  "Concrete": 0
+                                                }
+                                              },
+                                              {
+                                                "Pi": [
+                                                  {
+                                                    "Pi": [
+                                                      {
+                                                        "Var": 6
+                                                      },
+                                                      {
+                                                        "Pi": [
+                                                          {
+                                                            "Id": {
+                                                              "lhs": {
+                                                                "App": [
+                                                                  {
+                                                                    "Var": 6
+                                                                  },
+                                                                  {
+                                                                    "Var": 0
+                                                                  }
+                                                                ]
+                                                              },
+                                                              "rhs": {
+                                                                "Var": 3
+                                                              },
+                                                              "ty": {
+                                                                "Var": 8
+                                                              }
+                                                            }
+                                                          },
+                                                          {
+                                                            "Var": 2
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "Pi": [
+                                                      {
+                                                        "Pi": [
+                                                          {
+                                                            "App": [
+                                                              {
+                                                                "Var": 5
+                                                              },
+                                                              {
+                                                                "Var": 3
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "Var": 2
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "Pi": [
+                                                          {
+                                                            "Pi": [
+                                                              {
+                                                                "App": [
+                                                                  {
+                                                                    "Var": 5
+                                                                  },
+                                                                  {
+                                                                    "Var": 4
+                                                                  }
+                                                                ]
+                                                              },
+                                                              {
+                                                                "Var": 3
+                                                              }
+                                                            ]
+                                                          },
+                                                          {
+                                                            "Var": 3
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            "native": {
+              "accepted": true,
+              "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+              "diagnostic": null,
+              "profile": "verum-native/1"
+            },
+            "profile": "verum-source-pi-id/1",
+            "source": {
+              "declaration": "ss_formal_membership",
+              "sha256": "6e6a29794106733821855eeab6dd40c404a5b7c315e734e1185d0ad23fa5d15f",
+              "span": {
+                "end": 629,
+                "sha256": "948f9564c915992ef019a8ead0658e46e1bd84ed91465de1fb950b26c183c522",
+                "start": 0
+              }
+            },
+            "status": "verified",
+            "telescope": [
+              {
+                "domain": {
+                  "Universe": {
+                    "Concrete": 0
+                  }
+                },
+                "id": 0,
+                "name": "obj",
+                "role": "type"
+              },
+              {
+                "domain": {
+                  "Universe": {
+                    "Concrete": 0
+                  }
+                },
+                "id": 1,
+                "name": "syn",
+                "role": "type"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Var": 0
+                    },
+                    {
+                      "Var": 2
+                    }
+                  ]
+                },
+                "id": 3,
+                "name": "point",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Var": 2
+                    },
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    }
+                  ]
+                },
+                "id": 5,
+                "name": "semantic_local",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Var": 3
+                    },
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    }
+                  ]
+                },
+                "id": 7,
+                "name": "global",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Var": 4
+                },
+                "id": 8,
+                "name": "x",
+                "role": "value"
+              },
+              {
+                "domain": {
+                  "Pi": [
+                    {
+                      "Universe": {
+                        "Concrete": 0
+                      }
+                    },
+                    {
+                      "Pi": [
+                        {
+                          "Pi": [
+                            {
+                              "Var": 5
+                            },
+                            {
+                              "Pi": [
+                                {
+                                  "Id": {
+                                    "lhs": {
+                                      "App": [
+                                        {
+                                          "Var": 5
+                                        },
+                                        {
+                                          "Var": 0
+                                        }
+                                      ]
+                                    },
+                                    "rhs": {
+                                      "Var": 2
+                                    },
+                                    "ty": {
+                                      "Var": 7
+                                    }
+                                  }
+                                },
+                                {
+                                  "Var": 2
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Var": 1
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "id": 13,
+                "name": "formal",
+                "role": "value"
+              }
+            ],
+            "universe_bindings": []
+          },
+          "status": "verified"
+        },
+        "native": {
+          "accepted": true,
+          "checker": "bac4d105a9f799f594e41fa27cb1e26084baf8183285ad193ab5175cfda1a7de",
+          "diagnostic": null,
+          "profile": "verum-native/1"
+        },
+        "profile": "noesis-verum/1",
+        "scope": "closed_formal_judgment",
+        "source_alignment": "not_checked",
+        "status": "verified",
+        "subject": {
+          "blob": "3ec8659d99c8354d6740c5e197c5044f4bbd33ef985fbbd845e7fa700fb79eb2",
+          "corpus": "msfs",
+          "object": "proofs/ss_formal_membership.json",
+          "revision": "f9bf782cdde2be4f47a824d2d7c9a4766eb05cda5f73cf7ff6f8b9f4b40235c3"
+        }
+      }
+    ]
+  }
+}

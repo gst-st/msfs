@@ -5,12 +5,12 @@
 # Single entry point for every operation a reviewer or maintainer might
 # perform on this corpus.  Run `make help` for the full target list.
 #
-#   • `make`                   — full green-light pipeline (check + audit + gate)
+#   • `make`                   — source check and source-shape regression gates (not proof certification)
 #   • `make check`             — type-check the corpus
 #   • `make verify`            — run the verification ladder
 #   • `make audit`             — emit every audit report into audit-reports/
 #   • `make audit-msfs`        — MSFS-specific audits (htt, ar, self-recognition)
-#   • `make export`            — emit foreign-format certificates
+#   • `make export`            — request exact foreign proofs (unsupported until typed translation exists)
 #   • `make help`              — human-readable list of targets
 # =============================================================================
 
@@ -48,11 +48,11 @@ default: check audit-honesty-gate
 help:
 	@echo "verum-corpus targets:"
 	@echo ""
-	@echo "  make / make default            full CI green-light bundle"
+	@echo "  make / make default            source-shape checks (not proof certification)"
 	@echo "  make check                     verum check (type-check)"
 	@echo "  make verify                    verum verify (full ladder)"
 	@echo "  make smoke                     run smoke test suite"
-	@echo "  make export                    emit foreign-format certificates"
+	@echo "  make export                    request exact foreign proofs (unsupported until typed translation exists)"
 	@echo ""
 	@echo "  make audit                     all audit reports → audit-reports/"
 	@echo "  make audit-msfs                MSFS-scope audit bundle (htt-roadmap,"
@@ -148,81 +148,8 @@ audit-ar-roadmap:
 
 .PHONY: audit-self-recognition
 audit-self-recognition:
-	@# CLI drift note (2026-07-10): `--self-recognition` was removed from
-	@# `verum audit`; `--kernel-soundness` is the current trusted-base
-	@# surface (Rust-rule roster vs .vr corpus + Coq/Lean re-check files).
-	@$(VERUM) audit --kernel-soundness $(JSON_FORMAT) > $(AUDIT_DIR)/self-recognition.json
-	@$(VERUM) audit --kernel-soundness | tail -5
-
-.PHONY: audit-cross-format
-audit-cross-format:
-	@$(VERUM) audit --cross-format $(JSON_FORMAT) > $(AUDIT_DIR)/cross-format.json
-	@$(VERUM) audit --cross-format | tail -5
-
-.PHONY: audit-kernel-intrinsics
-audit-kernel-intrinsics:
-	@$(VERUM) audit --kernel-intrinsics $(JSON_FORMAT) > $(AUDIT_DIR)/kernel-intrinsics.json
-	@$(VERUM) audit --kernel-intrinsics | tail -3
-
-.PHONY: audit-honesty
-audit-honesty:
-	@$(VERUM) audit --proof-honesty $(JSON_FORMAT) > $(AUDIT_DIR)/proof-honesty.json
-	@$(VERUM) audit --proof-honesty | tail -10
-
-# -----------------------------------------------------------------------------
-# proof-honesty CI gate (regressions blocked)
-# -----------------------------------------------------------------------------
-# Compares live `verum audit --proof-honesty` against the frozen baseline in
-# tests/proof_honesty_baseline.json.  Exits non-zero on any regression
-# (more axiom-placeholder, fewer multi-step / structural, any new
-# theorem-trivial-true or theorem-no-proof-body).
-
-.PHONY: audit-honesty-gate
-audit-honesty-gate:
-	@VERUM_BIN=$(VERUM) bash tests/integration/proof_honesty_gate.sh
-
-# Refresh the baseline to live counts (use after intentional upgrades).
-.PHONY: refresh-honesty-baseline
-refresh-honesty-baseline:
-	@$(VERUM) audit --proof-honesty $(JSON_FORMAT) > $(AUDIT_DIR)/proof-honesty.json
-	@echo "  (baseline refresh: hand-edit tests/proof_honesty_baseline.json after live audit)"
-
-# -----------------------------------------------------------------------------
-# Smoke / integration / regression test suites
-# -----------------------------------------------------------------------------
-.PHONY: smoke
-smoke:
-	@echo "▶ running smoke tests"
-	@for f in tests/smoke/*.vr; do \
-	  echo "  ▸ $$f"; \
-	  $(VERUM) check $$f || exit 1; \
-	done
-
-.PHONY: integration
-integration:
-	@echo "▶ running integration shell scripts"
-	@for f in tests/integration/*.sh; do \
-	  echo "  ▸ $$f"; \
-	  VERUM_BIN=$(VERUM) bash $$f || exit 1; \
-	done
-
-.PHONY: test
-test: smoke integration
-
-# -----------------------------------------------------------------------------
-# Foreign-format certificate export
-# -----------------------------------------------------------------------------
-.PHONY: export
-export:
-	@# CLI drift note (2026-07-10): `--to agda` was removed from `verum
-	@# export`, and --output now takes a FILE path (defaults to
-	@# certificates/<format>/export.<ext>) rather than a directory.
-	@echo "▶ exporting Coq / Lean / Dedukti / Metamath certificates"
-	@$(VERUM) export --to coq      --with-provenance
-	@$(VERUM) export --to lean     --with-provenance
-	@$(VERUM) export --to dedukti  --with-provenance
-	@$(VERUM) export --to metamath --with-provenance
-	@echo "  ✔ all 4 formats emitted (agda dropped with CLI support)"
+	@echo "▶ requesting proof export; unsupported typed translation must fail explicitly"
+	@$(VERUM) export --to lean --with-provenance
 
 # -----------------------------------------------------------------------------
 # Cleanup
@@ -239,3 +166,10 @@ certification-inventory:
 	@$(PYTHON) scripts/certification_inventory.py --output certification-inventory.json
 certification-hygiene:
 	@$(PYTHON) scripts/certification_inventory.py --require-clean-exports
+
+# Exact-source proof plus independent oracle and Noesis archive replay.
+# Paths must identify the actual freshly built executables.
+.PHONY: certify-source
+certify-source:
+	@test -n "$(VERUM_SOURCE_CHECKER)" -a -n "$(NOESIS)" || (echo "Set VERUM_SOURCE_CHECKER and NOESIS to built executables" >&2; exit 1)
+	@$(PYTHON) scripts/verify_source_membership.py --checker "$(VERUM_SOURCE_CHECKER)" --noesis "$(NOESIS)" --report proofs/ss-membership/replay-report.json

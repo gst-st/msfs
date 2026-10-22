@@ -1,0 +1,81 @@
+MSFS source, formalization and library audit — 2026-10-22
+
+This is a defect register, not a change to the paper or a relaxation of its
+statements. Existing foreign scaffolds remain migration evidence. They do not
+become proofs when their labels, citation years or framework tags are checked.
+
+O1. Membership and AFNT-alpha are different obligations.
+Source: paper-en/paper.tex, lem:SS-membership; the (F_S) definition; thm:afnt-alpha.
+The new proof introduces the syntactic branch for the represented pointing
+(Syn(S), [phi]). F-3 instead supplies a categorical equivalence involving Syn(F).
+An inclusion F in S does not by itself make the interpretation Syn(F)->Syn(S)
+fully faithful or establish literal equality of the represented pointings.
+Required: a precise ambient category of pointed objects, the comparison map,
+and a proof that the ORIGINAL F-3 hypotheses justify the relevant transport.
+Adding the desired membership as a hypothesis would not discharge this task.
+Status: representation-inclusion checked; full alpha correspondence open.
+
+O2. A definable colimit need not encode a definable presentation tower.
+Source: paper-en/paper.tex, proper-class argument following AFNT-beta.
+Invalid inference: a formal specification of a colimit determines a formal
+specification of every input in its diagram. Counterexample at the recursive
+presentation level: choose a noncomputable binary sequence b_n, let A_n be a
+pointed finite set with 1+b_n elements, and let every strict transition A_i->A_j
+be constant at the distinguished point (identities at i=j). These maps compose.
+Every element becomes the distinguished point at the next stage, so the colimit
+is the one-point set, with a constant finite specification. Its diagram still
+encodes the noncomputable sequence. Thus the inference already fails for a
+countable directed diagram. This diagnoses the inference, not the negation of
+the paper's full proper-class conclusion.
+Required: an actual recovery/faithfulness theorem for the particular tower,
+or a different proof of the unchanged conclusion.
+Status: open; no certificate.
+
+O3. Nonexplosion quantifier.
+Source: paper-en/paper.tex, Explosion-min.
+The condition bottom does not derive phi for EVERY phi contradicts reflexivity
+at phi=bottom. Nonexplosion means NOT(every phi is derivable from bottom), or
+that at least one phi is not derivable. They are different quantifier orders.
+Required: explicit author-visible correction of the condition and rechecking
+all dependent claims. No current theorem is marked proved by replacing its goal.
+Status: defective source condition recorded; paper unchanged in this change.
+
+O4. Unconnected arbitrary outputs in legacy categorical library contracts.
+Source: Verum core/math/s_definable/class_s_s.vr and lemma_3_4.vr.
+Local membership entails closure_depth=0. The Grothendieck closure axiom takes
+arbitrary diagram and result references, requires only nonnegative diagram
+depth, and entails result depth>=1. Choosing result=diagram equal to a local
+witness gives depth=0 and depth>=1. No relation tying result to a construction
+appears in the contract. Similar defects affect other closure markers.
+Required: a typed construction with explicit inputs/output relation and an
+actual proof of preservation. A citation or integer metadata is insufficient.
+The portable Pi/Id source profile does not import these contracts.
+Status: source signature inconsistent; cannot serve as certified foundation.
+
+O5. Legacy library kernel is not an implementation of the portable kernel.
+Source: Verum core/verify/kernel_v0.
+lookup_shifted returns the raw context type; for [A:U0,x:A], lookup of x needs
+the shifted type Var1, not Var0. The substitution lemma file contains constant
+false typing predicates and a substitution returning the unchanged term. The
+multi-step beta predicate is false even at a reflexive step. The native Rust
+checker has independent implementations; these library routines are NOT their
+verified extraction or proof of soundness.
+Required: shared calculus contract, executable capture-avoiding substitution,
+shifted lookup, reflexive-transitive reduction, and checked metatheorems. Until
+then they cannot certify Verum's implementation.
+Status: concrete unimplemented/incorrect stdlib mechanisms; not used by the
+source/native Noesis admission path.
+
+O6. Reflection/stabilization authority.
+Source: Verum predicative_reflection.vr, reflection_tower.rs and legacy audits.
+Numerical strata, annotation strings and bibliographic framework presence do
+not prove stabilization, foundational equivalence or self-soundness. Some
+source axioms still refer to claims withdrawn or qualified in the current paper.
+Required: statement-bound proof replay, explicit assumption closure and checked
+interpretations between foundations. Structural reports must retain their data
+but cannot grant discharge authority. See the accompanying Verum authority fix.
+Status: proof obligations open; numerical/citation evidence is structural only.
+
+The registry is a focused audit, not a claim that every MSFS or stdlib defect has
+been enumerated. Full categorical closure, dual enactments, accessibility bounds,
+foreign proof translation and the legacy marker chain remain unverified.

@@ -1,70 +1,38 @@
 #!/usr/bin/env bash
-# =============================================================================
-# Cross-format export signal check (M0.D first deliverable)
-# =============================================================================
-#
-# After `verum export --to <format>` runs across all five targets, this
-# script verifies the M0.A signal (20 @theorem promotions vs 176 @axiom
-# placeholders) is preserved end-to-end through each emitter.
-#
-# Round-trip CI (running lean / coqc / agda / dkcheck / metamath against
-# the exported files) requires those toolchains to be installed and is
-# tracked separately under M0.D Phase 2; this script is the Phase 1
-# guardrail that catches "exporter regressed and emitted everything as
-# axiom" failures.
-# =============================================================================
-
+# The former test counted theorem/axiom labels around sorry/Admitted and even
+# swallowed Agda failure. That did not test preservation or proof validity.
+# This admission regression requires explicit refusal of every unfaithful proof
+# target and proves refusal neither creates artifacts nor overwrites user files.
+# Actual source/native theorem checking is exercised by make certify-source.
 set -euo pipefail
-
 CORPUS_DIR="$(cd "$(dirname "$0")/../.." && pwd)"
 VERUM_BIN="${VERUM_BIN:-verum}"
-
-EXPECTED_THEOREMS=20
-EXPECTED_AXIOMS=176
-
+TEST_DIR="$(mktemp -d "${TMPDIR:-/tmp}/msfs-export-admission.XXXXXX")"
+trap 'rm -rf "$TEST_DIR"' EXIT
 cd "$CORPUS_DIR"
-
-echo "==> Re-exporting all 5 formats from $CORPUS_DIR"
-"$VERUM_BIN" export --to lean      >/dev/null
-"$VERUM_BIN" export --to coq       >/dev/null
-"$VERUM_BIN" export --to dedukti   >/dev/null
-"$VERUM_BIN" export --to metamath  >/dev/null
-"$VERUM_BIN" export --to agda      >/dev/null 2>&1 || true  # agda is optional
-
-# Lean: `theorem X : Prop := sorry` vs `axiom X : Prop`
-LEAN_T=$(grep -c '^theorem ' certificates/lean/export.lean)
-LEAN_A=$(grep -c '^axiom ' certificates/lean/export.lean)
-
-# Coq: `Theorem X : Prop. Admitted.` vs `Axiom X : Prop.`
-COQ_T=$(grep -c '^Theorem ' certificates/coq/export.v)
-COQ_A=$(grep -c '^Axiom ' certificates/coq/export.v)
-
-echo
-echo "Format     Theorems   Axioms"
-echo "─────────  ────────  ───────"
-printf "lean       %8d  %7d\n" "$LEAN_T" "$LEAN_A"
-printf "coq        %8d  %7d\n" "$COQ_T"  "$COQ_A"
-
-fail=0
-for fmt in lean coq; do
-    case "$fmt" in
-        lean) t=$LEAN_T; a=$LEAN_A;;
-        coq)  t=$COQ_T;  a=$COQ_A;;
-    esac
-    if [ "$t" -ne "$EXPECTED_THEOREMS" ]; then
-        echo "FAIL: $fmt export emits $t theorems, expected $EXPECTED_THEOREMS"
-        fail=1
+for format in lean coq dedukti metamath agda; do
+    output="$TEST_DIR/$format/proof.txt"
+    log="$TEST_DIR/$format.log"
+    if "$VERUM_BIN" export --to "$format" --with-provenance --output "$output" >"$log" 2>&1; then
+        echo "FAIL: $format granted proof export without an exact typed translation" >&2
+        exit 1
     fi
-    if [ "$a" -ne "$EXPECTED_AXIOMS" ]; then
-        echo "FAIL: $fmt export emits $a axioms, expected $EXPECTED_AXIOMS"
-        fail=1
+    if ! grep -q 'exact source statement' "$log"; then
+        cat "$log" >&2
+        echo "FAIL: $format failed for an unrelated reason" >&2
+        exit 1
     fi
+    test ! -e "$output"
+    test ! -e "$output.provenance.json"
+    mkdir -p "$(dirname "$output")"
+    printf '%s\n' 'existing research artifact' > "$output"
+    cp "$output" "$TEST_DIR/expected"
+    if "$VERUM_BIN" export --to "$format" --with-provenance --output "$output" >"$log" 2>&1; then
+        echo "FAIL: repeated export unexpectedly succeeded" >&2
+        exit 1
+    fi
+    grep -q 'exact source statement' "$log"
+    cmp "$output" "$TEST_DIR/expected"
+    test ! -e "$output.provenance.json"
 done
-
-if [ "$fail" -eq 0 ]; then
-    echo
-    echo "OK: M0.A signal preserved across exports — 20 @theorem + 176 @axiom"
-    exit 0
-else
-    exit 1
-fi
+echo 'PASS: 5 explicit unsupported targets; no generated scaffolds; existing artifacts preserved.'

@@ -1,0 +1,16 @@
+public theorem ss_witness_membership(
+    obj: Type, syn: Type,
+    point: fn(syn) -> obj,
+    semantic_local: fn(obj) -> Type,
+    global: fn(obj) -> Type,
+    x: obj,
+    phi: syn,
+    presentation: Path<obj>(point(phi), x)
+): forall (r: Type).
+   forall (syntactic: fn<phi0: meta syn>(Path<obj>(point(phi0), x)) -> r).
+   forall (semantic: fn(semantic_local(x)) -> r).
+   forall (global_case: fn(global(x)) -> r). r
+proof = |r: Type|
+    |syntactic: fn<phi0: meta syn>(Path<obj>(point(phi0), x)) -> r|
+    |semantic: fn(semantic_local(x)) -> r|
+    |global_case: fn(global(x)) -> r| syntactic(phi, presentation);

@@ -32,6 +32,43 @@ For each theorem, certification needs:
 
 Verum's native judgment profile can replay closed terms with dependent functions, dependent pairs and identity elimination. It does not automatically elaborate all MSFS source contracts, categorical infrastructure or framework annotations. Noesis may retain the source, its formalization and the replay report as distinct objects; it must not promote a prose theorem based on a certificate attached by name.
 
+## Checked source lemma and exact correspondence
+
+The representation-level inclusion in `lem:SS-membership` now has two actual
+Verum source proofs: [explicit presentation](proofs/ss-membership/witness.vr)
+and [encoded formal witness](proofs/ss-membership/formal.vr). Neither assumes
+membership of the target union. Both introduce its syntactic branch. The full
+mathematical scope, universe levels and excluded categorical identifications
+are stated in the [correspondence review](proofs/ss-membership/correspondence.txt).
+The paper's statement has not been altered to fit these proofs.
+
+```sh
+python3 scripts/verify_source_membership.py \
+  --checker /absolute/path/to/verum-source-replay \
+  --noesis /absolute/path/to/noesis \
+  --report proofs/ss-membership/replay-report.json
+```
+
+This command requires real executables. It checks the exact source/review hashes,
+elaborates each form at three universe levels, and compares the entire native
+statement and proof with an independently constructed named-term oracle. It then
+stores the exact paper bytes, quoted source ports, correspondence review and proof
+sources in a disposable Noesis database. Noesis repeats native verification;
+mutated proofs must fail, historical proofs must remain valid, and archive restore
+must preserve the exact results. It does not modify the deployed corpus.
+
+[Recorded execution](proofs/ss-membership/replay-report.json): six exact
+source/oracle comparisons, two ill-typed source mutations rejected, two source
+proofs replayed before and after Noesis archive restoration, and two Noesis proof
+mutations rejected. A Source edge verifies provenance, not the semantic adequacy
+of a formalization. That distinction remains explicit in every report.
+
+This closes the stated representation-inclusion proof. It does **not** replace
+the legacy `core.math.s_definable` marker axiom or prove AFNT-alpha: the legacy
+signature additionally promises global membership and mixes subtheory
+interpretation with object identity. Those obligations remain separate. See the
+[open mathematical and library defects](proofs/open-obligations.txt).
+
 ## Existing tooling
 
 ```sh
@@ -39,7 +76,7 @@ make check                # source check with the configured Verum build
 make verify               # verification strategies supported by that build
 make audit-honesty-gate   # existing source-shape regression gate
 make audit-msfs           # framework and implementation audits
-make export               # generate foreign artifacts, then inspect and replay them
+make export               # refuses proof exports until exact typed translation is available
 ```
 
 Use a freshly built Verum and its matching `core` sources. Record the compiler revision, options, actual outputs and remaining assumptions. Source-shape gates and coverage summaries remain useful regression checks; they are not proof certification. The tutorial and historical audit outputs describe tooling workflows, not current blanket verification guarantees.
