@@ -232,3 +232,10 @@ clean:
 	@rm -rf target/ .verum_cache/ .z3-trace
 	@find . -name "*.vbc" -delete
 	@echo "▶ cleaned"
+
+# Export inspection is an explicit hygiene gate, not mathematical certification.
+.PHONY: certification-inventory certification-hygiene
+certification-inventory:
+	@$(PYTHON) scripts/certification_inventory.py --output certification-inventory.json
+certification-hygiene:
+	@$(PYTHON) scripts/certification_inventory.py --require-clean-exports

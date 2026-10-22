@@ -1,0 +1,1366 @@
+{
+  "profile": "msfs-certification-inventory/1",
+  "authority": "inventory_only",
+  "source_elaboration": "not_certified",
+  "sources": [
+    {
+      "path": "src/lib.vr",
+      "sha256": "cc7d828882fd197eb5b2c20e55e9bfc4e6ba9f9f163e6ed41c65f541932d20e4"
+    },
+    {
+      "path": "src/theorems/mod.vr",
+      "sha256": "fd55fe2f586f153e4e8ea628fcc3fd274a67d405df5aa4bf7ebc3a876dce1426"
+    },
+    {
+      "path": "src/theorems/msfs/ac_oc_duality.vr",
+      "sha256": "60144b2bd7ad1679ddbf0090dfca53ed9eeaba941dbad1267a312b508c58655f"
+    },
+    {
+      "path": "src/theorems/msfs/afnt_alpha.vr",
+      "sha256": "895a20142338e2586ea5e800f98dbe5eff3c6fef2da5721c789921c0474a1b08"
+    },
+    {
+      "path": "src/theorems/msfs/afnt_beta.vr",
+      "sha256": "789bb038e7b23fc125fd3337d865fe87cf0b05ef7b11242e42622ee81c8c3a60"
+    },
+    {
+      "path": "src/theorems/msfs/bypass_paths.vr",
+      "sha256": "84d4a3e8a8c8b27634de372126b1fdee4a9143a12617e9270b2c5ac750c19277"
+    },
+    {
+      "path": "src/theorems/msfs/categorical_preliminaries.vr",
+      "sha256": "2d234ccf5a5d20df8d8764cc189e6dfda339d8c82fb644f5350ed029441a064f"
+    },
+    {
+      "path": "src/theorems/msfs/consequences.vr",
+      "sha256": "0dfab9d5378d70540656397b2705ee65a75c359da60a151a58b85992577f1b63"
+    },
+    {
+      "path": "src/theorems/msfs/five_axis.vr",
+      "sha256": "019ff54affd088d5aa3435d1876ba53a910a5efd0646a61b9f84eed39702737f"
+    },
+    {
+      "path": "src/theorems/msfs/introduction.vr",
+      "sha256": "08e70ea996d421c48f9a427b2bd1e9965017e8681c803c510d15c4cd4793dd5c"
+    },
+    {
+      "path": "src/theorems/msfs/l_abs_conditions.vr",
+      "sha256": "1a259a1acb1654d3e2644c3c31dc12a7c3110690cee22ce5b092b27f6f071f51"
+    },
+    {
+      "path": "src/theorems/msfs/meta_classification.vr",
+      "sha256": "e7ff09ac11094720158ac1c6eb26555637ca21c6800572f4b62aae2d1fe2e7e9"
+    },
+    {
+      "path": "src/theorems/msfs/mod.vr",
+      "sha256": "89c17336369a2ee0d2b46b4d990c5817ad8563f02bd54799d5f4d95d30df5c65"
+    },
+    {
+      "path": "src/theorems/msfs/no_go_subsumption.vr",
+      "sha256": "f983b532b0695d8250a74eb2433ef6ffad4a4226bc460e0c3a9a048100fe2111"
+    },
+    {
+      "path": "src/theorems/msfs/paraconsistent.vr",
+      "sha256": "77f1d3e2b484f16792bc6b86d33e164f8c6441cbcf3955e6eebc24059a9f4c66"
+    },
+    {
+      "path": "src/theorems/msfs/rich_s_anchor.vr",
+      "sha256": "dae411800f572b7f9542ae3a3b2581af1433e4e8ba44c5317f59d03aeaa6731d"
+    },
+    {
+      "path": "src/theorems/msfs/strata.vr",
+      "sha256": "708c14d2cfbc2046b02e0797647a2bb5da474f58b34dd9ce006fa11f9c9234c9"
+    }
+  ],
+  "exports": [
+    {
+      "path": "certificates/coq/export.v",
+      "sha256": "0886bab9db1088cc738056b71c2391d7b6639fbc3bbe15fb453888d30d0097f0",
+      "findings": [
+        {
+          "line": 9,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_1_kelly_2_categorical : Prop."
+        },
+        {
+          "line": 12,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_2_lurie_htt : Prop."
+        },
+        {
+          "line": 15,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_3_riehl_verity : Prop."
+        },
+        {
+          "line": 18,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_4_pronk_bicat_fractions : Prop."
+        },
+        {
+          "line": 21,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_5_lawvere_fp : Prop."
+        },
+        {
+          "line": 24,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_6_whitehead : Prop."
+        },
+        {
+          "line": 27,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_A_7_bergner_lurie_stabilization : Prop."
+        },
+        {
+          "line": 30,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_A_8_adamek_rosicky : Prop."
+        },
+        {
+          "line": 34,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 37,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_11_1_subsumption_reduction : Prop."
+        },
+        {
+          "line": 41,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 44,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_11_1_subsumption_anchor : Prop."
+        },
+        {
+          "line": 48,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 56,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 60,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 64,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 68,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 72,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 76,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 79,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_9_6c_meta_iteration_reduction : Prop."
+        },
+        {
+          "line": 83,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 86,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_8_1_universe_reduction : Prop."
+        },
+        {
+          "line": 89,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_8_2_reflective_tower_reduction : Prop."
+        },
+        {
+          "line": 92,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_corollary_8_8_intensional_reduction : Prop."
+        },
+        {
+          "line": 96,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 100,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 103,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_8_3_display_class : Prop."
+        },
+        {
+          "line": 106,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_8_4_display_2_category : Prop."
+        },
+        {
+          "line": 109,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_8_5_s_int : Prop."
+        },
+        {
+          "line": 112,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_8_6_I_existence : Prop."
+        },
+        {
+          "line": 115,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_8_7_slice_locality : Prop."
+        },
+        {
+          "line": 119,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 122,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_proposition_grading_structural : Prop."
+        },
+        {
+          "line": 143,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 148,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 153,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 156,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_10_1_E_category : Prop."
+        },
+        {
+          "line": 159,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_10_2_S_S_E : Prop."
+        },
+        {
+          "line": 162,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_lemma_10_3_enactment_syntax_semantics : Prop."
+        },
+        {
+          "line": 166,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 170,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 174,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 178,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 182,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 185,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_7_1_horizontal_reduction : Prop."
+        },
+        {
+          "line": 188,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_7_2_vertical_reduction : Prop."
+        },
+        {
+          "line": 191,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_7_3_meta_vertical_reduction : Prop."
+        },
+        {
+          "line": 194,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_7_4_lateral_reduction : Prop."
+        },
+        {
+          "line": 197,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_7_6_completeness_reduction : Prop."
+        },
+        {
+          "line": 201,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 205,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 209,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 213,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 216,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_7_5_lawvere_scope : Prop."
+        },
+        {
+          "line": 220,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 239,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_open_question_Q1_closed_in_diakrisis : Prop."
+        },
+        {
+          "line": 242,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_open_question_Q2_open : Prop."
+        },
+        {
+          "line": 245,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_open_question_Q3_closed_in_diakrisis : Prop."
+        },
+        {
+          "line": 248,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_open_question_Q4_closed_in_diakrisis : Prop."
+        },
+        {
+          "line": 251,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_open_question_Q5_closed_in_diakrisis : Prop."
+        },
+        {
+          "line": 254,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_definition_B_1_paraconsistent_rich_s : Prop."
+        },
+        {
+          "line": 257,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_B_2_paraconsistent_afnt : Prop."
+        },
+        {
+          "line": 260,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_6_1_afnt_beta : Prop."
+        },
+        {
+          "line": 263,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_6_1_step_1_seed_witness : Prop."
+        },
+        {
+          "line": 266,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_6_1_step_2_diagram_s_indexed : Prop."
+        },
+        {
+          "line": 270,
+          "kind": "admitted",
+          "text": "Admitted."
+        },
+        {
+          "line": 273,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_proposition_6_2_proper_class_dichotomy : Prop."
+        },
+        {
+          "line": 276,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_proposition_6_3_trajectory_space : Prop."
+        },
+        {
+          "line": 279,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_proposition_6_3_corollary : Prop."
+        },
+        {
+          "line": 282,
+          "kind": "opaque_proposition",
+          "text": "Axiom msfs_theorem_6_1_beta_tower_reduction : Prop."
+        },
+        {
+          "line": 286,
+          "kind": "admitted",
+          "text": "Admitted."
+        }
+      ],
+      "logical_replay": "not_performed"
+    },
+    {
+      "path": "certificates/dedukti/export.dk",
+      "sha256": "3b5abd759c48ae3a9f35c41419cf41802a0f5c86d66229c248843cc65605d7a8",
+      "findings": [
+        {
+          "line": 3,
+          "kind": "admitted_marker",
+          "text": "when SmtCertificates are loaded; otherwise admitted comment marker. ;)"
+        },
+        {
+          "line": 33,
+          "kind": "admitted_marker",
+          "text": "msfs_appendix_A_categorical_preliminaries_full : Prop. (; admitted ;)"
+        },
+        {
+          "line": 39,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_11_1_subsumption : Prop. (; admitted ;)"
+        },
+        {
+          "line": 45,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_5_1_afnt_alpha : Prop. (; admitted ;)"
+        },
+        {
+          "line": 51,
+          "kind": "admitted_marker",
+          "text": "msfs_definition_9_1_meta_cls : Prop. (; admitted ;)"
+        },
+        {
+          "line": 54,
+          "kind": "admitted_marker",
+          "text": "msfs_definition_9_2_meta_cls_top : Prop. (; admitted ;)"
+        },
+        {
+          "line": 57,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_9_3_meta_categoricity : Prop. (; admitted ;)"
+        },
+        {
+          "line": 60,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_9_4_structural_multiplicity : Prop. (; admitted ;)"
+        },
+        {
+          "line": 63,
+          "kind": "admitted_marker",
+          "text": "msfs_corollary_9_5_plurality : Prop. (; admitted ;)"
+        },
+        {
+          "line": 66,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_9_6_meta_classification_stabilization : Prop. (; admitted ;)"
+        },
+        {
+          "line": 72,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_9_6c_no_l_abs_escalation : Prop. (; admitted ;)"
+        },
+        {
+          "line": 84,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_8_1_universe_polymorphism : Prop. (; admitted ;)"
+        },
+        {
+          "line": 87,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_8_2_reflective_tower : Prop. (; admitted ;)"
+        },
+        {
+          "line": 105,
+          "kind": "admitted_marker",
+          "text": "msfs_corollary_8_8_intensional_no_new_axis : Prop. (; admitted ;)"
+        },
+        {
+          "line": 123,
+          "kind": "admitted_marker",
+          "text": "msfs_proposition_2_2_iii_fnd_strict_above_cls : Prop. (; admitted ;)"
+        },
+        {
+          "line": 126,
+          "kind": "admitted_marker",
+          "text": "msfs_proposition_2_2_iii_cls_strict_above_clsmax : Prop. (; admitted ;)"
+        },
+        {
+          "line": 129,
+          "kind": "admitted_marker",
+          "text": "msfs_proposition_2_2_iii_clsmax_strict_above_abs_witness : Prop. (; admitted ;)"
+        },
+        {
+          "line": 141,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_10_4_ac_oc_morita_duality : Prop. (; admitted ;)"
+        },
+        {
+          "line": 144,
+          "kind": "admitted_marker",
+          "text": "msfs_corollary_10_5_conservativity : Prop. (; admitted ;)"
+        },
+        {
+          "line": 147,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_10_7_dual_boundary_lemma : Prop. (; admitted ;)"
+        },
+        {
+          "line": 150,
+          "kind": "admitted_marker",
+          "text": "msfs_corollary_10_8_l_abs_E_empty : Prop. (; admitted ;)"
+        },
+        {
+          "line": 153,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_10_9_dual_five_axis : Prop. (; admitted ;)"
+        },
+        {
+          "line": 171,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_7_1_horizontal : Prop. (; admitted ;)"
+        },
+        {
+          "line": 174,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_7_2_vertical : Prop. (; admitted ;)"
+        },
+        {
+          "line": 177,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_7_3_meta_vertical : Prop. (; admitted ;)"
+        },
+        {
+          "line": 180,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_7_4_lateral : Prop. (; admitted ;)"
+        },
+        {
+          "line": 186,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_7_6_completeness : Prop. (; admitted ;)"
+        },
+        {
+          "line": 231,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_6_1_colim_in_s_s_global : Prop. (; admitted ;)"
+        },
+        {
+          "line": 246,
+          "kind": "admitted_marker",
+          "text": "msfs_theorem_6_1_operational_closure : Prop. (; admitted ;)"
+        }
+      ],
+      "logical_replay": "not_performed"
+    },
+    {
+      "path": "certificates/lean/export.lean",
+      "sha256": "d3416ef27ed461c663d27f7edabe2ff3e557c2735114636dab81fd0cf249fdc2",
+      "findings": [
+        {
+          "line": 9,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_1_kelly_2_categorical : Prop"
+        },
+        {
+          "line": 12,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_2_lurie_htt : Prop"
+        },
+        {
+          "line": 15,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_3_riehl_verity : Prop"
+        },
+        {
+          "line": 18,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_4_pronk_bicat_fractions : Prop"
+        },
+        {
+          "line": 21,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_5_lawvere_fp : Prop"
+        },
+        {
+          "line": 24,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_6_whitehead : Prop"
+        },
+        {
+          "line": 27,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_A_7_bergner_lurie_stabilization : Prop"
+        },
+        {
+          "line": 30,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_A_8_adamek_rosicky : Prop"
+        },
+        {
+          "line": 33,
+          "kind": "sorry",
+          "text": "def msfs_appendix_A_categorical_preliminaries_full : Prop := sorry"
+        },
+        {
+          "line": 36,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_11_1_subsumption_reduction : Prop"
+        },
+        {
+          "line": 39,
+          "kind": "sorry",
+          "text": "def msfs_theorem_11_1_subsumption : Prop := sorry"
+        },
+        {
+          "line": 42,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_11_1_subsumption_anchor : Prop"
+        },
+        {
+          "line": 45,
+          "kind": "sorry",
+          "text": "def msfs_theorem_5_1_afnt_alpha : Prop := sorry"
+        },
+        {
+          "line": 51,
+          "kind": "sorry",
+          "text": "def msfs_definition_9_1_meta_cls : Prop := sorry"
+        },
+        {
+          "line": 54,
+          "kind": "sorry",
+          "text": "def msfs_definition_9_2_meta_cls_top : Prop := sorry"
+        },
+        {
+          "line": 57,
+          "kind": "sorry",
+          "text": "def msfs_theorem_9_3_meta_categoricity : Prop := sorry"
+        },
+        {
+          "line": 60,
+          "kind": "sorry",
+          "text": "def msfs_theorem_9_4_structural_multiplicity : Prop := sorry"
+        },
+        {
+          "line": 63,
+          "kind": "sorry",
+          "text": "def msfs_corollary_9_5_plurality : Prop := sorry"
+        },
+        {
+          "line": 66,
+          "kind": "sorry",
+          "text": "def msfs_theorem_9_6_meta_classification_stabilization : Prop := sorry"
+        },
+        {
+          "line": 69,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_9_6c_meta_iteration_reduction : Prop"
+        },
+        {
+          "line": 72,
+          "kind": "sorry",
+          "text": "def msfs_theorem_9_6c_no_l_abs_escalation : Prop := sorry"
+        },
+        {
+          "line": 75,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_8_1_universe_reduction : Prop"
+        },
+        {
+          "line": 78,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_8_2_reflective_tower_reduction : Prop"
+        },
+        {
+          "line": 81,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_corollary_8_8_intensional_reduction : Prop"
+        },
+        {
+          "line": 84,
+          "kind": "sorry",
+          "text": "def msfs_theorem_8_1_universe_polymorphism : Prop := sorry"
+        },
+        {
+          "line": 87,
+          "kind": "sorry",
+          "text": "def msfs_theorem_8_2_reflective_tower : Prop := sorry"
+        },
+        {
+          "line": 90,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_8_3_display_class : Prop"
+        },
+        {
+          "line": 93,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_8_4_display_2_category : Prop"
+        },
+        {
+          "line": 96,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_8_5_s_int : Prop"
+        },
+        {
+          "line": 99,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_8_6_I_existence : Prop"
+        },
+        {
+          "line": 102,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_8_7_slice_locality : Prop"
+        },
+        {
+          "line": 105,
+          "kind": "sorry",
+          "text": "def msfs_corollary_8_8_intensional_no_new_axis : Prop := sorry"
+        },
+        {
+          "line": 108,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_proposition_grading_structural : Prop"
+        },
+        {
+          "line": 123,
+          "kind": "sorry",
+          "text": "def msfs_proposition_2_2_iii_fnd_strict_above_cls : Prop := sorry -- via msfs_proper_inclusion_fnd_cls (forward reference at statement level)"
+        },
+        {
+          "line": 126,
+          "kind": "sorry",
+          "text": "def msfs_proposition_2_2_iii_cls_strict_above_clsmax : Prop := sorry -- via msfs_proper_inclusion_cls_clsmax (forward reference at statement level)"
+        },
+        {
+          "line": 129,
+          "kind": "sorry",
+          "text": "def msfs_proposition_2_2_iii_clsmax_strict_above_abs_witness : Prop := sorry -- via msfs_proper_inclusion_clsmax_abs (forward reference at statement level)"
+        },
+        {
+          "line": 132,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_10_1_E_category : Prop"
+        },
+        {
+          "line": 135,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_10_2_S_S_E : Prop"
+        },
+        {
+          "line": 138,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_lemma_10_3_enactment_syntax_semantics : Prop"
+        },
+        {
+          "line": 141,
+          "kind": "sorry",
+          "text": "def msfs_theorem_10_4_ac_oc_morita_duality : Prop := sorry"
+        },
+        {
+          "line": 144,
+          "kind": "sorry",
+          "text": "def msfs_corollary_10_5_conservativity : Prop := sorry"
+        },
+        {
+          "line": 147,
+          "kind": "sorry",
+          "text": "def msfs_theorem_10_7_dual_boundary_lemma : Prop := sorry"
+        },
+        {
+          "line": 150,
+          "kind": "sorry",
+          "text": "def msfs_corollary_10_8_l_abs_E_empty : Prop := sorry"
+        },
+        {
+          "line": 153,
+          "kind": "sorry",
+          "text": "def msfs_theorem_10_9_dual_five_axis : Prop := sorry"
+        },
+        {
+          "line": 156,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_7_1_horizontal_reduction : Prop"
+        },
+        {
+          "line": 159,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_7_2_vertical_reduction : Prop"
+        },
+        {
+          "line": 162,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_7_3_meta_vertical_reduction : Prop"
+        },
+        {
+          "line": 165,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_7_4_lateral_reduction : Prop"
+        },
+        {
+          "line": 168,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_7_6_completeness_reduction : Prop"
+        },
+        {
+          "line": 171,
+          "kind": "sorry",
+          "text": "def msfs_theorem_7_1_horizontal : Prop := sorry"
+        },
+        {
+          "line": 174,
+          "kind": "sorry",
+          "text": "def msfs_theorem_7_2_vertical : Prop := sorry"
+        },
+        {
+          "line": 177,
+          "kind": "sorry",
+          "text": "def msfs_theorem_7_3_meta_vertical : Prop := sorry"
+        },
+        {
+          "line": 180,
+          "kind": "sorry",
+          "text": "def msfs_theorem_7_4_lateral : Prop := sorry"
+        },
+        {
+          "line": 183,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_7_5_lawvere_scope : Prop"
+        },
+        {
+          "line": 186,
+          "kind": "sorry",
+          "text": "def msfs_theorem_7_6_completeness : Prop := sorry"
+        },
+        {
+          "line": 201,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_open_question_Q1_closed_in_diakrisis : Prop"
+        },
+        {
+          "line": 204,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_open_question_Q2_open : Prop"
+        },
+        {
+          "line": 207,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_open_question_Q3_closed_in_diakrisis : Prop"
+        },
+        {
+          "line": 210,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_open_question_Q4_closed_in_diakrisis : Prop"
+        },
+        {
+          "line": 213,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_open_question_Q5_closed_in_diakrisis : Prop"
+        },
+        {
+          "line": 216,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_definition_B_1_paraconsistent_rich_s : Prop"
+        },
+        {
+          "line": 219,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_B_2_paraconsistent_afnt : Prop"
+        },
+        {
+          "line": 222,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_6_1_afnt_beta : Prop"
+        },
+        {
+          "line": 225,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_6_1_step_1_seed_witness : Prop"
+        },
+        {
+          "line": 228,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_6_1_step_2_diagram_s_indexed : Prop"
+        },
+        {
+          "line": 231,
+          "kind": "sorry",
+          "text": "def msfs_theorem_6_1_colim_in_s_s_global : Prop := sorry"
+        },
+        {
+          "line": 234,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_proposition_6_2_proper_class_dichotomy : Prop"
+        },
+        {
+          "line": 237,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_proposition_6_3_trajectory_space : Prop"
+        },
+        {
+          "line": 240,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_proposition_6_3_corollary : Prop"
+        },
+        {
+          "line": 243,
+          "kind": "opaque_proposition",
+          "text": "axiom msfs_theorem_6_1_beta_tower_reduction : Prop"
+        },
+        {
+          "line": 246,
+          "kind": "sorry",
+          "text": "def msfs_theorem_6_1_operational_closure : Prop := sorry"
+        }
+      ],
+      "logical_replay": "not_performed"
+    },
+    {
+      "path": "certificates/metamath/export.mm",
+      "sha256": "738533964388756b40913b67dfd8c9be03a6f1579ea77ef26e14848b1bdd2aef",
+      "findings": [
+        {
+          "line": 11,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_1_kelly_2_categorical $a wff msfs_lemma_A_1_kelly_2_categorical $."
+        },
+        {
+          "line": 14,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_2_lurie_htt $a wff msfs_lemma_A_2_lurie_htt $."
+        },
+        {
+          "line": 17,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_3_riehl_verity $a wff msfs_lemma_A_3_riehl_verity $."
+        },
+        {
+          "line": 20,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_4_pronk_bicat_fractions $a wff msfs_lemma_A_4_pronk_bicat_fractions $."
+        },
+        {
+          "line": 23,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_5_lawvere_fp $a wff msfs_lemma_A_5_lawvere_fp $."
+        },
+        {
+          "line": 26,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_6_whitehead $a wff msfs_lemma_A_6_whitehead $."
+        },
+        {
+          "line": 29,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_A_7_bergner_lurie_stabilization $a wff msfs_theorem_A_7_bergner_lurie_stabilization $."
+        },
+        {
+          "line": 32,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_A_8_adamek_rosicky $a wff msfs_lemma_A_8_adamek_rosicky $."
+        },
+        {
+          "line": 35,
+          "kind": "unknown_proof",
+          "text": "th-msfs_appendix_A_categorical_preliminaries_full $p wff msfs_appendix_A_categorical_preliminaries_full $= ? $."
+        },
+        {
+          "line": 38,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_11_1_subsumption_reduction $a wff msfs_theorem_11_1_subsumption_reduction $."
+        },
+        {
+          "line": 41,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_11_1_subsumption $p wff msfs_theorem_11_1_subsumption $= ? $."
+        },
+        {
+          "line": 44,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_11_1_subsumption_anchor $a wff msfs_theorem_11_1_subsumption_anchor $."
+        },
+        {
+          "line": 47,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_5_1_afnt_alpha $p wff msfs_theorem_5_1_afnt_alpha $= ? $."
+        },
+        {
+          "line": 50,
+          "kind": "unknown_proof",
+          "text": "th-msfs_corollary_5_2_l_abs_empty $p wff msfs_corollary_5_2_l_abs_empty $( apply: msfs_theorem_5_1_afnt_alpha $) $= ? $."
+        },
+        {
+          "line": 53,
+          "kind": "unknown_proof",
+          "text": "th-msfs_definition_9_1_meta_cls $p wff msfs_definition_9_1_meta_cls $= ? $."
+        },
+        {
+          "line": 56,
+          "kind": "unknown_proof",
+          "text": "th-msfs_definition_9_2_meta_cls_top $p wff msfs_definition_9_2_meta_cls_top $= ? $."
+        },
+        {
+          "line": 59,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_9_3_meta_categoricity $p wff msfs_theorem_9_3_meta_categoricity $= ? $."
+        },
+        {
+          "line": 62,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_9_4_structural_multiplicity $p wff msfs_theorem_9_4_structural_multiplicity $= ? $."
+        },
+        {
+          "line": 65,
+          "kind": "unknown_proof",
+          "text": "th-msfs_corollary_9_5_plurality $p wff msfs_corollary_9_5_plurality $= ? $."
+        },
+        {
+          "line": 68,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_9_6_meta_classification_stabilization $p wff msfs_theorem_9_6_meta_classification_stabilization $= ? $."
+        },
+        {
+          "line": 71,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_9_6c_meta_iteration_reduction $a wff msfs_theorem_9_6c_meta_iteration_reduction $."
+        },
+        {
+          "line": 74,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_9_6c_no_l_abs_escalation $p wff msfs_theorem_9_6c_no_l_abs_escalation $= ? $."
+        },
+        {
+          "line": 77,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_8_1_universe_reduction $a wff msfs_theorem_8_1_universe_reduction $."
+        },
+        {
+          "line": 80,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_8_2_reflective_tower_reduction $a wff msfs_theorem_8_2_reflective_tower_reduction $."
+        },
+        {
+          "line": 83,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_corollary_8_8_intensional_reduction $a wff msfs_corollary_8_8_intensional_reduction $."
+        },
+        {
+          "line": 86,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_8_1_universe_polymorphism $p wff msfs_theorem_8_1_universe_polymorphism $= ? $."
+        },
+        {
+          "line": 89,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_8_2_reflective_tower $p wff msfs_theorem_8_2_reflective_tower $= ? $."
+        },
+        {
+          "line": 92,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_8_3_display_class $a wff msfs_definition_8_3_display_class $."
+        },
+        {
+          "line": 95,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_8_4_display_2_category $a wff msfs_definition_8_4_display_2_category $."
+        },
+        {
+          "line": 98,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_8_5_s_int $a wff msfs_definition_8_5_s_int $."
+        },
+        {
+          "line": 101,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_8_6_I_existence $a wff msfs_theorem_8_6_I_existence $."
+        },
+        {
+          "line": 104,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_8_7_slice_locality $a wff msfs_theorem_8_7_slice_locality $."
+        },
+        {
+          "line": 107,
+          "kind": "unknown_proof",
+          "text": "th-msfs_corollary_8_8_intensional_no_new_axis $p wff msfs_corollary_8_8_intensional_no_new_axis $= ? $."
+        },
+        {
+          "line": 110,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_proposition_grading_structural $a wff msfs_proposition_grading_structural $."
+        },
+        {
+          "line": 113,
+          "kind": "unknown_proof",
+          "text": "th-msfs_corollary_grade_collapse $p wff msfs_corollary_grade_collapse $( apply: msfs_proposition_grading_structural $) $= ? $."
+        },
+        {
+          "line": 116,
+          "kind": "unknown_proof",
+          "text": "th-msfs_proposition_2_2_iv_l_abs_empty $p wff msfs_proposition_2_2_iv_l_abs_empty $( apply: msfs_corollary_5_2_l_abs_empty $) $= ? $."
+        },
+        {
+          "line": 119,
+          "kind": "unknown_proof",
+          "text": "th-msfs_proposition_2_3_corollary_cls_not_in_l_abs $p wff msfs_proposition_2_3_corollary_cls_not_in_l_abs $( apply: msfs_proposition_2_2_iv_l_abs_empty $) $= ? $."
+        },
+        {
+          "line": 122,
+          "kind": "unknown_proof",
+          "text": "th-msfs_proposition_2_2_iii_clsmax_strict_above_abs $p wff msfs_proposition_2_2_iii_clsmax_strict_above_abs $( apply: msfs_proposition_2_2_iv_l_abs_empty $) $= ? $."
+        },
+        {
+          "line": 125,
+          "kind": "unknown_proof",
+          "text": "th-msfs_proposition_2_2_iii_fnd_strict_above_cls $p wff msfs_proposition_2_2_iii_fnd_strict_above_cls $( apply: msfs_proper_inclusion_fnd_cls $) $= ? $."
+        },
+        {
+          "line": 128,
+          "kind": "unknown_proof",
+          "text": "th-msfs_proposition_2_2_iii_cls_strict_above_clsmax $p wff msfs_proposition_2_2_iii_cls_strict_above_clsmax $( apply: msfs_proper_inclusion_cls_clsmax $) $= ? $."
+        },
+        {
+          "line": 131,
+          "kind": "unknown_proof",
+          "text": "th-msfs_proposition_2_2_iii_clsmax_strict_above_abs_witness $p wff msfs_proposition_2_2_iii_clsmax_strict_above_abs_witness $( apply: msfs_proper_inclusion_clsmax_abs $) $= ? $."
+        },
+        {
+          "line": 134,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_10_1_E_category $a wff msfs_definition_10_1_E_category $."
+        },
+        {
+          "line": 137,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_10_2_S_S_E $a wff msfs_definition_10_2_S_S_E $."
+        },
+        {
+          "line": 140,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_lemma_10_3_enactment_syntax_semantics $a wff msfs_lemma_10_3_enactment_syntax_semantics $."
+        },
+        {
+          "line": 143,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_10_4_ac_oc_morita_duality $p wff msfs_theorem_10_4_ac_oc_morita_duality $= ? $."
+        },
+        {
+          "line": 146,
+          "kind": "unknown_proof",
+          "text": "th-msfs_corollary_10_5_conservativity $p wff msfs_corollary_10_5_conservativity $= ? $."
+        },
+        {
+          "line": 149,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_10_7_dual_boundary_lemma $p wff msfs_theorem_10_7_dual_boundary_lemma $= ? $."
+        },
+        {
+          "line": 152,
+          "kind": "unknown_proof",
+          "text": "th-msfs_corollary_10_8_l_abs_E_empty $p wff msfs_corollary_10_8_l_abs_E_empty $= ? $."
+        },
+        {
+          "line": 155,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_10_9_dual_five_axis $p wff msfs_theorem_10_9_dual_five_axis $= ? $."
+        },
+        {
+          "line": 158,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_7_1_horizontal_reduction $a wff msfs_theorem_7_1_horizontal_reduction $."
+        },
+        {
+          "line": 161,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_7_2_vertical_reduction $a wff msfs_theorem_7_2_vertical_reduction $."
+        },
+        {
+          "line": 164,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_7_3_meta_vertical_reduction $a wff msfs_theorem_7_3_meta_vertical_reduction $."
+        },
+        {
+          "line": 167,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_7_4_lateral_reduction $a wff msfs_theorem_7_4_lateral_reduction $."
+        },
+        {
+          "line": 170,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_7_6_completeness_reduction $a wff msfs_theorem_7_6_completeness_reduction $."
+        },
+        {
+          "line": 173,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_7_1_horizontal $p wff msfs_theorem_7_1_horizontal $= ? $."
+        },
+        {
+          "line": 176,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_7_2_vertical $p wff msfs_theorem_7_2_vertical $= ? $."
+        },
+        {
+          "line": 179,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_7_3_meta_vertical $p wff msfs_theorem_7_3_meta_vertical $= ? $."
+        },
+        {
+          "line": 182,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_7_4_lateral $p wff msfs_theorem_7_4_lateral $= ? $."
+        },
+        {
+          "line": 185,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_7_5_lawvere_scope $a wff msfs_definition_7_5_lawvere_scope $."
+        },
+        {
+          "line": 188,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_7_6_completeness $p wff msfs_theorem_7_6_completeness $= ? $."
+        },
+        {
+          "line": 191,
+          "kind": "unknown_proof",
+          "text": "th-msfs_consequence_univalent_foundations $p wff msfs_consequence_univalent_foundations $( apply: msfs_theorem_5_1_afnt_alpha $) $= ? $."
+        },
+        {
+          "line": 194,
+          "kind": "unknown_proof",
+          "text": "th-msfs_consequence_higher_topos $p wff msfs_consequence_higher_topos $( apply: msfs_theorem_5_1_afnt_alpha $) $= ? $."
+        },
+        {
+          "line": 197,
+          "kind": "unknown_proof",
+          "text": "th-msfs_consequence_cohesive $p wff msfs_consequence_cohesive $( apply: msfs_theorem_5_1_afnt_alpha $) $= ? $."
+        },
+        {
+          "line": 200,
+          "kind": "unknown_proof",
+          "text": "th-msfs_consequence_infinity_cosmoi $p wff msfs_consequence_infinity_cosmoi $( apply: msfs_theorem_5_1_afnt_alpha $) $= ? $."
+        },
+        {
+          "line": 203,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_open_question_Q1_closed_in_diakrisis $a wff msfs_open_question_Q1_closed_in_diakrisis $."
+        },
+        {
+          "line": 206,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_open_question_Q2_open $a wff msfs_open_question_Q2_open $."
+        },
+        {
+          "line": 209,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_open_question_Q3_closed_in_diakrisis $a wff msfs_open_question_Q3_closed_in_diakrisis $."
+        },
+        {
+          "line": 212,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_open_question_Q4_closed_in_diakrisis $a wff msfs_open_question_Q4_closed_in_diakrisis $."
+        },
+        {
+          "line": 215,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_open_question_Q5_closed_in_diakrisis $a wff msfs_open_question_Q5_closed_in_diakrisis $."
+        },
+        {
+          "line": 218,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_definition_B_1_paraconsistent_rich_s $a wff msfs_definition_B_1_paraconsistent_rich_s $."
+        },
+        {
+          "line": 221,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_B_2_paraconsistent_afnt $a wff msfs_theorem_B_2_paraconsistent_afnt $."
+        },
+        {
+          "line": 224,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_6_1_afnt_beta $a wff msfs_theorem_6_1_afnt_beta $."
+        },
+        {
+          "line": 227,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_6_1_step_1_seed_witness $a wff msfs_theorem_6_1_step_1_seed_witness $."
+        },
+        {
+          "line": 230,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_6_1_step_2_diagram_s_indexed $a wff msfs_theorem_6_1_step_2_diagram_s_indexed $."
+        },
+        {
+          "line": 233,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_6_1_colim_in_s_s_global $p wff msfs_theorem_6_1_colim_in_s_s_global $= ? $."
+        },
+        {
+          "line": 236,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_proposition_6_2_proper_class_dichotomy $a wff msfs_proposition_6_2_proper_class_dichotomy $."
+        },
+        {
+          "line": 239,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_proposition_6_3_trajectory_space $a wff msfs_proposition_6_3_trajectory_space $."
+        },
+        {
+          "line": 242,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_proposition_6_3_corollary $a wff msfs_proposition_6_3_corollary $."
+        },
+        {
+          "line": 245,
+          "kind": "syntax_axiom",
+          "text": "ax-msfs_theorem_6_1_beta_tower_reduction $a wff msfs_theorem_6_1_beta_tower_reduction $."
+        },
+        {
+          "line": 248,
+          "kind": "unknown_proof",
+          "text": "th-msfs_theorem_6_1_operational_closure $p wff msfs_theorem_6_1_operational_closure $= ? $."
+        }
+      ],
+      "logical_replay": "not_performed"
+    }
+  ],
+  "baseline_axiom_placeholder_ceiling": 43,
+  "limits": [
+    "Lexical inspection is not a proof checker; an absent marker does not establish a valid proof.",
+    "A name declared at Prop is not the mathematical statement represented by that name.",
+    "Native proof replay must be linked to a faithful elaboration of each source statement; a file hash or an annotation is insufficient."
+  ]
+}
