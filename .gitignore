@@ -92,3 +92,7 @@ verum-corpus/audit-reports/
 
 # Generated complete Markdown attachments (scripts/build-markdown.py)
 /output/
+
+# Python verifier bytecode is regenerable; preserve source and receipts.
+__pycache__/
+*.py[cod]

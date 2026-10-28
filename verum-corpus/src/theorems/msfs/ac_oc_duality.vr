@@ -1,4 +1,6 @@
 // =============================================================================
+// Two-stage AC/OC note: pre-localization adjunction ε ⊣ α is asymmetric (non-trivial enactment fiber α^{-1}(F));
+// coarse equivalence M ≃ M_E holds conditionally after R_E-localization (Theorem thm:ac-oc-duality).
 // MSFS §10 — AC/OC Morita Duality
 // =============================================================================
 //

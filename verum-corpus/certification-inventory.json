@@ -13,7 +13,7 @@
     },
     {
       "path": "src/theorems/msfs/ac_oc_duality.vr",
-      "sha256": "60144b2bd7ad1679ddbf0090dfca53ed9eeaba941dbad1267a312b508c58655f"
+      "sha256": "98888814e56df799dfb8d0395f63bc95f14fd1bf615ea689c539eae0ef12bd7d"
     },
     {
       "path": "src/theorems/msfs/afnt_alpha.vr",
@@ -61,7 +61,7 @@
     },
     {
       "path": "src/theorems/msfs/paraconsistent.vr",
-      "sha256": "77f1d3e2b484f16792bc6b86d33e164f8c6441cbcf3955e6eebc24059a9f4c66"
+      "sha256": "de1b1efaadfb925cfccd0508ddfa26a537cb7ef44ad1d1a33ecd3e01f711f740"
     },
     {
       "path": "src/theorems/msfs/rich_s_anchor.vr",

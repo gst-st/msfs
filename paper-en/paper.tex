@@ -460,7 +460,7 @@ If $X$ is a formally $S$-definable object --- meaning $X$ is specified by a form
 \end{lemma}
 
 \begin{proof}
-By Convention~\ref{conv:notation} (Morita-reducibility clause), an object $X$ presented by a formula $\phi_X$ is viewed in $\mathbf{StrCat}_{S, n}$ as the pointed structure $(\Syn(S), [\phi_X])$. Since $[\phi_X] \in \Ob(\Syn(S))$, this pair lies in $\cS_S^{\mathrm{local}}$ \emph{by the first clause of Definition~\ref{def:SS}} --- no closure operation is required. Hence $X \in \cS_S^{\mathrm{local}} \subseteq \cS_S$. (If $\phi_X$ is native to a proper sub-theory $\iota_F : F \hookrightarrow S$, the induced interpretation functor $\Syn(\iota_F) : \Syn(F) \to \Syn(S)$ carries $[\phi_X]_F$ to $[\phi_X]$, so the pointing may equivalently be taken over $F$; the conclusion is unchanged.)
+By Convention~\ref{conv:notation} (Morita-reducibility clause), an object $X$ directly presented by a formula $\phi_X \in S$ is viewed in $\mathbf{StrCat}_{S, n}$ as the pointed structure $(\Syn(S), [\phi_X])$. Since $[\phi_X] \in \Ob(\Syn(S))$, this pair lies in $\cS_S^{\mathrm{local}}$ \emph{by the first clause of Definition~\ref{def:SS}} --- no closure operation is required. Hence $X \in \cS_S^{\mathrm{local}} \subseteq \cS_S$. (When $\phi_X$ is instead presented inside a proper subtheory $\iota_F : F \hookrightarrow S$ as in Definition~\ref{def:F}, the translated formula $\iota_F(\phi_X) \in S$ defines $(\Syn(S), [\iota_F(\phi_X)]_S) \in \cS_S^{\mathrm{local}}$, whereas identifying $\Syn(F)[\phi_X]_F$ with $(\Syn(S), [\iota_F(\phi_X)]_S)$ as pointed $(\infty, n)$-categories requires slice-conservativity of $\Syn(\iota_F)$ — which fails in general for non-conservative extensions such as $\PA \hookrightarrow \PA + \Con(\PA)$. Theorem~\ref{thm:afnt-alpha} below handles both the slice-conservative case and arbitrary faithful subtheories $\iota_F : F \hookrightarrow S$.)
 \end{proof}
 
 \subsection{Size Stratification}\label{sec:size-stratification}
@@ -496,7 +496,7 @@ $(\Pi_{4, S, n})(X)$ holds iff $\forall Y \in \cS_S,\ \forall\ (\infty, n)\text{
 \end{definition}
 
 \begin{definition}[$(\Pi_{3\text{-max}, S, n})$]\label{def:pi3max}
-$(\Pi_{3\text{-max}, S, n})(X)$ holds iff $\forall F \in \cF,\ \exists\ (\infty, n)\text{-functor}\ F \to X$ equivalent onto its image.
+$(\Pi_{3\text{-max}, S, n})(X)$ holds iff for every Rich-foundation $F' \in \cF$ there exists a structure-preserving $(\infty, n)$-functor $\Syn(F') \to X$ equivalent onto its image that realizes $F'$ as an internal derivation in any foundation $F$ presenting $X$ (inducing a faithful relative interpretation $F' \to F$, parallel to the $1$-morphism $(\phi, \Phi)$ in Definition~\ref{def:level6-cE}).
 \end{definition}
 
 \begin{definition}[$\LAbs$]\label{def:level6}
@@ -505,11 +505,16 @@ $X \in \LAbs$ iff $X \models (F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-m
 
 \section{\texorpdfstring{Boundary Lemma: The Emptiness of $\LAbs$ ($(\alpha)$-Part of AFN-T)}{Boundary Lemma: The Emptiness of L\_Abs ((alpha)-Part of AFN-T)}}\label{sec:afnt-alpha}
 
-\begin{theorem}[Boundary Lemma: incompatibility of $(F_S) \wedge (\Pi_{4, S, n})$; AFN-T $(\alpha)$-part]\label{thm:afnt-alpha}
+\begin{theorem}[Boundary Lemma: emptiness of $\LAbs$; AFN-T $(\alpha)$-part]\label{thm:afnt-alpha}
 For every Rich-metatheory $S \in \RS$ and every categorical level $n \in \mathbb{N} \cup \{\infty\}$, there exists no $(\infty, n)$-categorical object $X$ satisfying the $\LAbs$ triple
 \[
 (F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n}).
 \]
+Specifically, let $X$ satisfy $(F_S)$ via $\iota_F : F \hookrightarrow S$ and $\Syn(F)[\phi_X] \simeq_{(\infty, n)} X$:
+\begin{enumerate}[nosep,label=(\roman*)]
+\item \emph{Direct / slice-conservative mechanism $(\alpha_0)$}: whenever $F = S$ (direct $S$-definability) or $\Syn(\iota_F)$ restricts on $[\phi_X]$ to an $(\infty, n)$-equivalence onto $(\Syn(S), [\iota_F(\phi_X)]_S)$, already the sub-pair $(F_S) \wedge (\Pi_{4, S, n})$ is inconsistent.
+\item \emph{Strong diagonal anti-absoluteness $(\alpha_{\mathrm{diag}})$}: for \emph{every} faithful subtheory inclusion $\iota_F : F \hookrightarrow S$ in Definition~\ref{def:F} (without assuming slice-conservativity of $\Syn(\iota_F)$, and even if $(\Pi_{4, S, n})$ is omitted or punctured to exclude self-equivalences), the generative pair $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$ is inconsistent.
+\end{enumerate}
 \end{theorem}
 
 \begin{corollary}[$\LAbs$ emptiness]\label{cor:level6-empty-alpha}
@@ -521,7 +526,13 @@ Immediate from Theorem~\ref{thm:afnt-alpha} and Definition~\ref{def:level6}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:afnt-alpha}]
-Assume $X$ satisfies $(F_S) \wedge (\Pi_{4, S, n})$. Then $X \in \cS_S^{\mathrm{global}} \subseteq \cS_S$ by Lemma~\ref{lem:SS-membership}, and $\id_X : X \to X$ is an $(\infty, n)$-equivalence with target in $\cS_S$, violating $(\Pi_{4, S, n})$.
+Let $X$ satisfy $(F_S)$ via $F \in \cF$, $\iota_F : F \hookrightarrow S$, and $\phi_X \in F$ with $e : X \xrightarrow{\simeq_{(\infty, n)}} \Syn(F)[\phi_X]$.
+
+\emph{Mechanism $(\alpha_0)$ (slice-conservative case).} Suppose $F = S$ or $\Syn(\iota_F)|_{[\phi_X]} : \Syn(F)[\phi_X] \to (\Syn(S), [\iota_F(\phi_X)]_S)$ is an $(\infty, n)$-equivalence onto its image. By Lemma~\ref{lem:SS-membership} applied to $\iota_F(\phi_X) \in S$, the target $Y := (\Syn(S), [\iota_F(\phi_X)]_S)$ lies in $\cS_S^{\mathrm{local}} \subseteq \cS_S$, and $\Syn(\iota_F)|_{[\phi_X]} \circ e : X \to Y$ (for $F = S$, simply $\id_X : X \to X$) is an $(\infty, n)$-equivalence onto its image with target in $\cS_S$, violating $(\Pi_{4, S, n})$.
+
+\emph{Mechanism $(\alpha_{\mathrm{diag}})$ (general faithful $\iota_F : F \hookrightarrow S$ via diagonalization).} By (R3), $S$ possesses a model $\cM \in \mathbf{U}_2$ in the ambient metatheory $\ZFC + 2\text{-inacc}$, so $S$ is syntactically consistent: there is no finite derivation of $\bot$ from $S$ in the standard natural numbers $\mathbb{N} = \omega \in \mathbf{U}_1$. Define the first-order arithmetic theory $T_S := \PA + \Con(S)$, where $\Con(S)$ is the canonical $\Pi_1^0$ consistency sentence for the r.e.\ presentation of $S$ supplied by (R2) and (R4). Because $\mathbb{N} \models \PA$ and $\Con(S)$ is true in $\mathbb{N}$ (no $\omega$-consistency assumption on $S$ is needed), the standard model $\mathbb{N} \in \mathbf{U}_1 \subset \mathbf{U}_2$ witnesses (R3) for $T_S$; conditions (R1), (R2), (R4), and first-order (R5) ($n_{T_S} = 1$, $\kappa_{T_S} = \kappa_1$; Lambek--Scott~\cite{LambekScott1986}) hold immediately, so $T_S \in \cF$.
+
+Applying $(\Pi_{3\text{-max}, S, n})(X)$ at $F' := T_S \in \cF$ yields a faithful relative interpretation $\tau : T_S \to F$. Composing with $\iota_F : F \hookrightarrow S$ gives a relative interpretation $J := \iota_F \circ \tau : \PA + \Con(S) \to S$, hence an interpretation of $\mathsf{Q} + \Con(S)$ in $S$. Pulling back arithmetic sentences along $J$ defines $S_{\mathrm{arith}} := \{\psi \in \mathrm{Sent}(\mathcal{L}_{\mathsf{Q}}) : S \vdash J(\psi)\}$, a consistent recursively enumerable single-sorted extension of $\mathsf{Q} + \Con(S)$. Since any $S_{\mathrm{arith}}$-derivation of $0 = 1$ translates primitive recursively via $J$ to an $S$-contradiction, $\Con(S)$ implies $\Con(S_{\mathrm{arith}})$ on a Solovay definable $\mathsf{I\Delta_0} + \Omega_1$ cut inside $S_{\mathrm{arith}}$, yielding a relative interpretation of $\mathsf{Q} + \Con(S_{\mathrm{arith}})$ in the consistent r.e.\ theory $S_{\mathrm{arith}}$. This contradicts the Feferman--Pudl\'ak Second Incompleteness Theorem for relative interpretability (Feferman~\cite{Feferman1960}, Thm.~5.6; Pudl\'ak~\cite{Pudlak1985}, Thm.~2.1). Hence no object $X$ satisfies $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$, and a fortiori none satisfies the $\LAbs$ triple.
 \end{proof}
 
 \section{\texorpdfstring{Boundary Lemma: No Limit-Based Escape ($(\beta)$-Part of AFN-T)}{Boundary Lemma: No Limit-Based Escape ((beta)-Part of AFN-T)}}\label{sec:afnt-beta}
@@ -542,20 +553,21 @@ Each $A_\kappa \in \cS_S$ by Lemma~\ref{lem:SS-membership}; $S$-definability of 
 
 \subsection{Proper-Class Towers Do Not Provide an Escape}
 
-\begin{proposition}[Proper-class towers: $\RS$-closure dichotomy]\label{prop:proper-class}
-Let $\{A_\alpha\}_{\alpha \in \mathrm{Ord}}$ be a proper-class-indexed tower with each $A_\alpha$ formally specified within a Rich-foundation $F_\alpha$ over a metatheory $S$, and let $A_\infty := \colim_{\alpha \in \mathrm{Ord}} A_\alpha$ denote the intended limit. Exactly one of the following holds.
+\begin{proposition}[Proper-class and non-uniform towers: colimit $\RS$-definability dichotomy]\label{prop:proper-class}
+Let $\{A_\alpha\}_{\alpha \in I}$ be any directed or proper-class-indexed tower of objects over Rich-foundations, and suppose an intended limit object $A_\infty := \colim_{\alpha \in I} A_\alpha$ exists in the ambient $(\infty, n)$-categorical meta-universe. With respect to the class $\RS$, the limit object $A_\infty$ satisfies exactly one of the following two alternatives, and in neither case does $A_\infty$ belong to $\LAbs$:
 \begin{itemize}
-\item[\textbf{(a)}] \emph{Uniformly generated tower.} There exists a single recursive generating scheme $\psi(\alpha, A)$ in some metatheory $S_{\mathrm{tow}} \supseteq S$ such that $\psi$ specifies $\alpha \mapsto (F_\alpha, \phi_{A_\alpha})$ uniformly for all $\alpha \in \mathrm{Ord}$. If the limit $A_\infty$ admits a formula $\phi_{A_\infty}$ in $S_{\mathrm{tow}}$ and $S_{\mathrm{tow}} \in \RS$, then $A_\infty$ satisfies $(F_{S_{\mathrm{tow}}})$ and Theorem~\ref{thm:afnt-alpha} applied to $S_{\mathrm{tow}}$ forecloses Level~6 at $A_\infty$.
-\item[\textbf{(b)}] \emph{Non-uniformly generated tower.} There is no single recursive scheme in any $S' \in \RS$ generating the tower; the specification assignment $\alpha \mapsto (F_\alpha, \phi_{A_\alpha})$ is not $S'$-recursively enumerable for any $S' \in \RS$.
+\item[\textbf{(a)}] \emph{$\RS$-definable colimit.} There exists at least one $S' \in \RS$ such that $A_\infty$ satisfies $(F_{S'})$ (for instance, when the tower is uniformly generated by a recursive scheme in some $S_{\mathrm{tow}} \in \RS$ that defines $A_\infty$, or when a non-uniform diagram collapses to a finitely specifiable colimit). Then for every $S' \in \RS$ witnessing $(F_{S'})(A_\infty)$ and every $n \in \mathbb{N} \cup \{\infty\}$, Theorem~\ref{thm:afnt-alpha} applied at $(S', n)$ refutes $(F_{S'})(A_\infty) \wedge (\Pi_{4, S', n})(A_\infty) \wedge (\Pi_{3\text{-max}, S', n})(A_\infty)$.
+\item[\textbf{(b)}] \emph{$\RS$-indefinable colimit.} For every $S' \in \RS$, the limit $A_\infty$ fails $(F_{S'})$. Then for every $(S', n) \in \RS \times (\mathbb{N} \cup \{\infty\})$, the first conjunct of Definition~\ref{def:level6} fails at $A_\infty$.
 \end{itemize}
-In case (b), the tower falls outside the scope of Definition~\ref{def:level6}: the limit $A_\infty$ cannot witness $(F_{S'})$ for any $S' \in \RS$, since $(F_{S'})$ requires a formula of $S'$ by (F-3) and (R2) forces any such formula to be r.e.-axiomatized.
+Consequently, $A_\infty \notin \LAbs$.
 \end{proposition}
 
 \begin{proof}
-\textbf{(a)} The recursive scheme $\psi$ is a formula of $S_{\mathrm{tow}}$; the limit is specified by $\phi_{A_\infty}(A) \equiv \forall \alpha\,\psi(\alpha, A) \Rightarrow A = A_\alpha\text{-limit}$. If $S_{\mathrm{tow}} \in \RS$ (preserved by r.e.\ extension when (R3) model existence does not fail), Definition~\ref{def:F} yields $(F_{S_{\mathrm{tow}}})(A_\infty)$, and Theorem~\ref{thm:afnt-alpha} forecloses the conjunction $(F_{S_{\mathrm{tow}}}) \wedge (\Pi_{4, S_{\mathrm{tow}}, n})$. Towers with $S_{\mathrm{tow}} \notin \RS$ fall into case (b).
-
-\textbf{(b)} Suppose, toward contradiction, that $A_\infty$ satisfies $(F_{S'})$ for some $S' \in \RS$. By (F-3), there is a formula $\phi_{A_\infty} \in S'$ classifying $A_\infty$. By (R2), $S'$ is r.e.-axiomatized, so the derivation structure of $\phi_{A_\infty}$ is $S'$-recursively enumerable. Unfolding $\phi_{A_\infty}$ through the tower construction yields an $S'$-r.e.\ generating formula for the sequence $\alpha \mapsto (F_\alpha, \phi_{A_\alpha})$, contradicting non-uniformity. Hence $A_\infty$ satisfies no $(F_{S'})$ for $S' \in \RS$, and is not a $\LAbs$ candidate.
+In the ambient metatheory $\ZFC + 2\text{-inacc}$, excluded middle splits on the sentence $\exists S' \in \RS,\ (F_{S'})(A_\infty)$. In Case~(a), suppose toward contradiction that $A_\infty \in \LAbs$; by Definition~\ref{def:level6}, there exists $(S_0, n_0) \in \RS \times (\mathbb{N} \cup \{\infty\})$ such that $A_\infty \models (F_{S_0}) \wedge (\Pi_{4, S_0, n_0}) \wedge (\Pi_{3\text{-max}, S_0, n_0})$, which is impossible by Theorem~\ref{thm:afnt-alpha} applied directly at $(S_0, n_0)$. In Case~(b), $\neg(F_{S'})(A_\infty)$ holds for all $S' \in \RS$, so no witness $(S', n)$ for Definition~\ref{def:level6} can exist. In both cases $A_\infty \notin \LAbs$.
 \end{proof}
+
+\paragraph{Counterexample to naive diagram recovery (terminal collapse).}
+Crucially, the dichotomy above is taken on the \emph{limit object} $A_\infty$ rather than on recursive uniformity of the input diagram $\alpha \mapsto A_\alpha$. A formal specification $\phi_{A_\infty}$ of a colimit does \emph{not} in general recover a recursive specification of its diagram. Already for a countable directed diagram $(\mathbb{N}, \le)$: choose an arbitrary non-computable binary sequence $b : \mathbb{N} \to \{0, 1\}$, let $A_k$ be a pointed finite set of cardinality $1 + b_k$ with basepoint $*_k$, let $f_{k,k} := \id_{A_k}$, and for $j < k$ let $f_{j,k} : A_j \to A_k$ be the constant map with value $*_k$. These transitions compose strictly ($f_{k,m} \circ f_{j,k} = f_{j,m}$ for $j < k < m$), and every element of $A_k$ maps to $*_{k+1}$ at the next step, so $\colim_{k < \omega} A_k \cong \{*\}$ is the terminal one-point set. Here $(A_k)_{k < \omega}$ is non-r.e.\ (encoding $b$), yet $A_\infty \cong \{*\}$ has a constant finite specification and therefore falls into Case~\textbf{(a)} above — excluded from $\LAbs$ by Theorem~\ref{thm:afnt-alpha}, without any invalid attempt to reconstruct $(b_k)$ from $\phi_{A_\infty}$.
 
 \subsection{Concrete Towers}
 
@@ -962,7 +974,7 @@ construction and type checks listed in Remark~\ref{thm:meta-stab}.
 
 \section{AC/OC Duality and the Dual Boundary Lemma}\label{sec:ac-oc-duality}
 
-The Lambek--Scott adjunction $(\Syn, \Mod)$ of (R5b), assembled across $\RS$ and over $n \in \mathbb{N} \cup \{\infty\}$, induces a $(\infty, \infty)$-equivalence between the theory-centric moduli $\fM$ and the enactment-centric moduli $\fM_\cE$ (Theorem~\ref{thm:ac-oc-duality}). The dual boundary lemma $\LAbsE = \emptyset$ follows (Theorem~\ref{thm:dual-afnt}).
+Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\cE$ proceeds in two structurally distinct stages: (1) before localization, the section--forgetful pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) is genuinely asymmetric, with $\alpha \circ \varepsilon = \id_\cF$ strictly while each enactment fiber $\alpha^{-1}(F)$ retains distinct semantic models, operational realizations, and resource budgets; (2) after localization at reflection morphisms $\mathcal{R}_\cE$, under the existence, descent, and coherence hypotheses of Theorem~\ref{thm:ac-oc-duality}, the coarse stacks $\fM$ and $\fM_\cE$ become equivalent at a specified categorical level. Independently of those localization hypotheses, the Dual Boundary Lemma $\LAbsE = \emptyset$ holds unconditionally in $\cE$ (Theorem~\ref{thm:dual-afnt}).
 
 \begin{figure}[ht]
 \centering
@@ -987,7 +999,7 @@ The Lambek--Scott adjunction $(\Syn, \Mod)$ of (R5b), assembled across $\RS$ and
 \node[stack] (ME) at (3.6, 1.6) {$\fME$ \\[-1pt] \scriptsize\itshape $= \cE / \mathrm{gauge}_\cE$};
 \draw[func, dashed, gray!60!black] (F) -- node[midway, left, font=\scriptsize, gray!60!black] {quotient} (M);
 \draw[func, dashed, gray!60!black] (E) -- node[midway, right, font=\scriptsize, gray!60!black] {quotient} (ME);
-\draw[equiv] (M.east) -- node[midway, above, font=\footnotesize] {$\simeq_{(\infty, \infty)}$} node[midway, below, font=\scriptsize, gray!60!black] {Thm.~\ref{thm:ac-oc-duality}} (ME.west);
+\draw[equiv] (M.east) -- node[midway, above, font=\footnotesize] {$\simeq$ (cond.)} node[midway, below, font=\scriptsize, gray!60!black] {Thm.~\ref{thm:ac-oc-duality}} (ME.west);
 
 % Bottom rows: strata correspondence
 \node[strat] (L5F) at (-3.6, 0.3) {$\LFnd$};
@@ -1015,7 +1027,7 @@ The Lambek--Scott adjunction $(\Syn, \Mod)$ of (R5b), assembled across $\RS$ and
 \draw[gray!40, densely dotted] (LME.south) -- (L6E.north);
 
 \end{tikzpicture}
-\caption{AC/OC duality and the induced bijection of strata. At the $2$-category level (top row), the adjoint pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) relates the theory-centric $\cF$ to the enactment-centric $\cE$: $\varepsilon$ is the syntactic self-enactment section $F \mapsto (F, \Syn(F), \id, \id)$; $\alpha$ is the forgetful functor $(F, \cC, \iota, r) \mapsto F$. Passing to gauge-classes (middle row) yields an $(\infty, \infty)$-equivalence of classifying $2$-stacks $\fM \simeq \fME$ (Theorem~\ref{thm:ac-oc-duality}), via full faithfulness of $\varepsilon$ and essential surjectivity through the chosen reflector $r$. Under this equivalence the four strata correspond bijectively (bottom rows): $\LFnd \leftrightarrow \LFndE$, $\LCls \leftrightarrow \LClsE$, $\LClsMax \leftrightarrow \LClsMaxE$, and $\LAbs = \emptyset \leftrightarrow \LAbsE = \emptyset$ (Theorem~\ref{thm:dual-afnt}). The symmetry formalises the reconciliation of the object-centric and action-centric viewpoints on mathematical foundations: neither is primary; both describe the same classifying stack.}
+\caption{Two-stage AC/OC architecture. At the $2$-category level before localization (top row), the asymmetric adjoint pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) embeds theory-centric $\cF$ into enactment-centric $\cE$ as a coreflective section ($\alpha \circ \varepsilon = \id_\cF$), while each enactment fiber $\alpha^{-1}(F)$ carries non-isomorphic realizations and operational costs whose reflection counit is not invertible in $\cE$. Passing to localized moduli (middle row), whenever the localization and descent hypotheses of Theorem~\ref{thm:ac-oc-duality} hold at a specified categorical level, inverting $\mathcal{R}_\cE$ collapses each fiber $\alpha^{-1}(F)$ onto $\varepsilon(F)$ and yields a coarse equivalence $\fM \simeq \fME$ under which invariant strata correspond (bottom rows). Regardless of localization, $\LAbs = \emptyset$ and $\LAbsE = \emptyset$ hold unconditionally (Theorems~\ref{thm:afnt-alpha} and~\ref{thm:dual-afnt}).}
 \label{fig:ac-oc-duality}
 \end{figure}
 
@@ -1322,7 +1334,7 @@ AFN-T as stated (Theorem~\ref{thm:afnt-alpha}) applies to classical Rich-metathe
 \begin{definition}[Paraconsistent R-S with extractable classical kernel]\label{def:paraconsistent-rs}
 A theory $S'$ is a \textbf{paraconsistent Rich-metatheory with extractable classical kernel} if it satisfies the classical conditions (R1')--(R5') analogous to (R1)--(R5), together with:
 \begin{itemize}
-\item \textbf{(Explosion-min)}: $\bot \not\vdash \phi$ for every formula $\phi$ (contradictions do not entail everything).
+\item \textbf{(Explosion-min)}: there exists a formula $\phi$ such that $\bot \not\vdash_{S'} \phi$ (equivalently, $\neg\forall\phi\,(\bot \vdash_{S'} \phi)$: contradictions do not entail every formula).
 \item \textbf{(Strong-neg)}: there exists a negation $\sim$ such that $(p \wedge \sim p) \vdash_\sim \bot$ (a specific contradiction principle, though not full explosion).
 \item \textbf{(Classical-kernel extractability)}: an explicitly specified classical fragment $S^*$ is consistent and belongs to $\RS$. Preservation of candidate definitions, interpretations, and boundary predicates under a translation from $S'$ is additional data, as required by Theorem~\ref{thm:paraconsistent-afnt}. No largest such fragment is asserted to exist automatically.
 \end{itemize}
@@ -1410,6 +1422,11 @@ D.~Clausen and P.~Scholze,
 M.~Ernst,
 \newblock The prospects of unlimited category theory: doing what remains to be done,
 \newblock \emph{Review of Symbolic Logic} 8 (2015), no.~2, 306--327.
+
+\bibitem{Feferman1960}
+S.~Feferman,
+\newblock Arithmetization of metamathematics in a general setting,
+\newblock \emph{Fundamenta Mathematicae} 49 (1960), 35--92.
 
 \bibitem{Feferman1964}
 S.~Feferman,
@@ -1555,6 +1572,11 @@ G.~Priest,
 D.~Pronk,
 \newblock Etendues and stacks as bicategories of fractions,
 \newblock \emph{Compositio Mathematica} 102 (1996), no.~3, 243--303.
+
+\bibitem{Pudlak1985}
+P.~Pudl\'ak,
+\newblock Cuts, consistency statements and interpretations,
+\newblock \emph{Journal of Symbolic Logic} 50 (1985), no.~2, 423--441.
 
 \bibitem{Rathjen1999}
 M.~Rathjen,

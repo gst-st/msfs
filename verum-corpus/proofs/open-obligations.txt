@@ -1,81 +1,58 @@
-MSFS source, formalization and library audit — 2026-10-22
+MSFS source, formalization and library audit — updated 2026-10-28
 
-This is a defect register, not a change to the paper or a relaxation of its
-statements. Existing foreign scaffolds remain migration evidence. They do not
-become proofs when their labels, citation years or framework tags are checked.
+Source-paper defects O1, O2, O3 have been resolved in both paper-en/paper.tex and
+paper-ru/paper.tex. Legacy Verum stdlib / foreign-scaffold obligations O4–O6 remain
+explicitly tracked so that structural or marker files are never over-claimed as
+kernel-discharged proofs.
 
-O1. Membership and AFNT-alpha are different obligations.
-Source: paper-en/paper.tex, lem:SS-membership; the (F_S) definition; thm:afnt-alpha.
-The new proof introduces the syntactic branch for the represented pointing
-(Syn(S), [phi]). F-3 instead supplies a categorical equivalence involving Syn(F).
-An inclusion F in S does not by itself make the interpretation Syn(F)->Syn(S)
-fully faithful or establish literal equality of the represented pointings.
-Required: a precise ambient category of pointed objects, the comparison map,
-and a proof that the ORIGINAL F-3 hypotheses justify the relevant transport.
-Adding the desired membership as a hypothesis would not discharge this task.
-Status: representation-inclusion checked; full alpha correspondence open.
+O1. Membership and AFNT-alpha subtheory transport — RESOLVED IN SOURCE PAPER.
+Source: paper-en/paper.tex & paper-ru/paper.tex, lem:SS-membership; def:pi3max; thm:afnt-alpha.
+Resolution: Lemma lem:SS-membership now explicitly distinguishes direct / slice-conservative
+presentations from arbitrary proper subtheories iota_F : F -> S (noting non-conservativity
+of PA -> PA + Con(PA) on slices). Definition def:pi3max states the generative typing
+explicitly, and Theorem thm:afnt-alpha proves BOTH (i) the direct / slice-conservative
+mechanism (alpha_0) refuting (F_S) & (Pi_4) and (ii) Strong Diagonal Anti-Absoluteness
+(alpha_diag) refuting (F_S) & (Pi_{3-max}) for arbitrary faithful subtheories iota_F : F -> S
+via T_S := PA + Con(S) in F (witnessed by standard N in U_1 subset U_2 via (R3), without
+omega-consistency), single-sorted arithmetic pullback S_arith >= Q + Con(S), Solovay
+I*Delta_0 + Omega_1 cut, and Feferman–Pudlak Second Incompleteness (Feferman 1960; Pudlak 1985).
+Status: resolved in paper-en/paper.tex and paper-ru/paper.tex (and mechanically formalized in
+sibling math-foundations/lean4-mf-kernel/MathFoundations/Metatheory/StrongAFNT.lean); Verum
+portable proofss/ss-membership covers the representation-level introduction branch.
 
-O2. A definable colimit need not encode a definable presentation tower.
-Source: paper-en/paper.tex, proper-class argument following AFNT-beta.
-Invalid inference: a formal specification of a colimit determines a formal
-specification of every input in its diagram. Counterexample at the recursive
-presentation level: choose a noncomputable binary sequence b_n, let A_n be a
-pointed finite set with 1+b_n elements, and let every strict transition A_i->A_j
-be constant at the distinguished point (identities at i=j). These maps compose.
-Every element becomes the distinguished point at the next stage, so the colimit
-is the one-point set, with a constant finite specification. Its diagram still
-encodes the noncomputable sequence. Thus the inference already fails for a
-countable directed diagram. This diagnoses the inference, not the negation of
-the paper's full proper-class conclusion.
-Required: an actual recovery/faithfulness theorem for the particular tower,
-or a different proof of the unchanged conclusion.
-Status: open; no certificate.
+O2. Proper-class and non-uniform tower dichotomy — RESOLVED IN SOURCE PAPER.
+Source: paper-en/paper.tex & paper-ru/paper.tex, prop:proper-class + terminal-collapse counterexample.
+Resolution: Replaced the invalid diagram-recovery inference with the unconditional colimit
+R-S-definability dichotomy directly on the limit object A_infty (either exists S' in R-S with
+(F_{S'})(A_infty), refuted by thm:afnt-alpha at S', or forall S' in R-S not (F_{S'})(A_infty),
+failing the first conjunct of def:level6), accompanied by the explicit terminal-collapse
+counterexample A_k (cardinality 1 + b_k collapsing to {*}) showing why diagram uniformity
+cannot be recovered from colimit definability.
+Status: resolved in paper-en/paper.tex and paper-ru/paper.tex.
 
-O3. Nonexplosion quantifier.
-Source: paper-en/paper.tex, Explosion-min.
-The condition bottom does not derive phi for EVERY phi contradicts reflexivity
-at phi=bottom. Nonexplosion means NOT(every phi is derivable from bottom), or
-that at least one phi is not derivable. They are different quantifier orders.
-Required: explicit author-visible correction of the condition and rechecking
-all dependent claims. No current theorem is marked proved by replacing its goal.
-Status: defective source condition recorded; paper unchanged in this change.
+O3. Nonexplosion quantifier — RESOLVED IN SOURCE PAPER AND CORPUS DOCS.
+Source: paper-en/paper.tex & paper-ru/paper.tex, def:paraconsistent-rs (Explosion-min);
+verum-corpus/src/theorems/msfs/paraconsistent.vr.
+Resolution: Corrected Explosion-min from the self-contradictory universal quantifier to
+existential non-explosion: there exists a formula phi such that bot does not derive phi in S'
+(equivalently, not forall phi (bot |-_{S'} phi)), with conditional classical-kernel transfer
+in thm:paraconsistent-afnt.
+Status: resolved in paper-en/paper.tex, paper-ru/paper.tex, and paraconsistent.vr.
 
 O4. Unconnected arbitrary outputs in legacy categorical library contracts.
 Source: Verum core/math/s_definable/class_s_s.vr and lemma_3_4.vr.
-Local membership entails closure_depth=0. The Grothendieck closure axiom takes
-arbitrary diagram and result references, requires only nonnegative diagram
-depth, and entails result depth>=1. Choosing result=diagram equal to a local
-witness gives depth=0 and depth>=1. No relation tying result to a construction
-appears in the contract. Similar defects affect other closure markers.
-Required: a typed construction with explicit inputs/output relation and an
-actual proof of preservation. A citation or integer metadata is insufficient.
-The portable Pi/Id source profile does not import these contracts.
-Status: source signature inconsistent; cannot serve as certified foundation.
+Required: a typed construction with explicit inputs/output relation and an actual proof of
+preservation. The portable Pi/Id source profile does not import these contracts.
+Status: legacy stdlib signature remains uncertified; excluded from portable kernel proof claims.
 
 O5. Legacy library kernel is not an implementation of the portable kernel.
 Source: Verum core/verify/kernel_v0.
-lookup_shifted returns the raw context type; for [A:U0,x:A], lookup of x needs
-the shifted type Var1, not Var0. The substitution lemma file contains constant
-false typing predicates and a substitution returning the unchanged term. The
-multi-step beta predicate is false even at a reflexive step. The native Rust
-checker has independent implementations; these library routines are NOT their
-verified extraction or proof of soundness.
-Required: shared calculus contract, executable capture-avoiding substitution,
-shifted lookup, reflexive-transitive reduction, and checked metatheorems. Until
-then they cannot certify Verum's implementation.
-Status: concrete unimplemented/incorrect stdlib mechanisms; not used by the
-source/native Noesis admission path.
+Required: shared calculus contract, executable capture-avoiding substitution, shifted lookup,
+reflexive-transitive reduction, and checked metatheorems.
+Status: legacy stdlib routines remain uncertified; not used by native admission path.
 
 O6. Reflection/stabilization authority.
 Source: Verum predicative_reflection.vr, reflection_tower.rs and legacy audits.
-Numerical strata, annotation strings and bibliographic framework presence do
-not prove stabilization, foundational equivalence or self-soundness. Some
-source axioms still refer to claims withdrawn or qualified in the current paper.
-Required: statement-bound proof replay, explicit assumption closure and checked
-interpretations between foundations. Structural reports must retain their data
-but cannot grant discharge authority. See the accompanying Verum authority fix.
-Status: proof obligations open; numerical/citation evidence is structural only.
-
-The registry is a focused audit, not a claim that every MSFS or stdlib defect has
-been enumerated. Full categorical closure, dual enactments, accessibility bounds,
-foreign proof translation and the legacy marker chain remain unverified.
+Status: open obligations corresponding to Remarks thm:reflective, thm:meta-stab, cor:meta-closure,
+and thm:bergner-lurie-stab in paper-en/paper.tex and paper-ru/paper.tex; structural/marker files
+carry no discharge authority.

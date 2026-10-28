@@ -130,3 +130,5 @@ The source worker replays both native algorithms. Noesis separately reconstructs
 the statement from the complete telescope and repeats native replay. Corrupted
 proofs must be rejected. Exact source quotes/revisions survive archive restoration.
 The generated report records actual checker identities and executed checks.
+
+Update (2026-10-28): The proof parenthesis in paper-en/paper.tex (lem:SS-membership) has been explicitly qualified to note that proper-subtheory slice identification requires slice-conservativity of Syn(iota_F), while arbitrary faithful subtheories iota_F : F -> S are closed by the Strong Diagonal Anti-Absoluteness clause (alpha_diag) of Theorem thm:afnt-alpha. This portable Verum artifact continues to certify strictly the representation-level introduction into the syntactic branch of the local/global union.

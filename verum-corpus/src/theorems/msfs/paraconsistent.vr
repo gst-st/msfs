@@ -29,10 +29,10 @@ mount core.math.rich_s.conditions.{RichS};
 /// MSFS Definition B.1 — Paraconsistent R-S. A theory `S'` is
 /// paraconsistent-Rich iff:
 /// - it satisfies classical (R1)–(R5),
-/// - **(Explosion-min)**: `⊥ \nvdash_{S'} \phi` for every `\phi`,
+/// - **(Explosion-min)**: `\exists \phi. \bot \nvdash_{S'} \phi` (non-explosion; O3 resolved),
 /// - **(Strong-neg)**: `\exists \sim. (p \wedge \sim p) \vdash_\sim \bot`,
-/// - **(Classical-kernel-extractability)**: the largest classical
-/// fragment `S'^*` of `S'` is consistent and itself in `\RS`.
+/// - **(Classical-kernel-extractability)**: a specified classical
+/// fragment `S^*` is consistent, lies in `\RS`, and admits a boundary-predicate-preserving translation from `S'`.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Definition B.1 — Paraconsistent R-S with extractable classical kernel")
