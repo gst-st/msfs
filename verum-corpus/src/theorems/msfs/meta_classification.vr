@@ -1,50 +1,22 @@
 // =============================================================================
-// MSFS §9 — L_Cls Meta-Classification (Theorems 9.3, 9.4, 9.6)
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// In paper-en/paper.tex §9:
+//   - `thm:meta-cat` and `thm:meta-mult` are CONDITIONAL criteria requiring
+//     supplied comparison functors / essential-image verifications;
+//   - `thm:meta-stab` (former Theorem 9.6) is WITHDRAWN as a theorem and
+//     recorded as an OPEN OBLIGATION (Remark `thm:meta-stab`).
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §9 Meta-classification (labels
-// `def:meta`, `def:maximality`, `thm:meta-cat`, `thm:meta-mult`,
-// `cor:plurality`, `thm:meta-stab`).
-//
-// Five results + 2 definitions on the structure of L_Cls
-// (classifiers of Rich-foundations):
-//
-// Definition 9.1 — Meta_Cls trait –.
-// Definition 9.2 — Maximality predicate (Max-1)–(Max-4).
-// Theorem 9.3 — Meta-Categoricity: any two F_1, F_2 ∈ Meta_Cls^⊤
-// over the same `S ∈ \RS` are canonically
-// `(∞, ∞)`-equivalent (5-step proof).
-// Theorem 9.4 — Structural multiplicity: ≥ 3 pairwise non-2-
-// equivalent meta-structures in Meta_Cls \ Meta_Cls^⊤
-// (Univalent Foundations / ∞-cosmoi / cohesive).
-// Corollary 9.5 — L_Cls is structurally plural (direct from 9.4).
-// Theorem 9.6 — Meta-classification stabilization (3 conjuncts).
-//
-// **Architecture (post-#146 — `@delegate` declarative refactor).**
-// Every corpus-side theorem that mirrors a stdlib `_full` form's proof
-// body now uses `@delegate(target)` instead of a hand-written
-// `proof { apply target(args); }` block. The compiler's
-// `phases::delegate_expansion` pre-pass synthesises the equivalent
-// proof body before macro expansion, so downstream consumers
-// (semantic analysis, audit gates, cross-format export) see a
-// structurally complete artefact without distinguishing
-// synthesised-vs-manual forms.
-//
-// The corpus side stays the *single source of truth for the namespace*;
-// the stdlib stays the *single source of truth for the structural
-// bridges* the proof bodies cite. Boilerplate eliminated: ~50 LOC
-// across the 6 delegating theorems in this file.
+// MSFS §9 — L_Cls Meta-Classification (schematic stubs)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.meta_classification.msfs_definition_9_1_meta_cls"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.meta_classification;
 
@@ -71,7 +43,7 @@ mount lib.theorems.msfs.afnt_alpha.{msfs_theorem_5_1_afnt_alpha};
 /// satisfying  locally-small 2-cat,  classification 2-functor
 /// `Cl_F : F → 𝔐` with image `𝔐(F) ⊆ 𝔐`,  accessible reflection,
 ///  non-generative,  S-parametrised.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Definition 9.1 — Meta_Cls –")
@@ -93,7 +65,7 @@ ensures w.m1_locally_small_2_category()
 /// stratification, (Max-4) intensional completeness **with joint
 /// conservativity of (Cl_F, \II_F)** (post-audit paper form: the
 /// conservativity clause is what powers Theorem 9.3's faithfulness).
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Definition 9.2 — Meta_Cls^⊤ (Max-1)..(Max-4)")
@@ -127,7 +99,7 @@ ensures w.max_1_full_classification()
 /// 3. `Φ_F` essentially surjective via (Max-1) + (Max-2).
 /// 4. `Φ_F` fully faithful via (Cl_F, I_F) joint faithfulness.
 /// 5. Lift to (∞,∞) via Whitehead criterion + Theorem A.7.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 9.3 — Meta-Categoricity (canonical (∞,∞)-equivalence)")
@@ -167,7 +139,7 @@ public theorem msfs_theorem_9_3_meta_categoricity(
 /// equivalent meta-structures: Univalent Foundations / ∞-cosmoi /
 /// cohesive higher topos. Pairwise non-equivalence via classification-
 /// image distinctions; none is in `Meta_Cls^⊤` (each violates Max-1).
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 9.4 — ≥3 pairwise non-2-equivalent meta-structures")
@@ -185,7 +157,7 @@ public theorem msfs_theorem_9_4_structural_multiplicity(
 
 /// **MSFS Corollary 9.5 — L_Cls is structurally plural.** Direct from
 /// Theorem 9.4: `Meta_Cls` contains multiple non-equivalent members.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Corollary 9.5 — L_Cls is structurally plural")
@@ -201,21 +173,17 @@ public theorem msfs_corollary_9_5_plurality(
     ensures w.pairwise_non_equivalent();
 
 // =============================================================================
-// Theorem 9.6 — Meta-Classification Stabilisation
+// Remark `thm:meta-stab` — WITHDRAWN as a theorem (open stabilization obligation)
 // =============================================================================
 
-/// **MSFS Theorem 9.6 (a)+(b) — Meta-classification stabilisation
-/// (paper label `thm:meta-stab`).**
-///
-/// (a) `𝔐^(Cls) := Meta_Cls / meta_gauge` is itself in Meta_Cls.
-/// (b) Theory-level idempotence: `𝔐^(Cls·2) ≃_2 𝔐^(Cls)` as
-/// (∞,∞)-theories. Set-theoretic instantiation ascends the
-/// Grothendieck-universe hierarchy κ_1 < κ_2 < ⋯ but realises the
-/// same (∞,∞)-theory.
-@verify(certified)
+/// **WITHDRAWN / OPEN OBLIGATION (Remark `thm:meta-stab`).**
+/// Retained only as a non-certified legacy stub for namespace compatibility.
+/// Meta-classification idempotence and unbounded universe ascent are OPEN
+/// obligations in paper-en/paper.tex §9, NOT proved or certified theorems.
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Theorem 9.6 (a)+(b) — Meta-classification stabilisation")
+@framework(msfs, "WITHDRAWN — MSFS Remark thm:meta-stab (open meta-stabilization obligation; stub only)")
 @delegate(msfs_theorem_9_6_meta_classification_stabilization_full)
 public theorem msfs_theorem_9_6_meta_classification_stabilization(
     w: &MetaStabilisationWitness,
@@ -256,7 +224,7 @@ public axiom msfs_theorem_9_6c_meta_iteration_reduction(
 /// kernel bridges (no auxiliary witness), so it stays as a manual
 /// `proof { … }` block — the @delegate attribute is for single-target
 /// delegations; multi-step bridges chain through manual proof bodies.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 9.6 (c) — No L_Abs escalation via meta-iteration (reduces to Theorem 5.1)")

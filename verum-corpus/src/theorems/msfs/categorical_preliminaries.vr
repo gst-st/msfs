@@ -1,31 +1,22 @@
 // =============================================================================
-// MSFS Appendix A — Categorical Preliminaries (8 results)
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// The declarations below are bibliographic publication-year placeholders
+// (`citation_year == YYYY ensures citation_year == YYYY`), NOT formalizations
+// of the cited categorical theorems. In particular, the former Theorem A.7
+// ("Bergner-Lurie stabilization") is WITHDRAWN and recorded as an open
+// obligation in paper-en/paper.tex (Remark `thm:bergner-lurie-stab`).
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, Appendix A.
-//
-// Standard categorical infrastructure cited from authoritative
-// works. Most lemmas are *admissions* of external results; only
-// Theorem A.7 (Bergner–Lurie (∞,∞)-stabilization) is reconstructed
-// in the paper because its multiple-citation chain (Barwick–Schommer-
-// Pries unicity + Bergner–Rezk model comparison + Ara–Maltsiniotis
-// globular/cubical equivalence) is essential for §6 / §7 / §9.
-//
-// The stratified-citation pattern: each external work is admitted
-// once at the framework layer; downstream theorems cite by lineage
-// name (`lurie_htt`, `riehl_verity`, `pronk_1996`, `kelly_1982`,
-// `adamek_rosicky_1994`, `barwick_schommer_pries_2021`).
+// MSFS Appendix A — Categorical Preliminaries (schematic bibliographic stubs)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.categorical_preliminaries.msfs_lemma_A_1_kelly_2_categorical"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.categorical_preliminaries;
 
@@ -77,11 +68,12 @@ public axiom msfs_lemma_A_6_whitehead(dim_n: Int) -> Bool
 requires dim_n >= 0
 ensures dim_n >= 0;
 
-/// **MSFS Theorem A.7 — Bergner–Lurie (∞,∞)-stabilization.** Three source
-/// citations: Barwick–Schommer-Pries 2021 + Bergner–Rezk 2013 + Ara–Maltsiniotis 2017.
+/// **WITHDRAWN / OPEN OBLIGATION (Remark `thm:bergner-lurie-stab`).**
+/// Retained only as a legacy bibliographic stub for namespace compatibility.
+/// No unbounded `(∞,∞)`-stabilization theorem is proved or certified here.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Theorem A.7 — Bergner–Lurie (∞,∞)-stabilization (CRITICAL forward ref)")
+@framework(msfs, "WITHDRAWN — MSFS Remark thm:bergner-lurie-stab (open unbounded-stabilization obligation; stub only)")
 public axiom msfs_theorem_A_7_bergner_lurie_stabilization(
     barwick_schommer_pries_year: Int,
     bergner_rezk_year: Int,
@@ -94,35 +86,23 @@ public axiom msfs_theorem_A_7_bergner_lurie_stabilization(
     && bergner_rezk_year == 2013
     && ara_maltsiniotis_year == 2017;
 
-/// Lemma A.8 — Adámek–Rosický 1994: accessible-categories infrastructure.
+/// Lemma A.8 — Adámek–Rosický 1994: bibliographic stub only.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Lemma A.8 — Adámek–Rosický 1994 (accessible-categories infrastructure)")
+@framework(msfs, "MSFS Lemma A.8 — Adámek–Rosický 1994 (bibliographic stub only)")
 public axiom msfs_lemma_A_8_adamek_rosicky(citation_year: Int) -> Bool
 requires citation_year == 1994
 ensures citation_year == 1994;
 
 // =============================================================================
-// MSFS Appendix A — top-level aggregator @theorem
+// MSFS Appendix A — non-certified bibliographic stub aggregator
 // =============================================================================
 
-/// **MSFS Appendix A categorical preliminaries — full citation
-/// aggregator.** Assembles the 8 external-paper
-/// citation axioms (Kelly + HTT + Riehl-Verity + Pronk + Lawvere FP
-/// + Whitehead + Bergner-Lurie + Adámek-Rosický) into a single
-/// kernel-checked aggregator. Downstream theorems requiring "the full
-/// Appendix-A categorical infrastructure" cite this single @theorem
-/// instead of 8 separate @axiom calls — the kernel-recheck walks the
-/// underlying chain exactly once.
-///
-/// The 8 underlying lemmas remain @axiom anchors because each is a
-/// verbatim admission of an authoritative external publication (Kelly
-/// 1982, Lurie HTT 2009, etc.); the aggregator surfaces the citation
-/// dependency graph as a single kernel-checked handle.
-@verify(certified)
+/// NON-CERTIFIED STUB: aggregates publication-year identity axioms only.
+/// Carries no proof authority for Appendix A or Remark `thm:bergner-lurie-stab`.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Appendix A — full categorical preliminaries aggregator")
+@framework(msfs, "MSFS Appendix A — non-certified bibliographic stub aggregator")
 public theorem msfs_appendix_A_categorical_preliminaries_full(truncation_level: Int)
 requires truncation_level >= 0
 ensures truncation_level >= 0

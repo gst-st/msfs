@@ -1,4 +1,11 @@
 // =============================================================================
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// Only proofs/ss-membership/{witness.vr, formal.vr} (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
+// =============================================================================
+// =============================================================================
 // MSFS §1 — Conventions and Notation
 // =============================================================================
 //

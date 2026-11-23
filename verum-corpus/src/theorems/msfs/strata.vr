@@ -1,25 +1,21 @@
 // =============================================================================
-// MSFS §2 — Stratified Hierarchy
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// Alignment notes against paper-en/paper.tex §2:
+//   - Strictness of `L_Cls^top ⊆ L_Cls` is NOT proved unconditionally
+//     (Proposition `prop:level-structure` (iii) requires a constructed witness).
+//   - `ensures false` declarations below depend on unproved stdlib axioms.
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §2.
-//
-// The structural content (Definition 2.1 strata enum, Proposition
-// 2.2, Proposition 2.3) lives in the host stdlib at
-// `core.math.strata`. This file states the candidate-parameterised
-// theorems that derive each Proposition's content from Theorem 5.1 +
-// the host stdlib axioms.
+// MSFS §2 — Stratified Hierarchy (schematic stub)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.strata.msfs_proposition_2_2_iv_l_abs_empty"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.strata;
 
@@ -45,7 +41,7 @@ mount lib.theorems.msfs.afnt_alpha.{msfs_corollary_5_2_l_abs_empty};
 /// produces a contradiction. Reduces to Corollary 5.2, which chains
 /// to Theorem 5.1's full Lemma-3.4-+-id_X-violation argument; every
 /// step lives on the kernel-recheck stack.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Proposition 2.2 (iv) — L_Abs == ∅")
@@ -71,7 +67,7 @@ public theorem msfs_proposition_2_2_iv_l_abs_empty(
 /// putatively in both L_Cls and L_Abs satisfies the L_Abs triple,
 /// which Proposition 2.2 (iv) forecloses. §10 (AC/OC duality) cites
 /// this as a targeting fact for the dual side.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Proposition 2.3 corollary — Cls(L_Fnd) ≠ L_Abs")
@@ -97,7 +93,7 @@ public theorem msfs_proposition_2_3_corollary_cls_not_in_l_abs(
 /// witness). At the LAbsCandidate carrier this reduces to Proposition
 /// 2.2 (iv): any putative L_Abs inhabitant would simultaneously have to
 /// be in L_Cls_top, but no L_Abs inhabitant exists.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Proposition 2.2 (iii) — L_Cls_top ⊋ L_Abs (vacuous form)")
@@ -129,7 +125,7 @@ public theorem msfs_proposition_2_2_iii_clsmax_strict_above_abs(
 /// `L_Abs`: the classifier stratum is a distinct stratum, labelled
 /// `L_Cls`. At the Stratum carrier this is the tag-level inequality
 /// L_Fnd ≠ L_Cls, re-checked by the kernel through the stdlib axiom.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Proposition 2.3 — non-collapse of the horizontal meta")
@@ -149,7 +145,7 @@ public theorem msfs_proposition_2_3_no_horizontal_collapse(
 /// Strictness witnessed by ∞-cosmoi (Riehl–Verity): satisfies
 /// (M1)–(M5) but fails Max-1 — its classification image is a strict
 /// sub-stack of `M_stack`.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Proposition 2.2 (iii) — L_Cls ⊋ L_Cls_top")

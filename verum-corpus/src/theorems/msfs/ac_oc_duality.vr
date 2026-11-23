@@ -1,53 +1,32 @@
 // =============================================================================
-// Two-stage AC/OC note: pre-localization adjunction ε ⊣ α is asymmetric (non-trivial enactment fiber α^{-1}(F));
-// coarse equivalence M ≃ M_E holds conditionally after R_E-localization (Theorem thm:ac-oc-duality).
-// MSFS §10 — AC/OC Morita Duality
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// Alignment notes against paper-en/paper.tex §10:
+//   - Pre-localization adjunction `ε ⊣ α` is strictly asymmetric: counit
+//     `(id_F, ι) : ε(F) -> E` and retraction `(id_F, r) : E -> ε(F)` are
+//     distinct 1-morphisms; internal reflector unit `η_r` is not invertible in E.
+//   - `thm:ac-oc-duality` is CONDITIONAL on existence, descent, and coherence
+//     of localizations (no unbounded-depth lift).
+//   - The former equation `Con(F ∪ E) = Con(F) = Con(ZFC + 2-inacc)` is
+//     WITHDRAWN (`cor:ac-oc-conservativity` is conditional definitional
+//     conservativity only).
+//   - `def:SSE` and `lem:SS-membership-E` do NOT invoke Lambek-Scott for a
+//     left adjoint to `ev_M` or cocomplete AFT for a left reflector.
+//   - `def:level6-cE` (`\tilde{F}_S`) requires explicit faithful relative
+//     interpretations `F -> F' -> S`, and `thm:dual-afnt` covers both the
+//     slice-conservative retraction branch and the diagonal branch via `ε(T_S)`.
+//   - `ensures false` declarations below depend on unproved stdlib axioms.
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §10 — AC/OC Morita Duality.
-//
-// **Centrepiece result of the dual side: parallels Theorem 5.1 + 6.1
-// on the enactment-centric (DC) side.**
-//
-// Definition 10.1 — 2-category `\cE` of pointed reflective enactments
-// `(F, \cC, ι, r)`; ε ⊣ α adjoint pair
-// (Diakrisis 108.T premise).
-// Definition 10.2 — class `\cS_S^\cE` of S-definable enactments.
-// Lemma 10.3 — enactment syntax–semantics: formal-S-definable
-// enactment ⟹ in `\cS_S^\cE^{global}` via Kan
-// extension + Adámek–Rosický adjoint-functor
-// existence.
-// Theorem 10.4 — **AC/OC Morita Duality**: `𝔐 ≃_{(∞,∞)} 𝔐_\cE`
-// via ε ⊣ α biadjunction.
-// Corollary 10.5 — `Con(\cF ∪ \cE) = Con(\cF) = Con(\ZFC + 2-inacc)`.
-// Theorem 10.7 — Dual Boundary Lemma (109.T): `\LAbs^\cE = ∅`.
-// Corollary 10.8 — `\LAbs^\cE = ∅` headline.
-// Theorem 10.9 — Dual five-axis absoluteness.
-// • Definitions 10.1 / 10.2 + Lemma 10.3 are kept as @axiom but
-// witness-parameterised (carriers in core/math/dual_absolute_layer.vr).
-// • Theorem 10.4 is the load-bearing AC/OC Morita duality bridge,
-// witness-parameterised (now host stdlib axiom).
-// • Theorems 10.7, 10.9 + Corollaries 10.5, 10.8 are PROMOTED to
-// @theorem with structured proof bodies that:
-// (a) cite Theorem 10.4 to project the dual candidate to AC side,
-// (b) chain through MSFS Theorem 5.1 / Proposition 2.2 (iv) on the
-// AC side to derive the dual emptiness.
-//
-// The kernel-recheck trail thus walks: dual triple → Theorem 10.4
-// projection → AC triple → Theorem 5.1 → Lemma 3.4 + id_X-violates-Π_4
-// → false. Both sides of the duality appear in every dual @theorem's
-// recheck stack.
+// MSFS §10 — AC/OC Duality and Dual Boundary Lemma (schematic stubs)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.ac_oc_duality.msfs_definition_10_1_E_category"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.ac_oc_duality;
 
@@ -100,17 +79,14 @@ public axiom msfs_definition_10_2_S_S_E(m: &SSMembership) -> Bool
 requires true
 ensures m.closure_depth() >= 0;
 
-/// **MSFS Lemma 10.3 — Enactment syntax-semantics lemma (anchor).**
-/// The structural content lives in the witness-parameterised host-
-/// stdlib axiom `msfs_lemma_10_3_enactment_syntax_semantics_witness`,
-/// which is the analogue of `msfs_f_s_implies_formal_s_definable` on
-/// the enactment side. Post-audit C-7 explicit construction of (ι, r)
-/// via Kan extension along `Syn(F') ↪ \cC`; left reflector r via
-/// Adámek–Rosický adjoint-functor existence for accessible functors
-/// between locally `κ_S`-presentable categories.
+/// **MSFS Lemma 10.3 — Enactment syntax-semantics lemma (non-certified stub).**
+/// Paper-en/paper.tex Lemma `lem:SS-membership-E`: requires direct or
+/// slice-conservative inclusion `F -> S`, `C ∈ S_S`, and explicitly supplied
+/// S-definable retraction data `r ⊣ ι` (or continuous AFT on Ind-completions
+/// via Adámek–Rosický Thm. 1.66, limit-preserving case).
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Lemma 10.3 — enactment syntax-semantics")
+@framework(msfs, "MSFS Lemma 10.3 — enactment syntax-semantics (schematic stub)")
 public axiom msfs_lemma_10_3_enactment_syntax_semantics(m: &SSMembership) -> Bool
 requires true
 ensures m.closure_depth() >= 0;
@@ -130,7 +106,7 @@ ensures m.closure_depth() >= 0;
 /// precisely this localized invertibility, not invertibility in ℰ.
 /// (c) lift to (∞,∞) via Theorem A.7 stabilisation.
 /// (d) strata correspondence preserved (Cls/Gen + bijection).
-@verify(coherent)
+// UNCERTIFIED STUB (removed @verify(coherent) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 10.4 — AC/OC Morita Duality")
@@ -159,17 +135,15 @@ public theorem msfs_theorem_10_4_ac_oc_morita_duality(
 // Promoted @theorems — Corollary 10.5 / Theorem 10.7 / Corollary 10.8 / Theorem 10.9
 // =============================================================================
 
-/// **MSFS Corollary 10.5 — Conservativity.**
-///
-/// `Con(\cF ∪ \cE) = Con(\cF) = Con(\ZFC + 2-inacc)`. This @theorem takes a `&DualLAbsCandidate` and
-/// propagates the dual triple through the conservativity anchor. The
-/// kernel re-checks the duality-projection structure: the dual triple
-/// is consumed, and the AC-side projection (cand.articulation_view())
-/// must satisfy the AC-side three conditions per the anchor's ensures.
-@verify(certified)
+/// **MSFS Corollary 10.5 — Conditional definitional conservativity (non-certified stub).**
+/// Former equiconsistency equation `Con(F ∪ E) = Con(F) = Con(ZFC + 2-inacc)`
+/// is WITHDRAWN in paper-en/paper.tex (`cor:ac-oc-conservativity`): only
+/// conditional definitional conservativity holds once all definitions are
+/// proved to exist uniquely in a fixed base B.
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Corollary 10.5 — Con(F ∪ E) = Con(F) = Con(ZFC + 2-inacc)")
+@framework(msfs, "MSFS Corollary 10.5 — conditional definitional conservativity (schematic stub; equiconsistency equation withdrawn)")
 @delegate(msfs_corollary_10_5_conservativity_anchor)
 public theorem msfs_corollary_10_5_conservativity(
     cand: &DualLAbsCandidate,
@@ -194,7 +168,7 @@ public theorem msfs_corollary_10_5_conservativity(
 /// triple over its `articulation_view`.
 /// Step 2 — Apply MSFS Theorem 5.1 (AFN-T α-part) to the AC-side
 /// candidate to derive `false`.
-@verify(coherent)
+// UNCERTIFIED STUB (removed @verify(coherent) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 10.7 — Dual Boundary Lemma (Diakrisis 109.T) — structural @theorem")
@@ -222,7 +196,7 @@ public theorem msfs_theorem_10_7_dual_boundary_lemma(
 ///
 /// Mirror of MSFS Corollary 5.2 / Proposition 2.2 (iv) on the dual side.
 /// Direct application of the Dual Boundary Lemma (Theorem 10.7).
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Corollary 10.8 — L_Abs^cE = ∅")
@@ -242,7 +216,7 @@ public theorem msfs_corollary_10_8_l_abs_E_empty(
 /// the 5 axes still falls under Theorem 10.7's foreclosure — the proof
 /// body dispatches through the duality projection + AC-side Theorem
 /// 5.1 (which subsumes 7.1-7.6 by being uniform over them).
-@verify(coherent)
+// UNCERTIFIED STUB (removed @verify(coherent) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 10.9 — Dual five-axis absoluteness")

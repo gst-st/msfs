@@ -13,63 +13,63 @@
     },
     {
       "path": "src/theorems/msfs/ac_oc_duality.vr",
-      "sha256": "98888814e56df799dfb8d0395f63bc95f14fd1bf615ea689c539eae0ef12bd7d"
+      "sha256": "ff77b1ae47671c5aa14ddf8550553118e677a9e9baf21ff93c3d3f8750d98afe"
     },
     {
       "path": "src/theorems/msfs/afnt_alpha.vr",
-      "sha256": "895a20142338e2586ea5e800f98dbe5eff3c6fef2da5721c789921c0474a1b08"
+      "sha256": "40f17333b95498a0f844d66b05c6d402511572e59cecb2c5c01ff8c6e4ef6a6d"
     },
     {
       "path": "src/theorems/msfs/afnt_beta.vr",
-      "sha256": "789bb038e7b23fc125fd3337d865fe87cf0b05ef7b11242e42622ee81c8c3a60"
+      "sha256": "0cade51caabc8e188bf69a46eb73b269b43864d3ac0820e3a06c12697046705e"
     },
     {
       "path": "src/theorems/msfs/bypass_paths.vr",
-      "sha256": "84d4a3e8a8c8b27634de372126b1fdee4a9143a12617e9270b2c5ac750c19277"
+      "sha256": "fab8f5c52a34384fdfe76197eadd29eecaf2b18333eb51f9c9cc1b5e53c19062"
     },
     {
       "path": "src/theorems/msfs/categorical_preliminaries.vr",
-      "sha256": "2d234ccf5a5d20df8d8764cc189e6dfda339d8c82fb644f5350ed029441a064f"
+      "sha256": "df99d3ab8235e83b14b242f6156baaf282afa642a6a4f4ff035fc82a64371ab0"
     },
     {
       "path": "src/theorems/msfs/consequences.vr",
-      "sha256": "0dfab9d5378d70540656397b2705ee65a75c359da60a151a58b85992577f1b63"
+      "sha256": "9ae39329432bb4ad7f77d023c943b348123cf9957074f01814149389edc5849b"
     },
     {
       "path": "src/theorems/msfs/five_axis.vr",
-      "sha256": "019ff54affd088d5aa3435d1876ba53a910a5efd0646a61b9f84eed39702737f"
+      "sha256": "4245aeadb60cb8bbae1bb44ab9b7c37233bf3950a2b8ae8e05844af971e1ba86"
     },
     {
       "path": "src/theorems/msfs/introduction.vr",
-      "sha256": "08e70ea996d421c48f9a427b2bd1e9965017e8681c803c510d15c4cd4793dd5c"
+      "sha256": "818b712633b822ae477897bbe611f1af3d0ba73ba7dc2d872572d887802938c5"
     },
     {
       "path": "src/theorems/msfs/l_abs_conditions.vr",
-      "sha256": "1a259a1acb1654d3e2644c3c31dc12a7c3110690cee22ce5b092b27f6f071f51"
+      "sha256": "45ccf223e37adb2b97a2f73993927adb3ca6d1d6007791f6009ef1e4f2b30f72"
     },
     {
       "path": "src/theorems/msfs/meta_classification.vr",
-      "sha256": "e7ff09ac11094720158ac1c6eb26555637ca21c6800572f4b62aae2d1fe2e7e9"
+      "sha256": "da12162dde50fc1faa3598e8cde32e9d738e2b845cf18103ad2a1563ba1036a1"
     },
     {
       "path": "src/theorems/msfs/mod.vr",
-      "sha256": "89c17336369a2ee0d2b46b4d990c5817ad8563f02bd54799d5f4d95d30df5c65"
+      "sha256": "166d30503677e8d5f7fc0fe74064c614053f9f1f7672a6c3502cf44ae9783697"
     },
     {
       "path": "src/theorems/msfs/no_go_subsumption.vr",
-      "sha256": "f983b532b0695d8250a74eb2433ef6ffad4a4226bc460e0c3a9a048100fe2111"
+      "sha256": "0ff70aedcd8b5ca362944f078d1427d97b21e072560053104b54c8b0e9b18300"
     },
     {
       "path": "src/theorems/msfs/paraconsistent.vr",
-      "sha256": "de1b1efaadfb925cfccd0508ddfa26a537cb7ef44ad1d1a33ecd3e01f711f740"
+      "sha256": "2ab4f6c8ffa218fe25207e0ba59c3c11f4749c363c8f9b59d04f237b7b828780"
     },
     {
       "path": "src/theorems/msfs/rich_s_anchor.vr",
-      "sha256": "dae411800f572b7f9542ae3a3b2581af1433e4e8ba44c5317f59d03aeaa6731d"
+      "sha256": "55ba49ea7f4b566f304901937db97cb08c841b9d472f91a235f7737b7cfe73c0"
     },
     {
       "path": "src/theorems/msfs/strata.vr",
-      "sha256": "708c14d2cfbc2046b02e0797647a2bb5da474f58b34dd9ce006fa11f9c9234c9"
+      "sha256": "4a61bcaf1ef5373cd2b83c3dea698c50c411a59584ea0cfb952cd06a38ab16b4"
     }
   ],
   "exports": [

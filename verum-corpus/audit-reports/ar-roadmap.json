@@ -1,19 +1,22 @@
 {
   "schema_version": 1,
   "reference": "Adamek-Rosicky 1994 - Locally Presentable and Accessible Categories",
+  "status": "unverified_schematic_roadmap_only",
+  "authority": "none",
   "total": 7,
-  "mechanised": 2,
-  "partial": 2,
-  "axiom_cited": 0,
-  "pending": 0,
-  "coverage_ratio": 1.0000,
+  "mechanised": 0,
+  "partial": 0,
+  "axiom_cited": 4,
+  "pending": 4,
+  "coverage_ratio": 0.0,
+  "note": "No theorem of Adamek-Rosicky (1994) is mechanized in this repository. All entries below are unverified literature citations / schematic obligations.",
   "sections": [
-    { "section": "AR 1.26", "title": "λ-filtered colimit closure of κ-accessible categories", "status": "mechanised", "kernel_modules": "accessibility::build_filtered_colimit" },
-    { "section": "AR 2.6", "title": "Reflexion of accessible category to a presentable one", "status": "partial", "kernel_modules": "reflective_subcategory::build_reflective_subcategory + accessibility::build_filtered_colimit" },
-    { "section": "AR 2.39 (locally presentable)", "title": "Characterisation of locally presentable categories — MSFS uses LP-categories ABSTRACTLY (κ-presentable + filtered colimits, both mechanised); the meta-characterisation 2.39 itself is informal App. A background, not invoked as a proof step", "status": "out-of-scope-for-MSFS", "kernel_modules": "(meta-characterisation; constructive content captured by AR 1.26 + AR 5.5.4)" },
-    { "section": "AR 5.5.4 (Adjoint Functor)", "title": "AFT for presentable categories", "status": "mechanised", "kernel_modules": "adjoint_functor::build_adjunction" },
-    { "section": "AR Ch.4 (sketches)", "title": "Sketches and accessible models — MSFS uses Ch.2 (locally presentable categories), NOT Ch.4; reserved for Diakrisis", "status": "out-of-scope-for-MSFS", "kernel_modules": "" },
-    { "section": "AR Ch.2 (locally presentable categories)", "title": "Adámek-Rosický 1994 Chapter 2 — accessibility-theoretic treatment of locally presentable categories (MSFS App. A informal cite)", "status": "partial", "kernel_modules": "accessibility::build_filtered_colimit + adjoint_functor::build_adjunction" },
-    { "section": "AR App. (set-theoretic prerequisites)", "title": "Vopěnka's principle, large cardinals beyond κ_2 — NOT cited by MSFS (paper convention is ZFC + 2 inaccessibles only); reserved for Diakrisis advanced extensions", "status": "out-of-scope-for-MSFS", "kernel_modules": "zfc_self_recognition (κ_1, κ_2 only)" }
+    { "section": "AR 1.26", "title": "Uniqueness of adjoints / filtered-colimit foundations", "status": "unverified_citation" },
+    { "section": "AR 1.66", "title": "Adjoint Functor Theorem for locally presentable categories (continuous case for left adjoints)", "status": "unverified_citation" },
+    { "section": "AR 2.26", "title": "Ind-completion equivalence for accessible categories", "status": "unverified_citation" },
+    { "section": "AR Ch.2", "title": "Locally presentable and accessible categories (background)", "status": "unverified_citation" },
+    { "section": "AR 2.39", "title": "Characterisation of locally presentable categories", "status": "out-of-scope-for-MSFS" },
+    { "section": "AR Ch.4", "title": "Sketches and accessible models", "status": "out-of-scope-for-MSFS" },
+    { "section": "AR App.", "title": "Set-theoretic prerequisites beyond ZFC + 2 inaccessibles", "status": "out-of-scope-for-MSFS" }
   ]
 }

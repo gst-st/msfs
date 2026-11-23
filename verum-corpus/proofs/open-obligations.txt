@@ -1,9 +1,13 @@
-MSFS source, formalization and library audit — updated 2026-10-28
+MSFS source, formalization and library audit — updated 2026-11-23
 
-Source-paper defects O1, O2, O3 have been resolved in both paper-en/paper.tex and
-paper-ru/paper.tex. Legacy Verum stdlib / foreign-scaffold obligations O4–O6 remain
-explicitly tracked so that structural or marker files are never over-claimed as
-kernel-discharged proofs.
+Source-paper mathematical defects (O1–O3, plus AFN-T α/β scope, def:SSE/lem:SS-membership-E/thm:dual-afnt,
+universe/cardinality bounds, thm:subsumption, thm:lateral, prop:trajectory-space, prop:no-collapse,
+lem:pronk, (R1) vs bounded arithmetic, and 1-to-1 EN/RU/mini sync) have been resolved cleanly in
+paper-en/paper.tex, paper-ru/paper.tex, and paper-en/paper-mini.tex.
+Legacy Verum stdlib / foreign-scaffold obligations O4–O6 remain explicitly tracked, and all
+src/theorems/msfs/*.vr files and audit-reports/*.json files have been quarantined so that ONLY
+proofs/ss-membership/{witness.vr, formal.vr} (representation-level union introduction A -> A \/ B \/ C)
+is reported as a kernel-checked Verum artifact.
 
 O1. Membership and AFNT-alpha subtheory transport — RESOLVED IN SOURCE PAPER.
 Source: paper-en/paper.tex & paper-ru/paper.tex, lem:SS-membership; def:pi3max; thm:afnt-alpha.

@@ -1,40 +1,27 @@
 // =============================================================================
-// MSFS §8 — Three Bypass Paths (Theorems 8.1, 8.2, 8.6, 8.7 + Cor 8.8)
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// Alignment notes against paper-en/paper.tex §8:
+//   - Former Theorem 8.2 bound `Con(S_∞) = Con(S) + κ_inacc` is WITHDRAWN
+//     (Remark `thm:reflective`: consistency iterations require separate
+//     proof-theoretic strength analysis).
+//   - Theorem `thm:I-existence` constructs only an ordinary slice pseudofunctor
+//     with isomorphisms as display maps; obligations (I-1)-(I-4) remain OPEN.
+//   - Corollary `cor:grade-collapse` proves that the equivalence-seeded display
+//     filtration collapses at stage 0 (Remark `rem:grading-open` records open
+//     nontrivial intensional grading obligations; bare MLTT/ETT is insufficient).
+//   - `ensures false` declarations below depend on unproved stdlib axioms.
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §8 — Three bypass paths
-// (universe polymorphism, reflective tower, intensional refinement
-// via display 2-categories).
-//
-// Seven results closing historical bypass attempts against AFN-T:
-//
-// Theorem 8.1 — universe polymorphism absoluteness.
-// Theorem 8.2 — reflective tower boundedness (Con(S_∞) ≤ Con(S)
-// + κ_inacc).
-// Definitions 8.3 / 8.4 / 8.5 — display class, display 2-category,
-// S_int (2-category of display 2-cats).
-// Theorem 8.6 — existence of `I : F^op → S_int` (8-step
-// construction; intensional-refinement functor).
-// Theorem 8.7 — slice-locality of `I` via gauge-quotient.
-// Corollary 8.8 — intensional refinement adds *no* new
-// structural axis to AFN-T.
-//
-// Theorem 8.6 is the most technically demanding — 8 construction
-// steps (objects, 1-morphisms, 2-morphisms, functoriality, I_1
-// homotopy invariance, I_2 gauge covariance, I_3 strict refinement
-// of Morita through Eff topos τ-invariant, I_4 Morita 2-localization
-// via Pronk's bicategory of fractions).
+// MSFS §8 — Three Bypass Paths (schematic stubs)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.bypass_paths.msfs_theorem_8_1_universe_reduction"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.bypass_paths;
 
@@ -67,13 +54,12 @@ public axiom msfs_theorem_8_1_universe_reduction(
     && candidate.cond_Pi_4().is_irreducible_in_s_s()
     && candidate.cond_Pi_3_max().is_maximally_generative();
 
-/// **MSFS §8.2 reduction citation.** Reflective tower over S yields
-/// `Con(S_∞) = Con(S) + κ_inacc`; one inaccessible cardinal of
-/// consistency strength gain, no new structural axis. Reduction
-/// preserves the L_Abs triple. Paper §8.2.
+/// **WITHDRAWN / OPEN OBLIGATION (Remark `thm:reflective`).**
+/// Former bound `Con(S_∞) = Con(S) + κ_inacc` is withdrawn in paper-en/paper.tex §8;
+/// retained only as a non-certified legacy stub.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS §8.2 reduction — reflective tower bounded by Con(S) + κ_inacc, no new axis")
+@framework(msfs, "WITHDRAWN — MSFS Remark thm:reflective (consistency iterations need separate strength analysis; stub only)")
 public axiom msfs_theorem_8_2_reflective_tower_reduction(
     candidate: &LAbsCandidate,
     ) -> Bool
@@ -111,7 +97,7 @@ public axiom msfs_corollary_8_8_intensional_reduction(
 /// universe polymorphism cannot satisfy the L_Abs triple — the
 /// reduction to S_S^global is precisely the Π_4 violation that
 /// Theorem 5.1 forecloses.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 8.1 — universe-polymorphism Morita-reduces to S_S^global")
@@ -129,17 +115,13 @@ public theorem msfs_theorem_8_1_universe_polymorphism(
     apply msfs_theorem_5_1_afnt_alpha(candidate);
 };
 
-/// **MSFS Theorem 8.2 — reflective tower boundedness.**
-/// `Con(\text{reflective tower over } S) = Con(S) + κ_{inacc}`.
-/// One additional inaccessible cardinal — no further escape.
-///
-/// Operational closure: a candidate built from a reflective tower
-/// cannot inhabit L_Abs; the consistency-bounded ascent does not
-/// open a new structural axis, so Theorem 5.1 still applies.
-@verify(certified)
+/// **WITHDRAWN / OPEN OBLIGATION (Remark `thm:reflective`).**
+/// Former bound `Con(S_∞) = Con(S) + κ_inacc` is withdrawn; retained only as a
+/// non-certified legacy stub.
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Theorem 8.2 — reflective tower bounded by Con(S) + κ_inacc")
+@framework(msfs, "WITHDRAWN — MSFS Remark thm:reflective (schematic stub only)")
 public theorem msfs_theorem_8_2_reflective_tower(
     candidate: &LAbsCandidate,
     )
@@ -363,7 +345,7 @@ ensures witness.a_two_functor_2_commutes()
 /// an "intensionally distinguished" L_Abs slice still falls within
 /// Theorem 5.1's scope because the slice maps gauge-equivalently to
 /// `𝔐` (Theorem 8.7).
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Corollary 8.8 — intensional refinement adds no new axis to AFN-T")
@@ -459,7 +441,7 @@ public axiom msfs_proposition_grading_structural(
 /// precisely the tower { Int^(n)([F]) }_n that the extensional
 /// projection forgets — the fibers of Theorem 8.7's slice fibration
 /// are ℕ-graded 2-categories, not bare 2-categories.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Corollary grade-collapse — extensionality is grade-blindness")

@@ -1,10 +1,36 @@
 {
   "schema_version": 1,
-  "gate_passes": true,
+  "authority": "hygiene_gate_only",
+  "gate_passes": false,
+  "reason": "Retained foreign exports under certificates/{coq,lean,dedukti,metamath} are non-certified scaffolds containing sorry, Admitted, admitted markers, unknown proofs, and opaque `axiom : Prop` declarations (see certification-inventory.json).",
   "required_format_count": 3,
   "formats": [
-    { "format": "coq", "extension": "v", "tool_status": "available", "files_found": 1, "files_passed": 1, "files_failed": 0, "first_failure": "" },
-    { "format": "lean4", "extension": "lean", "tool_status": "available", "files_found": 1, "files_passed": 1, "files_failed": 0, "first_failure": "" },
-    { "format": "dedukti", "extension": "dk", "tool_status": "available", "files_found": 1, "files_passed": 1, "files_failed": 0, "first_failure": "" }
+    {
+      "format": "coq",
+      "extension": "v",
+      "tool_status": "scaffolds_present",
+      "files_found": 1,
+      "files_passed": 0,
+      "files_failed": 1,
+      "first_failure": "certificates/coq/export.v contains Admitted proofs and opaque `Axiom ... : Prop` declarations"
+    },
+    {
+      "format": "lean4",
+      "extension": "lean",
+      "tool_status": "scaffolds_present",
+      "files_found": 1,
+      "files_passed": 0,
+      "files_failed": 1,
+      "first_failure": "certificates/lean/export.lean contains `:= sorry` definitions and opaque `axiom ... : Prop` declarations"
+    },
+    {
+      "format": "dedukti",
+      "extension": "dk",
+      "tool_status": "scaffolds_present",
+      "files_found": 1,
+      "files_passed": 0,
+      "files_failed": 1,
+      "first_failure": "certificates/dedukti/export.dk contains `(; admitted ;)` markers and unproved Prop declarations"
+    }
   ]
 }

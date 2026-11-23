@@ -1,53 +1,20 @@
 // =============================================================================
-// theorems.msfs — MSFS corpus aggregator (top-level module)
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// None of the modules mounted under `src/theorems/msfs/` is kernel-certified;
+// they are schematic specifications / legacy stubs carrying zero proof-discharge
+// authority. Only `proofs/ss-membership/{witness.vr, formal.vr}` (representing
+// the syntactic-branch union introduction A -> A \/ B \/ C of `lem:SS-membership`)
+// has an independently replayed native kernel certificate.
+// See `certification-inventory.json`, `proofs/open-obligations.txt`, and
+// `paper-en/paper.tex` Appendix C.
 // =============================================================================
-//
-// Single import point for downstream consumers. Mounting
-//
-// mount lib.theorems.msfs.{...};
-//
-// gives access to every public theorem, lemma, definition, and corollary
-// across the 14 paper sections + 2 appendices. Each section is one flat
-// file `<canonical_name>.vr` in this directory, declaring the module
-// path `lib.theorems.msfs.<canonical_name>` — the loader resolves
-// mounts by file path, so file names MUST equal module segments
-// (numbered chapter directories broke resolution and kept the corpus
-// out of the closure entirely).
-//
-// **Per-section coverage** (mirroring paper.tex):
-//
-// ┌─────────────────────────────────┬──────────────────────────────────┐
-// │ Paper section │ Section module path │
-// ├─────────────────────────────────┼──────────────────────────────────┤
-// │ §1 Introduction / conventions │ lib.theorems.msfs.introduction │
-// │ §2 Stratified hierarchy │ lib.theorems.msfs.strata │
-// │ §3 Reasonable Rich-metatheories │ lib.theorems.msfs.rich_s_anchor │
-// │ §4 L_Abs conditions │ lib.theorems.msfs.l_abs_conditions │
-// │ §5 AFN-T α-part │ lib.theorems.msfs.afnt_alpha │
-// │ §6 AFN-T β-part │ lib.theorems.msfs.afnt_beta │
-// │ §7 Five-axis absoluteness │ lib.theorems.msfs.five_axis │
-// │ §8 Three bypass paths │ lib.theorems.msfs.bypass_paths │
-// │ §9 Meta-classification │ lib.theorems.msfs.meta_classification │
-// │ §10 AC/OC duality │ lib.theorems.msfs.ac_oc_duality │
-// │ §11 No-go subsumption │ lib.theorems.msfs.no_go_subsumption │
-// │ §12 Consequences + Open Q │ lib.theorems.msfs.consequences │
-// │ App.A Categorical preliminaries │ lib.theorems.msfs.categorical_preliminaries │
-// │ App.B Paraconsistent extension │ lib.theorems.msfs.paraconsistent │
-// └─────────────────────────────────┴──────────────────────────────────┘
-//
-// **Self-containment endpoint.** The companion theorem
-// `core.math.frameworks.msfs.self_containment.msfs_self_containment_theorem`
-// (host stdlib) certifies that no MSFS proof body in this aggregator
-// transitively depends on anything outside ZFC + 2 strongly inaccessible
-// cardinals. Run `verum audit --kernel-soundness` to inspect the
-// trusted-base decomposition (CLI drift 2026-07-10: the former
-// `--self-recognition` flag was removed).
+// theorems.msfs — MSFS corpus schematic module index
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Definition("v0.1"),
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs;
 

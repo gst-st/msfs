@@ -1,5 +1,19 @@
-error: unexpected argument '--footprint' found
-
-Usage: verum audit [OPTIONS]
-
-For more information, try '--help'.
+{
+  "schema_version": 1,
+  "status": "unverified_stub_corpus",
+  "authority": "none",
+  "note": "All .vr modules under src/theorems/msfs/ are non-certified schematic specifications and stubs carrying zero proof-discharge authority. Only proofs/ss-membership/{witness.vr, formal.vr} has an independently replayed native kernel certificate (representation-level union introduction A -> A \\/ B \\/ C). See certification-inventory.json and paper-en/paper.tex Appendix C.",
+  "certified_modules": [],
+  "portable_kernel_checked_artifacts": [
+    {
+      "path": "proofs/ss-membership/witness.vr",
+      "declaration": "ss_witness_membership",
+      "scope": "representation-level syntactic-branch union introduction (A -> A \\/ B \\/ C); does not certify AFN-T or categorical closure"
+    },
+    {
+      "path": "proofs/ss-membership/formal.vr",
+      "declaration": "ss_formal_membership",
+      "scope": "encoded representation-level syntactic-branch union introduction (A -> A \\/ B \\/ C); does not certify AFN-T or categorical closure"
+    }
+  ]
+}

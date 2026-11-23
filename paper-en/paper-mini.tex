@@ -34,6 +34,10 @@
 \newcommand{\cW}{\mathcal{W}}
 \newcommand{\fM}{\mathfrak{M}}
 \newcommand{\Meta}{\mathfrak{Meta}}
+\newcommand{\LFnd}{\mathcal{L}_{\mathrm{Fnd}}}
+\newcommand{\LCls}{\mathcal{L}_{\mathrm{Cls}}}
+\newcommand{\LClsMax}{\mathcal{L}_{\mathrm{Cls}}^{\top}}
+\newcommand{\LAbs}{\mathcal{L}_{\mathrm{Abs}}}
 \newcommand{\Sint}{\cS_{\mathrm{int}}}
 \newcommand{\Ob}{\mathrm{Ob}}
 \newcommand{\Mor}{\mathrm{Mor}}
@@ -45,6 +49,7 @@
 \newcommand{\Syn}{\mathrm{Syn}}
 \newcommand{\Mod}{\mathrm{Mod}}
 \newcommand{\Con}{\mathrm{Con}}
+\newcommand{\PA}{\mathsf{PA}}
 \newcommand{\ZFC}{\mathsf{ZFC}}
 \newcommand{\MLTT}{\mathsf{MLTT}}
 \newcommand{\HoTT}{\mathsf{HoTT}}
@@ -69,7 +74,7 @@
 \maketitle
 
 \begin{abstract}
-We state a relative boundary lemma for formally represented structures in a specified metatheory: if a candidate belongs to the selected derived class $\cS_S$, its identity is an interpretation into that class, so it cannot satisfy a condition forbidding every such interpretation. This is the precise content of the AFN-T obstruction used here; it does not exclude new foundations or operational refinements. We distinguish it from conditional classifier-comparison and slice constructions. Categoricity from the maximality axioms, strict intensional refinement, unbounded meta-stabilization, and an exact consistency-strength calculation remain open construction obligations. This summary follows the corrected main MSFS paper.
+We present a concise statement of the Absolute Foundation No-Go Theorem (AFN-T) and its boundary mechanisms in a specified metatheory $S \in \RS$: (i) for direct or slice-conservative presentations in the selected derived class $\cS_S$, the identity functor is an interpretation into $\cS_S$, refuting the non-reducibility predicate $\Pi_4$; (ii) for arbitrary faithful subtheory inclusions $\iota_F : F \hookrightarrow S$ equipped with a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative proof-translation, testing maximal generativity $\Pi_{3\text{-max}}$ against $T_S = \PA + \Con_{\sigma_S}(S)$ refutes $(F_S) \wedge (\Pi_{3\text{-max}})$ via Feferman--Pudl\'ak Second Incompleteness. Neither mechanism excludes new foundations or operational refinements. We distinguish these boundary results from conditional classifier-comparison criteria and slice constructions. Categoricity from the maximality axioms, strict intensional refinement, unbounded meta-stabilization, and exact consistency-strength determinations remain open construction obligations. This summary matches the main MSFS paper.
 
 \medskip
 \noindent\textbf{Keywords:} no-go theorems, categorical logic, $(\infty, n)$-categories, Lambek--Scott semantics, meta-classification.
@@ -81,45 +86,45 @@ We state a relative boundary lemma for formally represented structures in a spec
 
 \section{Introduction}\label{sec:intro}
 
-Classical results of Cantor, Russell, G\"odel, Tarski, and Lawvere have different hypotheses and conclusions. The relative boundary lemma below is an identity obstruction for an explicitly defined comparison class; it does not reprove those results or subsume their specific diagonals.
+Classical results of Cantor, Russell, G\"odel, Tarski, and Lawvere have distinct hypotheses, domains, and recursion- or set-theoretic inputs. They serve as motivating analogues rather than strict corollaries of the boundary lemma below (indeed, the diagonal branch $(\alpha_{\mathrm{diag}})$ explicitly invokes the Feferman--Pudl\'ak form of G\"odel's Second Incompleteness Theorem as an input).
 
-\paragraph{Main result.} A specified presentation in $\cS_S$ reduces to itself by the identity. Thus the condition $\Pi_4$, which forbids all such reductions, fails (Theorem~\ref{thm:afnt}). No full faithfulness of arbitrary syntax-to-model evaluation is claimed.
+\paragraph{Main result.} For a direct or slice-conservative presentation in $\cS_S$, the identity reduces the candidate to itself, refuting $\Pi_4$; for an arbitrary faithful subtheory inclusion $\iota_F : F \hookrightarrow S$ under canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative interpretability, diagonalization via $T_S = \PA + \Con_{\sigma_S}(S)$ refutes $(F_S) \wedge (\Pi_{3\text{-max}})$ (Theorem~\ref{thm:afnt}). No full faithfulness of arbitrary syntax-to-model evaluation is claimed.
 
-\paragraph{Scope.} The same argument applies at each constructed categorical or metatheoretic stage where its hypotheses hold. It does not construct coherent higher-depth models or an unbounded tower of universes.
+\paragraph{Scope.} Both arguments apply at each constructed categorical or metatheoretic stage where their hypotheses hold. They do not construct coherent higher-depth models or an unbounded tower of universes.
 
 \paragraph{Comparison and refinement.} Theorems~\ref{thm:meta-cat} and~\ref{thm:meta-mult} give conditional comparison criteria. Theorem~\ref{thm:intensional} supplies an ordinary slice construction, whose equivalence-only display filtration is trivial. Further intensional data require their own construction and preservation proofs.
 
-\paragraph{Open obligations.} Remarks~\ref{thm:stab}, \ref{thm:reflective}, and~\ref{thm:meta-stab} record missing stabilization and strength arguments. No exact equiconsistency with two inaccessible cardinals follows from choosing that ambient base. No machine-checked coverage of the revised claims is asserted without an exact statement mapping and a fresh replay of the companion corpus.
+\paragraph{Open obligations.} Remarks~\ref{thm:stab}, \ref{thm:reflective}, and~\ref{thm:meta-stab} record open stabilization and strength obligations. No exact equiconsistency with two inaccessible cardinals follows from choosing that ambient base. Within the companion Verum corpus, only the representation-level syntactic-branch union introduction in \texttt{proofs/ss-membership/} has a replayed native kernel proof; remaining corpus files are schematic specifications.
 
-\paragraph{Conventions.} We work throughout in $\ZFC$ augmented by two inaccessible cardinals $\kappa_1 < \kappa_2$, providing Grothendieck universes $\mathbf{U}_1 \subset \mathbf{U}_2$. Sufficiency of this base for each proposed construction requires its own size and existence checks. The categorical machinery follows Kelly~\cite{Kelly1982} for enriched and $2$-categories, Lurie~\cite{LurieHTT, LurieHA} for $(\infty, 1)$-categories, Riehl--Verity~\cite{RiehlVerity2022} for $\infty$-cosmoi, Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994} for accessible functors, and Barwick--Schommer-Pries~\cite{BarwickSchommerPries2021} for $(\infty, n)$-unicity. All $2$-categories are locally small and $\kappa_1$-accessible unless stated otherwise.
+\paragraph{Conventions.} We work throughout in $\ZFC$ augmented by two inaccessible cardinals $\kappa_1 < \kappa_2$, providing Grothendieck universes $\mathbf{U}_1 \subset \mathbf{U}_2$. Sufficiency of this base for each proposed construction requires its own size and existence checks. The categorical machinery follows Kelly~\cite{Kelly1982} for enriched and $2$-categories, Lurie~\cite{LurieHTT, LurieHA} for $(\infty, 1)$-categories, Riehl--Verity~\cite{RiehlVerity2022} for $\infty$-cosmoi, Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994} for accessible functors, and Barwick--Schommer-Pries~\cite{BarwickSchommerPries2021} for finite-$n$ unicity.
 
 \section{\texorpdfstring{Rich-Metatheories and the Class $\cS_S$}{Rich-Metatheories and the Class S-S}}\label{sec:rs}
 
 \begin{definition}[Rich-metatheory]\label{def:rs}
-A first-order theory $S$ is a \textbf{Rich-metatheory} (R-S) if:
+A theory $S$ formulated in a first-order meta-syntax is a \textbf{Rich-metatheory} ($\RS$) if:
 \begin{itemize}
 \item \textbf{(R1)} $S$ interprets Robinson arithmetic $\mathsf{Q}$.
 \item \textbf{(R2)} The set of axioms of $S$ is recursively enumerable over a countable language.
-\item \textbf{(R3)} $S$ has a model $\cM$ in the chosen outer universe $\mathbf U_2$.
+\item \textbf{(R3)} $S$ has a model $\cM$ in the outer Grothendieck universe $\mathbf U_2$.
 \item \textbf{(R4)} There is a recursive injection $\ulcorner \cdot \urcorner : \mathrm{Formulas}(S) \to \mathbb{N}$ such that the predicates ``$n$ codes a provable formula'' and ``$n$ codes a well-formed formula'' are $S$-definable.
-\item \textbf{(R5)} There is $n_S \in \mathbb{N} \cup \{\infty\}$ such that the syntactic category $\Syn(S)$ (contexts, provable-from-context substitutions, higher homotopies) is an $(\infty, n_S)$-category, with the evaluation functor $\ev : \Syn(S) \to \cM$ preserving the $(\infty, n_S)$-structure up to $(\infty, n_S)$-equivalence.
+\item \textbf{(R5)} There is $n_S \in \mathbb{N} \cup \{\infty\}$ such that the syntactic category $\Syn(S)$ (contexts, provable-from-context substitutions, higher homotopies) is an essentially $\mathbf{U}_1$-small $(\infty, n_S)$-category whose $\mathrm{Ind}_{\kappa_S}$-completion ($\kappa_S \in \{\kappa_1, \kappa_2\}$) is $\kappa_S$-accessible, and for every model $\cM \in \mathbf{U}_2$ of $S$ the evaluation $\ev : \Syn(S) \to \cM$ is an $S$-preserving $(\infty, n_S)$-functor participating in a Lambek--Scott-type syntax--semantics adjunction $\Syn \dashv \Mod$.
 \end{itemize}
-We denote the class of Rich-metatheories as $\RS$, and the class of Rich-foundations (axiomatic systems satisfying (R1)--(R5)) as $\cF$.
+We denote the class of Rich-metatheories as $\RS$, and the $2$-category of Rich-foundations ($\LFnd$) as $\cF$.
 \end{definition}
 
-Examples must be checked against (R1)--(R5) using a specific formal theory and a chosen categorical semantics. A mathematical programme is not itself a recursive axiomatization, and an evaluation functor is not automatically fully faithful. The general higher-level syntax--semantics bridge is a hypothesis to verify in each application.
+Examples must be checked against (R1)--(R5) using a specific formal theory and a chosen categorical semantics. A mathematical programme is not itself a recursive axiomatization, and an evaluation functor into a single model is neither automatically fully faithful nor automatically a right adjoint. The general higher-level syntax--semantics bridge is a hypothesis to verify in each application.
 
 \begin{definition}[The selected presentation class $\cS_S$]\label{def:SS}
-Fix a syntactic presentation $\Syn(S)$ and the allowed universe bounds. Include in $\cS_S^{\mathrm{local}}$ the pointed presentations $(\Syn(S),[\phi])$ for admissible formulas $\phi$ of its syntax, together with the model objects specified by the chosen interface. Define $\cS_S^{\mathrm{global}}$ using a stated list of actually existing, $S$-definable derived constructions. Set $\cS_S=\cS_S^{\mathrm{local}}\cup\cS_S^{\mathrm{global}}$. Existence, size, and closure under further limits are not consequences of this notation.
+Fix a syntactic presentation $\Syn(S)$ and the ambient universe $\mathbf{U}_2$. Define $\cS_S^{\mathrm{local}} \subseteq \mathbf{U}_2$ to contain the pointed syntactic presentations $(\Syn(S), [\phi])$ for admissible formulas $\phi$ of $S$ (essentially $\mathbf{U}_1$-small) together with pointed model objects $(\cM, Y)$ for $\cM \in \mathbf{U}_2$, $\cM \models S$, $Y \in \Ob(\cM)$. Define $\cS_S^{\mathrm{global}} \subseteq \mathbf{U}_2$ by closing $\cS_S^{\mathrm{local}}$ under the fixed $\mathbf{U}_2$-bounded derived categorical operations (Kan extensions, Grothendieck constructions, $\mathbf{U}_2$-small limits/colimits when they exist in $\mathbf{U}_2$, slice/comma/opposite categories, derived functors, monoidal products/internal homs). Set $\cS_S := \cS_S^{\mathrm{local}} \cup \cS_S^{\mathrm{global}}$. Thus $\cS_S$ is a $\mathbf{U}_2$-class ($\subseteq \mathbf{U}_2$, of size $\le \kappa_2$); restricting both model carriers and diagram indices to $\mathbf{U}_1$ yields a $\mathbf{U}_2$-small fragment $\cS_S^{(\mathbf{U}_1)} \in \mathbf{U}_2$. Accessibility of derived objects is verified case by case rather than assumed globally.
 \end{definition}
 
 \begin{lemma}[Membership of the chosen syntactic presentation]\label{lem:SS-membership}
-If a formally described candidate is represented by the pointed presentation $(\Syn(S),[\phi_X])$ under this convention, that presentation belongs to $\cS_S$.
+If a formally described candidate is represented directly by the pointed syntactic presentation $(\Syn(S), [\phi_X])$ for $\phi_X \in S$, then that presentation belongs to $\cS_S^{\mathrm{local}} \subseteq \cS_S$.
 \end{lemma}
 \begin{proof}
 It is included in $\cS_S^{\mathrm{local}}$ by Definition~\ref{def:SS}.
 \end{proof}
-This is a statement about the selected formal presentation. Identifying it with a semantic object in a particular model requires an additional comparison, not merely interpretation of the formula.
+When $\phi_X$ is instead presented inside a proper subtheory $\iota_F : F \hookrightarrow S$, identifying $(\Syn(F), [\phi_X]_F)$ with $(\Syn(S), [\iota_F(\phi_X)]_S)$ requires slice-conservativity of $\Syn(\iota_F)$ (which fails for non-conservative extensions such as $\PA \hookrightarrow \PA + \Con(\PA)$). Theorem~\ref{thm:afnt} handles both the slice-conservative case and arbitrary faithful subtheories $\iota_F : F \hookrightarrow S$.
 
 \begin{definition}[Morita-reducibility]\label{def:morita}
 An $(\infty, n)$-functor $F : X \to Y$ is an \emph{$(\infty, n)$-equivalence onto its image} if $F$ is fully faithful and essentially surjective onto the full sub-$(\infty, n)$-category of $Y$ given by $\image(F)$. We say $X$ is \emph{$(\infty, n)$-Morita-reducible} to $Y$, written $X \to_{M, n} Y$, if such a functor exists.
@@ -127,35 +132,43 @@ An $(\infty, n)$-functor $F : X \to Y$ is an \emph{$(\infty, n)$-equivalence ont
 
 \section{The Absolute Foundation No-Go Theorem}\label{sec:afnt}
 
-\begin{theorem}[Relative AFN-T]\label{thm:afnt}
-Fix a categorical setting and a selected class $\cS_S$. If a candidate $X$ belongs to $\cS_S$, it is Morita-reducible to an element of that class. Therefore it cannot satisfy
+\begin{theorem}[AFN-T $(\alpha)$-part]\label{thm:afnt}
+Fix $S \in \RS$ and $n \in \mathbb{N} \cup \{\infty\}$, and let $X$ be a pointed $(\infty, n)$-categorical candidate presented via a faithful subtheory inclusion $\iota_F : F \hookrightarrow S$ and $(\Syn(F), [\phi_X]_F) \simeq_{(\infty, n)} X$ (condition $(F_S)$):
+\begin{enumerate}[nosep,label=(\roman*)]
+\item \emph{Direct / slice-conservative mechanism $(\alpha_0)$}: whenever $F = S$ or $\Syn(\iota_F)|_{[\phi_X]_F} : (\Syn(F), [\phi_X]_F) \to (\Syn(S), [\iota_F(\phi_X)]_S)$ is an $(\infty, n)$-equivalence onto its image, $X$ reduces to an element of $\cS_S^{\mathrm{local}} \subseteq \cS_S$ and therefore cannot satisfy
 \[
- (\Pi_4):\quad X\not\to_{M,n}Y\quad\text{for every }Y\in\cS_S.
+ (\Pi_{4, S, n}):\quad X \not\to_{M, n} Y \quad\text{for every } Y \in \cS_S.
 \]
-In particular, the conjunction of such represented definability, $\Pi_4$, and maximal generativity is empty.
+\item \emph{Strong diagonal anti-absoluteness $(\alpha_{\mathrm{diag}})$}: suppose $S$ is equipped with a canonical $\Sigma_1$-binumeration $\sigma_S$ of its r.e.\ axiom set (fixing $\Con_{\sigma_S}(S)$), and every composite interpretation $J := \iota_F \circ \tau : \PA + \Con_{\sigma_S}(S) \to S$ arising from maximal generativity $(\Pi_{3\text{-max}, S, n})$ is a classical first-order relative interpretation (or is accompanied by an explicit negative translation and primitive-recursive proof-translation verifiable in $\PA$). Then for every faithful inclusion $\iota_F : F \hookrightarrow S$, the generative pair $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$ is inconsistent.
+\end{enumerate}
+In particular, across all $(S, n)$ in the scope of (i) or (ii), the $\LAbs$ conjunction $(F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n})$ is empty.
 \end{theorem}
 \begin{proof}
-Take $Y=X$. The identity functor is an equivalence and hence a reduction prohibited by $\Pi_4$.
+For (i), take $Y := (\Syn(S), [\iota_F(\phi_X)]_S) \in \cS_S^{\mathrm{local}} \subseteq \cS_S$ (for $F = S$, $Y = X$ via $\id_X$); the induced equivalence onto its image violates $\Pi_4$. For (ii), by (R3) the theory $S$ is syntactically consistent in standard $\mathbb{N}$, so $T_S := \PA + \Con_{\sigma_S}(S)$ has standard model $\mathbb{N} \in \mathbf{U}_1 \subset \mathbf{U}_2$ and lies in $\cF$. Applying $(\Pi_{3\text{-max}, S, n})$ at $T_S$ and composing with $\iota_F$ yields $J : \PA + \Con_{\sigma_S}(S) \to S$. Its classical arithmetic pullback $S_{\mathrm{arith}}$ is a consistent r.e.\ extension of $\PA + \Con_{\sigma_S}(S)$ in which primitive-recursive proof-translation gives $S_{\mathrm{arith}} \vdash \Con_{\sigma_{\mathrm{arith}}}(S_{\mathrm{arith}})$, contradicting G\"odel--Feferman--Pudl\'ak Second Incompleteness (Feferman~\cite{Feferman1960}, Thm.~5.6; Pudl\'ak~\cite{Pudlak1985}, Thm.~2.1).
 \end{proof}
-The former proof incorrectly inferred full faithfulness of an arbitrary evaluation functor from an initiality property of syntax. Interpretation can identify distinct syntactic data; full faithfulness needs an independent theorem. The relative identity proof avoids that inference and states its actual scope.
+Unlike an inference of full faithfulness from syntactic initiality, neither mechanism assumes that an arbitrary evaluation functor into a model is fully faithful.
 
-\begin{theorem}[Relative boundary at a constructed limit]\label{thm:afnt-beta}
-Suppose a specified $S$-definable small diagram has a colimit $A_\infty$ in the chosen universe and the selected derived class is closed under this construction. Then $A_\infty\in\cS_S$ and it fails $\Pi_4$.
+\begin{theorem}[Limit exclusion; AFN-T $(\beta)$-part]\label{thm:afnt-beta}
+Let $A_\infty := \colim_{\kappa < \lambda} A_\kappa$ be the colimit of a transfinite diagram in the ambient $(\infty, n)$-categorical meta-universe:
+\begin{enumerate}[nosep,label=(\alph*)]
+\item \emph{Definable $\mathbf{U}_2$-cofinal closure}: if $\mathrm{cf}(\lambda) < \kappa_2$, a cofinal $\mathbf{U}_2$-small subdiagram $D : I \to \cS_S^{(k)}$ has $S$-definable objects and coherent transition functors, and $A_\infty$ exists in $\mathbf{U}_2$, then $A_\infty \in \cS_S^{(k+1)} \subseteq \cS_S^{\mathrm{global}}$ and fails $(\Pi_{4, S, n})$.
+\item \emph{Unconditional $\LAbs$ dichotomy}: for any directed or proper-class diagram without assuming $S$-definability of transitions or fixed-cardinal accessibility closure, excluded middle splits on $\exists S' \in \RS\,(F_{S'})(A_\infty)$: either $A_\infty$ satisfies $(F_{S'})$ for some $S' \in \RS$ (refuted by Theorem~\ref{thm:afnt}), or it fails $(F_{S'})$ for all $S' \in \RS$. Thus $A_\infty \notin \LAbs$ within the scope of Theorem~\ref{thm:afnt}.
+\end{enumerate}
 \end{theorem}
 \begin{proof}
-Membership is the stated closure hypothesis; apply Theorem~\ref{thm:afnt}.
+Part (a) applies the $\mathbf{U}_2$-small colimit closure of Definition~\ref{def:SS} and Theorem~\ref{thm:afnt}~(i). Part (b) applies excluded middle in $\ZFC + 2\text{-inacc}$ directly to the limit object $A_\infty$, avoiding any invalid reconstruction of diagram uniformity from a specification of $A_\infty$.
 \end{proof}
-A bound on cofinality alone does not construct a definable diagram or its colimit. A uniformly described proper-class scheme can have a finite description; it is not excluded merely by counting formula codes. Its semantics and consistency strength require a separate analysis.
+A bound on cofinality alone neither constructs an $S$-definable diagram nor guarantees preservation of a fixed accessibility cardinal $\kappa_1$.
 
 \section{Absoluteness}\label{sec:absolute}
 
-\begin{theorem}[Transfer of the relative obstruction]\label{thm:absolute}
-At every stage or presentation where the candidate lies in the chosen comparison class and identity maps are admissible reductions, the conclusion of Theorem~\ref{thm:afnt} holds.
+\begin{theorem}[Transfer of the boundary obstruction]\label{thm:absolute}
+At every stage, depth, or faithfully embedded categorical doctrine where a candidate satisfies the hypotheses of Theorem~\ref{thm:afnt}~(i) or~(ii), the conclusion of Theorem~\ref{thm:afnt} holds.
 \end{theorem}
 \begin{proof}
-Apply the identity argument in that presentation.
+Apply Theorem~\ref{thm:afnt} in that presentation.
 \end{proof}
-Transferring a claim between different metatheories, depths, or semantic models requires a translation preserving these hypotheses. This does not establish exhaustiveness of possible variations.
+Transferring a claim between different metatheories, depths, or semantic doctrines (such as double or fusion categories) requires an explicitly supplied translation or faithful embedding preserving the boundary predicates. This does not establish exhaustiveness of all possible variations.
 
 \begin{remark}[Unbounded stabilization remains open]\label{thm:stab}
 Barwick--Schommer-Pries~\cite{BarwickSchommerPries2021} compares models of $(\infty,n)$-categories for fixed finite $n$. It does not prove an equivalence between unspecified $(\infty,\infty)$ and $(\infty,\infty+1)$ constructions. An unbounded-depth model, coherent comparison maps, and a proof of any proposed stabilization must be supplied separately.
@@ -212,10 +225,10 @@ Budget exhaustion gives \texttt{Unknown}, rather than semantic undefinedness
 or refutation. These distinctions leave the higher intensional construction
 obligations above open.
 
-\section{Meta-Classification of Level 5+ Frameworks}\label{sec:meta}
+\section{\texorpdfstring{Meta-Classification of $\LCls$ Frameworks}{Meta-Classification of L\_Cls Frameworks}}\label{sec:meta}
 
-\begin{definition}[Level 5+ meta-structure]\label{def:meta}
-A $2$-category $\mathbf{F}$ is a \emph{Level 5+ meta-structure} if:
+\begin{definition}[$\LCls$ meta-structure]\label{def:meta}
+A $2$-category $\mathbf{F}$ is an \emph{$\LCls$ meta-structure} if:
 \begin{itemize}
 \item \textbf{(M1)} locally small;
 \item \textbf{(M2)} equipped with a classification $2$-functor $\Cl_{\mathbf{F}} : \mathbf{F} \to \fM(\mathbf{F}) \subseteq \fM$;
@@ -223,14 +236,14 @@ A $2$-category $\mathbf{F}$ is a \emph{Level 5+ meta-structure} if:
 \item \textbf{(M4)} non-generative: $\mathbf{F}$ does not derive the axioms of $F \in \image(\Cl_{\mathbf{F}})$;
 \item \textbf{(M5)} parametrized by some $S \in \RS$.
 \end{itemize}
-$\mathbf{F}$ is \emph{maximal} (and we write $\mathbf{F} \in \Meta_{5+}^{\max}$) if additionally:
+$\mathbf{F}$ is \emph{maximal} (and we write $\mathbf{F} \in \Meta_{\mathrm{Cls}}^{\top}$) if additionally:
 \begin{itemize}
 \item \textbf{(Max-1)} $\image(\Cl_{\mathbf{F}}) = \fM$;
 \item \textbf{(Max-2)} $\mathrm{Aut}_2(\mathbf{F})$ acts transitively on gauge classes in $\image(\Cl_{\mathbf{F}})$;
 \item \textbf{(Max-3)} $\mathbf{F}$ admits a depth-indexed filtration $\{\mathbf{F}^{(m)}\}_{m < \omega}$ with $\mathbf{F} \simeq_2 \colim_m \mathbf{F}^{(m)}$ and a depth function $\mathrm{depth} : \Ob(\mathbf{F}) \to \omega$ such that every comprehension-defined object of depth $m$ uses only objects of depth $< m$;
 \item \textbf{(Max-4)} a correctly typed higher intensional construction satisfying the additional (I-1)--(I-4) obligations after Theorem~\ref{thm:intensional}, with the joint-separation condition of the main paper. Its existence is not supplied by the ordinary slice construction.
 \end{itemize}
-The class of Level 5+ meta-structures is $\Meta_{5+}$; the class of maximal meta-structures is $\Meta_{5+}^{\max} \subseteq \Meta_{5+}$.
+The class of $\LCls$ meta-structures is $\Meta_{\mathrm{Cls}}$; the class of maximal meta-structures is $\Meta_{\mathrm{Cls}}^{\top} \subseteq \Meta_{\mathrm{Cls}}$.
 \end{definition}
 
 \begin{theorem}[Conditional comparison criterion]\label{thm:meta-cat}
@@ -250,7 +263,7 @@ An equivalence commuting with the classification functors preserves their essent
 Applying this criterion to Univalent Foundations, $\infty$-cosmoi, or cohesive frameworks requires actual classifiers satisfying (M1)--(M5) and proofs of the proposed image distinctions. Programme names and different syntactic presentations do not furnish these witnesses.
 
 \begin{remark}[Meta-classification remains a construction problem]\label{thm:meta-stab}
-The proposed quotient $\Meta_{5+}/\mathrm{gauge}_{\mathrm{meta}}$ needs a site, descent data, size bounds, a classification functor of the correct type, and a reflection. Idempotence under further classification requires explicit comparison functors and invertible unit/counit. Neither fixed-finite-$n$ unicity nor the notation for the quotient supplies them. Two inaccessible cardinals also do not give an unbounded tower of inaccessible universes. At every stage that is actually constructed in its selected derived class, Theorem~\ref{thm:afnt} still applies independently of stabilization.
+The proposed quotient $\Meta_{\mathrm{Cls}}/\mathrm{gauge}_{\mathrm{meta}}$ needs a site, descent data, size bounds, a classification functor of the correct type, and a reflection. Idempotence under further classification requires explicit comparison functors and invertible unit/counit. Neither fixed-finite-$n$ unicity nor the notation for the quotient supplies them. Two inaccessible cardinals also do not give an unbounded tower of inaccessible universes. At every stage that is actually constructed in its selected derived class, Theorem~\ref{thm:afnt} still applies independently of stabilization.
 \end{remark}
 
 \section{Consistency Strength}\label{sec:cons}
@@ -263,8 +276,8 @@ Eliminate the defined names throughout any proof, using existence and uniqueness
 \end{proof}
 The proposed classifier and higher intensional constructions have not all been completed in $\ZFC+2\text{-inacc}$. No exact consistency-strength equation is therefore inferred here. A complete model construction would give an upper bound; equiconsistency additionally requires a reverse interpretation or a separate lower-bound proof.
 
-\begin{corollary}[Level-6 impossibility]\label{cor:level-6}
-Within the represented-definability convention of Definition~\ref{def:SS} and Lemma~\ref{lem:SS-membership}, no candidate satisfies that condition together with $\Pi_4$ and maximal generativity. This is the relative exclusion of Theorem~\ref{thm:afnt}.
+\begin{corollary}[Emptiness of $\LAbs$]\label{cor:level-6}
+Within the scope of Theorem~\ref{thm:afnt} (every direct or slice-conservative presentation over $\RS$, and every faithful subtheory presentation satisfying the diagonalization hypotheses of Theorem~\ref{thm:afnt}~(ii)), no candidate satisfies $(F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n})$, so $\LAbs = \emptyset$.
 \end{corollary}
 
 \begin{proof}
@@ -273,7 +286,7 @@ Immediate from Theorem~\ref{thm:afnt}.
 
 \section*{Acknowledgments}
 
-The author thanks the mathematical community for the foundational results of Cantor, Russell, G\"odel, Tarski, Lawvere, Lambek--Scott, Ad\'amek--Rosick\'y, Makkai--Par\'e, Jacobs, Pronk, Lurie, Riehl--Verity, Voevodsky, Schreiber, and Barwick--Schommer-Pries, on which this synthesis rests.
+The author thanks the mathematical community for the foundational results of Cantor, Russell, G\"odel, Tarski, Feferman, Pudl\'ak, Lawvere, Lambek--Scott, Ad\'amek--Rosick\'y, Makkai--Par\'e, Jacobs, Pronk, Lurie, Riehl--Verity, Voevodsky, Schreiber, and Barwick--Schommer-Pries, on which this synthesis rests.
 
 \begin{thebibliography}{99}
 
@@ -322,6 +335,11 @@ A.~Connes,
 M.~Ernst,
 \newblock The prospects of unlimited category theory: doing what remains to be done,
 \newblock \emph{Rev. Symb. Log.} 8 (2015), 306--327.
+
+\bibitem{Feferman1960}
+S.~Feferman,
+\newblock Arithmetization of metamathematics in a general setting,
+\newblock \emph{Fund. Math.} 49 (1960), 35--92.
 
 \bibitem{Feferman1964}
 S.~Feferman,
@@ -398,6 +416,11 @@ M.~Makkai and R.~Par\'e,
 D.~Pronk,
 \newblock Etendues and stacks as bicategories of fractions,
 \newblock \emph{Compos. Math.} 102 (1996), 243--303.
+
+\bibitem{Pudlak1985}
+P.~Pudl\'ak,
+\newblock Cuts, consistency statements and interpretations,
+\newblock \emph{J. Symb. Log.} 50 (1985), 423--441.
 
 \bibitem{Rathjen1999}
 M.~Rathjen,

@@ -1,36 +1,24 @@
 // =============================================================================
-// MSFS §7 — Five-Axis Absoluteness (Theorems 7.1–7.6)
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// Alignment notes against paper-en/paper.tex §7:
+//   - Former Theorem A.7 / `(∞,∞+1)-Cat = (∞,∞)-Cat` stabilization claims in
+//     the legacy docstrings below are WITHDRAWN (Remark `thm:bergner-lurie-stab`).
+//   - Theorem `thm:lateral` is CONDITIONAL on a supplied faithful embedding
+//     into `(∞,n)-Cat` (general double categories and fusion categories do NOT
+//     automatically reduce to `(∞,2)-Cat` or bare 1-categories).
+//   - `ensures false` declarations below depend on unproved stdlib axioms.
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §7 — Five-axis absoluteness.
-//
-// Six structural absoluteness theorems showing AFN-T is uniform along
-// five axes of variation:
-//
-// Theorem 7.1 — horizontal: ∀ S ∈ \RS, AFN-T holds uniformly.
-// Theorem 7.2 — vertical: ∀ n ∈ ℕ ∪ {∞}, AFN-T holds uniformly.
-// Theorem 7.3 — meta-vertical: meta-iterations don't escape AFN-T
-// via Theorem A.7's (∞,∞)-stabilization.
-// Theorem 7.4 — lateral: alternative categorical orderings reduce
-// to (∞, n)-Cat ⟹ AFN-T transfers.
-// Definition 7.5 — Lawvere-scope LS.
-// Theorem 7.6 — completeness: any structural variation in LS
-// reduces to one of (horizontal, vertical, meta-
-// vertical, lateral) ⟹ five-axis absoluteness.
-//
-// All five theorems descend from Theorem 5.1 + Lemma 3.4 plus
-// auxiliary stabilization / Lawvere-scope technology.
+// MSFS §7 — Five-Axis Analysis (schematic stubs)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.five_axis.msfs_theorem_7_1_horizontal_reduction"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.five_axis;
 
@@ -107,14 +95,14 @@ public axiom msfs_theorem_7_2_vertical_reduction(
     && candidate.cond_Pi_4().is_irreducible_in_s_s()
     && candidate.cond_Pi_3_max().is_maximally_generative();
 
-/// **MSFS Theorem 7.3 axis-reduction citation.** Meta-vertical-axis
-/// uniformity: any meta-stratum candidate collapses to an `(∞, ∞)`-Cat
-/// candidate via Theorem A.7's `(∞, ∞ + 1)-Cat = (∞, ∞)-Cat`
-/// stabilisation, where Theorem 5.1's argument lives. Paper §7.3 +
-/// Appendix A.7.
+/// **MSFS Theorem 7.3 axis-reduction stub (relative meta-vertical exclusion).**
+/// Note: former `(∞,∞+1)-Cat = (∞,∞)-Cat` stabilization (Theorem A.7) is
+/// WITHDRAWN in paper-en/paper.tex (Remark `thm:bergner-lurie-stab`). Theorem
+/// `thm:meta-vertical` applies only to meta-iterations explicitly formalized
+/// inside `S_S`.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS §7.3 reduction — meta-vertical axis: meta-stratum collapses via (∞,∞+1)-Cat = (∞,∞)-Cat (Theorem A.7)")
+@framework(msfs, "MSFS Theorem thm:meta-vertical — relative meta-vertical exclusion (schematic stub; stabilization withdrawn)")
 public axiom msfs_theorem_7_3_meta_vertical_reduction(
     candidate: &LAbsCandidate,
     ) -> Bool
@@ -167,7 +155,7 @@ public axiom msfs_theorem_7_6_completeness_reduction(
 /// **MSFS Theorem 7.1 — horizontal axis.** AFN-T holds uniformly
 /// over all `S ∈ \RS`: Lemma 3.4 + the id_X-violates-Π_4 template
 /// (Theorem 5.1 proof) use only (R1)-(R5), nothing S-specific.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 7.1 — horizontal axis: AFN-T uniform over R-S")
@@ -193,7 +181,7 @@ public theorem msfs_theorem_7_1_horizontal<S: RichS>(
 /// **MSFS Theorem 7.2 — vertical axis.** AFN-T holds uniformly over
 /// all `n ∈ ℕ ∪ {∞}`: (R5b) Lambek–Scott applies levelwise +
 /// Barwick–Schommer-Pries unicity at limit n = ∞.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 7.2 — vertical axis: AFN-T uniform over n ∈ ℕ ∪ {∞}")
@@ -212,13 +200,12 @@ public theorem msfs_theorem_7_2_vertical(
     apply msfs_theorem_5_1_afnt_alpha(candidate);
 };
 
-/// **MSFS Theorem 7.3 — meta-vertical axis.** Meta-iteration
-/// `(∞, ∞ + 1)-Cat = (∞, ∞)-Cat` (Theorem A.7) ⟹ no escape via
-/// meta-stratum elevation.
-@verify(certified)
+/// **MSFS Theorem 7.3 — relative meta-vertical exclusion (non-certified stub).**
+/// Former Theorem A.7 stabilization claim is WITHDRAWN (Remark `thm:bergner-lurie-stab`).
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
-@framework(msfs, "MSFS Theorem 7.3 — meta-vertical axis: meta-iterations stabilise via Theorem A.7")
+@framework(msfs, "MSFS Theorem thm:meta-vertical — relative meta-vertical exclusion (schematic stub)")
 public theorem msfs_theorem_7_3_meta_vertical(
     candidate: &LAbsCandidate,
     )
@@ -238,7 +225,7 @@ public theorem msfs_theorem_7_3_meta_vertical(
 /// **MSFS Theorem 7.4 — lateral axis.** Alternative categorical
 /// orderings (operadic, double-cat, globular, opetopic, stable
 /// (∞,1), fusion) reduce to `(∞, n)`-Cat ⟹ AFN-T transfers.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 7.4 — lateral axis: alt orderings reduce to (∞, n)")
@@ -273,7 +260,7 @@ s.n_S() >= -1;
 /// **MSFS Theorem 7.6 — completeness axis (conditional on LS).**
 /// Any structural variation of `F ∈ LS` reduces to one of the four
 /// preceding axes ⟹ AFN-T is *five-axis absolute* within LS.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 7.6 — completeness axis (within Lawvere-scope)")

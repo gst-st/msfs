@@ -1,39 +1,21 @@
 // =============================================================================
-// MSFS Theorem 5.1 — AFN-T α-part
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// The `ensures false` declarations below depend on unproved legacy stdlib
+// axioms (`msfs_id_x_violates_pi_4`, `msfs_lemma_3_4_s_definability`) and do
+// not formalize either slice-conservativity or the diagonal branch
+// `(alpha_diag)` of Theorem `thm:afnt-alpha` in paper-en/paper.tex.
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §5 — Theorem 5.1 (Boundary Lemma:
-// AFN-T α-part).
-//
-// Statement (paper, Theorem 5.1):
-//
-// For every S ∈ \RS and ordinal n ∈ ℕ ∪ {∞}, the conjunction
-// (F_S) ∧ (Π_{4,S,n}) ∧ (Π_{3-max,S,n}) is internally
-// inconsistent. Equivalently:
-//
-// ¬∃ X : MathObject. F_S(X) ∧ Π_4(S, n, X) ∧ Π_{3-max}(S, n, X).
-//
-// Proof (paper, single paragraph):
-//
-// Assume X satisfies (F_S) ∧ (Π_{4, S, n}). Then X ∈
-// S_S^local ⊆ S_S by Lemma 3.4 (post-audit form: the pointing
-// (Syn(S), [φ_X]) is in the local base by definition — no closure
-// step), and id_X : X → X is an (∞, n)-equivalence onto its image
-// with target in S_S, violating (Π_{4, S, n}).
-//
-// Corollary (Corollary 5.2): L_Abs == ∅. Immediate from Theorem 5.1
-// + Definition 4.4.
+// MSFS §5 — AFN-T α-part (schematic stub)
 // =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.afnt_alpha.msfs_theorem_5_1_afnt_alpha"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.afnt_alpha;
 
@@ -97,7 +79,7 @@ mount core.proof.kernel_bridge.{
 /// lineage); `adamek_rosicky` (size/accessibility bookkeeping).
 /// Post-audit, HTT 5.1.4 is NOT on Theorem 5.1's path — it powers
 /// only the auxiliary O2 construction route.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 5.1 — AFN-T α-part: ¬∃ X. (F_S) ∧ (Π_4) ∧ (Π_3-max)")
@@ -148,7 +130,7 @@ public theorem msfs_theorem_5_1_afnt_alpha(
 /// Proof: Definition 4.4 unfolds `X ∈ L_Abs(S, n)` to the existence
 /// of witnesses for the joint condition; Theorem 5.1 (applied
 /// universally) refutes the joint condition; contradiction.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Corollary 5.2 — L_Abs == ∅")

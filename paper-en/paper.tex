@@ -127,9 +127,9 @@ I study the $(\infty, n)$-categorical moduli space $\fM$ of formal systems (here
 
 \emph{(iv) Meta-stabilization problem.} Equivalence between iterated classifiers is not established. Fixed-finite-$n$ unicity of higher-category models does not supply it, and unbounded universe ascent requires additional assumptions.
 
-\emph{(v) Conditional AC/OC duality.} At a specified categorical level, a comparison adjunction whose unit is invertible and whose counit is inverted by the chosen localization induces an equivalence after localization. Constructing these data for the proposed theory-centric and enactment-centric moduli, and extending them to unbounded depth, are separate obligations.
+\emph{(v) Two-stage AC/OC duality.} Before localization, the section--forgetful adjunction $\varepsilon \dashv \alpha$ between theories and pointed reflective enactments is strictly asymmetric ($\alpha \circ \varepsilon = \id_\cF$, while each enactment fibre $\alpha^{-1}(F)$ retains distinct semantic realizations and resource budgets). At a specified categorical level, when the required localizations and descent data exist, inverting the reflection morphisms yields a coarse equivalence $\fM \simeq \fM_\cE$. Independently of localization, the Dual Boundary Lemma $\LAbs^\cE = \emptyset$ holds directly in $\cE$.
 
-\emph{Boundary corollary: the Absolute Foundation No-Go Theorem (AFN-T).} By the syntax--semantics adjunction underlying (R5), the defined $\LAbs$ stratum (formally definable, non-reducible, and maximally generative foundation) is empty. AFN-T subsumes the classical no-go series Cantor~\cite{Cantor1891}, Russell~\cite{Russell1903}, G\"odel~\cite{Godel1931}, Tarski~\cite{Tarski1936}, Lawvere~\cite{Lawvere1969}, Ernst~\cite{Ernst2015} uniformly across $\RS$ and all $(\infty, n)$, $n \in \mathbb{N} \cup \{\infty\}$, and extends dually to the enactment-absolute stratum $\LAbs^\cE$.
+\emph{Boundary corollary: the Absolute Foundation No-Go Theorem (AFN-T).} The defined $\LAbs$ stratum (formally definable, non-reducible, and maximally generative foundation) is empty --- both via the direct/slice-conservative identity mechanism $(\alpha_0)$ across all $S \in \RS$ and, for arbitrary faithful subtheory inclusions $\iota_F : F \hookrightarrow S$, via strong diagonal anti-absoluteness $(\alpha_{\mathrm{diag}})$ under a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative interpretability. AFN-T stands alongside the classical no-go series Cantor~\cite{Cantor1891}, Russell~\cite{Russell1903}, G\"odel~\cite{Godel1931}, Tarski~\cite{Tarski1936}, Lawvere~\cite{Lawvere1969}, Ernst~\cite{Ernst2015} as a categorical boundary schema (without reproving their domain-specific diagonals) and extends dually to the enactment-absolute stratum $\LAbs^\cE$.
 
 \smallskip
 \noindent\textbf{Keywords:} moduli space of formal systems, classifying $2$-stacks, categorical logic, $(\infty, n)$-categories, higher topos theory, intensional type theory, meta-classification, effective topos, no-go theorems.
@@ -145,18 +145,8 @@ I study the $(\infty, n)$-categorical moduli space $\fM$ of formal systems (here
 
 \section{Introduction}
 
-\paragraph{Scope audit (8 October 2026).}
-AFN-T's identity argument is relative to the defined class $\cS_S$ and
-the definition of $\Pi_4$. It does not exclude new mathematics, new
-foundations, or operational refinements of Morita-equivalent realizations.
-In particular, a cost/time invariant descends through a localization only
-if it sends every inverted morphism to an equivalence. The reflective
-localization used for enactments does not automatically retain execution
-cost, causality, memory, or production resources. An Autogeny realization
-therefore requires these data above the localized classifier and separate
-proofs that its interpretation preserves them.
-
-
+\paragraph{Scope of the obstruction.}
+The identity argument $(\alpha_0)$ of AFN-T is relative to the defined class $\cS_S$ and the definition of $\Pi_4$, while the diagonal argument $(\alpha_{\mathrm{diag}})$ rules out internal interpretability of all Rich-foundations inside any formally $S$-presented candidate under canonical $\Sigma_1$-binumeration and classical (or negative-translated) proof-translation. Neither mechanism excludes new mathematics, new foundations, or operational refinements of Morita-equivalent realizations. In particular, a cost or time invariant descends through a localization only if it sends every inverted morphism to an equivalence. The reflective localization used for enactments does not automatically retain execution cost, causality, memory, or production resources; any resource-sensitive realization therefore retains those data \emph{above} the localized classifier and requires separate proofs of preservation.
 
 This paper studies the \emph{moduli space of formal systems} $\fM$, the classifying $(\infty, 2)$-stack whose points are Morita-equivalence classes of Rich-foundations (formal theories $F$ satisfying conditions (R1)--(R5) of Definition~\ref{def:rs}) and whose $k$-morphisms are faithful interpretations and provable natural equivalences. The principal results concern the structure of $\fM$:
 \begin{itemize}
@@ -165,9 +155,9 @@ This paper studies the \emph{moduli space of formal systems} $\fM$, the classify
 \item \textbf{Conditional categoricity of $\LClsMax$} (Theorem~\ref{thm:meta-cat}).
 \item \textbf{Open meta-stabilization and universe obligations} (Remark~\ref{thm:meta-stab}).
 \item \textbf{Conditional slice-locality} (Theorem~\ref{thm:slice-locality}), requiring a supplied compatible comparison.
-\item \textbf{Generated filtrations and their limitation} (Definition~\ref{def:display-grade}, Proposition~\ref{prop:grading}): generator-preserving functors cannot increase grade; the former equivalence-only seed gives grade zero everywhere (Corollary~\ref{cor:grade-collapse}).
-\item \textbf{Five-axis absoluteness} (\S\ref{sec:five-axis}).
-\item \textbf{Conditional AC/OC comparison} (Theorem~\ref{thm:ac-oc-duality}); the separate relative identity obstruction is Theorem~\ref{thm:dual-afnt}.
+\item \textbf{Generated filtrations and their limitation} (Definition~\ref{def:display-grade}, Proposition~\ref{prop:grading}): generator-preserving functors cannot increase grade; an equivalence-only seed gives grade zero everywhere (Corollary~\ref{cor:grade-collapse}).
+\item \textbf{Five-axis analysis} (\S\ref{sec:five-axis}).
+\item \textbf{Two-stage AC/OC comparison} (Theorem~\ref{thm:ac-oc-duality}) and the \textbf{Dual Boundary Lemma} $\LAbsE = \emptyset$ (Theorem~\ref{thm:dual-afnt}).
 \item \textbf{Outer boundary: $\LAbs = \emptyset$} --- the Absolute Foundation No-Go Theorem (Theorem~\ref{thm:afnt-alpha}, Theorem~\ref{thm:afnt-beta}).
 \end{itemize}
 
@@ -196,11 +186,11 @@ I work throughout in $\ZFC$ augmented by two inaccessible cardinals $\kappa_1 < 
 \begin{definition}[The total $(\infty, n)$-category $\mathbf{StrCat}_{S, n}$]\label{def:strcat}
 For $S \in \RS$ and $n \in \mathbb{N} \cup \{\infty\}$, the \emph{total $(\infty, n)$-category of $S$-structured $(\infty, n)$-categories}, denoted $\mathbf{StrCat}_{S, n}$, has:
 \begin{itemize}
-\item \textbf{Objects}: pairs $(\cC, \mathrm{str}_\cC)$ where $\cC$ is an $(\infty, n)$-category that is either essentially $\mathbf{U}_1$-small or $\kappa_1$-accessible (the two cases cover syntactic categories and model categories respectively; cf.\ (R5a)) and $\mathrm{str}_\cC$ is an $S$-model structure on $\cC$ (i.e., an interpretation of $S$-signature into $\cC$ satisfying the axioms of $S$).
+\item \textbf{Objects}: pairs $(\cC, \mathrm{str}_\cC)$ where $\cC$ is a $\mathbf{U}_2$-small $(\infty, n)$-category that is either essentially $\mathbf{U}_1$-small or $\kappa_S$-accessible within $\mathbf{U}_2$ (covering syntactic categories and model categories respectively; cf.\ (R5a)) and $\mathrm{str}_\cC$ is an $S$-model structure on $\cC$ (i.e., an interpretation of $S$-signature into $\cC$ satisfying the axioms of $S$).
 \item \textbf{$1$-morphisms}: $S$-preserving $(\infty, n)$-functors $\Phi : (\cC_1, \mathrm{str}_1) \to (\cC_2, \mathrm{str}_2)$, i.e., functors commuting with the respective $S$-model structures up to coherent $(\infty, n)$-isomorphism.
 \item \textbf{Higher morphisms}: coherent $(\infty, n)$-natural transformations between $S$-preserving functors.
 \end{itemize}
-I embed objects of $\Syn(S)$ and of any model $\cM \models S$ into $\mathbf{StrCat}_{S, n}$ via the pointing construction $X \mapsto (\Syn(S), X)$ and $Y \mapsto (\cM, Y)$ respectively. Morita-reducibility, as specified in Convention~\ref{conv:notation}, refers to the existence of an $S$-preserving $(\infty, n)$-functor in $\mathbf{StrCat}_{S, n}$ between such pointed structures that is an equivalence onto its image.
+I embed objects of $\Syn(S)$ and of any model $\cM \in \mathbf{U}_2$ of $S$ into $\mathbf{StrCat}_{S, n}$ via the pointing construction $X \mapsto (\Syn(S), X)$ and $Y \mapsto (\cM, Y)$ respectively. Morita-reducibility, as specified in Convention~\ref{conv:notation}, refers to the existence of an $S$-preserving $(\infty, n)$-functor in $\mathbf{StrCat}_{S, n}$ between such pointed structures that is an equivalence onto its image.
 \end{definition}
 
 \subsection{Assumption Register}\label{sec:assumption-register}
@@ -209,12 +199,12 @@ The register distinguishes the metatheoretic base, structural definitions, and a
 
 \begin{description}
 \item[\textbf{(A1) Foundational base.}] $\ZFC$ plus two strongly inaccessible cardinals $\kappa_1<\kappa_2$ (Convention~\ref{conv:zfc-inacc}). \emph{Status: foundational axiom package.} This is the declared base for constructions whose size and existence conditions have been verified. It does not certify its own consistency. A model construction gives an upper consistency bound; equiconsistency requires a converse interpretation or a separate lower-bound argument.
-\item[\textbf{(A2) Scope of ``metatheory''.}] The no-go quantifies over $\RS$ as delimited by (R1)--(R5) (\S\ref{sec:rs}): recursively enumerable, interpreting Robinson's $Q$, possessing a model in $\mathbf{U}_2$, $\mathbf{StrCat}$-compatible, with essentially $\mathbf{U}_1$-small $\Syn(S)$ of $\kappa_S$-accessible $\mathrm{Ind}$-completion (R5a). \emph{Status: definitional scope.} Systems outside $\RS$ --- non-r.e.\ oracle theories, infinitary logics without accessible syntax --- are not ruled on. Theorem~\ref{thm:afnt-alpha} is universal over $\RS$, not over an informal totality of ``all foundations''.
+\item[\textbf{(A2) Scope of ``metatheory''.}] The no-go quantifies over $\RS$ as delimited by (R1)--(R5) (\S\ref{sec:rs}): recursively enumerable, interpreting Robinson's $\mathsf{Q}$, possessing a model in $\mathbf{U}_2$, $\mathbf{StrCat}$-compatible, with essentially $\mathbf{U}_1$-small $\Syn(S)$ of $\kappa_S$-accessible $\mathrm{Ind}$-completion (R5a). \emph{Status: definitional scope.} Systems outside $\RS$ --- non-r.e.\ oracle theories, infinitary logics without accessible syntax --- are not ruled on. Theorem~\ref{thm:afnt-alpha} applies directly across $\RS$ for direct/slice-conservative presentations $(\alpha_0)$, and for arbitrary faithful subtheories $(\alpha_{\mathrm{diag}})$ under a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative interpretability.
 \item[\textbf{(A3) Formal content of ``absolute foundation''.}] $\LAbs$ membership is \emph{defined} as the conjunction $(F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n})$ (Definition~\ref{def:level6}). \emph{Status: interpretive adequacy assumption.} AFN-T forecloses precisely this triple; the philosophical reading ``no absolute foundation exists'' is faithful exactly to the extent the triple captures the intended notion. The five-axis analysis of \S\ref{sec:five-axis} hardens this reading axis-by-axis but does not eliminate its interpretive character.
 \item[\textbf{(A4) Comparison relation.}] Objects are compared through Morita-reducibility: existence of an $S$-preserving $(\infty, n)$-functor in $\mathbf{StrCat}_{S, n}$ that is an equivalence onto its image, with objects embedded by the pointing construction (Definition~\ref{def:strcat}). \emph{Status: structural convention.} A finer or coarser comparison topology would redraw stratum boundaries; \S\ref{sec:intensional-grading} measures exactly what the Morita quotient forgets.
 \item[\textbf{(A5) Axis exhaustiveness.}] The escape-parameter space is taken to be the five axes $(S, n, \mu, \xi, \pi)$ of \S\ref{sec:five-axis}. \emph{Status: definitional scope, not a theorem.} Exhaustiveness holds by definition of what the paper counts as an escape parameter; a genuinely new axis would require a new theorem, not contradict an existing one.
 \item[\textbf{(A6) Meta-classifier axioms.}] The proposed classifying apparatus satisfies (M1)--(M5) and, for the maximal class, (Max-1)--(Max-4). \emph{Status: axioms on a proposed classifier.} The joint-separation clause of (Max-4) supplies neither morphism lifts nor equivalences on hom-categories. Theorem~\ref{thm:meta-cat} additionally requires comparison functors that are essentially surjective and locally equivalences. Existence of these data remains open.
-\item[\textbf{(A7) Localization semantics of equivalence.}] The AC/OC duality (\S\ref{sec:ac-oc-duality}) reads ``equivalence'' through $\mathrm{gauge}_\cE$, the $2$-localization of $\cE$ at the reflection morphisms $\mathcal{R}_\cE$ (Pronk calculus of fractions, (BF1)--(BF5)): the reflection unit is inverted \emph{by} the localization, never in $\cE$ itself. \emph{Status: semantic convention}, of the same kind as ring-theoretic Morita equivalence.
+\item[\textbf{(A7) Localization semantics of equivalence.}] The AC/OC comparison (\S\ref{sec:ac-oc-duality}) reads coarse ``equivalence'' through $\mathrm{gauge}_\cE$, the $2$-localization of $\cE$ at the reflection morphisms $\mathcal{R}_\cE$ (Pronk calculus of fractions, (BF1)--(BF5)): the retraction $(\id_F, r) : E \to \varepsilon(F)$ (and thereby the counit $(\id_F, \iota) : \varepsilon(F) \to E$ of $\varepsilon \dashv \alpha$) is inverted \emph{by} the localization, never in $\cE$ itself, where the internal reflector unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ remains non-invertible. \emph{Status: semantic convention}, of the same kind as ring-theoretic Morita equivalence.
 \item[\textbf{(A8) Display generators.}] A filtration requires specified seeds and allowed operations. \emph{Status: presentation data.} The formerly canonical seed of equivalences produces a constant filtration. Nontrivial syntactic or resource-sensitive generators and invariance under their comparison maps are additional obligations.
 \end{description}
 
@@ -226,7 +216,7 @@ The register is an interface for extensions: each extension must specify which a
 
 I stratify $\fM$ into four formal strata distinguished by the two structurally distinct meta-operations $\mathrm{Cls}$ (horizontal, classifying) and $\mathrm{Gen}$ (vertical, generative). The strata, defined by their categorical conditions, are:
 \[
-\LFnd \;\xrightarrow{\mathrm{Cls}}\; \LCls \;\supsetneq\; \LClsMax \;\xrightarrow{\mathrm{Gen}}\; \LAbs.
+\LFnd \;\xrightarrow{\mathrm{Cls}}\; \LCls \;\supseteq\; \LClsMax \;\xrightarrow{\mathrm{Gen}}\; \LAbs.
 \]
 
 \begin{figure}[ht]
@@ -251,7 +241,7 @@ I stratify $\fM$ into four formal strata distinguished by the two structurally d
 \draw[red, very thick] ($(L6.north west)+(0.4,-0.2)$) -- ($(L6.south east)+(-0.4,0.2)$);
 \draw[red, very thick] ($(L6.north east)+(-0.4,-0.2)$) -- ($(L6.south west)+(0.4,0.2)$);
 \end{tikzpicture}
-\caption{The proposed formal stratification of $\fM$. Classification and maximal generation are distinct operations. The maximality conditions define $\LClsMax\subseteq\LCls$; they do not by themselves prove categoricity, existence of maximal classifiers, or strictness of the inclusion. The relative AFN-T argument excludes the explicitly defined $\LAbs$ conjunction. Any transport to enactment-centric moduli is conditional on the comparison and localization data of Theorem~\ref{thm:ac-oc-duality}.}
+\caption{The proposed formal stratification of $\fM$. Classification and maximal generation are distinct operations. The maximality conditions define $\LClsMax\subseteq\LCls$; they do not by themselves prove categoricity, existence of maximal classifiers, or strictness of the inclusion. The AFN-T argument excludes the explicitly defined $\LAbs$ conjunction. Transport of coarse moduli equivalence to enactment-centric moduli is conditional on the comparison and localization data of Theorem~\ref{thm:ac-oc-duality}, whereas $\LAbsE = \emptyset$ holds directly in $\cE$ (Theorem~\ref{thm:dual-afnt}).}
 \label{fig:hierarchy}
 \end{figure}
 
@@ -353,11 +343,11 @@ Synthetic mathematics & 2000s+ & Taylor, Shulman & Axiomatic synthetic foundatio
 \end{itemize}
 
 \begin{proposition}[Non-collapse of the horizontal meta at $\LFnd$]\label{prop:no-collapse}
-$\mathrm{Cls}(\LFnd)$ does \emph{not} embed into $\LFnd$ and does not coincide with $\LAbs$. It is therefore a distinct formal stratum, which I label $\LCls$.
+The horizontal classifier stratum $\LCls := \mathrm{Cls}(\LFnd)$ is neither a subclass of $\LFnd$ ($\LCls \not\subseteq \LFnd$) nor contained in or equal to $\LAbs$. It is therefore a distinct formal stratum.
 \end{proposition}
 
 \begin{proof}[Proof sketch.]
-A member $\mathbf{F} \in \mathrm{Cls}(\LFnd)$ is a $2$-category of Rich-foundations with an accessible classification functor into $\fM$. It is not itself a Rich-foundation (it does not satisfy (R1)--(R5) for a generating theory), so $\mathbf{F} \notin \LFnd$. It is not in $\LAbs$ because (M4) requires non-generativity, while $\LAbs$ requires maximal generativity $(\Pi_{3\text{-max}})$.
+The classifier package (M1)--(M5) specifies a locally small $2$-category $\mathbf{F}$ equipped with a classification functor $\Cl_{\mathbf{F}} : \mathbf{F} \to \fM$ and accessible reflection $R_{\mathbf{F}}$, which does not by itself supply a formal theory satisfying (R1)--(R5). While a composite structure carrying both packages can satisfy both criteria simultaneously (Proposition~\ref{prop:level-structure}~(ii)), satisfaction of (M1)--(M5) alone does not imply membership in $\LFnd$, so $\LCls \not\subseteq \LFnd$. Furthermore, (M4) requires non-generativity whereas $\LAbs$ requires maximal generativity $(\Pi_{3\text{-max}})$ (and is empty by Theorem~\ref{thm:afnt-alpha}), so $\LCls$ does not coincide with $\LAbs$.
 \end{proof}
 
 \paragraph{Horizontal stabilization.} Equivalence of iterated classifiers is an open problem (Remark~\ref{thm:meta-stab}); AFN-T does not prove that no further classifier structure can arise.
@@ -366,7 +356,7 @@ A member $\mathbf{F} \in \mathrm{Cls}(\LFnd)$ is a $2$-category of Rich-foundati
 
 \paragraph{Summary.} The formal sequence reads:
 \[
-\underbrace{\LFnd}_{\text{(R1)--(R5)}} \; \xrightarrow{\mathrm{Cls}} \; \underbrace{\LCls}_{\text{(M1)--(M5)}} \; \supsetneq \; \underbrace{\LClsMax}_{(\mathrm{Max}\text{-1})\text{--}(\mathrm{Max}\text{-4})} \; \xrightarrow{\mathrm{Gen}} \; \underbrace{\LAbs = \emptyset}_{\text{AFN-T}}
+\underbrace{\LFnd}_{\text{(R1)--(R5)}} \; \xrightarrow{\mathrm{Cls}} \; \underbrace{\LCls}_{\text{(M1)--(M5)}} \; \supseteq \; \underbrace{\LClsMax}_{(\mathrm{Max}\text{-1})\text{--}(\mathrm{Max}\text{-4})} \; \xrightarrow{\mathrm{Gen}} \; \underbrace{\LAbs = \emptyset}_{\text{AFN-T}}
 \]
 
 \section{Reasonable Rich-Metatheories}\label{sec:rs}
@@ -411,46 +401,46 @@ The following are reasonable Rich-metatheories. Each entry is a \emph{formal the
 \subsection{Non-examples}
 
 \begin{itemize}
-\item \emph{Affine logic without exponential $!$}: fails (R1) --- Peano induction requires contraction on the induction hypothesis.
+\item \emph{Purely propositional or contraction-free affine logic without arithmetic axioms}: fails (R1) --- without arithmetic operations and contraction/duplication sufficient to represent arbitrary numeral terms and the axioms of $\mathsf{Q}$ (in particular, totality of successor, addition, and multiplication), Robinson arithmetic $\mathsf{Q}$ is not interpreted.
 \item \emph{Inconsistent theories}: fail (R3).
 \item \emph{Second-order arithmetic with full semantics}: fails (R2) --- the full set of valid formulas is not recursively enumerable.
 \item \emph{Intuitive ``theories of everything''} in physics lacking formal axiomatization: fail (R1) and (R2).
-\item \emph{Strict philosophical ultrafinitism} (Esenin-Volpin~\cite{EseninVolpin1961,EseninVolpin1970}): fails (R1) at the strictest reading --- the totality of the successor function is rejected for ``infeasibly large'' arguments, so full Peano induction is not available. Bounded variants (see Boundary cases below) belong to a different stratum.
+\item \emph{Strict philosophical ultrafinitism} (Esenin-Volpin~\cite{EseninVolpin1961,EseninVolpin1970}): fails (R1) at the strictest reading --- rejecting the totality of successor, addition, or multiplication on ``infeasibly large'' arguments violates the basic totality axioms of Robinson's $\mathsf{Q}$ itself (already without invoking any induction schema). Bounded arithmetic variants (see Boundary cases below) behave differently.
 \end{itemize}
 
 \begin{proposition}[Numbering alone is not an independence witness]\label{prop:rs-independence}
 If a theory admits an effective G\"odel coding, additionally choosing a nonrecursive numbering does not refute the existence of an effective coding.
 \end{proposition}
 \begin{proof}[Witness audit]
-The original effective coding remains an existential witness. The replacement numbering changes a presentation, not the existential property of the theory. Consequently the former (R4)-countermodel does not establish independence of (R1)--(R5).
+The original effective coding remains an existential witness. The replacement numbering changes a presentation, not the existential property of the theory. Consequently a nonrecursive renumbering does not establish independence of (R4) from the remaining conditions.
 \end{proof}
-The other proposed independence witnesses also require reconstruction in one fixed signature with all remaining conditions verified. In particular, Robinson's Q has no induction schema, so absence of full induction does not prove non-interpretability of Q; and an inconsistent syntactic presentation does not automatically yield the required syntax--semantics adjunction. Full independence of (R1)--(R5) is not established here.
+Constructing full independence witnesses for (R1)--(R5) requires verifying all remaining conditions in one fixed signature: in particular, since Robinson's $\mathsf{Q}$ has no induction schema, absence of Peano induction does not witness failure of (R1), and an inconsistent syntactic presentation does not automatically yield the required syntax--semantics adjunction (R5b). Full independence of (R1)--(R5) is not established here.
 
 \begin{itemize}
-\item \emph{Bounded arithmetic and feasibility calculi.} The systems $\mathsf{I\Delta_0}$, $\mathsf{S}_2^i$ / $\mathsf{T}_2^i$ of Buss~\cite{Buss1986}, $\mathsf{V}_0$, polynomial-time computable arithmetics, and proof-theoretic feasibility calculi formalise restricted fragments of the ultrafinitist intuition. They satisfy (R2)--(R5) but realise (R1) only in a restricted form: the ambient arithmetic interprets a bounded-quantifier fragment of $\mathsf{PA}$, not full $\mathsf{PA}$. They are admissible into $\RS$ as \emph{weak Rich-metatheories}, classifying a corresponding sub-stack of $\fM$ at restricted intrinsic categorical depth $n_S$. Their Morita-relation to standard $\RS$-points is studied via reverse mathematics~\cite{Simpson2009}.
-\item \emph{Strict ultrafinitism (Esenin-Volpin tradition).} The strictest philosophical ultrafinitism, which rejects the totality of successor for ``infeasibly large'' arguments, falls outside $\RS$ at any standard reading of (R1) (above, Non-examples). The bounded-arithmetic and polynomial-time variants above provide formal reconstructions admissible into $\RS$ as weak Rich-metatheories.
+\item \emph{Bounded arithmetic and feasibility calculi.} The systems $\mathsf{I\Delta_0}$ and Buss's $\mathsf{S}_2^i$ / $\mathsf{T}_2^i$~\cite{Buss1986} extend Robinson's $\mathsf{Q}$ and therefore already satisfy (R1) literally (alongside (R2)--(R5) at $n_S = 1$), even though they lack full $\PA$ induction; they enter $\RS$ as \emph{weak Rich-metatheories}. Strictly weaker feasibility calculi that omit total multiplication (such as $\mathsf{V}_0$ or sub-$\mathsf{Q}$ fragments) do not interpret $\mathsf{Q}$ and fall outside $\RS$ unless extended to do so. The Morita relation of weak Rich-metatheories to stronger $\RS$-points (such as $\PA$ and subsystems of $\mathsf{Z}_2$) is studied via reverse mathematics~\cite{Simpson2009}.
+\item \emph{Strict ultrafinitism (Esenin-Volpin tradition).} The strictest philosophical ultrafinitism, rejecting totality of successor, addition, or multiplication for ``infeasibly large'' arguments, falls outside $\RS$ at (R1) (above, Non-examples). The $\mathsf{Q}$-extending bounded-arithmetic systems above provide formal reconstructions admissible into $\RS$ as weak Rich-metatheories.
 \item \emph{Paraconsistent theories.} Appendix~\ref{app:paraconsistent} gives a conditional transfer criterion. A suitable classical kernel and a translation preserving all three boundary predicates have to be supplied.
 \end{itemize}
 
 \subsection{\texorpdfstring{The Class $\cS_S$}{The Class S\_S}}
 
 \begin{definition}[$S$-definable categorical structures]\label{def:SS}
-Let $S \in \RS$. Define inductively:
+Let $S \in \RS$. Define inductively within the outer universe $\mathbf{U}_2$:
 \begin{align*}
-\cS_S^{\mathrm{local}} &:= \{(\cM, Y) : \cM \models S,\ Y \in \Ob(\cM)\} \;\cup\; \{(\Syn(S), X) : X \in \Ob(\Syn(S))\}, \\
+\cS_S^{\mathrm{local}} &:= \{(\cM, Y) : \cM \in \mathbf{U}_2,\ \cM \models S,\ Y \in \Ob(\cM)\} \;\cup\; \{(\Syn(S), X) : X \in \Ob(\Syn(S))\}, \\
 \cS_S^{(0)} &:= \cS_S^{\mathrm{local}}, \\
 \cS_S^{(k+1)} &:= \cS_S^{(k)} \,\cup\, \mathcal{O}\bigl(\cS_S^{(k)}\bigr),
 \end{align*}
-where $\mathcal{O}$ is the closure under the following fixed list of $(\infty, n)$-categorical operations, each taking $\cS_S^{(k)}$-objects as input and producing objects in $\cS_S^{(k+1)}$:
+where $\mathcal{O}$ collects the outputs (whenever the corresponding construction exists within $\mathbf{U}_2$) of the following fixed list of $(\infty, n)$-categorical operations applied to $\cS_S^{(k)}$-data:
 \begin{enumerate}[nosep,label=\textrm{(O\arabic*)}]
 \item Left and right Kan extensions along $\cS_S^{(k)}$-morphisms;
 \item Grothendieck constructions $\int F$ for Cartesian fibrations $F : I \to \cS_S^{(k)}$ with $I \in \cS_S^{(k)}$;
-\item Limits and colimits of small diagrams (throughout, ``small'' for a diagram means: indexed by an $(\infty, n)$-category that is $\mathbf{U}_2$-small) valued in $\cS_S^{(k)}$;
+\item Limits and colimits of $\mathbf{U}_2$-small diagrams (indexed by a $\mathbf{U}_2$-small $(\infty, n)$-category $I \in \mathbf{U}_2$) valued in $\cS_S^{(k)}$;
 \item Slice/comma/opposite categories built from $\cS_S^{(k)}$-data;
 \item Derived functors (Quillen sense) between $\cS_S^{(k)}$-objects equipped with model-category structure (when applicable; vacuous on objects without model structure);
 \item Symmetric monoidal tensor products and internal hom in closed monoidal $\cS_S^{(k)}$-objects.
 \end{enumerate}
-Set $\cS_S^{\mathrm{global}} := \bigcup_{k < \omega} \cS_S^{(k)}$ and $\cS_S := \cS_S^{\mathrm{local}} \cup \cS_S^{\mathrm{global}}$. All operations (O1)--(O6) are $\kappa_1$-accessible (Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994}); $\cS_S^{\mathrm{global}}$ is $\kappa_1$-accessible and $\mathbf{U}_2$-small.
+Set $\cS_S^{\mathrm{global}} := \bigcup_{k < \omega} \cS_S^{(k)}$ and $\cS_S := \cS_S^{\mathrm{local}} \cup \cS_S^{\mathrm{global}}$. Every member of $\cS_S$ lies in $\mathbf{U}_2$, so $\cS_S^{\mathrm{local}}$, $\cS_S^{\mathrm{global}}$, and $\cS_S$ are $\mathbf{U}_2$-classes ($\subseteq \mathbf{U}_2$, of cardinality $\le \kappa_2$); restricting both the semantic base ($\cM \in \mathbf{U}_1$) and diagram indices in (O3) to $\mathbf{U}_1$ produces a $\mathbf{U}_2$-small fragment $\cS_S^{(\mathbf{U}_1)} \in \mathbf{U}_2$. Because operations such as opposite categories (O4) or arbitrary $\mathbf{U}_2$-small (co)limits do not generally preserve a fixed accessibility cardinal $\kappa_1$, accessibility of any derived object in $\cS_S^{\mathrm{global}}$ is checked case by case rather than assumed globally across (O1)--(O6).
 \end{definition}
 
 \subsection{\texorpdfstring{Key Lemma: $S$-Definability Implies $\cS_S$-Membership}{Key Lemma: S-Definability Implies S\_S-Membership}}
@@ -460,7 +450,7 @@ If $X$ is a formally $S$-definable object --- meaning $X$ is specified by a form
 \end{lemma}
 
 \begin{proof}
-By Convention~\ref{conv:notation} (Morita-reducibility clause), an object $X$ directly presented by a formula $\phi_X \in S$ is viewed in $\mathbf{StrCat}_{S, n}$ as the pointed structure $(\Syn(S), [\phi_X])$. Since $[\phi_X] \in \Ob(\Syn(S))$, this pair lies in $\cS_S^{\mathrm{local}}$ \emph{by the first clause of Definition~\ref{def:SS}} --- no closure operation is required. Hence $X \in \cS_S^{\mathrm{local}} \subseteq \cS_S$. (When $\phi_X$ is instead presented inside a proper subtheory $\iota_F : F \hookrightarrow S$ as in Definition~\ref{def:F}, the translated formula $\iota_F(\phi_X) \in S$ defines $(\Syn(S), [\iota_F(\phi_X)]_S) \in \cS_S^{\mathrm{local}}$, whereas identifying $\Syn(F)[\phi_X]_F$ with $(\Syn(S), [\iota_F(\phi_X)]_S)$ as pointed $(\infty, n)$-categories requires slice-conservativity of $\Syn(\iota_F)$ — which fails in general for non-conservative extensions such as $\PA \hookrightarrow \PA + \Con(\PA)$. Theorem~\ref{thm:afnt-alpha} below handles both the slice-conservative case and arbitrary faithful subtheories $\iota_F : F \hookrightarrow S$.)
+By Convention~\ref{conv:notation} (Morita-reducibility clause), an object $X$ directly presented by a formula $\phi_X \in S$ is viewed in $\mathbf{StrCat}_{S, n}$ as the pointed structure $(\Syn(S), [\phi_X])$. Since $[\phi_X] \in \Ob(\Syn(S))$, this pair lies in $\cS_S^{\mathrm{local}}$ \emph{by the first clause of Definition~\ref{def:SS}} --- no closure operation is required. Hence $X \in \cS_S^{\mathrm{local}} \subseteq \cS_S$. (When $\phi_X$ is instead presented inside a proper subtheory $\iota_F : F \hookrightarrow S$ as in Definition~\ref{def:F}, the translated formula $\iota_F(\phi_X) \in S$ defines $(\Syn(S), [\iota_F(\phi_X)]_S) \in \cS_S^{\mathrm{local}}$, whereas identifying $(\Syn(F), [\phi_X]_F)$ with $(\Syn(S), [\iota_F(\phi_X)]_S)$ as pointed $(\infty, n)$-categories requires slice-conservativity of $\Syn(\iota_F)$ --- which fails in general for non-conservative extensions such as $\PA \hookrightarrow \PA + \Con(\PA)$. Theorem~\ref{thm:afnt-alpha} below handles both the slice-conservative case and arbitrary faithful subtheories $\iota_F : F \hookrightarrow S$.)
 \end{proof}
 
 \subsection{Size Stratification}\label{sec:size-stratification}
@@ -469,26 +459,27 @@ By Convention~\ref{conv:notation} (Morita-reducibility clause), an object $X$ di
 \begin{itemize}
 \item \textbf{Small} (elements of $\mathbf{U}_1$): sets of rank $< \kappa_1$.
 \item \textbf{Large} (elements of $\mathbf{U}_2 \setminus \mathbf{U}_1$): sets of rank in $[\kappa_1, \kappa_2)$.
-\item \textbf{Beyond $\mathbf{U}_2$}: sets of rank $\geq \kappa_2$, including $\mathbf{U}_2$-proper classes.
+\item \textbf{Beyond $\mathbf{U}_2$}: sets of rank $\geq \kappa_2$, including $\mathbf{U}_2$-classes (subsets of $\mathbf{U}_2$ of cardinality $\kappa_2$).
 \end{itemize}
 
 \paragraph{Cardinality bounds for ambient structures.}
 \begin{itemize}
-\item The $S$-definability class $\cS_S = \cS_S^{\mathrm{local}} \cup \cS_S^{\mathrm{global}}$ is $\mathbf{U}_2$-indexed: $\cS_S^{\mathrm{local}} \subseteq \mathbf{U}_1$ (objects of $\mathbf{U}_1$-sized models) and $\cS_S^{\mathrm{global}} \subseteq \mathbf{U}_2$ (derived constructions over $\cS_S^{\mathrm{local}}$ through $\mathbf{U}_2$-bounded functorial operations).
-\item $|\Ob(\cF)/\!\simeq| \leq 2^{\aleph_0} < \kappa_1$; $|\cF| \leq \kappa_2$.
-\item $|\Ob(\mathbf{StrCat}_{S, n})/\!\simeq| \leq 2^{\kappa_1} < \kappa_2$.
+\item The $S$-definability class $\cS_S = \cS_S^{\mathrm{local}} \cup \cS_S^{\mathrm{global}}$ is a $\mathbf{U}_2$-class ($\cS_S \subseteq \mathbf{U}_2$, cardinality $\le \kappa_2$): its syntactic base $\{(\Syn(S), X) : X \in \Ob(\Syn(S))\}$ is essentially $\mathbf{U}_1$-small by (R5a), while its semantic base $\{(\cM, Y) : \cM \in \mathbf{U}_2,\ \cM \models S,\ Y \in \Ob(\cM)\}$ necessarily includes models in $\mathbf{U}_2 \setminus \mathbf{U}_1$ (as required by (R3) for theories such as $\ZFC + \text{inacc}$) and is therefore not contained in $\mathbf{U}_1$. Restricting both model carriers and (O3)-diagram indices to $\mathbf{U}_1$ yields the $\mathbf{U}_2$-small fragment $\cS_S^{(\mathbf{U}_1)} \in \mathbf{U}_2$ of cardinality $\le \kappa_1 < \kappa_2$.
+\item Up to syntactic equivalence over a countable signature, there are countably many r.e.\ axiom sets, hence $|\Ob(\cF)/\!\simeq| \leq \aleph_0 \le 2^{\aleph_0} < \kappa_1$; allowing arbitrary $\mathbf{U}_2$-presentations gives $|\cF| \leq \kappa_2$.
+\item For the full ambient $\mathbf{U}_2$-class $\mathbf{StrCat}_{S, n}$, $|\Ob(\mathbf{StrCat}_{S, n})/\!\simeq| = \kappa_2$: indeed, for every cardinal $\mu < \kappa_2$, the product $\Set^I$ over $|I| = \mu$ (with $\mathbf{U}_1$-small sets) is a $\kappa_1$-accessible category in $\mathbf{U}_2$, yielding $\kappa_2$ pairwise non-equivalent objects. On the bounded-presentability subclass $\mathbf{StrCat}_{S, n}^{(\mathbf{U}_1)}$ consisting of essentially $\mathbf{U}_1$-small objects and $\kappa_1$-accessible categories whose full subcategory of $\kappa_1$-presentable objects is essentially $\mathbf{U}_1$-small (Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994}, Thm.~2.26), every object is determined up to equivalence by its $\mathbf{U}_1$-small generating category and $S$-structure, giving $|\Ob(\mathbf{StrCat}_{S, n}^{(\mathbf{U}_1)})/\!\simeq| \leq 2^{\kappa_1} < \kappa_2$.
 \item Any bound on $|\fM/\!\simeq_2|$ requires a verified size bound for its chosen presentation. Bounds for iterated classifiers require additional constructions and universe assumptions; Remark~\ref{thm:meta-stab} supplies no tower $(\kappa_k)$.
 \end{itemize}
 
 \section{\texorpdfstring{The $\LAbs$ Conditions}{The L\_Abs Conditions}}\label{sec:conditions}
 
 \begin{definition}[$(F_S)$]\label{def:F}
-An $(\infty, n)$-category $X$ satisfies $(F_S)$ for $S \in \RS$ iff $\exists F \in \cF$ with:
+A pointed $(\infty, n)$-categorical structure $X$ (in the sense of Convention~\ref{conv:notation} and Definition~\ref{def:strcat}) satisfies $(F_S)$ for $S \in \RS$ iff $\exists F \in \cF$ with:
 \begin{itemize}
-\item[\textbf{(F-1)}] $\iota_F : F \hookrightarrow S$ (subtheory inclusion);
+\item[\textbf{(F-1)}] $\iota_F : F \hookrightarrow S$ (faithful relative interpretation / subtheory inclusion);
 \item[\textbf{(F-2)}] $\iota_F^* : \Mod(S) \to \Mod(F)$ (induced model reduct);
-\item[\textbf{(F-3)}] $\phi_X \in F$ with $\Syn(F)[\phi_X] \simeq_{(\infty, n)} X$.
+\item[\textbf{(F-3)}] a formula $\phi_X$ in the language of $F$ presenting $X$ as the pointed syntactic structure $(\Syn(F), [\phi_X]_F) \simeq_{(\infty, n)} X$ (abbreviated $\Syn(F)[\phi_X]$).
 \end{itemize}
+The presentation is called \emph{direct} if $F = S$, and \emph{slice-conservative} if the induced functor $\Syn(\iota_F) : (\Syn(F), [\phi_X]_F) \to (\Syn(S), [\iota_F(\phi_X)]_S)$ restricts on $[\phi_X]_F$ to an $(\infty, n)$-equivalence onto its image in $\mathbf{StrCat}_{S, n}$ (for $F = S$, this holds trivially via the identity).
 \end{definition}
 
 \begin{definition}[$(\Pi_{4, S, n})$]\label{def:pi4}
@@ -506,19 +497,16 @@ $X \in \LAbs$ iff $X \models (F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-m
 \section{\texorpdfstring{Boundary Lemma: The Emptiness of $\LAbs$ ($(\alpha)$-Part of AFN-T)}{Boundary Lemma: The Emptiness of L\_Abs ((alpha)-Part of AFN-T)}}\label{sec:afnt-alpha}
 
 \begin{theorem}[Boundary Lemma: emptiness of $\LAbs$; AFN-T $(\alpha)$-part]\label{thm:afnt-alpha}
-For every Rich-metatheory $S \in \RS$ and every categorical level $n \in \mathbb{N} \cup \{\infty\}$, there exists no $(\infty, n)$-categorical object $X$ satisfying the $\LAbs$ triple
-\[
-(F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n}).
-\]
-Specifically, let $X$ satisfy $(F_S)$ via $\iota_F : F \hookrightarrow S$ and $\Syn(F)[\phi_X] \simeq_{(\infty, n)} X$:
+Let $S \in \RS$ and $n \in \mathbb{N} \cup \{\infty\}$, and let $X$ be a pointed $(\infty, n)$-categorical object satisfying $(F_S)$ via $\iota_F : F \hookrightarrow S$ and $(\Syn(F), [\phi_X]_F) \simeq_{(\infty, n)} X$:
 \begin{enumerate}[nosep,label=(\roman*)]
-\item \emph{Direct / slice-conservative mechanism $(\alpha_0)$}: whenever $F = S$ (direct $S$-definability) or $\Syn(\iota_F)$ restricts on $[\phi_X]$ to an $(\infty, n)$-equivalence onto $(\Syn(S), [\iota_F(\phi_X)]_S)$, already the sub-pair $(F_S) \wedge (\Pi_{4, S, n})$ is inconsistent.
-\item \emph{Strong diagonal anti-absoluteness $(\alpha_{\mathrm{diag}})$}: for \emph{every} faithful subtheory inclusion $\iota_F : F \hookrightarrow S$ in Definition~\ref{def:F} (without assuming slice-conservativity of $\Syn(\iota_F)$, and even if $(\Pi_{4, S, n})$ is omitted or punctured to exclude self-equivalences), the generative pair $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$ is inconsistent.
+\item \emph{Direct / slice-conservative mechanism $(\alpha_0)$}: whenever the $(F_S)$-presentation is direct ($F = S$) or slice-conservative, already the sub-pair $(F_S) \wedge (\Pi_{4, S, n})$ is inconsistent (for every $S \in \RS$ and $n \in \mathbb{N} \cup \{\infty\}$, without further hypotheses).
+\item \emph{Strong diagonal anti-absoluteness $(\alpha_{\mathrm{diag}})$}: suppose in addition that (a) the r.e.\ axiom set of $S$ is fixed by a canonical $\Sigma_1$-binumeration $\sigma_S$ in $\mathsf{Q}$ (stronger than bare (R4), determining the canonical $\Pi_1^0$ consistency sentence $\Con_{\sigma_S}(S)$), and (b) the composite interpretation $J := \iota_F \circ \tau : \PA + \Con_{\sigma_S}(S) \to S$ induced by any witness $\tau$ of $(\Pi_{3\text{-max}, S, n})$ is a classical first-order relative interpretation --- or, for intuitionistic, linear, or type-theoretic systems in $\RS$ (such as $\MLTT$, $\CIC$, $\HoTT$, $\mathsf{ILL}_{\mathsf{PA}}$, $\mathsf{HA}+\mathsf{MP}$, or topos internal languages from \S\ref{sec:rs}), is equipped with an explicit negative translation $(\cdot)^N$ of classical first-order arithmetic into $S$ together with a primitive-recursive proof-translation (verifiable in $\PA$) sending classical first-order derivations of $0 = 1$ in the arithmetic pullback to derivations of $\bot$ in $S$. Then for \emph{every} faithful subtheory inclusion $\iota_F : F \hookrightarrow S$ (without assuming slice-conservativity of $\Syn(\iota_F)$, and even if $(\Pi_{4, S, n})$ is omitted or punctured to exclude self-equivalences), the generative pair $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$ is inconsistent.
 \end{enumerate}
+In particular, across all $(S, n)$ in the scope of (i) or (ii), no object $X$ satisfies $(F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n})$.
 \end{theorem}
 
 \begin{corollary}[$\LAbs$ emptiness]\label{cor:level6-empty-alpha}
-$\LAbs = \emptyset$.
+Within the scope of Theorem~\ref{thm:afnt-alpha} (every direct or slice-conservative presentation over $\RS$, and every faithful subtheory presentation satisfying hypotheses (a)--(b) of $(\alpha_{\mathrm{diag}})$), $\LAbs = \emptyset$.
 \end{corollary}
 
 \begin{proof}
@@ -526,44 +514,48 @@ Immediate from Theorem~\ref{thm:afnt-alpha} and Definition~\ref{def:level6}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{thm:afnt-alpha}]
-Let $X$ satisfy $(F_S)$ via $F \in \cF$, $\iota_F : F \hookrightarrow S$, and $\phi_X \in F$ with $e : X \xrightarrow{\simeq_{(\infty, n)}} \Syn(F)[\phi_X]$.
+Let $X$ satisfy $(F_S)$ via $F \in \cF$, $\iota_F : F \hookrightarrow S$, and $\phi_X \in F$ with $e : X \xrightarrow{\simeq_{(\infty, n)}} (\Syn(F), [\phi_X]_F)$.
 
-\emph{Mechanism $(\alpha_0)$ (slice-conservative case).} Suppose $F = S$ or $\Syn(\iota_F)|_{[\phi_X]} : \Syn(F)[\phi_X] \to (\Syn(S), [\iota_F(\phi_X)]_S)$ is an $(\infty, n)$-equivalence onto its image. By Lemma~\ref{lem:SS-membership} applied to $\iota_F(\phi_X) \in S$, the target $Y := (\Syn(S), [\iota_F(\phi_X)]_S)$ lies in $\cS_S^{\mathrm{local}} \subseteq \cS_S$, and $\Syn(\iota_F)|_{[\phi_X]} \circ e : X \to Y$ (for $F = S$, simply $\id_X : X \to X$) is an $(\infty, n)$-equivalence onto its image with target in $\cS_S$, violating $(\Pi_{4, S, n})$.
+\emph{Mechanism $(\alpha_0)$ (direct / slice-conservative case).} Suppose $F = S$ or $\Syn(\iota_F)|_{[\phi_X]_F} : (\Syn(F), [\phi_X]_F) \to (\Syn(S), [\iota_F(\phi_X)]_S)$ is an $(\infty, n)$-equivalence onto its image. By Lemma~\ref{lem:SS-membership} applied to $\iota_F(\phi_X) \in S$, the target $Y := (\Syn(S), [\iota_F(\phi_X)]_S)$ lies in $\cS_S^{\mathrm{local}} \subseteq \cS_S$, and $\Syn(\iota_F)|_{[\phi_X]_F} \circ e : X \to Y$ (for $F = S$, simply $\id_X : X \to X$) is an $(\infty, n)$-equivalence onto its image with target in $\cS_S$, violating $(\Pi_{4, S, n})$.
 
-\emph{Mechanism $(\alpha_{\mathrm{diag}})$ (general faithful $\iota_F : F \hookrightarrow S$ via diagonalization).} By (R3), $S$ possesses a model $\cM \in \mathbf{U}_2$ in the ambient metatheory $\ZFC + 2\text{-inacc}$, so $S$ is syntactically consistent: there is no finite derivation of $\bot$ from $S$ in the standard natural numbers $\mathbb{N} = \omega \in \mathbf{U}_1$. Define the first-order arithmetic theory $T_S := \PA + \Con(S)$, where $\Con(S)$ is the canonical $\Pi_1^0$ consistency sentence for the r.e.\ presentation of $S$ supplied by (R2) and (R4). Because $\mathbb{N} \models \PA$ and $\Con(S)$ is true in $\mathbb{N}$ (no $\omega$-consistency assumption on $S$ is needed), the standard model $\mathbb{N} \in \mathbf{U}_1 \subset \mathbf{U}_2$ witnesses (R3) for $T_S$; conditions (R1), (R2), (R4), and first-order (R5) ($n_{T_S} = 1$, $\kappa_{T_S} = \kappa_1$; Lambek--Scott~\cite{LambekScott1986}) hold immediately, so $T_S \in \cF$.
+\emph{Mechanism $(\alpha_{\mathrm{diag}})$ (general faithful $\iota_F : F \hookrightarrow S$ via diagonalization).} By (R3), $S$ possesses a model $\cM \in \mathbf{U}_2$ in the ambient metatheory $\ZFC + 2\text{-inacc}$, so $S$ is syntactically consistent: there is no finite derivation of $\bot$ from $S$ in the standard natural numbers $\mathbb{N} = \omega \in \mathbf{U}_1$. Using the canonical $\Sigma_1$-binumeration $\sigma_S$ of the r.e.\ axiom set of $S$ supplied by hypothesis (a) (as opposed to an arbitrary $S$-definable provability predicate from bare (R4)), form the canonical $\Pi_1^0$ consistency sentence $\Con_{\sigma_S}(S) := \neg\mathrm{Prov}_{\sigma_S}(\ulcorner \bot \urcorner)$ and define the classical first-order arithmetic theory $T_S := \PA + \Con_{\sigma_S}(S)$. Because $\mathbb{N} \models \PA$ and $\Con_{\sigma_S}(S)$ is true in $\mathbb{N}$ (no $\omega$-consistency assumption on $S$ is needed), the standard model $\mathbb{N} \in \mathbf{U}_1 \subset \mathbf{U}_2$ witnesses (R3) for $T_S$; conditions (R1), (R2), (R4), and first-order (R5) ($n_{T_S} = 1$, $\kappa_{T_S} = \kappa_1$; Lambek--Scott~\cite{LambekScott1986}) hold immediately, so $T_S \in \cF$.
 
-Applying $(\Pi_{3\text{-max}, S, n})(X)$ at $F' := T_S \in \cF$ yields a faithful relative interpretation $\tau : T_S \to F$. Composing with $\iota_F : F \hookrightarrow S$ gives a relative interpretation $J := \iota_F \circ \tau : \PA + \Con(S) \to S$, hence an interpretation of $\mathsf{Q} + \Con(S)$ in $S$. Pulling back arithmetic sentences along $J$ defines $S_{\mathrm{arith}} := \{\psi \in \mathrm{Sent}(\mathcal{L}_{\mathsf{Q}}) : S \vdash J(\psi)\}$, a consistent recursively enumerable single-sorted extension of $\mathsf{Q} + \Con(S)$. Since any $S_{\mathrm{arith}}$-derivation of $0 = 1$ translates primitive recursively via $J$ to an $S$-contradiction, $\Con(S)$ implies $\Con(S_{\mathrm{arith}})$ on a Solovay definable $\mathsf{I\Delta_0} + \Omega_1$ cut inside $S_{\mathrm{arith}}$, yielding a relative interpretation of $\mathsf{Q} + \Con(S_{\mathrm{arith}})$ in the consistent r.e.\ theory $S_{\mathrm{arith}}$. This contradicts the Feferman--Pudl\'ak Second Incompleteness Theorem for relative interpretability (Feferman~\cite{Feferman1960}, Thm.~5.6; Pudl\'ak~\cite{Pudlak1985}, Thm.~2.1). Hence no object $X$ satisfies $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$, and a fortiori none satisfies the $\LAbs$ triple.
+Applying $(\Pi_{3\text{-max}, S, n})(X)$ at $F' := T_S \in \cF$ yields a faithful relative interpretation $\tau : T_S \to F$. Composing with $\iota_F : F \hookrightarrow S$ gives an interpretation $J := \iota_F \circ \tau : \PA + \Con_{\sigma_S}(S) \to S$. Under hypothesis (b), define the classical first-order arithmetic pullback
+\[
+  S_{\mathrm{arith}} := \{\psi \in \mathrm{Sent}(\mathcal{L}_{\PA}) : S \vdash J(\psi)\}
+\]
+in the classical first-order case, or $S_{\mathrm{arith}} := \{\psi \in \mathrm{Sent}(\mathcal{L}_{\PA}) : S \vdash J(\psi^N)\}$ using the supplied negative translation $(\cdot)^N$ (for which $\Pi_1^0$ sentences such as $\Con_{\sigma_S}(S)$ are preserved) in the intuitionistic, linear, or type-theoretic case. In either case, $S_{\mathrm{arith}}$ is a consistent classical first-order recursively enumerable extension of $\PA + \Con_{\sigma_S}(S)$ whose canonical $\Sigma_1$-axiom-enumeration $\sigma_{\mathrm{arith}}$ is induced directly from $\sigma_S$ and $J$ (or $J \circ (\cdot)^N$). By hypothesis (b), every classical first-order derivation of $0 = 1$ from $S_{\mathrm{arith}}$ translates primitive recursively to an $S$-derivation of $\bot$, and since $S_{\mathrm{arith}}$ extends $\PA$ (which proves totality of primitive-recursive functions and $\Sigma_1$-collection), $S_{\mathrm{arith}} \vdash \Con_{\sigma_S}(S) \to \Con_{\sigma_{\mathrm{arith}}}(S_{\mathrm{arith}})$. Because $S_{\mathrm{arith}} \vdash \Con_{\sigma_S}(S)$, we obtain $S_{\mathrm{arith}} \vdash \Con_{\sigma_{\mathrm{arith}}}(S_{\mathrm{arith}})$ (and a fortiori a classical relative interpretation of $\mathsf{Q} + \Con_{\sigma_{\mathrm{arith}}}(S_{\mathrm{arith}})$ in $S_{\mathrm{arith}}$), contradicting the G\"odel--Feferman--Pudl\'ak Second Incompleteness Theorem (Feferman~\cite{Feferman1960}, Thm.~5.6; Pudl\'ak~\cite{Pudlak1985}, Thm.~2.1). Hence no object $X$ satisfies $(F_S) \wedge (\Pi_{3\text{-max}, S, n})$, and a fortiori none satisfies the $\LAbs$ triple.
 \end{proof}
 
 \section{\texorpdfstring{Boundary Lemma: No Limit-Based Escape ($(\beta)$-Part of AFN-T)}{Boundary Lemma: No Limit-Based Escape ((beta)-Part of AFN-T)}}\label{sec:afnt-beta}
 
 \begin{theorem}[Boundary Lemma: no limit-based escape; AFN-T $(\beta)$-part]\label{thm:afnt-beta}
-Let $\lambda$ be an ordinal with $\mathrm{cf}(\lambda) < \kappa_2$ a regular cardinal (so the cofinal subsequence $\{A_{\kappa_i}\}_{i < \mathrm{cf}(\lambda)}$ used to compute the colimit is $\mathbf{U}_2$-indexed; this is the operative bound for the categorical machinery, no constraint on $\lambda$ itself beyond the existence of such a cofinality), and let $\{A_\kappa\}_{\kappa < \lambda}$ be a transfinite sequence of objects satisfying:
-\begin{enumerate}[label=(\roman*)]
-\item Each $A_\kappa$ is formally specified within some Rich-foundation $F_\kappa$ over $S$.
-\item The sequence is monotone in an appropriate $(\infty, n)$-categorical sense (there are coherent transition functors $A_\kappa \to A_{\kappa'}$ for $\kappa < \kappa'$).
-\item The limit $A_\infty := \colim_{\kappa < \lambda} A_\kappa$ exists in the ambient $(\infty, n)$-category.
+Let $S \in \RS$, let $\lambda$ be an ordinal, and let $\{A_\kappa\}_{\kappa < \lambda}$ be a transfinite diagram of pointed $(\infty, n)$-categorical objects with coherent transition functors $f_{\kappa, \kappa'} : A_\kappa \to A_{\kappa'}$ ($\kappa < \kappa' < \lambda$) admitting a colimit $A_\infty := \colim_{\kappa < \lambda} A_\kappa$ in the ambient $(\infty, n)$-categorical meta-universe:
+\begin{enumerate}[nosep,label=(\alph*)]
+\item \emph{Definable $\mathbf{U}_2$-cofinal closure ($\neg\Pi_4$)}: suppose in addition that (i) $\mathrm{cf}(\lambda) < \kappa_2$, so a cofinal subdiagram $D : I \to \mathbf{StrCat}_{S, n}$ is $\mathbf{U}_2$-small ($I \in \mathbf{U}_2$); (ii) every term $D(i)$ lies in $\cS_S^{(k)}$ for a fixed finite stage $k < \omega$ (in particular, each term is directly $S$-definable or slice-conservatively presented in $S$ via Lemma~\ref{lem:SS-membership}); (iii) the transition functors $D(i \to j)$ form an $S$-definable diagram valued in $\cS_S^{(k)}$; and (iv) the colimit $A_\infty \simeq \colim_{i \in I} D(i)$ exists within $\mathbf{U}_2$ (and, where $\kappa_1$-accessibility of $A_\infty$ is also required, the diagram and transitions satisfy the relevant presentability/accessibility hypotheses rather than relying on cofinality alone). Then $A_\infty \in \cS_S^{(k+1)} \subseteq \cS_S^{\mathrm{global}} \subseteq \cS_S$, so $\id_{A_\infty}$ witnesses $A_\infty \to_{M, n} A_\infty \in \cS_S$ and $A_\infty$ fails $(\Pi_{4, S, n})$.
+\item \emph{Unconditional exclusion from $\LAbs$}: without assuming $S$-definability of transitions, slice-conservativity, $\mathrm{cf}(\lambda) < \kappa_2$, or preservation of a fixed accessibility cardinal, the limit object $A_\infty$ does not belong to $\LAbs$ within the scope of Theorem~\ref{thm:afnt-alpha}.
 \end{enumerate}
-Then $A_\infty \in \cS_S^{\mathrm{global}}$, and therefore $A_\infty$ is Morita-reducible to an element of $\cS_S$. In particular, $A_\infty$ does not satisfy $(\Pi_{4, S, n})$.
 \end{theorem}
 
 \begin{proof}
-Each $A_\kappa \in \cS_S$ by Lemma~\ref{lem:SS-membership}; $S$-definability of the transition functors makes $D : \lambda \to \cS_S$ (valued in the pointed structures of Definition~\ref{def:SS}) an $S$-indexed diagram. By Definition~\ref{def:SS}, $\cS_S^{\mathrm{global}}$ is closed under Grothendieck constructions and Kan extensions along $S$-definable morphisms; hence $A_\infty = \colim D \in \cS_S^{\mathrm{global}}$. Accessibility: by the standard filtered-colimit closure properties of accessible categories (Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994}, particularly the closure of $\kappa$-accessible categories under $\lambda$-filtered colimits for regular $\lambda \leq \kappa$ and the preservation of accessibility under accessible reindexing), the colimit inherits $\kappa_1$-accessibility from the diagram. Morita-reduction to the canonical model-category colimit contradicts $(\Pi_4)$.
+\emph{(a)} By (i)--(iii), $D : I \to \cS_S^{(k)}$ is a $\mathbf{U}_2$-small diagram in $\cS_S^{(k)}$ whose colimit $A_\infty$ exists in $\mathbf{U}_2$ by (iv). Applying closure operation (O3) of Definition~\ref{def:SS} places $A_\infty \in \cS_S^{(k+1)} \subseteq \cS_S^{\mathrm{global}} \subseteq \cS_S$. Consequently the identity functor $\id_{A_\infty} : A_\infty \to A_\infty$ is an $(\infty, n)$-equivalence onto its image with target in $\cS_S$, contradicting $(\Pi_{4, S, n})$. (Note that $\mathrm{cf}(\lambda) < \kappa_2$ does not by itself imply $S$-definability of transitions --- as the terminal-collapse counterexample below demonstrates --- nor does $\kappa_1$-accessibility of individual terms imply $\kappa_1$-accessibility of a $\mathrm{cf}(\lambda)$-indexed colimit without explicit accessibility/presentability hypotheses on the transitions and diagram.)
+
+\emph{(b)} Immediate from Proposition~\ref{prop:proper-class} below applied directly to $A_\infty$: either $\exists S' \in \RS$ witnessing $(F_{S'})(A_\infty)$, in which case Theorem~\ref{thm:afnt-alpha} refutes $A_\infty \in \LAbs$ at $S'$, or $\neg(F_{S'})(A_\infty)$ for every $S' \in \RS$, refuting the first conjunct of Definition~\ref{def:level6}.
 \end{proof}
 
 \subsection{Proper-Class Towers Do Not Provide an Escape}
 
 \begin{proposition}[Proper-class and non-uniform towers: colimit $\RS$-definability dichotomy]\label{prop:proper-class}
-Let $\{A_\alpha\}_{\alpha \in I}$ be any directed or proper-class-indexed tower of objects over Rich-foundations, and suppose an intended limit object $A_\infty := \colim_{\alpha \in I} A_\alpha$ exists in the ambient $(\infty, n)$-categorical meta-universe. With respect to the class $\RS$, the limit object $A_\infty$ satisfies exactly one of the following two alternatives, and in neither case does $A_\infty$ belong to $\LAbs$:
+Let $\{A_\alpha\}_{\alpha \in I}$ be any directed or proper-class-indexed tower of objects over Rich-foundations, and suppose an intended limit object $A_\infty := \colim_{\alpha \in I} A_\alpha$ exists in the ambient $(\infty, n)$-categorical meta-universe. With respect to the class $\RS$, the limit object $A_\infty$ satisfies exactly one of the following two alternatives, and in neither case does $A_\infty$ belong to $\LAbs$ within the scope of Theorem~\ref{thm:afnt-alpha}:
 \begin{itemize}
-\item[\textbf{(a)}] \emph{$\RS$-definable colimit.} There exists at least one $S' \in \RS$ such that $A_\infty$ satisfies $(F_{S'})$ (for instance, when the tower is uniformly generated by a recursive scheme in some $S_{\mathrm{tow}} \in \RS$ that defines $A_\infty$, or when a non-uniform diagram collapses to a finitely specifiable colimit). Then for every $S' \in \RS$ witnessing $(F_{S'})(A_\infty)$ and every $n \in \mathbb{N} \cup \{\infty\}$, Theorem~\ref{thm:afnt-alpha} applied at $(S', n)$ refutes $(F_{S'})(A_\infty) \wedge (\Pi_{4, S', n})(A_\infty) \wedge (\Pi_{3\text{-max}, S', n})(A_\infty)$.
+\item[\textbf{(a)}] \emph{$\RS$-definable colimit.} There exists at least one $S' \in \RS$ such that $A_\infty$ satisfies $(F_{S'})$ (for instance, when the tower is uniformly generated by a recursive scheme in some $S_{\mathrm{tow}} \in \RS$ that defines $A_\infty$, or when a non-uniform diagram collapses to a finitely specifiable colimit). Then for every $S' \in \RS$ witnessing $(F_{S'})(A_\infty)$ and every $n \in \mathbb{N} \cup \{\infty\}$ in the scope of Theorem~\ref{thm:afnt-alpha}, Theorem~\ref{thm:afnt-alpha} applied at $(S', n)$ refutes $(F_{S'})(A_\infty) \wedge (\Pi_{4, S', n})(A_\infty) \wedge (\Pi_{3\text{-max}, S', n})(A_\infty)$.
 \item[\textbf{(b)}] \emph{$\RS$-indefinable colimit.} For every $S' \in \RS$, the limit $A_\infty$ fails $(F_{S'})$. Then for every $(S', n) \in \RS \times (\mathbb{N} \cup \{\infty\})$, the first conjunct of Definition~\ref{def:level6} fails at $A_\infty$.
 \end{itemize}
-Consequently, $A_\infty \notin \LAbs$.
+Consequently, $A_\infty \notin \LAbs$ within the scope of Theorem~\ref{thm:afnt-alpha}.
 \end{proposition}
 
 \begin{proof}
-In the ambient metatheory $\ZFC + 2\text{-inacc}$, excluded middle splits on the sentence $\exists S' \in \RS,\ (F_{S'})(A_\infty)$. In Case~(a), suppose toward contradiction that $A_\infty \in \LAbs$; by Definition~\ref{def:level6}, there exists $(S_0, n_0) \in \RS \times (\mathbb{N} \cup \{\infty\})$ such that $A_\infty \models (F_{S_0}) \wedge (\Pi_{4, S_0, n_0}) \wedge (\Pi_{3\text{-max}, S_0, n_0})$, which is impossible by Theorem~\ref{thm:afnt-alpha} applied directly at $(S_0, n_0)$. In Case~(b), $\neg(F_{S'})(A_\infty)$ holds for all $S' \in \RS$, so no witness $(S', n)$ for Definition~\ref{def:level6} can exist. In both cases $A_\infty \notin \LAbs$.
+In the ambient metatheory $\ZFC + 2\text{-inacc}$, excluded middle splits on the sentence $\exists S' \in \RS,\ (F_{S'})(A_\infty)$. In Case~(a), suppose toward contradiction that $A_\infty \in \LAbs$ within the scope of Theorem~\ref{thm:afnt-alpha}; by Definition~\ref{def:level6}, there exists $(S_0, n_0) \in \RS \times (\mathbb{N} \cup \{\infty\})$ such that $A_\infty \models (F_{S_0}) \wedge (\Pi_{4, S_0, n_0}) \wedge (\Pi_{3\text{-max}, S_0, n_0})$, which is impossible by Theorem~\ref{thm:afnt-alpha} applied directly at $(S_0, n_0)$. In Case~(b), $\neg(F_{S'})(A_\infty)$ holds for all $S' \in \RS$, so no witness $(S', n)$ for Definition~\ref{def:level6} can exist. In both cases $A_\infty \notin \LAbs$.
 \end{proof}
 
 \paragraph{Counterexample to naive diagram recovery (terminal collapse).}
@@ -582,22 +574,21 @@ Crucially, the dichotomy above is taken on the \emph{limit object} $A_\infty$ ra
 A subtler variant of the tower approach introduces a choice at each stage: $A_{\kappa+1}$ is not uniquely determined by $A_\kappa$, but depends on a structural choice. The space $\mathbb{T}$ of all possible trajectories is a large categorical object --- a tree, a simplicial set, or a path-groupoid.
 
 \begin{proposition}\label{prop:trajectory-space}
-The space of trajectory choices admits (at least) four presentations at different categorical resolutions --- these are \emph{not} mutually equivalent objects, but each captures the trajectory data at its own truncation level, and \emph{each} lies in $\cS_S^{\mathrm{global}}$:
+Fix $S \in \RS$ and an $S$-definable $\mathbf{U}_2$-small fragment $\fM_0 \in \cS_S^{\mathrm{global}}$ of the classifying $2$-stack $\fM$. The space of trajectory choices over $\fM_0$ admits four distinct, generally non-equivalent presentations at different categorical resolutions, each remaining in $\cS_S^{\mathrm{global}}$ whenever the corresponding derived construction exists in $\mathbf{U}_2$:
 \begin{itemize}
-\item as a path-groupoid, $\Pi_1(\fM)$, where $\fM$ is the classifying $2$-stack of Rich-foundations;
-\item as a simplicial set, the nerve $\mathrm{N}(\fM)$;
-\item as a choice tree, the tree of refinement choices over $\fM$;
-\item as a relation category, $\mathrm{Rel}(\fM)$.
+\item as a fundamental $1$-groupoid, $\Pi_1(\fM_0)$ (retaining invertible $1$-cells modulo $2$-isomorphism);
+\item as a simplicial set, the nerve $\mathrm{N}(\fM_0)$;
+\item as a rooted choice tree of refinement sequences over $\fM_0$;
+\item as a relation category, $\mathrm{Rel}(\fM_0)$.
 \end{itemize}
-Whichever resolution $\mathbb{T}$ is taken at, the conclusion below applies.
 \end{proposition}
 
 \begin{proof}[Proof (sketch)]
-Each of the four presentations is a standard derived construction over the $(\infty, 1)$-topos of Rich-foundations. See Lurie~\cite{LurieHTT} \S 3.2 for the identification of path-groupoids with simplicial sets; Pronk~\cite{Pronk1996} for the bicategory-of-fractions interpretation; the remaining equivalences are classical.
+None of these presentations assumes that $\fM$ or $\fM_0$ is an $(\infty, 1)$-topos, nor asserts equivalences among the four resolutions (each retains a different truncation or branching level of the underlying bicategorical data of $\fM_0$). Starting from $\fM_0 \in \cS_S^{\mathrm{global}}$, each presentation is formed by standard small (co)limit, slice/comma, and Grothendieck constructions from Definition~\ref{def:SS} within $\mathbf{U}_2$ (cf.\ Lurie~\cite{LurieHTT} \S 3.2 for simplicial nerves of categorical data, and Pronk~\cite{Pronk1996} for bicategorical fraction presentations) and therefore lies in $\cS_S^{\mathrm{global}}$.
 \end{proof}
 
 \begin{corollary}
-The limit of any trajectory-based tower approach lies in $\cS_S^{\mathrm{global}}$ and is therefore Morita-reducible within the classifying stack $\fM$. No $\LAbs$ escape occurs.
+The colimit of any trajectory-indexed diagram satisfying the definable-diagram closure hypotheses of Theorem~\ref{thm:afnt-beta}~(a) lies in $\cS_S^{\mathrm{global}}$ and fails $(\Pi_{4, S, n})$. Unconditionally, by Theorem~\ref{thm:afnt-beta}~(b) and Proposition~\ref{prop:proper-class}, no such colimit belongs to $\LAbs$ within the scope of Theorem~\ref{thm:afnt-alpha}.
 \end{corollary}
 
 \section{Five-Axis Absoluteness}\label{sec:five-axis}
@@ -634,18 +625,18 @@ I call this the \emph{five-axis absoluteness} property of AFN-T. Figure~\ref{fig
 \end{figure}
 
 \begin{theorem}[Horizontal absoluteness]\label{thm:horizontal}
-AFN-T (Theorem~\ref{thm:afnt-alpha}) holds for every $S \in \RS$ uniformly: there is a single proof working for all Rich-metatheories satisfying (R1)--(R5).
+AFN-T (Theorem~\ref{thm:afnt-alpha}) is uniform across $S \in \RS$: mechanism $(\alpha_0)$ applies uniformly to every $S \in \RS$ for direct or slice-conservative presentations, and mechanism $(\alpha_{\mathrm{diag}})$ applies uniformly to every $S \in \RS$ equipped with a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative proof-translation.
 \end{theorem}
 
 \begin{proof}
-The proof of Theorem~\ref{thm:afnt-alpha} consists of a single application of Lemma~\ref{lem:SS-membership} (syntax--semantics bridge) together with the observation that $\id_X : X \to X$ realizes a Morita reduction violating $(\Pi_{4, S, n})$. Lemma~\ref{lem:SS-membership} uses only (R2) and (R5a) (the syntactic category exists and its objects support the pointing construction of Convention~\ref{conv:notation}); the Morita-reduction observation uses only the categorical identity morphism. No datum from $S$ beyond (R1)--(R5) is invoked. Hence the proof applies uniformly to all $S \in \RS$.
+Mechanism $(\alpha_0)$ invokes only Lemma~\ref{lem:SS-membership} (using (R2) and (R5a)) and the categorical identity morphism $\id_X$, using no datum specific to a particular $S \in \RS$. Mechanism $(\alpha_{\mathrm{diag}})$ invokes only (R1)--(R4) and first-order (R5) for the uniform test theory $T_S := \PA + \Con_{\sigma_S}(S) \in \cF$, together with the stated canonical $\Sigma_1$-binumeration and proof-translation hypotheses. Hence both arguments operate uniformly across their declared scopes in $\RS$.
 \end{proof}
 
 \begin{theorem}[Relative vertical exclusion]\label{thm:vertical}
-At every categorical level for which the syntax--semantics bridge and derived-class membership of Theorem~\ref{thm:afnt-alpha} are supplied, its candidate fails $\Pi_4$.
+At every categorical level $n \in \mathbb{N} \cup \{\infty\}$ for which the syntax--semantics bridge and presentation hypotheses of Theorem~\ref{thm:afnt-alpha} are supplied, no candidate satisfies the $\LAbs$ triple (specifically, a direct or slice-conservative candidate fails $\Pi_4$ via $(\alpha_0)$, and a general faithful subtheory candidate under hypotheses (a)--(b) of $(\alpha_{\mathrm{diag}})$ fails $\Pi_{3\text{-max}}$).
 \end{theorem}
 \begin{proof}
-The identity of the candidate is an equivalence to a derived-class target, namely itself. This argument is independent of the chosen depth once those hypotheses hold. It neither constructs higher-depth syntax nor proves that an unbounded tower stabilizes.
+In the direct or slice-conservative case, the identity (or slice-conservative inclusion) gives an $(\infty, n)$-equivalence onto its image with target in $\cS_S$, independent of $n$. In the diagonal case $(\alpha_{\mathrm{diag}})$, the contradiction is derived at the level of faithful relative interpretations into $S$ via $T_S = \PA + \Con_{\sigma_S}(S)$, likewise independent of the ambient depth $n$. Neither argument constructs higher-depth syntax or proves that an unbounded categorical tower stabilizes.
 \end{proof}
 
 \begin{theorem}[Relative meta-vertical exclusion]\label{thm:meta-vertical}
@@ -655,25 +646,17 @@ of the derived class $\cS_S$ fails $\Pi_4$ in that metatheory.
 \begin{proof}
 The identity functor on the object is an equivalence onto its image and
 is one of the interpretations prohibited by $\Pi_4$. This is the same
-argument as Theorem~\ref{thm:afnt-alpha}.
+argument as mechanism $(\alpha_0)$ of Theorem~\ref{thm:afnt-alpha}.
 \end{proof}
 This relative exclusion does not imply that iteration adds no structure,
 that a tower stabilizes, or that all possible iterations are $S$-definable.
 
-\begin{theorem}[Lateral absoluteness]\label{thm:lateral}
-All alternative categorical orderings reduce to (or enrich) the $(\infty, n)$-hierarchy and therefore satisfy AFN-T.
+\begin{theorem}[Conditional lateral exclusion]\label{thm:lateral}
+Let $\mathcal{D}$ be an alternative categorical doctrine (such as $\infty$-operads, double categories, globular or cubical weak $\omega$-categories, stable $(\infty, 1)$-categories, or monoidal/fusion categories). Suppose a faithful embedding $U : \mathcal{D} \hookrightarrow (\infty, n)\text{-}\Cat$ (for a specified $n \in \mathbb{N} \cup \{\infty\}$) is supplied that sends every $\mathcal{D}$-candidate satisfying the $\mathcal{D}$-analogue of $(F_S) \wedge (\Pi_{4, S, n}) \wedge (\Pi_{3\text{-max}, S, n})$ to a pointed object $U(X) \in \mathbf{StrCat}_{S, n}$ meeting the hypotheses of Theorem~\ref{thm:afnt-alpha}. Then no such $\mathcal{D}$-candidate exists.
 \end{theorem}
 
 \begin{proof}
-Each listed ordering admits a canonical translation to $(\infty, n)$-$\Cat$ for appropriate $n$:
-\begin{itemize}
-\item Operads $\to$ symmetric monoidal $(\infty, 1)$-categories (Lurie HA~\cite{LurieHA} \S 5).
-\item Double categories $\to$ $(\infty, 2)$-categories (Grandis).
-\item Globular/cubical/opetopic $\omega$-categories $\simeq (\infty, \infty)$-categories (Ara--Maltsiniotis~\cite{AraMaltsiniotis2017}).
-\item Stable $(\infty, 1)$-categories $\to (\infty, 1)$-categories via spectrification.
-\item Fusion categories $\to$ finite $(\infty, 1)$-categories.
-\end{itemize}
-In each case, the translation preserves formal definability: objects in the alternative ordering correspond to objects in the $(\infty, n)$-hierarchy at the relevant level. Therefore, AFN-T applies uniformly across all orderings.
+Transport a putative $\mathcal{D}$-candidate $X$ along $U$ and apply Theorem~\ref{thm:afnt-alpha} at $(S, n)$ in $(\infty, n)\text{-}\Cat$. For doctrines that are already full or replete subdoctrines of $(\infty, n)\text{-}\Cat$ --- such as stable $(\infty, 1)$-categories (which are $(\infty, 1)$-categories with finite limits/colimits and invertible suspension, Lurie HA~\cite{LurieHA} \S 1.1) or $\infty$-operads via their symmetric monoidal envelopes (Lurie HA~\cite{LurieHA} \S 2.2) --- or doctrines admitting established homotopy comparisons (such as globular and cubical weak $\omega$-categories, Ara--Maltsiniotis~\cite{AraMaltsiniotis2017}), the ambient comparison functor is standard. By contrast, strictly richer doctrines such as general double categories (which carry independent horizontal and vertical $1$-morphisms rather than reducing to $(\infty, 2)$-categories) or linear/fusion categories (whose monoidal and linear structure is not recovered by forgetting to a bare $1$-category) require an explicitly supplied faithful embedding preserving the boundary predicates; the obstruction is conditional on that embedding.
 \end{proof}
 
 \begin{definition}[Lawvere-scope]\label{def:law-scope}
@@ -688,18 +671,18 @@ Membership in $\cL\cS$ is a structural property of $F$ and does not presuppose a
 \end{definition}
 
 \begin{theorem}[Completeness axis, conditional on Lawvere-scope]\label{thm:completeness}
-Suppose $F \in \cL\cS$. Then every structural variation of $F$ reduces to one of the four axes (horizontal, vertical, meta-vertical, lateral). In particular, AFN-T is five-axis absolute within $\cL\cS$.
+Suppose $F \in \cL\cS$. Then every structural variation of $F$ within the presentation data (L1)--(L4) reduces to one of the four axes (horizontal, vertical, meta-vertical, lateral), subject to the explicit hypotheses of Theorems~\ref{thm:horizontal}--\ref{thm:lateral}.
 \end{theorem}
 
 \begin{proof}
 Let $F \in \cL\cS$. By Definition~\ref{def:law-scope}, $F$ is characterized by a quadruple:
 \begin{itemize}
-\item \textbf{(A) Syntactic structure $\Syn(F)$}: signature + axioms + inference rules --- the \emph{horizontal axis} (over R-S).
+\item \textbf{(A) Syntactic structure $\Syn(F)$}: signature + axioms + inference rules --- the \emph{horizontal axis} (over $\RS$).
 \item \textbf{(B) Semantic depth}: the level $n$ of $\Mod(F)$ as $(\infty, n)$-category --- the \emph{vertical axis}.
 \item \textbf{(C) Meta-reflection}: iterations of G\"odel coding and reflection principles --- the \emph{meta-vertical axis}.
-\item \textbf{(D) Alternative semantics}: operadic, globular, cubical, opetopic, etc.\ --- the \emph{lateral axis}.
+\item \textbf{(D) Alternative semantics}: operadic, globular, cubical, stable, or faithfully embedded alternative doctrines --- the \emph{lateral axis}.
 \end{itemize}
-By Definition~\ref{def:law-scope}, membership in $\cL\cS$ \emph{means} that $F$ is presented exactly by the data (L1)--(L4), i.e.\ by the quadruple (A)--(D); this is where the conditionality of the theorem resides --- within $\cL\cS$, exhaustiveness of (A)--(D) holds by definition of the scope, not as an additional claim. Thus any putative fifth axis $\eta$ is a subcomponent of one of (A)--(D). Either $\eta \subseteq$ (A), in which case AFN-T for $\eta$ reduces to horizontal absoluteness (Theorem~\ref{thm:horizontal}); $\eta \subseteq$ (B), reducing to vertical (Theorem~\ref{thm:vertical}); $\eta \subseteq$ (C), reducing to meta-vertical (Theorem~\ref{thm:meta-vertical}); or $\eta \subseteq$ (D), reducing to lateral (Theorem~\ref{thm:lateral}). There is no independent fifth axis within $\cL\cS$.
+By Definition~\ref{def:law-scope}, membership in $\cL\cS$ \emph{means} that $F$ is presented exactly by the data (L1)--(L4), i.e.\ by the quadruple (A)--(D); this is where the conditionality of the theorem resides --- within $\cL\cS$, exhaustiveness of (A)--(D) holds by definition of the scope, not as an additional claim. Thus any putative fifth axis $\eta$ is a subcomponent of one of (A)--(D), and AFN-T applies under the corresponding hypotheses of Theorem~\ref{thm:horizontal}, Theorem~\ref{thm:vertical}, Theorem~\ref{thm:meta-vertical}, or Theorem~\ref{thm:lateral}. There is no independent fifth axis within $\cL\cS$.
 \end{proof}
 
 \section{Three Standard Bypass Paths}\label{sec:bypass}
@@ -727,13 +710,12 @@ and hopes that the limit $S_\infty$ captures something beyond its starting point
 
 \begin{remark}[Consistency iterations need separate strength analysis]\label{thm:reflective}
 For a specified recursively axiomatized theory $S$, adding
-$\mathrm{Con}(S)$ is an arithmetical consistency extension. Its strength
+$\mathrm{Con}(S)$ is an arithmetical consistency extension; its proof-theoretic strength
 is not uniformly ``exactly one inaccessible cardinal''. Transfinite
-iterations require a specified notation system, limit rule and reflection
-principle; none is fixed by the display $S_{\alpha+1}=S_\alpha+\mathrm{Con}(S_\alpha)$
-alone. The claimed inaccessible bound and the formula adding a cardinal to
-$\mathrm{Con}(S)$ are withdrawn. At each well-defined Rich stage, the
-relative identity argument of AFN-T still applies; it does not measure
+iterations require a specified ordinal-notation system, limit rule, and reflection
+principle; none is fixed by the schema $S_{\alpha+1}=S_\alpha+\mathrm{Con}(S_\alpha)$
+alone, and no uniform inaccessible bound is asserted here. At each well-defined Rich stage, the
+relative obstruction of Theorem~\ref{thm:afnt-alpha} still applies; it does not measure
 the stage's proof-theoretic strength or show that the tower terminates.
 \end{remark}
 
@@ -974,7 +956,7 @@ construction and type checks listed in Remark~\ref{thm:meta-stab}.
 
 \section{AC/OC Duality and the Dual Boundary Lemma}\label{sec:ac-oc-duality}
 
-Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\cE$ proceeds in two structurally distinct stages: (1) before localization, the section--forgetful pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) is genuinely asymmetric, with $\alpha \circ \varepsilon = \id_\cF$ strictly while each enactment fiber $\alpha^{-1}(F)$ retains distinct semantic models, operational realizations, and resource budgets; (2) after localization at reflection morphisms $\mathcal{R}_\cE$, under the existence, descent, and coherence hypotheses of Theorem~\ref{thm:ac-oc-duality}, the coarse stacks $\fM$ and $\fM_\cE$ become equivalent at a specified categorical level. Independently of those localization hypotheses, the Dual Boundary Lemma $\LAbsE = \emptyset$ holds unconditionally in $\cE$ (Theorem~\ref{thm:dual-afnt}).
+Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\cE$ proceeds in two structurally distinct stages: (1) before localization, the section--forgetful pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) is genuinely asymmetric, with $\alpha \circ \varepsilon = \id_\cF$ strictly while each enactment fiber $\alpha^{-1}(F)$ retains distinct semantic models, operational realizations, and resource budgets; (2) after localization at reflection morphisms $\mathcal{R}_\cE$, under the existence, descent, and coherence hypotheses of Theorem~\ref{thm:ac-oc-duality}, the coarse stacks $\fM$ and $\fM_\cE$ become equivalent at a specified categorical level. Independently of those localization hypotheses, the Dual Boundary Lemma $\LAbsE = \emptyset$ holds directly in $\cE$ within the scope of Theorem~\ref{thm:afnt-alpha} (Theorem~\ref{thm:dual-afnt}).
 
 \begin{figure}[ht]
 \centering
@@ -1027,7 +1009,7 @@ Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\
 \draw[gray!40, densely dotted] (LME.south) -- (L6E.north);
 
 \end{tikzpicture}
-\caption{Two-stage AC/OC architecture. At the $2$-category level before localization (top row), the asymmetric adjoint pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) embeds theory-centric $\cF$ into enactment-centric $\cE$ as a coreflective section ($\alpha \circ \varepsilon = \id_\cF$), while each enactment fiber $\alpha^{-1}(F)$ carries non-isomorphic realizations and operational costs whose reflection counit is not invertible in $\cE$. Passing to localized moduli (middle row), whenever the localization and descent hypotheses of Theorem~\ref{thm:ac-oc-duality} hold at a specified categorical level, inverting $\mathcal{R}_\cE$ collapses each fiber $\alpha^{-1}(F)$ onto $\varepsilon(F)$ and yields a coarse equivalence $\fM \simeq \fME$ under which invariant strata correspond (bottom rows). Regardless of localization, $\LAbs = \emptyset$ and $\LAbsE = \emptyset$ hold unconditionally (Theorems~\ref{thm:afnt-alpha} and~\ref{thm:dual-afnt}).}
+\caption{Two-stage AC/OC architecture. At the $2$-category level before localization (top row), the asymmetric adjoint pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) embeds theory-centric $\cF$ into enactment-centric $\cE$ as a coreflective section ($\alpha \circ \varepsilon = \id_\cF$ strictly), while each enactment fiber $\alpha^{-1}(F)$ carries non-isomorphic realizations and operational costs: the counit $(\id_F, \iota) : \varepsilon(F) \to E$ of $\varepsilon \dashv \alpha$ and the retraction $(\id_F, r) : E \to \varepsilon(F)$ satisfy $(\id_F, r) \circ (\id_F, \iota) \simeq \id_{\varepsilon(F)}$, whereas the internal reflector unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ is not invertible in $\cE$. Passing to localized moduli (middle row), whenever the localization and descent hypotheses of Theorem~\ref{thm:ac-oc-duality} hold at a specified categorical level, inverting $\mathcal{R}_\cE$ collapses each fiber $\alpha^{-1}(F)$ onto $\varepsilon(F)$ and yields a coarse equivalence $\fM \simeq \fME$ under which invariant strata correspond (bottom rows). Regardless of localization, $\LAbs = \emptyset$ and $\LAbsE = \emptyset$ hold directly within the scope of Theorems~\ref{thm:afnt-alpha} and~\ref{thm:dual-afnt}.}
 \label{fig:ac-oc-duality}
 \end{figure}
 
@@ -1036,7 +1018,7 @@ Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\
 \begin{definition}[$2$-category of enactments $\cE$]\label{def:enactments}
 The \emph{$2$-category of Rich-enactments} $\cE$ has:
 \begin{itemize}
-\item \textbf{Objects}: quadruples $(F, \cC, \iota, r)$, called \emph{pointed reflective enactments over $F$}, where $F \in \cF$, $\cC \in \mathbf{StrCat}_{S, n_F}$ (Definition~\ref{def:strcat}) is a $\kappa_1$-accessible $S$-model-category with an $F$-model structure, $\iota : \Syn(F) \to \cC$ is an $F$-preserving fully faithful $(\infty, n_F)$-functor onto a replete sub-$(\infty, n_F)$-category, and $r : \cC \to \Syn(F)$ is a \emph{chosen} left adjoint (reflector) to $\iota$ with unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ and counit $\varepsilon_r : r \circ \iota \Rightarrow \id_{\Syn(F)}$ satisfying the triangle identities in $\mathbf{StrCat}_{S, n_F}$. The reflector $r$ is part of the data; it is uniquely determined by $\iota$ up to unique invertible $2$-cell (Riehl--Verity~\cite{RiehlVerity2022} Prop.~2.1.11; Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994} Thm.~1.26).
+\item \textbf{Objects}: quadruples $(F, \cC, \iota, r)$, called \emph{pointed reflective enactments over $F$}, where $F \in \cF$, $\cC \in \mathbf{StrCat}_{S, n_F}$ (Definition~\ref{def:strcat}) is a $\kappa_S$-accessible $S$-model-category in $\mathbf{U}_2$ with an $F$-model structure, $\iota : \Syn(F) \to \cC$ is an $F$-preserving fully faithful $(\infty, n_F)$-functor onto a replete sub-$(\infty, n_F)$-category, and $r : \cC \to \Syn(F)$ is a \emph{chosen} left adjoint (reflector) to $\iota$ with unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ and invertible counit $\varepsilon_r : r \circ \iota \xRightarrow{\simeq} \id_{\Syn(F)}$ satisfying the triangle identities in $\mathbf{StrCat}_{S, n_F}$. The reflector $r$ is part of the data; it is uniquely determined by $\iota$ up to unique invertible $2$-cell (Riehl--Verity~\cite{RiehlVerity2022} Prop.~2.1.11; Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994} Thm.~1.26).
 \item \textbf{$1$-morphisms} $(\phi, \Phi) : (F_1, \cC_1, \iota_1, r_1) \to (F_2, \cC_2, \iota_2, r_2)$: a pair consisting of a $1$-morphism $\phi : F_1 \to F_2$ in $\cF$ (faithful interpretation) and an $S$-preserving $(\infty, n)$-functor $\Phi : \cC_1 \to \cC_2$ equipped with an invertible $2$-cell $\Phi \circ \iota_1 \Rightarrow \iota_2 \circ \Syn(\phi)$;
 \item \textbf{$2$-morphisms}: coherent natural transformations $(\phi, \Phi) \Rrightarrow (\phi', \Phi')$ compatible with the structure cells, i.e., pairs $(\tau, T)$ with $\tau : \phi \Rightarrow \phi'$ in $\cF$ and $T : \Phi \Rrightarrow \Phi'$ satisfying the evident pentagon with $\iota_1, \iota_2, \Syn(\tau)$.
 \end{itemize}
@@ -1045,31 +1027,47 @@ There is a canonical forgetful $2$-functor and a canonical section:
   \alpha : \cE \to \cF, \quad (F, \cC, \iota, r) \mapsto F; \qquad
   \varepsilon : \cF \to \cE, \quad F \mapsto \bigl(F,\, \Syn(F),\, \id_{\Syn(F)},\, \id_{\Syn(F)}\bigr).
 \]
-By construction $\alpha \circ \varepsilon = \id_\cF$ strictly. For readability I occasionally write $(F, \cC, \iota)$ for $(F, \cC, \iota, r)$ when the reflector is understood.
+By construction $\alpha \circ \varepsilon = \id_\cF$ strictly, yielding a $2$-adjunction $\varepsilon \dashv \alpha$ whose unit is the identity on $\cF$ and whose counit at $E = (F, \cC, \iota, r)$ is the $1$-morphism
+\[
+  (\id_F, \iota) : \varepsilon(\alpha(E)) = \bigl(F, \Syn(F), \id, \id\bigr) \longrightarrow (F, \cC, \iota, r).
+\]
+In the opposite direction, because $\varepsilon_r : r \circ \iota \xRightarrow{\simeq} \id_{\Syn(F)}$ is invertible, the reflector defines a canonical \emph{retraction morphism} in $\cE$:
+\[
+  (\id_F, r) : (F, \cC, \iota, r) \longrightarrow \varepsilon(\alpha(E)),
+\]
+satisfying $(\id_F, r) \circ (\id_F, \iota) \simeq \id_{\varepsilon(F)}$, while $(\id_F, \iota) \circ (\id_F, r) = (\id_F, \iota \circ r)$ is related to $\id_E$ only by the generally non-invertible internal reflector unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$. Thus the counit $(\id_F, \iota)$ and the retraction $(\id_F, r)$ are distinct $1$-morphisms in $\cE$ in opposite directions, neither of which is an equivalence in $\cE$ unless $\iota$ is already essentially surjective. For readability I occasionally write $(F, \cC, \iota)$ for $(F, \cC, \iota, r)$ when the reflector is understood.
 \end{definition}
 
 \begin{definition}[Enactment gauge]\label{def:gauge-E}
 Let $\mathcal{R}_\cE\subseteq\Mor_1(\cE)$ consist of reflection morphisms $(\tau,\Phi)$ for which $\tau$ is a gauge transformation and $r_2\Phi\iota_1$ is an equivalence. If the chosen localization exists with the required universe bounds, write
-\[ \mathrm{gauge}_\cE := \text{the $2$-localization class generated by } \mathcal{R}_\cE, \qquad \fM_\cE := \cE[\mathcal{R}_\cE^{-1}] \]
-A construction by Pronk's bicategory of fractions requires verification of all of its hypotheses, including the conditions on $2$-cells; closure under composition and pullbacks alone is not that verification. A zig-zag of inverted arrows yields equivalent objects, but the converse requires an additional argument in the chosen localization. The reflection $(\id_F,r):(F,\cC,\iota,r)\to\varepsilon(F)$ is a proposed arrow to invert. Its presence does not make the unit of the original reflection invertible in $\cE$.
+\[ \mathrm{gauge}_\cE := \text{the $2$-localization class generated by } \mathcal{R}_\cE, \qquad \fM_\cE := \cE[\mathcal{R}_\cE^{-1}]. \]
+A construction by Pronk's bicategory of fractions (Lemma~\ref{lem:pronk}) requires verification of all five conditions (BF1)--(BF5), including the $2$-cell cancellation condition (BF4); closure under composition and pullbacks alone is not that verification. A zig-zag of inverted arrows yields equivalent objects, but the converse requires an additional argument in the chosen localization. The retraction $(\id_F,r):(F,\cC,\iota,r)\to\varepsilon(F)$ belongs to $\mathcal{R}_\cE$ (since $\id_{\Syn(F)} r \iota \simeq \id_{\Syn(F)}$) and is inverted by the localization, making the counit $(\id_F, \iota) : \varepsilon(F) \to E$ of $\varepsilon \dashv \alpha$ its quasi-inverse in $\fM_\cE$; this does not make the internal reflector unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ invertible in $\cE$ itself.
 \end{definition}
 
 \subsection{The Enactment Syntax--Semantics Lemma}
 
 \begin{definition}[The class $\SSE$]\label{def:SSE}
-Given $S \in \RS$, the class $\SSE \subseteq \Ob \cE$ of \emph{$S$-definable pointed enactments} is the closure of the base class
-\[
-  \SSEbase = \bigl\{ (F', \cM, \iota_\cM, r_\cM) : \cM \models S,\ F' \in \cF,\ \iota_\cM := \ev_\cM,\ r_\cM := (\ev_\cM)^L \bigr\},
-\]
-where $\ev_\cM : \Syn(F') \to \cM$ is the syntax-to-semantics evaluation of (R5b) and $(\ev_\cM)^L$ is its left adjoint (Lambek--Scott), under componentwise application of the operations of Definition~\ref{def:SS}: the $F$-component by Definition~\ref{def:SS}; the $\cC$-component via the forgetful $\mathbf{StrCat}_{S, n} \to (\infty, n)\text{-}\Cat$; the $(\iota, r)$-components by functoriality of adjunctions under $S$-preserving $(\infty, n)$-functors. The sub-class $\SSEglobal \subseteq \SSE$ is the corresponding closure of $\SSEbase$ using only those operations of Definition~\ref{def:SS} defining $\cS_S^{\mathrm{global}}$ (Kan extensions, Grothendieck constructions, derived functors).
+Given $S \in \RS$, define the base class $\SSEbase \subseteq \Ob(\cE)$ of \emph{locally $S$-definable pointed reflective enactments} to consist of all quadruples $(F', \cC, \iota, r) \in \Ob(\cE)$ such that:
+\begin{enumerate}[nosep,label=(\alph*)]
+\item $F' \in \cF$ is either $S$ itself or admits a faithful slice-conservative inclusion $\iota_{F'} : F' \hookrightarrow S$ (so $\Syn(F')$ embeds equivalently into $\Syn(S)$);
+\item $\cC \in \mathbf{U}_2$ belongs to $\cS_S^{\mathrm{local}}$ (i.e.\ $\cC = \Syn(S)$ or $\cC = \cM$ for a model $\cM \in \mathbf{U}_2$ of $S$); and
+\item the fully faithful pointing $\iota : \Syn(F') \to \cC$ and its left adjoint reflector $r \dashv \iota$ (with triangle identities $\eta_r, \varepsilon_r$) are explicitly supplied as $S$-definable enactment data.
+\end{enumerate}
+In particular, $\varepsilon(S) = (S, \Syn(S), \id_{\Syn(S)}, \id_{\Syn(S)}) \in \SSEbase$. (No automatic left adjoint to an arbitrary evaluation functor $\ev_\cM : \Syn(F') \to \cM$ into a single model is asserted: Lambek--Scott~\cite{LambekScott1986} provides an adjunction $\Syn \dashv \Mod$ between categories of theories and structured categories, not a left adjoint to evaluation into an individual model.) The derived class $\SSEglobal \subseteq \Ob(\cE)$ is the closure of $\SSEbase$ under those $\mathbf{U}_2$-bounded operations of Definition~\ref{def:SS} that produce an enactment $(F'', \cC', \iota', r') \in \Ob(\cE)$ with $F''$ slice-conservatively embedded in $S$, $\cC' \in \cS_S^{\mathrm{global}}$, and explicitly supplied $S$-definable retraction data $r' \dashv \iota'$. Set $\SSE := \SSEbase \cup \SSEglobal$.
 \end{definition}
 
 \begin{lemma}[Enactment syntax--semantics lemma]\label{lem:SS-membership-E}
-Let $(F, \cC, \iota, r) \in \cE$ be a pointed reflective enactment such that the quadruple is formally $S$-definable, i.e., there exist formulas $\phi_F, \psi_\cC, \chi_\iota, \chi_r$ in some $F' \in \cF$ with $F' \hookrightarrow S$ specifying $F, \cC, \iota, r$ respectively, with the triangle identities and reflectiveness of $\iota$ provable in $F'$. Then $(F, \cC, \iota, r) \in \SSEglobal$.
+Let $(F, \cC, \iota, r) \in \cE$ be a pointed reflective enactment satisfying:
+\begin{enumerate}[nosep,label=(\roman*)]
+\item $F$ admits a direct ($F = S$) or slice-conservative faithful inclusion $\iota_F : F \hookrightarrow S$;
+\item the ambient model-category $\cC \in \mathbf{U}_2$ lies in $\cS_S$ (either $\cC \in \cS_S^{\mathrm{local}}$ or $\cC \in \cS_S^{\mathrm{global}}$ via Definition~\ref{def:SS}); and
+\item the fully faithful pointing $\iota : \Syn(F) \to \cC$ and its left adjoint reflector $r \dashv \iota$ (with triangle identities $\eta_r, \varepsilon_r$) are explicitly supplied as $S$-definable enactment data --- or, when passing to $\mathrm{Ind}$-completions $\widehat{\iota} : \mathrm{Ind}_{\kappa_S}(\Syn(F)) \to \cC$ between locally $\kappa_S$-presentable categories, $\widehat{\iota}$ is $\kappa_S$-accessible and preserves all $\mathbf{U}_1$-small limits, so its left adjoint $\widehat{r} \dashv \widehat{\iota}$ exists by the continuous Adjoint Functor Theorem (Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994}, Thm.~1.66) and restricts to $r \dashv \iota$ on $\Syn(F)$.
+\end{enumerate}
+Then $(F, \cC, \iota, r) \in \SSE$.
 \end{lemma}
 
 \begin{proof}
-By hypothesis, $F$ is formally $S$-definable via $\phi_F$; Lemma~\ref{lem:SS-membership} gives $F \in \cS_S^{\mathrm{global}}$. The model-category $\cC$ is specified by $\psi_\cC$ within $F'$; as an $S$-structured $(\infty, n)$-category the underlying $(\infty, n)$-category of $\cC$ lies in $\cS_S^{\mathrm{global}}$ by the same argument applied to the $\cS_S^{\mathrm{global}}$-closure of Definition~\ref{def:SS}. The pointing $\iota$ and the reflector $r$, specified by $\chi_\iota$ and $\chi_r$ in $F'$, are morphisms between $\cS_S^{\mathrm{global}}$-objects definable in $F' \hookrightarrow S$. The adjoint pair $(\iota, r)$ is realised in $\SSEglobal$ via the following explicit construction: $\iota$ is obtained as a Kan extension (Definition~\ref{def:SS}, O1) along the inclusion $\Syn(F') \hookrightarrow \cC$ specified by $\chi_\iota$; the existence of the \emph{left} reflector $r$ (left adjoint to $\iota$ per Definition~\ref{def:enactments}) then follows from the adjoint-functor existence theorem for accessible functors between locally $\kappa_S$-presentable categories (Ad\'amek--Rosick\'y~\cite{AdamekRosicky1994}, the adjoint-functor existence theorem applied to the cocomplete-category case), with the triangle identities transported from $\chi_r$. Assembled componentwise, $(F, \cC, \iota, r) \in \SSEglobal$.
+By (i) and Lemma~\ref{lem:SS-membership}, the syntactic presentation of $F$ embeds slice-conservatively into $\cS_S^{\mathrm{local}}$. By (ii), $\cC \in \cS_S^{\mathrm{local}} \cup \cS_S^{\mathrm{global}}$ within $\mathbf{U}_2$. Hypothesis (iii) supplies the $S$-definable fully faithful pointing $\iota : \Syn(F) \to \cC$ together with its left adjoint reflector $r \dashv \iota$ (noting that $\Syn(F)$ itself is essentially $\mathbf{U}_1$-small rather than locally presentable, and that in the locally $\kappa_S$-presentable $\mathrm{Ind}$-completed setting a \emph{left} adjoint requires $\widehat{\iota}$ to be accessible and limit-preserving, whereas the cocontinuous adjoint functor theorem produces a right adjoint). Assembled componentwise, $(F, \cC, \iota, r)$ satisfies Definition~\ref{def:SSE}: it lies in $\SSEbase$ when $\cC \in \cS_S^{\mathrm{local}}$ and in $\SSEglobal$ when $\cC \in \cS_S^{\mathrm{global}}$. Hence $(F, \cC, \iota, r) \in \SSE$.
 \end{proof}
 
 \subsection{AC/OC Morita Duality}
@@ -1085,7 +1083,7 @@ Then $\fM$ and $\fM_\cE$ are equivalent. Any stratum predicates and meta-operati
 \begin{proof}
 The two displayed equivalences exhibit quasi-inverse comparison functors. A stratum or operation transfers when its defining data commute with those functors, as required by the final hypothesis.
 \end{proof}
-For the proposed enactments, $\alpha\varepsilon=\id$ holds before localization and the reflection morphisms suggest the second comparison. One must still prove existence and size of the localizations, descent of both functors, and naturality and coherence of the comparison on all morphisms. Inverting reflection morphisms objectwise is not a proof of all these conditions. No unbounded-depth lift follows from finite-level comparisons; Remark~\ref{thm:bergner-lurie-stab} records the missing stabilization argument.
+For the proposed enactments, $\alpha\varepsilon=\id$ holds before localization and inverting the retractions $(\id_F, r) \in \mathcal{R}_\cE$ motivates the second comparison (turning each counit $(\id_F, \iota)$ into a quasi-inverse). One must still prove existence and size of the localizations, descent of both functors, and naturality and coherence of the comparison on all morphisms. Inverting reflection morphisms objectwise is not a proof of all these conditions. No unbounded-depth lift follows from finite-level comparisons; Remark~\ref{thm:bergner-lurie-stab} records the missing stabilization argument.
 
 \begin{corollary}[Conditional definitional conservativity]\label{cor:ac-oc-conservativity}
 If the enactment apparatus and all its structure maps are introduced by explicit definitions whose existence and uniqueness are proved in a fixed base $B$, adjoining their names is conservative over $B$ for sentences of its original language.
@@ -1095,14 +1093,14 @@ Eliminate the new names by their defining formulas. Existence and uniqueness mak
 \end{proof}
 Applying the corollary requires completing the construction of the enactment apparatus in $B$. No equation $\Con(\mathrm{MSFS})=\Con(\ZFC+2\text{-inacc})$ follows merely from using that metatheory. A model construction gives an upper consistency bound; a matching lower bound requires an additional interpretation.
 
-The equivalence of Theorem~\ref{thm:ac-oc-duality} transfers the $\LAbs$ conditions of \S\ref{sec:conditions} to the enactment side. Informally, an \emph{enactment-absolute} triple $(F, \cC, \iota)$ is one whose enactment-side description simultaneously admits formal specification, admits no non-trivial coordination with other enactments in the $S$-definable class, and is maximally receptive (every other enactment factors through it).
+By analogy with the $\LAbs$ conditions of \S\ref{sec:conditions} (and coinciding with their transport whenever the conditional equivalence of Theorem~\ref{thm:ac-oc-duality} holds), we formulate the enactment-absolute conditions directly in $\cE$. Informally, an \emph{enactment-absolute} quadruple $(F, \cC, \iota, r)$ simultaneously admits formal $S$-presentation with faithful interpretation into $S$, admits no non-trivial coordination with enactments in $\SSE$, and is maximally receptive.
 
 \begin{definition}[$\LAbsE$ conditions]\label{def:level6-cE}
 Given $S \in \RS$ and $n \in \mathbb{N} \cup \{\infty\}$, a pointed reflective enactment $(F, \cC, \iota, r) \in \cE$ is \textbf{enactment-absolute} if it satisfies the triple:
 \begin{itemize}
-\item[$(\tilde{F}_S)$] \emph{Enactment-definability}: the quadruple $(F, \cC, \iota, r)$ is formally $S$-definable in the sense of Lemma~\ref{lem:SS-membership-E}, i.e., specified by formulas $(\phi_F, \psi_\cC, \chi_\iota, \chi_r)$ in some $F' \in \cF$ with $F' \hookrightarrow S$ (this refines $(F_S)$ by additionally specifying the model-category presentation, the pointing, and the reflector).
+\item[$(\tilde{F}_S)$] \emph{Enactment-definability}: there exist $F' \in \cF$ and explicit faithful relative interpretations $F \hookrightarrow F' \hookrightarrow S$ in $\cF$ (in particular, a composite faithful relative interpretation $\iota_F : F \hookrightarrow S$, matching (F-1) of Definition~\ref{def:F}; mere formula specification of $F$'s axioms inside $F' \hookrightarrow S$ does not suffice, as $\ZFC$ has a recursive axiom formula in $\PA \hookrightarrow \PA$ without interpreting into $\PA$), together with formulas $(\phi_F, \psi_\cC, \chi_\iota, \chi_r)$ in $F'$ specifying $F, \cC, \iota, r$ with the reflection adjunction $r \dashv \iota$ provable in $F'$. The presentation is called \emph{slice-conservative} if $\iota_F : F \hookrightarrow S$, $\cC$, and $(\iota, r)$ satisfy hypotheses (i)--(iii) of Lemma~\ref{lem:SS-membership-E}.
 \item[$(\tilde{\Pi}_{4, S, n})$] \emph{Non-coordination}: there is no $1$-morphism $(\phi, \Phi) : (F, \cC, \iota, r) \to (F', \cC', \iota', r')$ in $\cE$ with target quadruple in $\SSE$ (Definition~\ref{def:SSE}) such that $\Phi$ is an $(\infty, n)$-equivalence onto its image.
-\item[$(\tilde{\Pi}_{3\text{-max}, S, n})$] \emph{Maximal receptivity}: for every enactment $(F', \cC', \iota', r') \in \cE$ there exists a $1$-morphism $(\phi, \Phi) : (F', \cC', \iota', r') \to (F, \cC, \iota, r)$ realizing a Morita reduction at the $(\infty, n)$-level.
+\item[$(\tilde{\Pi}_{3\text{-max}, S, n})$] \emph{Maximal receptivity}: for every enactment $(F', \cC', \iota', r') \in \cE$ there exists a $1$-morphism $(\phi, \Phi) : (F', \cC', \iota', r') \to (F, \cC, \iota, r)$ realizing a Morita reduction at the $(\infty, n)$-level (in particular, $\phi : F' \to F$ is a faithful relative interpretation in $\cF$).
 \end{itemize}
 The \emph{$\LAbsE$ stratum} is the class of $\mathrm{gauge}_\cE$-equivalence classes in $\fM_\cE$ with an enactment-absolute representative.
 \end{definition}
@@ -1110,15 +1108,22 @@ The \emph{$\LAbsE$ stratum} is the class of $\mathrm{gauge}_\cE$-equivalence cla
 \subsection{Dual Boundary Lemma}
 
 \begin{theorem}[Dual Boundary Lemma; Dual-AFN-T $(\alpha)$-part]\label{thm:dual-afnt}
-For every Rich-metatheory $S \in \RS$ and every categorical level $n \in \mathbb{N} \cup \{\infty\}$, no pointed reflective enactment $(F, \cC, \iota, r) \in \cE$ satisfies the $\LAbsE$ triple $(\tilde{F}_S) \wedge (\tilde{\Pi}_{4, S, n}) \wedge (\tilde{\Pi}_{3\text{-max}, S, n})$. Already the sub-pair $(\tilde{F}_S) \wedge (\tilde{\Pi}_{4, S, n})$ is structurally self-contradictory.
+Let $S \in \RS$ and $n \in \mathbb{N} \cup \{\infty\}$, and let $(F, \cC, \iota, r) \in \cE$ satisfy $(\tilde{F}_S)$ via faithful relative interpretations $\iota_F : F \hookrightarrow F' \hookrightarrow S$:
+\begin{enumerate}[nosep,label=(\roman*)]
+\item \emph{Direct / slice-conservative retraction branch}: whenever the presentation satisfies hypotheses (i)--(iii) of Lemma~\ref{lem:SS-membership-E}, already the sub-pair $(\tilde{F}_S) \wedge (\tilde{\Pi}_{4, S, n})$ is inconsistent.
+\item \emph{General diagonal branch}: whenever $S$ satisfies the canonical $\Sigma_1$-binumeration and classical relative (or negative-translation plus primitive-recursive proof-translation) hypotheses (a)--(b) of Theorem~\ref{thm:afnt-alpha}~(ii), the receptive pair $(\tilde{F}_S) \wedge (\tilde{\Pi}_{3\text{-max}, S, n})$ is inconsistent for \emph{every} faithful relative interpretation $F \hookrightarrow F' \hookrightarrow S$ (without assuming slice-conservativity, without invoking Lemma~\ref{lem:SS-membership-E}, and independently of the localization hypotheses of Theorem~\ref{thm:ac-oc-duality}).
+\end{enumerate}
+In particular, across all $(S, n)$ in the scope of Theorem~\ref{thm:afnt-alpha}, no pointed reflective enactment satisfies $(\tilde{F}_S) \wedge (\tilde{\Pi}_{4, S, n}) \wedge (\tilde{\Pi}_{3\text{-max}, S, n})$.
 \end{theorem}
 
 \begin{proof}
-Suppose $(F, \cC, \iota, r) \in \cE$ satisfies $(\tilde{F}_S) \wedge (\tilde{\Pi}_{4, S, n})$. By Lemma~\ref{lem:SS-membership-E}, $(F, \cC, \iota, r) \in \SSEglobal \subseteq \SSE$. The identity $1$-morphism $(\id_F, \id_\cC)$ has $\Phi = \id_\cC$ an $(\infty, n)$-equivalence onto its image, with target in $\SSE$. This coordination is forbidden by $(\tilde{\Pi}_{4, S, n})$. Contradiction. Hence $\LAbsE = \emptyset$.
+\emph{(i)} Under hypotheses (i)--(iii) of Lemma~\ref{lem:SS-membership-E}, $(F, \cC, \iota, r) \in \SSE$. The identity $1$-morphism $(\id_F, \id_\cC) : (F, \cC, \iota, r) \to (F, \cC, \iota, r)$ in $\cE$ has $\Phi = \id_\cC$ an $(\infty, n)$-equivalence onto its image with target in $\SSE$, contradicting $(\tilde{\Pi}_{4, S, n})$.
+
+\emph{(ii)} Form the consistent first-order arithmetic theory $T_S := \PA + \Con_{\sigma_S}(S) \in \cF$ as in the proof of Theorem~\ref{thm:afnt-alpha}~(ii), and consider its syntactic self-enactment $\varepsilon(T_S) = (T_S, \Syn(T_S), \id, \id) \in \cE$. Applying $(\tilde{\Pi}_{3\text{-max}, S, n})$ to $\varepsilon(T_S)$ yields a $1$-morphism $(\tau, \Phi) : \varepsilon(T_S) \to (F, \cC, \iota, r)$ in $\cE$. Applying the forgetful $2$-functor $\alpha : \cE \to \cF$ extracts the faithful relative interpretation $\tau = \alpha(\tau, \Phi) : T_S \to F$. Composing $\tau$ with the explicit faithful relative interpretation $\iota_F : F \hookrightarrow F' \hookrightarrow S$ supplied by $(\tilde{F}_S)$ gives $J := \iota_F \circ \tau : \PA + \Con_{\sigma_S}(S) \to S$, contradicting the G\"odel--Feferman--Pudl\'ak Second Incompleteness Theorem exactly as in Theorem~\ref{thm:afnt-alpha}~(ii).
 \end{proof}
 
 \begin{corollary}[$\LAbsE$ emptiness]\label{cor:level6-empty-cE}
-$\LAbsE = \emptyset$.
+Within the scope of Theorem~\ref{thm:dual-afnt}, $\LAbsE = \emptyset$.
 \end{corollary}
 
 \begin{theorem}[Conditional transfer of relative axes]\label{thm:dual-five-axis}
@@ -1131,63 +1136,59 @@ This does not provide a general exclusion for universe changes, reflection princ
 
 \section{Placement in the No-Go Series}\label{sec:series}
 
-AFN-T occupies a position in the structural series of foundational no-go theorems. All such results instantiate a single categorical schema: \emph{a system sufficiently expressive to formulate a candidate maximal object is unable to contain that object without contradiction}, realized through a self-referential embedding that turns the purported maximal object into an element of the very class it was supposed to transcend. Each specializes the schema through a distinct maximality aspect and diagonal step:
+AFN-T occupies a conceptual position alongside the historical series of foundational no-go theorems. All such results share a broad self-referential pattern --- \emph{a sufficiently expressive formal system cannot internally capture a maximal object violating its own definability or interpretability bounds} --- while differing substantially in hypotheses, ambient logic, and diagonal or recursion-theoretic mechanism:
 
 \begin{center}
 \begin{tabular}{@{}l l p{3.2cm} p{5.7cm}@{}}
 \toprule
-Theorem & Year & Maximality aspect & Diagonal step \\ \midrule
+Theorem & Year & Maximality aspect & Obstruction / diagonal step \\ \midrule
 Cantor~\cite{Cantor1891} & 1891 & cardinal & $x \notin f(x)$ for $f : X \to \cP(X)$ \\
 Russell~\cite{Russell1903} & 1903 & comprehension & $R = \{x : x \notin x\}$, $R \in R \iff R \notin R$ \\
 G\"odel (I, II)~\cite{Godel1931} & 1931 & completeness / consistency & $G = $ ``$G$ is not provable'' \\
 Tarski~\cite{Tarski1936} & 1936 & semantic truth & ``this sentence is not true'' \\
 Lawvere FP~\cite{Lawvere1969} & 1969 & categorical fixed-point & cartesian-closed + weakly surjective $\Rightarrow$ every $f$ has a fixed point \\
 Ernst~\cite{Ernst2015} & 2015 & unlimited category theory & Lawvere diagonal at $n = 1$ under Feferman (R1)--(R3) \\
-AFN-T & --- & foundational (definable + non-reducible + generative) & syntax--semantics bridge: $(F_S) \Rightarrow X \in \cS_S^{\mathrm{global}}$ via Lemma~\ref{lem:SS-membership}, contradicting $(\Pi_4)$ by $\id_X$ (Theorem~\ref{thm:afnt-alpha}) \\
-Dual-AFN-T & --- & enactment-absolute (definable + non-coordination + receptive) & identity enactment $(\id_F, \id_\cC)$ with target in $\SSE$ (Lemma~\ref{lem:SS-membership-E}) contradicts $(\tilde{\Pi}_4)$ (Theorem~\ref{thm:dual-afnt}); equivalently via $\alpha$ + AFN-T \\
+AFN-T & --- & foundational (definable + non-reducible + generative) & $(\alpha_0)$: syntax--semantics bridge (Lemma~\ref{lem:SS-membership}) against $(\Pi_4)$; $(\alpha_{\mathrm{diag}})$: $T_S = \PA + \Con_{\sigma_S}(S)$ via Feferman--Pudl\'ak against $(\Pi_{3\text{-max}})$ (Theorem~\ref{thm:afnt-alpha}) \\
+Dual-AFN-T & --- & enactment-absolute (definable + non-coordination + receptive) & identity enactment $(\id_F, \id_\cC)$ against $(\tilde{\Pi}_4)$ and projection $\alpha$ on $\varepsilon(T_S)$ against $(\tilde{\Pi}_{3\text{-max}})$ (Theorem~\ref{thm:dual-afnt}) \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\subsection{Subsumption}
+\subsection{Comparative Scope and Motivating Analogues}
 
-\begin{theorem}[Subsumption via specialization (framework-level)]\label{thm:subsumption}
-For each classical no-go theorem $T$ below, there exists a triple $(S_T, n_T, X_T)$ with $S_T \in \RS$, $n_T \in \mathbb{N} \cup \{\infty\}$, and $X_T$ the purported maximal object of $T$, such that (i) $X_T \models (F_{S_T})$; (ii) $X_T$ under the hypothesis of $T$ would satisfy $(\Pi_{4, S_T, n_T})$; (iii) Theorem~\ref{thm:afnt-alpha} applied at $(S_T, n_T)$ yields a structural contradiction with the existence of $X_T$ as $\LAbs$-candidate. The theorem provides the \emph{framework} in which each classical no-go inhabits; the row-specific diagonals (Cantor's $|X|<|\cP(X)|$, Russell's $R \in R \leftrightarrow R \notin R$, etc.)\ are independent classical proofs that refine the abstract $\id_{X_T}$-template into the specific witness used by $T$, and are not derived from AFN-T~$\alpha$ alone.
+\begin{remark}[Motivating analogues, not strict corollaries]\label{thm:subsumption}
+The classical theorems of Cantor~\cite{Cantor1891}, Russell~\cite{Russell1903}, G\"odel~\cite{Godel1931}, Tarski~\cite{Tarski1936}, Lawvere~\cite{Lawvere1969}, and Ernst~\cite{Ernst2015} --- as well as recursion-theoretic impossibility theorems such as Rice's theorem and Chaitin's incompleteness theorem --- serve as \emph{motivating analogues} for AFN-T rather than strict corollaries derived from Theorem~\ref{thm:afnt-alpha} alone. Each classical result rests on its own domain-specific diagonal, set-theoretic, or recursion-theoretic input (and indeed mechanism $(\alpha_{\mathrm{diag}})$ of Theorem~\ref{thm:afnt-alpha} explicitly uses the Feferman--Pudl\'ak form of G\"odel's Second Incompleteness Theorem as an input, rather than reproving it). The table below aligns each classical result with its ambient theory $S_T$, forbidden maximal object or predicate, and independent classical witness:
 \begin{center}\footnotesize
-\begin{tabular}{@{}lllcl@{}}
+\begin{tabular}{@{}p{2.0cm} p{2.2cm} p{4.1cm} c p{4.7cm}@{}}
 \toprule
-$T$ & $S_T$ & $X_T$ & $n_T$ & $(F_{S_T})$-witness \\ \midrule
-Cantor~\cite{Cantor1891} & $\ZFC$ & $\cP : \mathbf{Set} \to \mathbf{Set}$ universal & $1$ & $\phi_{\cP}(X,Y) \equiv Y = \cP(X)$ \\
-Russell~\cite{Russell1903} & $\ZFC$ & set of $\{x : x \notin x\}$ & $1$ & $\phi_R(x) \equiv x \notin x$ \\
-G\"odel I~\cite{Godel1931} & $\mathsf{PA}$ & $G$ (unprovable sentence) & $1$ & $\phi_G \equiv \neg \mathrm{Prov}(\ulcorner G \urcorner)$ \\
-G\"odel II~\cite{Godel1931} & $\mathsf{PA}$ & internal $\mathrm{Con}(\mathsf{PA})$-proof & $1$ & $\phi_{\mathrm{Con}}$ via $\mathrm{Prov}$ \\
-Tarski~\cite{Tarski1936} & $\mathsf{PA}$ & arithmetical truth predicate & $1$ & $T(\phi) \equiv \phi$ \\
-Lawvere FP~\cite{Lawvere1969} & CCC ext.\ of $\ZFC$ & w.\ surj.\ $X$, $f:X \to X^X$ & $1$ & $\phi_X$ in CCC-syntax \\
-Ernst~\cite{Ernst2015} & Feferman (R1)--(R3) & UCT object & $1$ & Feferman unlim.\ schema \\
+$T$ & $S_T$ & Forbidden maximal object / predicate & $n_T$ & Independent classical witness \\ \midrule
+Cantor~\cite{Cantor1891} & $\ZFC$ & surjection $f : X \twoheadrightarrow \cP(X)$ & $1$ & diagonal set $\{x \in X : x \notin f(x)\}$ \\
+Russell~\cite{Russell1903} & $\ZFC$ & set realizing $\{x : x \notin x\}$ & $1$ & $R \in R \leftrightarrow R \notin R$ \\
+G\"odel I~\cite{Godel1931} & $\mathsf{PA}$ & complete consistent r.e.\ extension & $1$ & fixed point $G \leftrightarrow \neg \mathrm{Prov}(\ulcorner G \urcorner)$ \\
+G\"odel II~\cite{Godel1931} & $\mathsf{PA}$ & internal proof of $\Con(\mathsf{PA})$ & $1$ & HBL derivability conditions + diagonal lemma \\
+Tarski~\cite{Tarski1936} & $\mathsf{PA}$ & definable arithmetical truth predicate & $1$ & Liar sentence $\lambda \leftrightarrow \neg T(\ulcorner \lambda \urcorner)$ \\
+Lawvere FP~\cite{Lawvere1969} & CCC ext.\ of $\ZFC$ & w.\ point-surj.\ $e : A \to Y^A$ & $1$ & diagonal $a \mapsto f(e(a)(a))$ \\
+Ernst~\cite{Ernst2015} & Feferman (R1)--(R3) & unlimited category theory object & $1$ & Feferman unlimited-axiom schema \\
 \bottomrule
 \end{tabular}
 \end{center}
-In each row, AFN-T at $(S_T, n_T)$ yields $\LAbs(S_T, n_T) = \emptyset$ at the row's maximality aspect; the classical diagonal of $T$ is the specific witness refinement establishing $T$ within the framework.
-\end{theorem}
-
-\begin{proof}
-Each row's $X_T$ is $S_T$-definable by the listed formula (i), so $X_T \in \cS_{S_T}^{\mathrm{global}}$ by Lemma~\ref{lem:SS-membership}. $\id_{X_T} : X_T \to X_T$ violates $(\Pi_{4, S_T, n_T})$ per Theorem~\ref{thm:afnt-alpha}, so $X_T \notin \LAbs$. The row-specific diagonal reconstructs: Cantor by $|X| < |\cP(X)|$ refining $\id_{\cP}$; Russell by $R \in R \leftrightarrow R \notin R$ refining $\id_R$; G\"odel by $G$-sentence $\leftrightarrow \neg\mathrm{Prov}(\ulcorner G \urcorner)$; Tarski's liar; Lawvere's fixed-point formula $f(x_0) = x_0$ via $\lambda x. f(x)(x)$; Ernst by Feferman unlimited-axiom schema. Each refinement specializes the universal $\id_{X_T}$ template of Theorem~\ref{thm:afnt-alpha} to the row-specific formal witness.
-\end{proof}
+Whenever a candidate in any of these settings is additionally endowed with the $\LAbs$ structure of Definition~\ref{def:level6}, Theorem~\ref{thm:afnt-alpha} excludes it from $\LAbs$; this relative boundary exclusion does not replace or derive the independent classical proofs listed in the rightmost column.
+\end{remark}
 
 \section{Consequences and Open Questions}\label{sec:consequences}
 
 \subsection{Consequences for Foundational Programmes}
 
-AFN-T imposes a uniform structural bound on every current foundational programme: each inhabits $\LFnd$, or $\LCls$ (possibly with membership in the maximal sub-class $\LClsMax \subseteq \LCls$), with $\LAbs$ empty. Specifically:
+AFN-T imposes a uniform structural bound on candidate absolute foundations: within the scope of Theorem~\ref{thm:afnt-alpha}, $\LAbs$ is empty, while existing foundational programmes inhabit $\LFnd$ or motivate candidate classifiers in $\LCls$ (possibly $\LClsMax \subseteq \LCls$). Specifically:
 \begin{itemize}\setlength{\itemsep}{1pt}
 \item \textbf{Univalent Foundations}, higher topoi, and cohesive frameworks motivate candidate classifiers. Their exact MSFS membership and classification images require the construction and verification specified in Theorem~\ref{thm:meta-mult}.
 \item \textbf{Higher topos theory} supplies semantic structures; an MSFS classifying functor is further data, and no programme-level maximality verdict is inferred without it.
-\item \textbf{Condensed mathematics}, perfectoid geometry, and $\infty$-cosmoi remain mathematical frameworks whose utility and potential extensions are not bounded by the relative $\Pi_4$ exclusion.
+\item \textbf{Condensed mathematics} (Clausen--Scholze~\cite{ClausenScholze2019}), perfectoid geometry, and $\infty$-cosmoi (Riehl--Verity~\cite{RiehlVerity2022}) remain mathematical frameworks whose utility and potential extensions are not bounded by the relative $\Pi_4$ exclusion.
 \item \textbf{Proof assistants} (Coq, Lean, Agda) implement $\LFnd$ foundations ($\CIC$, $\CIC + \mathrm{Univalence}$, $\MLTT$); the plurality of such systems is the plurality of $\LFnd$.
 \item \textbf{Categorical logic}: fixed-depth comparisons can organize specified foundational presentations. No upper bound on further classifier structure follows from the finite-$n$ unicity theorem.
 \end{itemize}
 
-\paragraph{Diagnostic for a specified candidate.} First specify the formal object, its metatheory, and the relevant interpretation relation. If the candidate belongs to the derived class $\cS_S$, its identity violates $\Pi_4$ as defined here. This is the relative obstruction of AFN-T. Assigning particular research programmes to $\LCls\setminus\LClsMax$ additionally requires the classifier constructions and essential-image checks of Theorem~\ref{thm:meta-mult}; absence of a syntactic presentation in one language is not proof of absence of a Morita-equivalent presentation.
+\paragraph{Diagnostic for a specified candidate.} First specify the formal object, its metatheory, and the relevant interpretation relation. If the candidate belongs to the derived class $\cS_S$, its identity morphism violates $\Pi_4$ via $(\alpha_0)$; if it is presented in a faithful subtheory $\iota_F : F \hookrightarrow S$ satisfying hypotheses (a)--(b) of $(\alpha_{\mathrm{diag}})$ and claims internal interpretability of all Rich-foundations $(\Pi_{3\text{-max}})$, it is refuted by diagonalization via $T_S = \PA + \Con_{\sigma_S}(S)$. Assigning particular research programmes to $\LCls\setminus\LClsMax$ additionally requires the classifier constructions and essential-image checks of Theorem~\ref{thm:meta-mult}; absence of a syntactic presentation in one language is not proof of absence of a Morita-equivalent presentation.
 
 \subsection{Open Questions}
 
@@ -1195,11 +1196,11 @@ AFN-T imposes a uniform structural bound on every current foundational programme
 
 \paragraph{(Q2) Completeness of the meta-framework list.} How complete is the list $\{\mathbf{F}_{\mathrm{univalent}},\allowbreak \mathbf{F}_{\mathrm{cosmoi}},\allowbreak \mathbf{F}_{\mathrm{cohesive}},\allowbreak \mathbf{F}_{\mathrm{HA}},\allowbreak \mathbf{F}_{\mathrm{synthetic}}\}$ of currently identified $\LCls$ meta-structures ($\mathbf{F}_{\mathrm{HA}}$ denotes Lurie's Higher Algebra programme~\cite{LurieHA})? Are there further natural meta-frameworks?
 
-\paragraph{(Q3) Exhaustiveness of bypass paths.} Theorems~\ref{thm:universe} and~\ref{thm:reflective} apply to explicitly definable constructions under their closure assumptions. They do not rule out all universe changes, reflection principles, or non-classical foundations. The classifier, intensional, and paraconsistent comparisons need their own construction and preservation proofs. No formal exhaustiveness result for arbitrary extensions is established.
+\paragraph{(Q3) Exhaustiveness of bypass paths.} Theorem~\ref{thm:universe} and Remark~\ref{thm:reflective} apply to explicitly definable constructions under their closure assumptions. They do not rule out all universe changes, reflection principles, or non-classical foundations. The classifier, intensional, and paraconsistent comparisons need their own construction and preservation proofs. No formal exhaustiveness result for arbitrary extensions is established.
 
 \paragraph{(Q4) Consistency-strength minimality.} Determine the base needed for each completed construction separately. The proposed meta-stabilization in Remark~\ref{thm:meta-stab} remains open, so neither its sufficiency under two inaccessibles nor a minimal consistency strength has been established.
 
-\paragraph{(Q5) Sub-stack of weak Rich-metatheories.} Do bounded-arithmetic theories ($\mathsf{I\Delta_0}$, $\mathsf{S}_2^i$) satisfying (R2)--(R5) and a restricted (R1) form a separate stratum $\LFnd^{\mathrm{weak}} \subset \LFnd$, or are they Morita-dense in $\LFnd$ via reverse mathematics~\cite{Simpson2009}?
+\paragraph{(Q5) Sub-stack of weak Rich-metatheories.} Do weak Rich-metatheories such as bounded-arithmetic systems ($\mathsf{I\Delta_0}$, $\mathsf{S}_2^i$, which satisfy (R1) via $\mathsf{Q}$ without full $\PA$ induction) form a separate Morita sub-stack $\LFnd^{\mathrm{weak}} \subset \LFnd$, or are they Morita-dense in $\LFnd$ via reverse mathematics~\cite{Simpson2009}?
 
 \appendix
 
@@ -1261,18 +1262,18 @@ Gambino--Garner~\cite{GambinoGarner2008} extends this to the $2$-categorical set
 \subsection{Bicategory of Fractions}
 
 \begin{lemma}[Pronk's bicategory of fractions]\label{lem:pronk}
-Given a $2$-category $\cC$ and a class $\mathcal{W}$ of $1$-morphisms satisfying the Bousfield--Pronk calculus-of-fractions conditions (BF1)--(BF5), the $2$-localization $\cC[\mathcal{W}^{-1}]$ exists as a bicategory of fractions.
+Given a bicategory (in particular a $2$-category) $\cC$ and a class $\mathcal{W}$ of $1$-morphisms satisfying Pronk's right calculus-of-fractions conditions (BF1)--(BF5), the bicategory of fractions $\cC[\mathcal{W}^{-1}]$ exists and satisfies the universal property of $2$-localization at $\mathcal{W}$ (modulo size conditions when $\cC$ is large).
 \end{lemma}
 
-Reference: Pronk~\cite{Pronk1996}.
+Reference: Pronk~\cite{Pronk1996} (\S 2.1, Thm.~21).
 
-The conditions (BF1)--(BF5) are:
+Pronk's conditions (BF1)--(BF5) are:
 \begin{itemize}
-\item[\textbf{(BF1)}] Contains identities.
-\item[\textbf{(BF2)}] Closed under composition.
-\item[\textbf{(BF3)}] $2$-pullback stable.
-\item[\textbf{(BF4)}] $2$-right-filtered (any morphism can be extended).
-\item[\textbf{(BF5)}] $\mathcal{W}$-saturation: contains all $2$-equivalences.
+\item[\textbf{(BF1)}] \emph{Equivalences}: every internal equivalence of $\cC$ (in particular every identity $1$-morphism) belongs to $\mathcal{W}$.
+\item[\textbf{(BF2)}] \emph{Composition}: $\mathcal{W}$ is closed under composition of $1$-morphisms.
+\item[\textbf{(BF3)}] \emph{Right Ore condition for $1$-cells}: for every $w : A \to C$ in $\mathcal{W}$ and every $f : B \to C$ in $\cC$, there exists a span $A \xleftarrow{g} D \xrightarrow{v} B$ with $v \in \mathcal{W}$ and an invertible $2$-cell $\alpha : w \circ g \xRightarrow{\simeq} f \circ v$.
+\item[\textbf{(BF4)}] \emph{Right cancellation / equalization for $2$-cells}: if $\alpha : w \circ f \Rightarrow w \circ g$ is a $2$-cell with $w \in \mathcal{W}$ and $f, g : A \to B$, then there exist $v : A' \to A$ in $\mathcal{W}$ and a $2$-cell $\beta : f \circ v \Rightarrow g \circ v$ such that $w \ast \beta = \alpha \ast v$; moreover, $\beta$ can be chosen invertible whenever $\alpha$ is invertible, and if $\beta, \beta' : f \circ v \Rightarrow g \circ v$ satisfy $w \ast \beta = w \ast \beta'$, there exists $u : A'' \to A'$ in $\mathcal{W}$ with $\beta \ast u = \beta' \ast u$.
+\item[\textbf{(BF5)}] \emph{Saturation under invertible $2$-cells}: if $w \in \mathcal{W}$ and there is an invertible $2$-cell $w \xRightarrow{\simeq} w'$, then $w' \in \mathcal{W}$.
 \end{itemize}
 
 \subsection{Lawvere Fixed-Point Theorem}
@@ -1320,19 +1321,17 @@ with the shifted diagram's colimit.
 Barwick--Schommer-Pries~\cite{BarwickSchommerPries2021} establish unicity
 for fixed finite $n$, with space of theories $B(\mathbb Z/2)^n$.
 Their result supplies neither this interchange nor an equivalence between
-successive moduli spaces of foundations. The former ``Bergner--Lurie
-stabilization theorem'' and its proof by this interchange are withdrawn.
-An unbounded-depth model and its comparison maps must first be specified.
+successive moduli spaces of foundations. An unbounded-depth model, coherent comparison maps, and any stabilization theorem remain open obligations and must be specified explicitly.
 \end{remark}
 
 \section{Paraconsistent Extension}\label{app:paraconsistent}
 
-AFN-T as stated (Theorem~\ref{thm:afnt-alpha}) applies to classical Rich-metatheories. This appendix extends the result to paraconsistent Rich-metatheories \emph{with extractable classical kernel} --- the class of paraconsistent logics in which every theorem admits a classical-inference witness. The extension does \emph{not} cover strongly-dialetheic theories (see below).
+Theorem~\ref{thm:afnt-alpha} applies to Rich-metatheories in $\RS$. This appendix formulates a conditional transfer to paraconsistent Rich-metatheories equipped with an explicitly specified classical kernel and a boundary-predicate-preserving translation (strongly dialetheic theories lacking such a translation are not covered).
 
 \subsection{Paraconsistent R-S}
 
 \begin{definition}[Paraconsistent R-S with extractable classical kernel]\label{def:paraconsistent-rs}
-A theory $S'$ is a \textbf{paraconsistent Rich-metatheory with extractable classical kernel} if it satisfies the classical conditions (R1')--(R5') analogous to (R1)--(R5), together with:
+A theory $S'$ is a \textbf{paraconsistent Rich-metatheory with extractable classical kernel} if it satisfies the conditions (R1')--(R5') analogous to (R1)--(R5), together with:
 \begin{itemize}
 \item \textbf{(Explosion-min)}: there exists a formula $\phi$ such that $\bot \not\vdash_{S'} \phi$ (equivalently, $\neg\forall\phi\,(\bot \vdash_{S'} \phi)$: contradictions do not entail every formula).
 \item \textbf{(Strong-neg)}: there exists a negation $\sim$ such that $(p \wedge \sim p) \vdash_\sim \bot$ (a specific contradiction principle, though not full explosion).
@@ -1343,22 +1342,22 @@ A theory $S'$ is a \textbf{paraconsistent Rich-metatheory with extractable class
 \subsection{Paraconsistent AFN-T}
 
 \begin{theorem}[Conditional transfer to a paraconsistent presentation]\label{thm:paraconsistent-afnt}
-Suppose a specified classical Rich-metatheory $S^*$ and a translation from $S'$ to $S^*$ are given. Assume that this translation sends every candidate satisfying all three $\LAbs$ conditions in $S'$ to a candidate satisfying all three conditions in $S^*$. Then no such candidate exists in $S'$.
+Suppose a specified classical Rich-metatheory $S^*$ and a translation from $S'$ to $S^*$ are given. Assume that this translation sends every candidate satisfying all three $\LAbs$ conditions in $S'$ to a candidate satisfying all three conditions in $S^*$ within the scope of Theorem~\ref{thm:afnt-alpha}. Then no such candidate exists in $S'$.
 \end{theorem}
 \begin{proof}[Proof (sketch)]
 A candidate in $S'$ would translate to a candidate in $S^*$, contradicting Theorem~\ref{thm:afnt-alpha} there.
 \end{proof}
-Neither a strong negation nor the name ``classical kernel'' constructs this translation. Consistency and Rich-membership of a kernel, functoriality of the translation, and preservation of $\Pi_4$ in particular remain obligations. Removing negation symbols is not a semantics-preserving translation. The former appeal to details in an unspecified companion note does not discharge these obligations.
+Neither a strong negation nor the name ``classical kernel'' constructs this translation. Consistency and Rich-membership of a kernel, functoriality of the translation, and preservation of $\Pi_4$ and $\Pi_{3\text{-max}}$ remain separate obligations. Removing negation symbols is not a semantics-preserving translation.
 
 \section{Verum Verification Ledger}\label{app:verification-ledger}
 
-The companion \textbf{Verum MSFS Corpus} is reported at \url{https://github.com/gst-st/msfs}. Its proof coverage must be checked against the exact statements and assumptions of this revision. The present revision does not assert that every theorem, definition, or open construction has a machine-checked proof. In particular, the newly explicit lifting and stabilization obligations cannot be counted as discharged by a previously matching label.
+The companion \textbf{Verum MSFS Corpus} is maintained at \url{https://github.com/gst-st/msfs}. Within that corpus, only the portable representation-level inclusion proofs in \texttt{verum-corpus/proofs/ss-membership/\{witness.vr, formal.vr\}} (certifying the syntactic-branch union introduction $A \to A \vee B \vee C$ corresponding to the direct syntactic branch of Lemma~\ref{lem:SS-membership}) have independently replayed native kernel certificates; all remaining \texttt{.vr} files in \texttt{verum-corpus/src/theorems/msfs/} are schematic specifications and non-certified stubs that carry no proof-discharge authority. The present paper does not assert machine-checked coverage of every theorem, definition, or open construction, and the lifting, stabilization, and diagonalization arguments cannot be counted as discharged by a matching label or schematic declaration.
 
 A verification report must identify the corpus and kernel revisions, the translated statement for each item, every admitted axiom or framework assumption, and a successful replay command. A marker of the form \texttt{@framework(name, "citation")} records a dependency; it does not prove the cited theorem or its applicability. Definitional conservativity, consistency strength, and correspondence between a formal encoding and the prose statement remain distinct obligations. No fresh replay of the external corpus is certified here.
 
 \section*{Acknowledgments and disclosures}
 
-The author thanks the mathematical community for the foundational results of Cantor, Russell, G\"odel, Tarski, Lawvere, Lambek--Scott, Ad\'amek--Rosick\'y, Makkai--Par\'e, Jacobs, Pronk, Lurie, Riehl--Verity, Voevodsky, Schreiber, and Clausen--Scholze, on which this synthesis rests. Max Sereda is the sole author; conceptualisation, formal analysis, proofs, and writing are entirely the author's responsibility. The work was conducted independently; the author declares no competing interests and no external funding. No data were generated or analysed; the full LaTeX source is archived with the preprint deposit.
+The author thanks the mathematical community for the foundational results of Cantor, Russell, G\"odel, Tarski, Feferman, Pudl\'ak, Lawvere, Lambek--Scott, Ad\'amek--Rosick\'y, Makkai--Par\'e, Jacobs, Pronk, Lurie, Riehl--Verity, Voevodsky, Schreiber, and Clausen--Scholze, on which this synthesis rests. Max Sereda is the sole author; conceptualisation, formal analysis, proofs, and writing are entirely the author's responsibility. The work was conducted independently; the author declares no competing interests and no external funding. No data were generated or analysed; the full LaTeX source is archived with the preprint deposit.
 
 \begin{thebibliography}{99}
 

@@ -1,55 +1,26 @@
 // =============================================================================
-// MSFS Theorem 6.1 — AFN-T β-part (no limit-based escape)
+// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
+// Not kernel-certified. Carries zero proof-discharge authority.
+// Alignment notes against paper-en/paper.tex §6:
+//   - Theorem `thm:afnt-beta` (a) requires explicit S-definability of BOTH
+//     objects and coherent transition functors, direct/slice-conservative
+//     membership in S_S^(k), and colimit existence in U_2 (the former
+//     Adámek-Rosický claim for λ <= κ preserving κ_1-accessibility was false
+//     and has been removed).
+//   - Theorem `thm:afnt-beta` (b) & Proposition `prop:proper-class` give the
+//     unconditional L_Abs exclusion via excluded middle on the limit object.
+//   - `ensures false` declarations below depend on unproved stdlib axioms.
+// Only `proofs/ss-membership/{witness.vr, formal.vr}` (representation-level
+// union introduction A -> A \/ B \/ C) has an independently replayed native
+// kernel certificate.
 // =============================================================================
-//
-// Source: A. Sereda, MSFS preprint, §6 — Theorem 6.1 (Boundary Lemma:
-// no limit-based escape; AFN-T β-part).
-//
-// Statement (paper, Theorem 6.1):
-//
-// Let λ be an ordinal with cf(λ) < κ_2 a regular cardinal, and
-// let {A_κ}_{κ < λ} be a transfinite sequence of objects
-// satisfying:
-// (i) each A_κ formally specified within some F_κ ∈ \cF over S,
-// (ii) the sequence is monotone in an (∞, n)-categorical sense
-// (with coherent transition functors A_κ → A_{κ'} for
-// κ < κ'),
-// (iii) the limit A_∞ := colim_{κ < λ} A_κ exists in the ambient
-// (∞, n)-category.
-// Then A_∞ ∈ \cS_S^{global}, hence Morita-reducible to an element
-// of \cS_S; in particular, A_∞ does not satisfy (Π_{4, S, n}).
-//
-// Proof outline (paper §6):
-//
-// Step 1: Each A_κ ∈ \cS_S<S> by Lemma 3.4.
-// Step 2: S-definability of the transition functors makes
-// D : λ → \cF an S-indexed diagram.
-// Step 3: \cS_S^{global} is closed under Grothendieck constructions
-// and Kan extensions along S-definable morphisms (Definition
-// 3.3 closures O1, O2). Hence A_∞ = colim D ∈ \cS_S^{global}.
-// Step 4: Accessibility: by the standard filtered-colimit closure of
-// accessible categories (Adámek–Rosický 1994), A_∞ inherits
-// κ_1-accessibility.
-// Step 5: Morita-reduction to the canonical model-category colimit
-// contradicts (Π_4) at A_∞.
-//
-// Together with Proposition 6.2 (proper-class towers dichotomy) and
-// Proposition 6.3 (trajectory space), this section closes the
-// "limit-based escape" route: no transfinite limit construction can
-// produce an L_Abs candidate. The result is uniform with Theorem 5.1's
-// finite-X argument; both rest on Lemma 3.4 + (Π_4) violation by
-// id_X / colim D.
-//
+// MSFS §6 — AFN-T β-part (schematic stub)
+// =============================================================================
 
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Theorem("v0.1"),
-    cve_closure: CveClosure {
-        constructive: Maybe.Some("lib.theorems.msfs.afnt_beta.msfs_theorem_6_1_afnt_beta"),
-        verifiable_strategy: Maybe.Some(VerifyStrategy.Certified),
-        executable: Maybe.Some("make -C verum-corpus audit-msfs"),
-    },
+    lifecycle: Lifecycle.Stub("unverified-schematic"),
 )
 module lib.theorems.msfs.afnt_beta;
 
@@ -184,7 +155,7 @@ public axiom msfs_theorem_6_1_step_2_diagram_s_indexed(
 /// the S-indexed tower-diagram `D`, which Definition 3.3 closure O2
 /// (`msfs_s_s_closed_under_grothendieck`) deposits into `S_S^global` at
 /// strictly greater depth.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_2)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 6.1 (operational, 3-step structural body) — colim ∈ S_S^global")
@@ -329,7 +300,7 @@ public axiom msfs_theorem_6_1_beta_tower_reduction(
 /// Theorem 5.1 closes the contradiction directly, using its
 /// universal `requires`-shape — the kernel doesn't need to know
 /// the candidate came from a tower.
-@verify(certified)
+// UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_2)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS Theorem 6.1 (operational closure) — no L_Abs via transfinite tower")
