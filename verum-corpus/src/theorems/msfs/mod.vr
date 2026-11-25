@@ -1,12 +1,14 @@
 // =============================================================================
-// STATUS: NON-CERTIFIED SCHEMATIC SPECIFICATION / LEGACY STUB (QUARANTINED)
-// None of the modules mounted under `src/theorems/msfs/` is kernel-certified;
-// they are schematic specifications / legacy stubs carrying zero proof-discharge
-// authority. Only `proofs/ss-membership/{witness.vr, formal.vr}` (representing
-// the syntactic-branch union introduction A -> A \/ B \/ C of `lem:SS-membership`)
-// has an independently replayed native kernel certificate.
-// See `certification-inventory.json`, `proofs/open-obligations.txt`, and
-// `paper-en/paper.tex` Appendix C.
+// STATUS: MIXED — LEGACY STUBS QUARANTINED + WAVE 1 CONSTRUCTIVE CORES
+// The 15 legacy schematic modules (`introduction`..`paraconsistent`) remain
+// NON-CERTIFIED SCHEMATIC SPECIFICATIONS / LEGACY STUBS (QUARANTINED) carrying
+// zero proof-discharge authority.
+// The 4 standalone Wave 1 modules (`wave1_meta_independence`,
+// `wave1_grading_separation`, `wave1_dual_enactment_core`,
+// `wave1_diakrisis_2cat_core`) are zero-axiom finite/2-categorical cores
+// machine-checked by `verum check`. Track B closed Pi/Id cores live in
+// `proofs/ss-membership/` and `proofs/afnt-alpha-id/`.
+// See `proofs/open-obligations.txt` and `paper-en/paper.tex` Appendix C.
 // =============================================================================
 // theorems.msfs — MSFS corpus schematic module index
 // =============================================================================
@@ -14,7 +16,7 @@
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Stub("unverified-schematic"),
+    lifecycle: Lifecycle.Postulate("unverified-schematic; aggregator"),
 )
 module lib.theorems.msfs;
 
@@ -115,3 +117,30 @@ mount lib.theorems.msfs.categorical_preliminaries.{};
 
 // Appendix B — Paraconsistent extension (Theorem B.2)
 mount lib.theorems.msfs.paraconsistent.{};
+
+// Wave 1 — Standalone zero-axiom machine-checked constructive cores
+mount lib.theorems.msfs.wave1_meta_independence.{
+    wave1_l_cls_not_maximal,
+    wave1_r11a_maximality_clauses_independent,
+    wave1_r11b_non_categorical_pair,
+};
+mount lib.theorems.msfs.wave1_grading_separation.{
+    wave1_r12_grade_monotone_and_iso_invariant,
+    wave1_r12_strict_separation,
+    wave1_cor_grade_collapse,
+    wave1_a4_comp_bound,
+    wave1_a4_exact_grade_witness,
+};
+mount lib.theorems.msfs.wave1_dual_enactment_core.{
+    wave1_a1_ez2_bf4_nonvacuity,
+    wave1_a1_pronk_bf1_to_bf5,
+    wave1_lawvere_diagonal_non_surjective,
+    wave1_synseed_reif_act_adjunction,
+    wave1_lp_dialetheic_non_explosive,
+    wave1_o3_classical_vs_lp_non_explosion,
+};
+mount lib.theorems.msfs.wave1_diakrisis_2cat_core.{
+    wave1_a3_shift2cat_all_13,
+    wave1_a3_seven_countermodels,
+    wave1_finite_slice_d1_to_d4,
+};

@@ -1,0 +1,13 @@
+public theorem dual_afnt_route1a_retraction_refutation(
+    enact: Type,
+    hom_e: fn(enact, enact) -> Type,
+    ss_e: fn(enact) -> Type,
+    equiv_on_img: fn<e1: meta enact, e2: meta enact>(hom_e(e1, e2)) -> Type,
+    e: enact,
+    in_sse: ss_e(e),
+    id_e: hom_e(e, e),
+    id_equiv: equiv_on_img(e, e, id_e)
+): forall (bot: Type).
+   forall (naive_pi4_tilde: fn<e2: meta enact, m: meta hom_e(e, e2)>(ss_e(e2), equiv_on_img(e, e2, m)) -> bot).
+   bot
+proof by intro(bot, naive_pi4_tilde); exact(naive_pi4_tilde(e, id_e, in_sse, id_equiv));

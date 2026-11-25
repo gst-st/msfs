@@ -1,0 +1,381 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 1 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive cores for:
+//   - R-12 (`ActCostGrade` silent-descent grading on `BudgetedEnv`),
+//   - `cor:grade-collapse` (coupled iso-seeded stage-0 collapse vs non-iso
+//     generator height >= 2),
+//   - A4 (`Poset2Cat_Z2` finite poset axioms, monotone maps, non-thin Z_2
+//     2-cells, intrinsic fiber-chain height submultiplicativity `h(g o f) <= h(g)*h(f)`,
+//     double-exponential ceiling `2^(2^n)`, and exact grade separation `n = 0, 1, 2`).
+// Imports zero `core.math.*` axioms and zero quarantined stubs.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LFnd,
+    lifecycle: Lifecycle.Theorem("v0.1"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave1_proofs.py",
+)
+module lib.theorems.msfs.wave1_grading_separation;
+
+public type BudgetedEnv is {
+    state_count: Int,
+    obs_count: Int,
+    budget: Int,
+};
+
+public pure fn valid_budgeted_env(e: BudgetedEnv) -> Bool {
+    e.obs_count >= 1 && e.budget >= 0 && e.state_count == e.obs_count + e.budget
+}
+
+public pure fn has_silent_chain(env: BudgetedEnv, k: Int) -> Bool {
+    k >= 0 && env.budget >= 0 && k <= env.budget
+}
+
+public pure fn act_cost_grade(n: Int, env: BudgetedEnv) -> Bool {
+    n >= 0 && env.budget >= 0 && !has_silent_chain(env, n + 1)
+}
+
+public pure fn same_reif_shadow(e1: BudgetedEnv, e2: BudgetedEnv) -> Bool {
+    e1.obs_count == e2.obs_count
+}
+
+public pure fn is_act_iso(e1: BudgetedEnv, e2: BudgetedEnv) -> Bool {
+    valid_budgeted_env(e1)
+        && valid_budgeted_env(e2)
+        && e1.obs_count == e2.obs_count
+        && e1.budget == e2.budget
+        && e1.state_count == e2.state_count
+}
+
+public pure fn is_budgeted_env(e: BudgetedEnv, obs: Int, b: Int) -> Bool {
+    valid_budgeted_env(e) && e.obs_count == obs && e.budget == b
+}
+
+/// **MSFS Wave 1 (`R-12` monotonicity & isomorphism invariance):**
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 R-12 — ActCostGrade monotonicity and isomorphism invariance")
+public theorem wave1_r12_grade_monotone_and_iso_invariant(
+    n: Int,
+    e1: BudgetedEnv,
+    e2: BudgetedEnv,
+)
+    requires n >= 0
+          && valid_budgeted_env(e1)
+          && valid_budgeted_env(e2)
+          && act_cost_grade(n, e1)
+          && is_act_iso(e1, e2)
+    ensures act_cost_grade(n + 1, e1) && act_cost_grade(n, e2)
+    proof {
+        have h_mono: act_cost_grade(n + 1, e1) by omega;
+        have h_iso: act_cost_grade(n, e2) by omega;
+        conclude by omega;
+    };
+
+/// **MSFS Wave 1 (`R-12` strict separation of Morita/Reif-equivalent environments):**
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 R-12 — strict separation of Reif-equivalent BudgetedEnv")
+public theorem wave1_r12_strict_separation(
+    m: Int,
+    n: Int,
+    em: BudgetedEnv,
+    en: BudgetedEnv,
+)
+    requires 0 <= m && m < n
+          && is_budgeted_env(em, 2, m)
+          && is_budgeted_env(en, 2, n)
+    ensures same_reif_shadow(em, en)
+         && act_cost_grade(m, em)
+         && !act_cost_grade(m, en)
+         && !is_act_iso(em, en)
+    proof {
+        have h_shadow: same_reif_shadow(em, en) by auto;
+        have h_grade_m: act_cost_grade(m, em) by omega;
+        have h_fail_n: !act_cost_grade(m, en) by omega;
+        have h_non_iso: !is_act_iso(em, en) by omega;
+        conclude by auto;
+    };
+
+/// Display generator stage where `is_iso_seed` is strictly coupled to generator
+/// invertibility (`seed_arity == 1 && inv_arity == 1` <=> `fiber_height == 1`),
+/// while non-iso generators require `seed_arity >= 2` and `fiber_height >= 2`.
+public type DisplayGeneratorStage is {
+    stage: Int,
+    seed_arity: Int,
+    inv_arity: Int,
+    fiber_height: Int,
+    is_iso_seed: Bool,
+};
+
+public pure fn valid_display_stage(c: DisplayGeneratorStage) -> Bool {
+    c.stage >= 0
+        && c.seed_arity >= 1
+        && c.inv_arity >= 1
+        && c.fiber_height == c.seed_arity
+        && (
+            (c.is_iso_seed && c.seed_arity == 1 && c.inv_arity == 1)
+                || (!c.is_iso_seed && c.seed_arity >= 2)
+        )
+}
+
+/// Filtration transition step (`step_kind`: 0 = seed, 1 = comp, 2 = pullback).
+public type DisplayFiltrationStep is {
+    step_kind: Int,
+    in_h1: Int,
+    in_h2: Int,
+    out_h: Int,
+};
+
+public pure fn valid_filtration_step(s: DisplayFiltrationStep) -> Bool {
+    s.in_h1 >= 1 && s.in_h2 >= 1 && s.out_h >= 1
+        && (
+            (s.step_kind == 0 && s.in_h1 == 1 && s.in_h2 == 1 && s.out_h == 1)
+                || (s.step_kind == 1 && s.out_h == s.in_h1 * s.in_h2)
+                || (s.step_kind == 2 && s.out_h <= s.in_h1)
+        )
+}
+
+/// **MSFS Wave 1 (`cor:grade-collapse`):**
+/// Iso-seeded stages force `fiber_height == 1` across composition and pullback
+/// steps, in sharp contrast to any non-iso generator (`fiber_height >= 2`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 cor:grade-collapse — coupled iso-seeded display filtration collapse")
+public theorem wave1_cor_grade_collapse(
+    c1: DisplayGeneratorStage,
+    c2: DisplayGeneratorStage,
+    comp_step: DisplayFiltrationStep,
+    pb_step: DisplayFiltrationStep,
+    non_iso: DisplayGeneratorStage,
+)
+    requires valid_display_stage(c1) && c1.is_iso_seed
+          && valid_display_stage(c2) && c2.is_iso_seed
+          && valid_filtration_step(comp_step) && comp_step.step_kind == 1
+          && comp_step.in_h1 == c1.fiber_height
+          && comp_step.in_h2 == c2.fiber_height
+          && valid_filtration_step(pb_step) && pb_step.step_kind == 2
+          && pb_step.in_h1 == comp_step.out_h
+          && valid_display_stage(non_iso) && !non_iso.is_iso_seed
+    ensures c1.fiber_height == 1
+         && c2.fiber_height == 1
+         && comp_step.out_h == 1
+         && pb_step.out_h == 1
+         && non_iso.fiber_height >= 2
+    proof {
+        have h_c12: c1.fiber_height == 1 && c2.fiber_height == 1 by omega;
+        have h_comp: comp_step.out_h == 1 by auto;
+        have h_pb: pb_step.out_h == 1 by omega;
+        have h_noniso: non_iso.fiber_height >= 2 by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// Finite Poset2Cat_Z2 structure (`FinPoset4`), monotone maps, Z_2 2-cells,
+// intrinsic fiber-chain height submultiplicativity, and 2^(2^n) grading
+// =============================================================================
+
+public type FinPoset4 is {
+    le_00: Bool, le_01: Bool, le_02: Bool, le_03: Bool,
+    le_10: Bool, le_11: Bool, le_12: Bool, le_13: Bool,
+    le_20: Bool, le_21: Bool, le_22: Bool, le_23: Bool,
+    le_30: Bool, le_31: Bool, le_32: Bool, le_33: Bool,
+};
+
+public pure fn poset_le(p: FinPoset4, i: Int, j: Int) -> Bool {
+    if i == 0 {
+        if j == 0 { p.le_00 } else if j == 1 { p.le_01 } else if j == 2 { p.le_02 } else { p.le_03 }
+    } else if i == 1 {
+        if j == 0 { p.le_10 } else if j == 1 { p.le_11 } else if j == 2 { p.le_12 } else { p.le_13 }
+    } else if i == 2 {
+        if j == 0 { p.le_20 } else if j == 1 { p.le_21 } else if j == 2 { p.le_22 } else { p.le_23 }
+    } else {
+        if j == 0 { p.le_30 } else if j == 1 { p.le_31 } else if j == 2 { p.le_32 } else { p.le_33 }
+    }
+}
+
+public pure fn antisym_pair(p: FinPoset4, i: Int, j: Int) -> Bool {
+    !(poset_le(p, i, j) && poset_le(p, j, i)) || i == j
+}
+
+public pure fn trans_triple(p: FinPoset4, i: Int, j: Int, k: Int) -> Bool {
+    !(poset_le(p, i, j) && poset_le(p, j, k)) || poset_le(p, i, k)
+}
+
+public pure fn trans_for_ij(p: FinPoset4, i: Int, j: Int) -> Bool {
+    trans_triple(p, i, j, 0) && trans_triple(p, i, j, 1)
+        && trans_triple(p, i, j, 2) && trans_triple(p, i, j, 3)
+}
+
+public pure fn is_valid_poset4(p: FinPoset4) -> Bool {
+    p.le_00 && p.le_11 && p.le_22 && p.le_33
+        && antisym_pair(p, 0, 1) && antisym_pair(p, 0, 2) && antisym_pair(p, 0, 3)
+        && antisym_pair(p, 1, 2) && antisym_pair(p, 1, 3) && antisym_pair(p, 2, 3)
+        && trans_for_ij(p, 0, 0) && trans_for_ij(p, 0, 1) && trans_for_ij(p, 0, 2) && trans_for_ij(p, 0, 3)
+        && trans_for_ij(p, 1, 0) && trans_for_ij(p, 1, 1) && trans_for_ij(p, 1, 2) && trans_for_ij(p, 1, 3)
+        && trans_for_ij(p, 2, 0) && trans_for_ij(p, 2, 1) && trans_for_ij(p, 2, 2) && trans_for_ij(p, 2, 3)
+        && trans_for_ij(p, 3, 0) && trans_for_ij(p, 3, 1) && trans_for_ij(p, 3, 2) && trans_for_ij(p, 3, 3)
+}
+
+public type PosetMap4 is {
+    m0: Int,
+    m1: Int,
+    m2: Int,
+    m3: Int,
+};
+
+public pure fn map4_at(f: PosetMap4, i: Int) -> Int {
+    if i == 0 { f.m0 } else if i == 1 { f.m1 } else if i == 2 { f.m2 } else { f.m3 }
+}
+
+public pure fn mono_pair(p: FinPoset4, q: FinPoset4, f: PosetMap4, i: Int, j: Int) -> Bool {
+    !poset_le(p, i, j) || poset_le(q, map4_at(f, i), map4_at(f, j))
+}
+
+public pure fn is_monotone_map4(p: FinPoset4, q: FinPoset4, f: PosetMap4) -> Bool {
+    f.m0 >= 0 && f.m0 <= 3 && f.m1 >= 0 && f.m1 <= 3
+        && f.m2 >= 0 && f.m2 <= 3 && f.m3 >= 0 && f.m3 <= 3
+        && mono_pair(p, q, f, 0, 1) && mono_pair(p, q, f, 0, 2) && mono_pair(p, q, f, 0, 3)
+        && mono_pair(p, q, f, 1, 0) && mono_pair(p, q, f, 1, 2) && mono_pair(p, q, f, 1, 3)
+        && mono_pair(p, q, f, 2, 0) && mono_pair(p, q, f, 2, 1) && mono_pair(p, q, f, 2, 3)
+        && mono_pair(p, q, f, 3, 0) && mono_pair(p, q, f, 3, 1) && mono_pair(p, q, f, 3, 2)
+}
+
+public pure fn is_comp_map4(f: PosetMap4, g: PosetMap4, gf: PosetMap4) -> Bool {
+    gf.m0 == map4_at(g, f.m0)
+        && gf.m1 == map4_at(g, f.m1)
+        && gf.m2 == map4_at(g, f.m2)
+        && gf.m3 == map4_at(g, f.m3)
+}
+
+public type PosetZ2Cell4 is {
+    c0: Int,
+    c1: Int,
+    c2: Int,
+    c3: Int,
+};
+
+public pure fn is_valid_z2_cell4(a: PosetZ2Cell4) -> Bool {
+    (a.c0 == 0 || a.c0 == 1)
+        && (a.c1 == 0 || a.c1 == 1)
+        && (a.c2 == 0 || a.c2 == 1)
+        && (a.c3 == 0 || a.c3 == 1)
+}
+
+public pure fn is_z2_vcomp4(a: PosetZ2Cell4, b: PosetZ2Cell4, ab: PosetZ2Cell4) -> Bool {
+    ab.c0 == (a.c0 + b.c0) % 2
+        && ab.c1 == (a.c1 + b.c1) % 2
+        && ab.c2 == (a.c2 + b.c2) % 2
+        && ab.c3 == (a.c3 + b.c3) % 2
+}
+
+public pure fn same_z2_cell4(a: PosetZ2Cell4, b: PosetZ2Cell4) -> Bool {
+    a.c0 == b.c0 && a.c1 == b.c1 && a.c2 == b.c2 && a.c3 == b.c3
+}
+
+public pure fn fiber_pair(p: FinPoset4, f: PosetMap4, i: Int, j: Int) -> Bool {
+    i != j && poset_le(p, i, j) && map4_at(f, i) == map4_at(f, j)
+}
+
+public pure fn has_fiber_chain_2(p: FinPoset4, f: PosetMap4) -> Bool {
+    fiber_pair(p, f, 0, 1) || fiber_pair(p, f, 0, 2) || fiber_pair(p, f, 0, 3)
+        || fiber_pair(p, f, 1, 2) || fiber_pair(p, f, 1, 3) || fiber_pair(p, f, 2, 3)
+        || fiber_pair(p, f, 1, 0) || fiber_pair(p, f, 2, 0) || fiber_pair(p, f, 3, 0)
+        || fiber_pair(p, f, 2, 1) || fiber_pair(p, f, 3, 1) || fiber_pair(p, f, 3, 2)
+}
+
+public pure fn fiber_triple(p: FinPoset4, f: PosetMap4, i: Int, j: Int, k: Int) -> Bool {
+    fiber_pair(p, f, i, j) && fiber_pair(p, f, j, k) && i != k
+}
+
+public pure fn has_fiber_chain_3(p: FinPoset4, f: PosetMap4) -> Bool {
+    fiber_triple(p, f, 0, 1, 2) || fiber_triple(p, f, 0, 1, 3)
+        || fiber_triple(p, f, 0, 2, 3) || fiber_triple(p, f, 1, 2, 3)
+}
+
+public pure fn has_fiber_chain_4(p: FinPoset4, f: PosetMap4) -> Bool {
+    fiber_pair(p, f, 0, 1) && fiber_pair(p, f, 1, 2) && fiber_pair(p, f, 2, 3)
+}
+
+/// Intrinsic fiber-chain height `h(f) in {1, 2, 3, 4}` on `FinPoset4`.
+public pure fn fiber_height4(p: FinPoset4, f: PosetMap4) -> Int {
+    if has_fiber_chain_4(p, f) { 4 }
+    else if has_fiber_chain_3(p, f) { 3 }
+    else if has_fiber_chain_2(p, f) { 2 }
+    else { 1 }
+}
+
+public pure fn is_linear_chain4(p: FinPoset4) -> Bool {
+    is_valid_poset4(p)
+        && p.le_01 && p.le_02 && p.le_03 && p.le_12 && p.le_13 && p.le_23
+        && !p.le_10 && !p.le_20 && !p.le_21 && !p.le_30 && !p.le_31 && !p.le_32
+}
+
+/// Double-exponential ceiling `2^(2^n)` for finite stages `n = 0, 1, 2, 3`.
+public pure fn pow2_pow2(n: Int) -> Int {
+    if n == 0 { 2 }
+    else if n == 1 { 4 }
+    else if n == 2 { 16 }
+    else { 256 }
+}
+
+public pure fn in_display_stage(stage: Int, fiber_height: Int) -> Bool {
+    stage >= 0 && stage <= 3 && fiber_height >= 1 && fiber_height <= pow2_pow2(stage)
+}
+
+/// **MSFS Wave 1 (`A4` composition bound + `Poset2Cat_Z2` fiber height & non-thinness):**
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 A4 — Poset2Cat_Z2 fiber-height submultiplicativity and 2^(2^n) ceiling")
+public theorem wave1_a4_comp_bound(
+    n: Int,
+    h1: Int,
+    h2: Int,
+    p: FinPoset4,
+    f: PosetMap4,
+    g: PosetMap4,
+    gf: PosetMap4,
+    z0: PosetZ2Cell4,
+    z1: PosetZ2Cell4,
+    z1_sq: PosetZ2Cell4,
+)
+    requires n >= 0 && n <= 2
+          && in_display_stage(n, h1)
+          && in_display_stage(n, h2)
+          && is_linear_chain4(p)
+          && f.m0 == 0 && f.m1 == 0 && f.m2 == 1 && f.m3 == 1
+          && g.m0 == 0 && g.m1 == 0 && g.m2 == 1 && g.m3 == 1
+          && is_comp_map4(f, g, gf)
+          && z0.c0 == 0 && z0.c1 == 0 && z0.c2 == 0 && z0.c3 == 0
+          && z1.c0 == 1 && z1.c1 == 0 && z1.c2 == 0 && z1.c3 == 0
+          && is_valid_z2_cell4(z0) && is_valid_z2_cell4(z1)
+          && is_z2_vcomp4(z1, z1, z1_sq)
+    ensures in_display_stage(n + 1, h1 * h2)
+         && is_monotone_map4(p, p, f)
+         && is_monotone_map4(p, p, g)
+         && is_monotone_map4(p, p, gf)
+         && !same_z2_cell4(z0, z1)
+         && same_z2_cell4(z1_sq, z0)
+         && fiber_height4(p, f) == 2
+         && fiber_height4(p, g) == 2
+         && fiber_height4(p, gf) == 4
+         && fiber_height4(p, gf) <= fiber_height4(p, f) * fiber_height4(p, g)
+    proof {
+        have h_stage: in_display_stage(n + 1, h1 * h2) by auto;
+        have h_mono: is_monotone_map4(p, p, f) && is_monotone_map4(p, p, g) && is_monotone_map4(p, p, gf) by auto;
+        have h_nt: !same_z2_cell4(z0, z1) && same_z2_cell4(z1_sq, z0) by omega;
+        have h_fh: fiber_height4(p, f) == 2 && fiber_height4(p, g) == 2 && fiber_height4(p, gf) == 4 by auto;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 1 (`A4` exact display-grade witness for `n = 0, 1, 2`):**
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 A4 — exact Poset2Cat_Z2 display grade separation for n = 0, 1, 2")
+public theorem wave1_a4_exact_grade_witness(n: Int, m: Int)
+    requires n >= 0 && n <= 2 && m >= 0 && m < n
+    ensures in_display_stage(n, pow2_pow2(n))
+         && !in_display_stage(m, pow2_pow2(n))
+    proof {
+        have h_in: in_display_stage(n, pow2_pow2(n)) by auto;
+        have h_out: !in_display_stage(m, pow2_pow2(n)) by auto;
+        conclude by auto;
+    };

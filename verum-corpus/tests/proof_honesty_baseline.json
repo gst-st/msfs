@@ -1,23 +1,23 @@
 {
-  "_comment": "MSFS proof-honesty baseline (schema v3, 2026-07-10). Matches the live `verum audit --proof-honesty` classifier, which emits a COMBINED theorem_axiom_only counter (audit schema_version 1). The v2 structural/tautological split relied on a classifier the current CLI does not implement; its enforcement did not disappear — the forbidden classes (axiom `ensures true`, theorems discharged solely by such axioms, theorems with `ensures true`) are now checked textually by tests/integration/proof_honesty_gate.sh itself, corpus-side, independent of CLI classifier churn.",
+  "_comment": "MSFS proof-honesty baseline (schema v3, 2026-11-25 Wave 1 Iteration 2). Synchronizes commit 758a322 strata.vr ontology audit (by_lineage_min.msfs.theorem_axiom_only: 21 -> 20) and tracks 17 genuine zero-axiom Track A multi-step theorems (`src/theorems/msfs/wave1_*.vr`) plus 3 Track B closed Pi/Id multi-step theorems (`proofs/afnt-alpha-id/`). Never weakens theorem_no_proof_body=0, theorem_trivial_true=0, or axiom_placeholder<=43.",
   "_audit_command": "verum audit --proof-honesty",
-  "_baseline_date": "2026-07-10",
-  "_baseline_iteration": "post-wiring baseline: corpus GREEN under verum check (17 modules), Intensional Grading block included",
+  "_baseline_date": "2026-11-25",
+  "_baseline_iteration": "M4.1 Iteration 2 (substantive Track A 4 wave1 modules + Track B direct .vr->AST Pi/Id kernel + P0 Lifecycle.Postulate)",
   "schema_version": 3,
   "totals_min": {
     "_invariant": "running totals must satisfy: total[k] >= totals_min[k] for monotone metrics, total[k] <= totals_max[k] for the trivial counters.",
-    "theorem_multi_step":  16,
-    "theorem_axiom_only":  21
+    "theorem_multi_step": 36,
+    "theorem_axiom_only": 21
   },
   "totals_max": {
-    "axiom_placeholder":              43,
-    "theorem_no_proof_body":           0,
-    "theorem_trivial_true":            0
+    "axiom_placeholder": 43,
+    "theorem_no_proof_body": 0,
+    "theorem_trivial_true": 0
   },
   "by_lineage_min": {
     "msfs": {
-      "theorem_multi_step": 16,
-      "theorem_axiom_only": 21
+      "theorem_multi_step": 33,
+      "theorem_axiom_only": 20
     }
   },
   "by_lineage_max": {

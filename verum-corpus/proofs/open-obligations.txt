@@ -1,58 +1,91 @@
-MSFS source, formalization and library audit — updated 2026-11-23
+MSFS source, formalization and library audit — updated 2026-11-25 (Wave 1 Iteration 2)
 
 Source-paper mathematical defects (O1–O3, plus AFN-T α/β scope, def:SSE/lem:SS-membership-E/thm:dual-afnt,
 universe/cardinality bounds, thm:subsumption, thm:lateral, prop:trajectory-space, prop:no-collapse,
 lem:pronk, (R1) vs bounded arithmetic, and 1-to-1 EN/RU/mini sync) have been resolved cleanly in
 paper-en/paper.tex, paper-ru/paper.tex, and paper-en/paper-mini.tex.
-Legacy Verum stdlib / foreign-scaffold obligations O4–O6 remain explicitly tracked, and all
-src/theorems/msfs/*.vr files and audit-reports/*.json files have been quarantined so that ONLY
-proofs/ss-membership/{witness.vr, formal.vr} (representation-level union introduction A -> A \/ B \/ C)
-is reported as a kernel-checked Verum artifact.
+
+In verum-corpus:
+  - P0 repair: replaced invalid `Lifecycle.Stub("unverified-schematic")` with honest
+    `Lifecycle.Postulate("unverified-schematic")` in the 11 legacy schematic MSFS modules
+    and `Lifecycle.Postulate("unverified-schematic; aggregator")` in `src/theorems/msfs/mod.vr`.
+    All 15 legacy `src/theorems/msfs/*.vr` modules and their `43` schematic `public axiom`
+    placeholders remain QUARANTINED and carry zero proof-discharge authority.
+  - Wave 1 Track A (`src/theorems/msfs/wave1_*.vr`, 4 modules, 17 `theorem_multi_step`, 0 axioms):
+    Standalone zero-axiom finite / 2-categorical constructive cores verified by `verum check`
+    and `verum arch check --strict` (zero rubber-stamp Bool flags, zero propositional tautologies):
+      1. `src/theorems/msfs/wave1_meta_independence.vr` (3 theorems):
+         - `wave1_l_cls_not_maximal` (`M_not1` with full category/functoriality laws witnessing `L_Cls \ L_Cls_top != empty`)
+         - `wave1_r11a_maximality_clauses_independent` (`R-11A` / `prop:max-independence-noncat` with explicit `Aut(C)` swap automorphisms and `B(Z_2)` functoriality)
+         - `wave1_r11b_non_categorical_pair` (`R-11B` / `M_maxDisc` vs `M_maxConn` full-functor refutation over `CandidateFunctor`)
+      2. `src/theorems/msfs/wave1_grading_separation.vr` (5 theorems):
+         - `wave1_r12_grade_monotone_and_iso_invariant` (`R-12` `ActCostGrade` monotonicity & iso-invariance)
+         - `wave1_r12_strict_separation` (`R-12` strict separation of Reif-equivalent `BudgetedEnv`)
+         - `wave1_cor_grade_collapse` (`cor:grade-collapse` coupled iso-seeded stage-0 collapse vs non-iso `fiber_height >= 2`)
+         - `wave1_a4_comp_bound` (`A4` `Poset2Cat_Z2` finite poset axioms, non-thin `Z_2` 2-cells, `h(g o f) <= h(g)*h(f)`, and `2^(2^n)` composition bound)
+         - `wave1_a4_exact_grade_witness` (`A4` exact display grade separation for finite `n = 0, 1, 2`)
+      3. `src/theorems/msfs/wave1_dual_enactment_core.vr` (6 theorems):
+         - `wave1_a1_ez2_bf4_nonvacuity` (`A1` `E_{Z2}` Pronk `(BF4)` non-vacuity & involution)
+         - `wave1_a1_pronk_bf1_to_bf5` (`A1` finite 3-object `EnactFin3(BaseZ2)` Pronk `(BF1)-(BF5)` + Ore squares + 2-out-of-3 + `eta_r` non-invertibility)
+         - `wave1_lawvere_diagonal_non_surjective` (`lem:lawvere-fp` finite Lawvere diagonal non-surjectivity on `Fin 2 -> (Fin 2 -> Fin 2)`)
+         - `wave1_synseed_reif_act_adjunction` (`ReifActAdjunction` finite `SynSeed -| Reif -| Act` triangles & unit non-invertibility)
+         - `wave1_lp_dialetheic_non_explosive` (`O3` Priest 3-valued `LP` LEM validity & dialetheic non-explosion witness)
+         - `wave1_o3_classical_vs_lp_non_explosion` (`O3` classical `{0, 2}` explosion vs 3-valued `LP` non-explosion semantic separation)
+      4. `src/theorems/msfs/wave1_diakrisis_2cat_core.vr` (3 theorems):
+         - `wave1_a3_shift2cat_all_13` (`A3` `Shift2Cat_Z2` 13-axiom non-thin witness with 13 distinct non-Bool predicates)
+         - `wave1_a3_seven_countermodels` (`A3` 7 countermodels isolating `Axi-1,6,7,8,9,T-alpha,T-2f**`, with genuine 2-rail `CM_notAxi6` satisfying `Axi-5`, `Axi-7`, and all 12 non-target axioms on every countermodel)
+         - `wave1_finite_slice_d1_to_d4` (`thm:I-existence` `FinPoset3` pullback `min(u, a)` universal property, `(D1)-(D4)`, and pseudofunctor laws)
+  - Wave 1 Track B (`proofs/`, unmounted from `src/lib.vr`):
+      1. `proofs/ss-membership/{witness.vr, formal.vr}` (2 theorems, native kernel certificate).
+      2. `proofs/afnt-alpha-id/{alpha_zero.vr, lawvere_fp.vr, route1a_retraction.vr}` (3 closed
+         dependent Pi/Id theorems parsed & compiled directly from `.vr` source text by
+         `scripts/verify_wave1_proofs.py` and verified 1-to-1 in the Python bidirectional
+         Pi/Id/J/IdElim kernel at universe levels 0, 1, 2; external `verum-source-replay`
+         and `noesis` binaries are absent from PATH).
+
+Remaining OPEN / QUARANTINED Obligations (NOT discharged in Wave 1):
+  - `(alpha_diag)`: Strong diagonal anti-absoluteness in `thm:afnt-alpha` (ii) and
+    `thm:dual-afnt` (ii) via canonical `Sigma_1`-binumeration, Solovay cut, and
+    Feferman-Pudlak Second Incompleteness for `T_S = PA + Con(S)`.
+  - `thm:afnt-beta`: Transfinite `Ord`-indexed colimit towers and `U_2`-class dichotomy.
+  - `43` quarantined schematic `public axiom` placeholders across legacy `src/theorems/msfs/*.vr`.
+  - `B1`–`B6`:
+      * `B1`: Stabilization of `(infty, n)`-enrichment as `n -> infty` (`thm:bergner-lurie-stab`).
+      * `B2`: Idempotence of meta-classification (`thm:meta-stab`).
+      * `B3`: Full `(infty, 2)`-stack model of all 13 `Diakrisis` axioms (`131.T`) & `Q1` categoricity.
+      * `B4`: Higher `(infty, n)` AC/OC duality (`(O-AC1)–(O-AC5)`).
+      * `B5`: Syntactic 2-functor of interpretation `I` on `F` (`(I-1)–(I-4)`).
+      * `B6`: Completeness of `Q2` and `Q3`.
+  - `O4`–`O6`: Legacy host stdlib `core.math.s_definable`, `core.verify.kernel_v0`, and
+    withdrawn reflection/stabilization markers.
+
+--------------------------------------------------------------------------------
+Historical Resolution Log (O1–O6)
+--------------------------------------------------------------------------------
 
 O1. Membership and AFNT-alpha subtheory transport — RESOLVED IN SOURCE PAPER.
 Source: paper-en/paper.tex & paper-ru/paper.tex, lem:SS-membership; def:pi3max; thm:afnt-alpha.
-Resolution: Lemma lem:SS-membership now explicitly distinguishes direct / slice-conservative
-presentations from arbitrary proper subtheories iota_F : F -> S (noting non-conservativity
-of PA -> PA + Con(PA) on slices). Definition def:pi3max states the generative typing
-explicitly, and Theorem thm:afnt-alpha proves BOTH (i) the direct / slice-conservative
-mechanism (alpha_0) refuting (F_S) & (Pi_4) and (ii) Strong Diagonal Anti-Absoluteness
-(alpha_diag) refuting (F_S) & (Pi_{3-max}) for arbitrary faithful subtheories iota_F : F -> S
-via T_S := PA + Con(S) in F (witnessed by standard N in U_1 subset U_2 via (R3), without
-omega-consistency), single-sorted arithmetic pullback S_arith >= Q + Con(S), Solovay
-I*Delta_0 + Omega_1 cut, and Feferman–Pudlak Second Incompleteness (Feferman 1960; Pudlak 1985).
 Status: resolved in paper-en/paper.tex and paper-ru/paper.tex (and mechanically formalized in
 sibling math-foundations/lean4-mf-kernel/MathFoundations/Metatheory/StrongAFNT.lean); Verum
-portable proofss/ss-membership covers the representation-level introduction branch.
+portable `proofs/ss-membership/` covers representation-level introduction and `proofs/afnt-alpha-id/`
+covers `(alpha_0)` + Lawvere FP + Route 1a in closed Pi/Id; `(alpha_diag)` remains open in Verum.
 
 O2. Proper-class and non-uniform tower dichotomy — RESOLVED IN SOURCE PAPER.
 Source: paper-en/paper.tex & paper-ru/paper.tex, prop:proper-class + terminal-collapse counterexample.
-Resolution: Replaced the invalid diagram-recovery inference with the unconditional colimit
-R-S-definability dichotomy directly on the limit object A_infty (either exists S' in R-S with
-(F_{S'})(A_infty), refuted by thm:afnt-alpha at S', or forall S' in R-S not (F_{S'})(A_infty),
-failing the first conjunct of def:level6), accompanied by the explicit terminal-collapse
-counterexample A_k (cardinality 1 + b_k collapsing to {*}) showing why diagram uniformity
-cannot be recovered from colimit definability.
-Status: resolved in paper-en/paper.tex and paper-ru/paper.tex.
+Status: resolved in paper-en/paper.tex and paper-ru/paper.tex; transfinite Verum formalization remains open.
 
-O3. Nonexplosion quantifier — RESOLVED IN SOURCE PAPER AND CORPUS DOCS.
+O3. Nonexplosion quantifier — RESOLVED IN SOURCE PAPER, CORPUS DOCS, AND WAVE 1.
 Source: paper-en/paper.tex & paper-ru/paper.tex, def:paraconsistent-rs (Explosion-min);
-verum-corpus/src/theorems/msfs/paraconsistent.vr.
-Resolution: Corrected Explosion-min from the self-contradictory universal quantifier to
-existential non-explosion: there exists a formula phi such that bot does not derive phi in S'
-(equivalently, not forall phi (bot |-_{S'} phi)), with conditional classical-kernel transfer
-in thm:paraconsistent-afnt.
-Status: resolved in paper-en/paper.tex, paper-ru/paper.tex, and paraconsistent.vr.
+verum-corpus/src/theorems/msfs/wave1_dual_enactment_core.vr.
+Status: resolved in paper-en/paper.tex, paper-ru/paper.tex, and constructively witnessed in Wave 1
+(`wave1_lp_dialetheic_non_explosive`, `wave1_o3_classical_vs_lp_non_explosion`).
 
 O4. Unconnected arbitrary outputs in legacy categorical library contracts.
 Source: Verum core/math/s_definable/class_s_s.vr and lemma_3_4.vr.
-Required: a typed construction with explicit inputs/output relation and an actual proof of
-preservation. The portable Pi/Id source profile does not import these contracts.
-Status: legacy stdlib signature remains uncertified; excluded from portable kernel proof claims.
+Status: legacy stdlib signature remains uncertified; excluded from Wave 1 & portable kernel proof claims.
 
 O5. Legacy library kernel is not an implementation of the portable kernel.
 Source: Verum core/verify/kernel_v0.
-Required: shared calculus contract, executable capture-avoiding substitution, shifted lookup,
-reflexive-transitive reduction, and checked metatheorems.
 Status: legacy stdlib routines remain uncertified; not used by native admission path.
 
 O6. Reflection/stabilization authority.

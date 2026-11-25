@@ -1,0 +1,51 @@
+{
+  "profile": "msfs-source-correspondence/1",
+  "source": {
+    "path": "paper-en/paper.tex",
+    "sha256": "189eb2f8f048601c8ebabe05bbafcdc1a4bec0174cdc3b8694e4eb07fc1c1952",
+    "fragments": [
+      {
+        "anchor": "thm:afnt-alpha",
+        "start": 62428,
+        "end": 64442,
+        "quote": "\\begin{theorem}[Boundary Lemma: emptiness of $\\LAbs$; AFN-T $(\\alpha)$-part]\\label{thm:afnt-alpha}\nLet $S \\in \\RS$ and $n \\in \\mathbb{N} \\cup \\{\\infty\\}$, and let $X$ be a pointed $(\\infty, n)$-categorical object satisfying $(F_S)$ via $\\iota_F : F \\hookrightarrow S$ and $(\\Syn(F), [\\phi_X]_F) \\simeq_{(\\infty, n)} X$:\n\\begin{enumerate}[nosep,label=(\\roman*)]\n\\item \\emph{Direct / slice-conservative mechanism $(\\alpha_0)$}: whenever the $(F_S)$-presentation is direct ($F = S$) or slice-conservative, already the sub-pair $(F_S) \\wedge (\\Pi_{4, S, n})$ is inconsistent (for every $S \\in \\RS$ and $n \\in \\mathbb{N} \\cup \\{\\infty\\}$, without further hypotheses).\n\\item \\emph{Strong diagonal anti-absoluteness $(\\alpha_{\\mathrm{diag}})$}: suppose in addition that (a) the r.e.\\ axiom set of $S$ is fixed by a canonical $\\Sigma_1$-binumeration $\\sigma_S$ in $\\mathsf{Q}$ (stronger than bare (R4), determining the canonical $\\Pi_1^0$ consistency sentence $\\Con_{\\sigma_S}(S)$), and (b) the composite interpretation $J := \\iota_F \\circ \\tau : \\PA + \\Con_{\\sigma_S}(S) \\to S$ induced by any witness $\\tau$ of $(\\Pi_{3\\text{-max}, S, n})$ is a classical first-order relative interpretation --- or, for intuitionistic, linear, or type-theoretic systems in $\\RS$ (such as $\\MLTT$, $\\CIC$, $\\HoTT$, $\\mathsf{ILL}_{\\mathsf{PA}}$, $\\mathsf{HA}+\\mathsf{MP}$, or topos internal languages from \\S\\ref{sec:rs}), is equipped with an explicit negative translation $(\\cdot)^N$ of classical first-order arithmetic into $S$ together with a primitive-recursive proof-translation (verifiable in $\\PA$) sending classical first-order derivations of $0 = 1$ in the arithmetic pullback to derivations of $\\bot$ in $S$. Then for \\emph{every} faithful subtheory inclusion $\\iota_F : F \\hookrightarrow S$ (without assuming slice-conservativity of $\\Syn(\\iota_F)$, and even if $(\\Pi_{4, S, n})$ is omitted or punctured to exclude self-equivalences), the generative pair $(F_S) \\wedge (\\Pi_{3\\text{-max}, S, n})$ is inconsistent.\n\\end{enumerate}",
+        "sha256": "5a78ae68e57fe718e002979420e351f9e8734a4418fdbc7ea5640c636021f3cc"
+      },
+      {
+        "anchor": "thm:dual-afnt",
+        "start": 187775,
+        "end": 188972,
+        "quote": "\\begin{theorem}[Dual Boundary Lemma; Dual-AFN-T $(\\alpha)$-part]\\label{thm:dual-afnt}\nLet $S \\in \\RS$ and $n \\in \\mathbb{N} \\cup \\{\\infty\\}$, and let $(F, \\cC, \\iota, r) \\in \\cE$ satisfy $(\\tilde{F}_S)$ via faithful relative interpretations $\\iota_F : F \\hookrightarrow F' \\hookrightarrow S$:\n\\begin{enumerate}[nosep,label=(\\roman*)]\n\\item \\emph{Direct / slice-conservative retraction branch}: whenever the presentation satisfies hypotheses (i)--(iii) of Lemma~\\ref{lem:SS-membership-E}, already the sub-pair $(\\tilde{F}_S) \\wedge (\\tilde{\\Pi}_{4, S, n})$ is inconsistent.\n\\item \\emph{General diagonal branch}: whenever $S$ satisfies the canonical $\\Sigma_1$-binumeration and classical relative (or negative-translation plus primitive-recursive proof-translation) hypotheses (a)--(b) of Theorem~\\ref{thm:afnt-alpha}~(ii), the receptive pair $(\\tilde{F}_S) \\wedge (\\tilde{\\Pi}_{3\\text{-max}, S, n})$ is inconsistent for \\emph{every} faithful relative interpretation $F \\hookrightarrow F' \\hookrightarrow S$ (without assuming slice-conservativity, without invoking Lemma~\\ref{lem:SS-membership-E}, and independently of the localization hypotheses of Theorem~\\ref{thm:ac-oc-duality}).\n\\end{enumerate}",
+        "sha256": "c2ea87971feff7654c41e00ff0b0da6592438826b93a4f957c9425ecc11bbc72"
+      }
+    ]
+  },
+  "formalizations": [
+    {
+      "path": "proofs/afnt-alpha-id/alpha_zero.vr",
+      "declaration": "afnt_alpha_zero_id_refutation",
+      "sha256": "db583982ce3420d8086a6f4a44e06f83eeb6c70bd9400ec16cb22a6f068f7331"
+    },
+    {
+      "path": "proofs/afnt-alpha-id/lawvere_fp.vr",
+      "declaration": "lawvere_diagonal_fixed_point",
+      "sha256": "6467f4a5cabf7602dfd870443337caac501bffdff1e2819b4e0c924f10b0bdd2"
+    },
+    {
+      "path": "proofs/afnt-alpha-id/route1a_retraction.vr",
+      "declaration": "dual_afnt_route1a_retraction_refutation",
+      "sha256": "7226924f0eb04887d450e56d6df7bccfa42c29a403d64c5efeb1148454d4f4e3"
+    }
+  ],
+  "scope": "direct/slice-conservative (alpha_0) id_X refutation, Lawvere diagonal fixed-point, and Dual-AFN-T Route 1a retraction refutation in closed Pi/Id",
+  "review": "proofs/afnt-alpha-id/correspondence.txt",
+  "review_sha256": "9adfcdf2f70c95fca8bdad02d87039563f56b6195fd7c450511d8ceccd65ee40",
+  "prose_alignment": "human_review_required; exact paper fragment hashes verified without modifying paper.tex",
+  "not_covered": [
+    "AFNT-alpha (alpha_diag) via PA + Con(S) and Feferman-Pudlak Second Incompleteness",
+    "Dual-AFN-T (ii) general diagonal branch",
+    "full (infty, n)-categorical equivalence and slice-conservativity",
+    "legacy core.math marker axioms and O4-O6",
+    "open research problems B1-B6"
+  ]
+}

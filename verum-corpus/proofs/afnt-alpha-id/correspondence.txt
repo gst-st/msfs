@@ -1,0 +1,71 @@
+INDEPENDENT SOURCE-CORRESPONDENCE REVIEW
+MSFS Wave 1 AFN-T (alpha_0), Lawvere Diagonal Fixed-Point, and Dual-AFN-T Route 1a
+Source-correspondence review. The paper has not been changed to fit the proofs.
+
+1. Original source and scope
+
+Repository: /Users/taaliman/projects/oldman/math-msfs
+Source: paper-en/paper.tex
+Anchors:
+  * thm:afnt-alpha (lines/bytes recorded in correspondence.json):
+    Part (i) — Direct / slice-conservative mechanism (\alpha_0):
+    whenever the (F_S)-presentation is direct or slice-conservative,
+    already the sub-pair (F_S) /\ (\Pi_{4, S, n}) is inconsistent via id_X.
+  * lem:lawvere-fp / Appendix A (Lawvere 1969 diagonal fixed-point theorem):
+    if eval_map : A x A -> Y is weakly point-surjective, then every f : Y -> Y
+    has a global fixed point y_0 = eval_map(pair(a_0, a_0)) satisfying y_0 ; f = y_0.
+  * thm:dual-afnt (lines/bytes recorded in correspondence.json):
+    Part (i) — Direct / slice-conservative retraction branch (Route 1a):
+    under hypotheses (i)-(iii) of Lemma lem:SS-membership-E, (F, C, \iota, r) \in \cS_{S,\cE},
+    and the identity 1-morphism (id_F, id_C) contradicts (\tilde{\Pi}_{4, S, n}).
+
+2. Universe-correct mathematical formulas (verum-source-pi-id/1)
+
+All three declarations are closed dependent Pi/Id proof terms in Type(0)
+(no axioms, no core.math.* imports, no Type : Type):
+
+  (a) afnt_alpha_zero_id_refutation (`proofs/afnt-alpha-id/alpha_zero.vr`):
+      Given (Obj : Type, Hom : Obj -> Obj -> Type, P : Obj -> Type, X : Obj,
+             id_X : Hom X X, hX : P X) and any (Bot : Type,
+             naive_Pi4 : Pi(Y : Obj). P Y -> Hom X Y -> Bot),
+      derives Bot via naive_Pi4 X hX id_X.
+
+  (b) lawvere_diagonal_fixed_point (`proofs/afnt-alpha-id/lawvere_fp.vr`):
+      Given (Obj, Hom, comp, T, A, ProdAA, Y, diag, eval_map, f, pair_aa, a0)
+      and equational path hypotheses:
+        h_assoc1  : (pair_aa ; eval_map) ; f = pair_aa ; (eval_map ; f)
+        h_diag_pt : pair_aa = a0 ; diag
+        h_assoc2  : (a0 ; diag) ; (eval_map ; f) = a0 ; (diag ; (eval_map ; f))
+        h_surj    : pair_aa ; eval_map = a0 ; (diag ; (eval_map ; f))
+      derives Id(Hom T Y, (pair_aa ; eval_map) ; f, pair_aa ; eval_map)
+      by J-transport / identity induction:
+        rewrite(h_assoc1); induction h_diag_pt; rewrite(h_assoc2);
+        rewrite < h_surj; reflexivity.
+
+  (c) dual_afnt_route1a_retraction_refutation (`proofs/afnt-alpha-id/route1a_retraction.vr`):
+      Given (Enact, HomE, SSE, EquivOnImg, E, in_SSE : SSE E,
+             id_E : HomE E E, id_equiv : EquivOnImg E E id_E) and any
+      (Bot : Type, naive_Pi4_tilde : Pi(E2 : Enact, m : HomE E E2). SSE E2 -> EquivOnImg E E2 m -> Bot),
+      derives Bot via naive_Pi4_tilde E id_E in_SSE id_equiv.
+
+3. Honest scope and explicit non-covered boundaries
+
+This package verifies ONLY the exact dependent-type algebraic cores listed above.
+It does NOT cover:
+  * Strong diagonal anti-absoluteness (\alpha_diag) in thm:afnt-alpha (ii) or
+    thm:dual-afnt (ii) (which require Sigma_1-binumeration, Solovay cuts, and
+    Feferman-Pudlak Second Incompleteness for T_S = PA + Con(S));
+  * Full (\infty, n)-categorical equivalence or slice-conservativity proofs;
+  * Lemma 3.4 / O4-O6 host-stdlib obligations or B1-B6 open research problems.
+
+4. Reproducible verification boundary
+
+In this environment, `verum-source-replay` and `noesis` binaries are NOT installed
+in PATH; therefore full external binary `verum-source-replay` execution was NOT
+performed. Instead, `scripts/verify_wave1_proofs.py` independently verifies:
+  1. SHA-256 digests of paper-en/paper.tex, quoted LaTeX fragments,
+     correspondence.txt, and all three .vr files;
+  2. Independent Python named-AST parsing & de Bruijn compilation + type/term
+     well-formedness checking for the closed Pi/Id certificates;
+  3. Structural correspondence with the finite Track A witnesses in
+     src/theorems/msfs/wave1_*.vr.

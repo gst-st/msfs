@@ -16,7 +16,7 @@
 @arch_module(
     foundation: Foundation.ZfcTwoInacc,
     stratum: MsfsStratum.LFnd,
-    lifecycle: Lifecycle.Stub("unverified-schematic"),
+    lifecycle: Lifecycle.Postulate("unverified-schematic"),
 )
 module lib.theorems.msfs.categorical_preliminaries;
 

@@ -1,0 +1,34 @@
+public theorem lawvere_diagonal_fixed_point(
+    obj: Type,
+    hom: fn(obj, obj) -> Type,
+    comp: fn<x: meta obj, y: meta obj, z: meta obj>(hom(x, y), hom(y, z)) -> hom(x, z),
+    t: obj,
+    a: obj,
+    prod_aa: obj,
+    y: obj,
+    diag: hom(a, prod_aa),
+    eval_map: hom(prod_aa, y),
+    f: hom(y, y),
+    pair_aa: hom(t, prod_aa),
+    a0: hom(t, a),
+    h_assoc1: Path<hom(t, y)>(
+        comp(t, y, y, comp(t, prod_aa, y, pair_aa, eval_map), f),
+        comp(t, prod_aa, y, pair_aa, comp(prod_aa, y, y, eval_map, f))
+    ),
+    h_diag_pt: Path<hom(t, prod_aa)>(
+        pair_aa,
+        comp(t, a, prod_aa, a0, diag)
+    ),
+    h_assoc2: Path<hom(t, y)>(
+        comp(t, prod_aa, y, comp(t, a, prod_aa, a0, diag), comp(prod_aa, y, y, eval_map, f)),
+        comp(t, a, y, a0, comp(a, prod_aa, y, diag, comp(prod_aa, y, y, eval_map, f)))
+    ),
+    h_surj: Path<hom(t, y)>(
+        comp(t, prod_aa, y, pair_aa, eval_map),
+        comp(t, a, y, a0, comp(a, prod_aa, y, diag, comp(prod_aa, y, y, eval_map, f)))
+    )
+): Path<hom(t, y)>(
+    comp(t, y, y, comp(t, prod_aa, y, pair_aa, eval_map), f),
+    comp(t, prod_aa, y, pair_aa, eval_map)
+)
+proof by rewrite(h_assoc1); induction h_diag_pt; rewrite(h_assoc2); rewrite < h_surj; reflexivity;

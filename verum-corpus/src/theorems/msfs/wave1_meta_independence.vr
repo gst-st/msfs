@@ -1,0 +1,511 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 1 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite 1-categorical classifier models for MSFS R-11A, R-11B
+// (Proposition `prop:max-independence-noncat` / `(Q1)` independence &
+// non-categoricity) and finite `L_Cls \ L_Cls_top` separation (`M_not1`).
+// Every category law (`id`, `comp`, `assoc`), `B(Z_2)` functoriality law,
+// `Aut(C)` swap automorphism, `(Max-1)..(Max-4)`, and candidate functor
+// fullness check is computed directly from explicit morphism/composition tables
+// with ZERO rubber-stamp Bool flags.
+// Imports zero `core.math.*` axioms and zero quarantined stubs.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LCls,
+    lifecycle: Lifecycle.Theorem("v0.1"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave1_proofs.py",
+)
+module lib.theorems.msfs.wave1_meta_independence;
+
+/// Finite 1-categorical classifier schema over `Ob subset {0, 1}` with up to
+/// 4 morphisms (`0 <= i < num_mors <= 4`), explicit `src`/`dst`/`id`/`comp`
+/// category table, `B(Z_2)`-valued maps `cl_map` / `int_map`, comprehension
+/// dependency relation `dep_xy`, and predicative rank `rank_x`.
+public type ClassifierModel is {
+    num_objs: Int,
+    num_mors: Int,
+    cl_0: Int,
+    cl_1: Int,
+    src_0: Int,
+    src_1: Int,
+    src_2: Int,
+    src_3: Int,
+    dst_0: Int,
+    dst_1: Int,
+    dst_2: Int,
+    dst_3: Int,
+    id_0: Int,
+    id_1: Int,
+    comp_00: Int,
+    comp_01: Int,
+    comp_02: Int,
+    comp_03: Int,
+    comp_10: Int,
+    comp_11: Int,
+    comp_12: Int,
+    comp_13: Int,
+    comp_20: Int,
+    comp_21: Int,
+    comp_22: Int,
+    comp_23: Int,
+    comp_30: Int,
+    comp_31: Int,
+    comp_32: Int,
+    comp_33: Int,
+    cl_map_0: Int,
+    cl_map_1: Int,
+    cl_map_2: Int,
+    cl_map_3: Int,
+    int_map_0: Int,
+    int_map_1: Int,
+    int_map_2: Int,
+    int_map_3: Int,
+    dep_00: Bool,
+    dep_01: Bool,
+    dep_10: Bool,
+    dep_11: Bool,
+    rank_0: Int,
+    rank_1: Int,
+};
+
+public pure fn mor_src(m: ClassifierModel, i: Int) -> Int {
+    if i == 0 { m.src_0 }
+    else if i == 1 { m.src_1 }
+    else if i == 2 { m.src_2 }
+    else { m.src_3 }
+}
+
+public pure fn mor_dst(m: ClassifierModel, i: Int) -> Int {
+    if i == 0 { m.dst_0 }
+    else if i == 1 { m.dst_1 }
+    else if i == 2 { m.dst_2 }
+    else { m.dst_3 }
+}
+
+public pure fn id_of(m: ClassifierModel, x: Int) -> Int {
+    if x == 0 { m.id_0 } else { m.id_1 }
+}
+
+public pure fn comp_row(m: ClassifierModel, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { m.comp_00 } else if j == 1 { m.comp_01 } else if j == 2 { m.comp_02 } else { m.comp_03 }
+    } else if i == 1 {
+        if j == 0 { m.comp_10 } else if j == 1 { m.comp_11 } else if j == 2 { m.comp_12 } else { m.comp_13 }
+    } else if i == 2 {
+        if j == 0 { m.comp_20 } else if j == 1 { m.comp_21 } else if j == 2 { m.comp_22 } else { m.comp_23 }
+    } else {
+        if j == 0 { m.comp_30 } else if j == 1 { m.comp_31 } else if j == 2 { m.comp_32 } else { m.comp_33 }
+    }
+}
+
+public pure fn cl_map_at(m: ClassifierModel, i: Int) -> Int {
+    if i == 0 { m.cl_map_0 }
+    else if i == 1 { m.cl_map_1 }
+    else if i == 2 { m.cl_map_2 }
+    else { m.cl_map_3 }
+}
+
+public pure fn int_map_at(m: ClassifierModel, i: Int) -> Int {
+    if i == 0 { m.int_map_0 }
+    else if i == 1 { m.int_map_1 }
+    else if i == 2 { m.int_map_2 }
+    else { m.int_map_3 }
+}
+
+public pure fn active_mor(m: ClassifierModel, i: Int) -> Bool {
+    i >= 0 && i < m.num_mors
+}
+
+public pure fn valid_mor_endpoints(m: ClassifierModel, i: Int) -> Bool {
+    !active_mor(m, i) || (
+        mor_src(m, i) >= 0 && mor_src(m, i) < m.num_objs
+            && mor_dst(m, i) >= 0 && mor_dst(m, i) < m.num_objs
+    )
+}
+
+public pure fn valid_id_unit(m: ClassifierModel, i: Int) -> Bool {
+    !active_mor(m, i) || (
+        comp_row(m, id_of(m, mor_src(m, i)), i) == i
+            && comp_row(m, i, id_of(m, mor_dst(m, i))) == i
+    )
+}
+
+public pure fn valid_comp_pair(m: ClassifierModel, i: Int, j: Int) -> Bool {
+    !(active_mor(m, i) && active_mor(m, j) && mor_dst(m, i) == mor_src(m, j))
+        || (
+            active_mor(m, comp_row(m, i, j))
+                && mor_src(m, comp_row(m, i, j)) == mor_src(m, i)
+                && mor_dst(m, comp_row(m, i, j)) == mor_dst(m, j)
+                && cl_map_at(m, comp_row(m, i, j)) == (cl_map_at(m, i) + cl_map_at(m, j)) % 2
+                && int_map_at(m, comp_row(m, i, j)) == (int_map_at(m, i) + int_map_at(m, j)) % 2
+        )
+}
+
+public pure fn valid_assoc_triple(m: ClassifierModel, i: Int, j: Int, k: Int) -> Bool {
+    !(active_mor(m, i) && active_mor(m, j) && active_mor(m, k)
+        && mor_dst(m, i) == mor_src(m, j) && mor_dst(m, j) == mor_src(m, k))
+        || comp_row(m, comp_row(m, i, j), k) == comp_row(m, i, comp_row(m, j, k))
+}
+
+public pure fn valid_assoc_pair_k(m: ClassifierModel, i: Int, j: Int) -> Bool {
+    valid_assoc_triple(m, i, j, 0)
+        && valid_assoc_triple(m, i, j, 1)
+        && valid_assoc_triple(m, i, j, 2)
+        && valid_assoc_triple(m, i, j, 3)
+}
+
+public pure fn valid_comp_row(m: ClassifierModel, i: Int) -> Bool {
+    valid_comp_pair(m, i, 0)
+        && valid_comp_pair(m, i, 1)
+        && valid_comp_pair(m, i, 2)
+        && valid_comp_pair(m, i, 3)
+        && valid_assoc_pair_k(m, i, 0)
+        && valid_assoc_pair_k(m, i, 1)
+        && valid_assoc_pair_k(m, i, 2)
+        && valid_assoc_pair_k(m, i, 3)
+}
+
+public pure fn valid_z2_map_range(m: ClassifierModel, i: Int) -> Bool {
+    !active_mor(m, i) || (
+        (cl_map_at(m, i) == 0 || cl_map_at(m, i) == 1)
+            && (int_map_at(m, i) == 0 || int_map_at(m, i) == 1)
+    )
+}
+
+/// Genuine `(M1)-(M5)` axioms checked directly from the morphism & composition table:
+/// category identities, composition closure, associativity, and `B(Z_2)` functoriality.
+public pure fn sat_m1_to_m5(m: ClassifierModel) -> Bool {
+    m.num_objs >= 1 && m.num_objs <= 2
+        && m.num_mors >= 1 && m.num_mors <= 4
+        && (m.cl_0 == 0 || m.cl_0 == 1)
+        && (m.num_objs == 1 || m.cl_1 == 0 || m.cl_1 == 1)
+        && valid_mor_endpoints(m, 0) && valid_mor_endpoints(m, 1)
+        && valid_mor_endpoints(m, 2) && valid_mor_endpoints(m, 3)
+        && active_mor(m, m.id_0) && mor_src(m, m.id_0) == 0 && mor_dst(m, m.id_0) == 0
+        && (m.num_objs == 1 || (active_mor(m, m.id_1) && mor_src(m, m.id_1) == 1 && mor_dst(m, m.id_1) == 1))
+        && valid_id_unit(m, 0) && valid_id_unit(m, 1) && valid_id_unit(m, 2) && valid_id_unit(m, 3)
+        && valid_z2_map_range(m, 0) && valid_z2_map_range(m, 1)
+        && valid_z2_map_range(m, 2) && valid_z2_map_range(m, 3)
+        && cl_map_at(m, m.id_0) == 0 && int_map_at(m, m.id_0) == 0
+        && (m.num_objs == 1 || (cl_map_at(m, m.id_1) == 0 && int_map_at(m, m.id_1) == 0))
+        && valid_comp_row(m, 0) && valid_comp_row(m, 1)
+        && valid_comp_row(m, 2) && valid_comp_row(m, 3)
+}
+
+/// `(Max-1)`: Surjectivity of `cl : Ob(C) -> {0, 1}`.
+public pure fn sat_max1(m: ClassifierModel) -> Bool {
+    (m.cl_0 == 0 || (m.num_objs == 2 && m.cl_1 == 0))
+        && (m.cl_0 == 1 || (m.num_objs == 2 && m.cl_1 == 1))
+}
+
+public pure fn aut_mor(s0: Int, s1: Int, s2: Int, s3: Int, i: Int) -> Int {
+    if i == 0 { s0 } else if i == 1 { s1 } else if i == 2 { s2 } else { s3 }
+}
+
+public pure fn aut_mor_preserves_pair(m: ClassifierModel, s0: Int, s1: Int, s2: Int, s3: Int, i: Int, j: Int) -> Bool {
+    !(active_mor(m, i) && active_mor(m, j) && mor_dst(m, i) == mor_src(m, j))
+        || aut_mor(s0, s1, s2, s3, comp_row(m, i, j))
+            == comp_row(m, aut_mor(s0, s1, s2, s3, i), aut_mor(s0, s1, s2, s3, j))
+}
+
+public pure fn aut_mor_valid_single(m: ClassifierModel, s0: Int, s1: Int, s2: Int, s3: Int, i: Int) -> Bool {
+    !active_mor(m, i) || (
+        active_mor(m, aut_mor(s0, s1, s2, s3, i))
+            && mor_src(m, aut_mor(s0, s1, s2, s3, i)) == 1 - mor_src(m, i)
+            && mor_dst(m, aut_mor(s0, s1, s2, s3, i)) == 1 - mor_dst(m, i)
+    )
+}
+
+public pure fn aut_mor_inj_pair(m: ClassifierModel, s0: Int, s1: Int, s2: Int, s3: Int, i: Int, j: Int) -> Bool {
+    !(active_mor(m, i) && active_mor(m, j) && i != j)
+        || aut_mor(s0, s1, s2, s3, i) != aut_mor(s0, s1, s2, s3, j)
+}
+
+/// Genuine functorial object-swapping automorphism `alpha in Aut(C)` (`0 <-> 1`).
+public pure fn is_swap_aut(m: ClassifierModel, s0: Int, s1: Int, s2: Int, s3: Int) -> Bool {
+    m.num_objs == 2
+        && aut_mor_valid_single(m, s0, s1, s2, s3, 0)
+        && aut_mor_valid_single(m, s0, s1, s2, s3, 1)
+        && aut_mor_valid_single(m, s0, s1, s2, s3, 2)
+        && aut_mor_valid_single(m, s0, s1, s2, s3, 3)
+        && aut_mor(s0, s1, s2, s3, m.id_0) == m.id_1
+        && aut_mor(s0, s1, s2, s3, m.id_1) == m.id_0
+        && aut_mor_inj_pair(m, s0, s1, s2, s3, 0, 1)
+        && aut_mor_inj_pair(m, s0, s1, s2, s3, 0, 2)
+        && aut_mor_inj_pair(m, s0, s1, s2, s3, 0, 3)
+        && aut_mor_inj_pair(m, s0, s1, s2, s3, 1, 2)
+        && aut_mor_inj_pair(m, s0, s1, s2, s3, 1, 3)
+        && aut_mor_inj_pair(m, s0, s1, s2, s3, 2, 3)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 0, 0)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 0, 1)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 0, 2)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 0, 3)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 1, 0)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 1, 1)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 1, 2)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 1, 3)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 2, 0)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 2, 1)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 2, 2)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 2, 3)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 3, 0)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 3, 1)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 3, 2)
+        && aut_mor_preserves_pair(m, s0, s1, s2, s3, 3, 3)
+        && m.dep_00 == m.dep_11
+        && m.dep_01 == m.dep_10
+}
+
+/// `(Max-2)`: Transitivity of `Aut(C)` on `Ob(C)`.
+public pure fn sat_max2_with(m: ClassifierModel, s0: Int, s1: Int, s2: Int, s3: Int) -> Bool {
+    m.num_objs == 1 || m.cl_0 == m.cl_1 || is_swap_aut(m, s0, s1, s2, s3)
+}
+
+/// `(Max-3)`: Predicative depth stratification (`compDep(x, y) => rank(y) < rank(x)`).
+public pure fn sat_max3(m: ClassifierModel) -> Bool {
+    (!m.dep_00 || m.rank_0 < m.rank_0)
+        && (!m.dep_11 || m.rank_1 < m.rank_1)
+        && (!m.dep_01 || m.rank_1 < m.rank_0)
+        && (!m.dep_10 || m.rank_0 < m.rank_1)
+}
+
+public pure fn parallel_mors_separated(m: ClassifierModel, i: Int, j: Int) -> Bool {
+    !(active_mor(m, i) && active_mor(m, j) && i != j
+        && mor_src(m, i) == mor_src(m, j) && mor_dst(m, i) == mor_dst(m, j))
+        || (cl_map_at(m, i) != cl_map_at(m, j) || int_map_at(m, i) != int_map_at(m, j))
+}
+
+/// `(Max-4)`: Joint separation of ALL parallel 1-morphisms by `(clMap, intMap)`.
+public pure fn sat_max4(m: ClassifierModel) -> Bool {
+    parallel_mors_separated(m, 0, 1)
+        && parallel_mors_separated(m, 0, 2)
+        && parallel_mors_separated(m, 0, 3)
+        && parallel_mors_separated(m, 1, 2)
+        && parallel_mors_separated(m, 1, 3)
+        && parallel_mors_separated(m, 2, 3)
+}
+
+public pure fn has_mor_between(m: ClassifierModel, x: Int, y: Int, i: Int) -> Bool {
+    active_mor(m, i) && mor_src(m, i) == x && mor_dst(m, i) == y
+}
+
+public pure fn hom_nonempty(m: ClassifierModel, x: Int, y: Int) -> Bool {
+    has_mor_between(m, x, y, 0)
+        || has_mor_between(m, x, y, 1)
+        || has_mor_between(m, x, y, 2)
+        || has_mor_between(m, x, y, 3)
+}
+
+public pure fn is_m_not1(m: ClassifierModel) -> Bool {
+    m.num_objs == 1 && m.num_mors == 1
+        && m.cl_0 == 0 && m.cl_1 == 0
+        && m.src_0 == 0 && m.dst_0 == 0 && m.id_0 == 0 && m.comp_00 == 0
+        && m.cl_map_0 == 0 && m.int_map_0 == 0
+        && !m.dep_00 && !m.dep_01 && !m.dep_10 && !m.dep_11
+}
+
+public pure fn is_m_not2(m: ClassifierModel) -> Bool {
+    m.num_objs == 2 && m.num_mors == 3
+        && m.cl_0 == 0 && m.cl_1 == 1
+        && m.src_0 == 0 && m.dst_0 == 0 && m.id_0 == 0
+        && m.src_1 == 1 && m.dst_1 == 1 && m.id_1 == 1
+        && m.src_2 == 0 && m.dst_2 == 1
+        && m.comp_00 == 0 && m.comp_02 == 2 && m.comp_11 == 1 && m.comp_21 == 2
+        && m.cl_map_0 == 0 && m.cl_map_1 == 0 && m.cl_map_2 == 0
+        && m.int_map_0 == 0 && m.int_map_1 == 0 && m.int_map_2 == 0
+        && !m.dep_00 && !m.dep_01 && m.dep_10 && !m.dep_11
+        && m.rank_0 == 0 && m.rank_1 == 1
+}
+
+public pure fn is_m_not3(m: ClassifierModel) -> Bool {
+    m.num_objs == 2 && m.num_mors == 2
+        && m.cl_0 == 0 && m.cl_1 == 1
+        && m.src_0 == 0 && m.dst_0 == 0 && m.id_0 == 0
+        && m.src_1 == 1 && m.dst_1 == 1 && m.id_1 == 1
+        && m.comp_00 == 0 && m.comp_11 == 1
+        && m.cl_map_0 == 0 && m.cl_map_1 == 0
+        && m.int_map_0 == 0 && m.int_map_1 == 0
+        && !m.dep_00 && m.dep_01 && m.dep_10 && !m.dep_11
+        && m.rank_0 == 0 && m.rank_1 == 0
+}
+
+public pure fn is_m_not4(m: ClassifierModel) -> Bool {
+    m.num_objs == 2 && m.num_mors == 4
+        && m.cl_0 == 0 && m.cl_1 == 1
+        && m.src_0 == 0 && m.dst_0 == 0 && m.id_0 == 0
+        && m.src_1 == 0 && m.dst_1 == 0
+        && m.src_2 == 1 && m.dst_2 == 1 && m.id_1 == 2
+        && m.src_3 == 1 && m.dst_3 == 1
+        && m.comp_00 == 0 && m.comp_01 == 1 && m.comp_10 == 1 && m.comp_11 == 0
+        && m.comp_22 == 2 && m.comp_23 == 3 && m.comp_32 == 3 && m.comp_33 == 2
+        && m.cl_map_0 == 0 && m.cl_map_1 == 0 && m.cl_map_2 == 0 && m.cl_map_3 == 0
+        && m.int_map_0 == 0 && m.int_map_1 == 0 && m.int_map_2 == 0 && m.int_map_3 == 0
+        && !m.dep_00 && !m.dep_01 && !m.dep_10 && !m.dep_11
+}
+
+public pure fn is_m_max_disc(m: ClassifierModel) -> Bool {
+    m.num_objs == 2 && m.num_mors == 2
+        && m.cl_0 == 0 && m.cl_1 == 1
+        && m.src_0 == 0 && m.dst_0 == 0 && m.id_0 == 0
+        && m.src_1 == 1 && m.dst_1 == 1 && m.id_1 == 1
+        && m.comp_00 == 0 && m.comp_11 == 1
+        && m.cl_map_0 == 0 && m.cl_map_1 == 0
+        && m.int_map_0 == 0 && m.int_map_1 == 0
+        && !m.dep_00 && !m.dep_01 && !m.dep_10 && !m.dep_11
+}
+
+public pure fn is_m_max_conn(m: ClassifierModel) -> Bool {
+    m.num_objs == 2 && m.num_mors == 4
+        && m.cl_0 == 0 && m.cl_1 == 1
+        && m.src_0 == 0 && m.dst_0 == 0 && m.id_0 == 0
+        && m.src_1 == 0 && m.dst_1 == 1
+        && m.src_2 == 1 && m.dst_2 == 0
+        && m.src_3 == 1 && m.dst_3 == 1 && m.id_1 == 3
+        && m.comp_00 == 0 && m.comp_01 == 1 && m.comp_12 == 0 && m.comp_13 == 1
+        && m.comp_20 == 2 && m.comp_21 == 3 && m.comp_32 == 2 && m.comp_33 == 3
+        && m.cl_map_0 == 0 && m.cl_map_1 == 1 && m.cl_map_2 == 1 && m.cl_map_3 == 0
+        && m.int_map_0 == 0 && m.int_map_1 == 0 && m.int_map_2 == 0 && m.int_map_3 == 0
+        && !m.dep_00 && !m.dep_01 && !m.dep_10 && !m.dep_11
+}
+
+/// Candidate functor `F : M_maxDisc -> M_maxConn`.
+public type CandidateFunctor is {
+    f_ob_0: Int,
+    f_ob_1: Int,
+    f_mor_0: Int,
+    f_mor_1: Int,
+};
+
+public pure fn functor_ob(f: CandidateFunctor, x: Int) -> Int {
+    if x == 0 { f.f_ob_0 } else { f.f_ob_1 }
+}
+
+public pure fn functor_mor(f: CandidateFunctor, i: Int) -> Int {
+    if i == 0 { f.f_mor_0 } else { f.f_mor_1 }
+}
+
+public pure fn is_functor_disc_to_conn(
+    disc: ClassifierModel,
+    conn: ClassifierModel,
+    f: CandidateFunctor,
+) -> Bool {
+    (f.f_ob_0 == 0 || f.f_ob_0 == 1)
+        && (f.f_ob_1 == 0 || f.f_ob_1 == 1)
+        && active_mor(conn, f.f_mor_0)
+        && active_mor(conn, f.f_mor_1)
+        && f.f_mor_0 == id_of(conn, f.f_ob_0)
+        && f.f_mor_1 == id_of(conn, f.f_ob_1)
+        && mor_src(conn, f.f_mor_0) == f.f_ob_0 && mor_dst(conn, f.f_mor_0) == f.f_ob_0
+        && mor_src(conn, f.f_mor_1) == f.f_ob_1 && mor_dst(conn, f.f_mor_1) == f.f_ob_1
+        && disc.num_mors == 2
+}
+
+public pure fn mor_hit_in_hom(
+    disc: ClassifierModel,
+    conn: ClassifierModel,
+    f: CandidateFunctor,
+    x: Int,
+    y: Int,
+    k: Int,
+) -> Bool {
+    !(active_mor(conn, k) && mor_src(conn, k) == functor_ob(f, x) && mor_dst(conn, k) == functor_ob(f, y))
+        || (has_mor_between(disc, x, y, 0) && functor_mor(f, 0) == k)
+        || (has_mor_between(disc, x, y, 1) && functor_mor(f, 1) == k)
+}
+
+public pure fn is_full_on_pair(
+    disc: ClassifierModel,
+    conn: ClassifierModel,
+    f: CandidateFunctor,
+    x: Int,
+    y: Int,
+) -> Bool {
+    mor_hit_in_hom(disc, conn, f, x, y, 0)
+        && mor_hit_in_hom(disc, conn, f, x, y, 1)
+        && mor_hit_in_hom(disc, conn, f, x, y, 2)
+        && mor_hit_in_hom(disc, conn, f, x, y, 3)
+}
+
+public pure fn is_full_functor(
+    disc: ClassifierModel,
+    conn: ClassifierModel,
+    f: CandidateFunctor,
+) -> Bool {
+    is_full_on_pair(disc, conn, f, 0, 0)
+        && is_full_on_pair(disc, conn, f, 0, 1)
+        && is_full_on_pair(disc, conn, f, 1, 0)
+        && is_full_on_pair(disc, conn, f, 1, 1)
+}
+
+/// **MSFS Wave 1 (`L_Cls \ L_Cls_top != empty` via `M_not1`):**
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 — M_not1 witnesses strict containment L_Cls_top subsetneq L_Cls")
+public theorem wave1_l_cls_not_maximal(m1: ClassifierModel)
+    requires is_m_not1(m1)
+    ensures sat_m1_to_m5(m1) && !sat_max1(m1)
+    proof {
+        have h_base: sat_m1_to_m5(m1) by auto;
+        have h_fail1: !sat_max1(m1) by auto;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 1 (`R-11A` / `prop:max-independence-noncat`):**
+/// Mutual logical independence of `(Max-1)-(Max-4)` on valid `(M1)-(M5)` classifier models.
+/// Notice `any_s0..any_s3` are universally quantified over all `Int`, proving NO swap
+/// automorphism exists in `Aut(M_not2)`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 R-11A — mutual logical independence of (Max-1)..(Max-4)")
+public theorem wave1_r11a_maximality_clauses_independent(
+    m1: ClassifierModel,
+    m2: ClassifierModel,
+    m3: ClassifierModel,
+    m4: ClassifierModel,
+    any_s0: Int,
+    any_s1: Int,
+    any_s2: Int,
+    any_s3: Int,
+)
+    requires is_m_not1(m1) && is_m_not2(m2) && is_m_not3(m3) && is_m_not4(m4)
+    ensures sat_m1_to_m5(m1) && !sat_max1(m1) && sat_max2_with(m1, 0, 0, 0, 0) && sat_max3(m1) && sat_max4(m1)
+         && sat_m1_to_m5(m2) && sat_max1(m2) && !sat_max2_with(m2, any_s0, any_s1, any_s2, any_s3) && sat_max3(m2) && sat_max4(m2)
+         && sat_m1_to_m5(m3) && sat_max1(m3) && sat_max2_with(m3, 1, 0, 0, 0) && !sat_max3(m3) && sat_max4(m3)
+         && sat_m1_to_m5(m4) && sat_max1(m4) && sat_max2_with(m4, 2, 3, 0, 1) && sat_max3(m4) && !sat_max4(m4)
+    proof {
+        have h1: sat_m1_to_m5(m1) && !sat_max1(m1) && sat_max2_with(m1, 0, 0, 0, 0) && sat_max3(m1) && sat_max4(m1) by auto;
+        have h2: sat_m1_to_m5(m2) && sat_max1(m2) && !sat_max2_with(m2, any_s0, any_s1, any_s2, any_s3) && sat_max3(m2) && sat_max4(m2) by auto;
+        have h3: sat_m1_to_m5(m3) && sat_max1(m3) && sat_max2_with(m3, 1, 0, 0, 0) && !sat_max3(m3) && sat_max4(m3) by auto;
+        have h4: sat_m1_to_m5(m4) && sat_max1(m4) && sat_max2_with(m4, 2, 3, 0, 1) && sat_max3(m4) && !sat_max4(m4) by auto;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 1 (`R-11B` / `prop:max-independence-noncat`):**
+/// Both `M_maxDisc` and `M_maxConn` satisfy `(M1)-(M5)` and ALL `(Max-1)-(Max-4)`,
+/// yet EVERY functor `F : M_maxDisc -> M_maxConn` fails fullness on `(0, 1)`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 1 R-11B — non-categoricity of (Max-1)..(Max-4) via M_maxDisc vs M_maxConn")
+public theorem wave1_r11b_non_categorical_pair(
+    disc: ClassifierModel,
+    conn: ClassifierModel,
+    f: CandidateFunctor,
+)
+    requires is_m_max_disc(disc)
+          && is_m_max_conn(conn)
+          && is_functor_disc_to_conn(disc, conn, f)
+    ensures sat_m1_to_m5(disc)
+         && sat_max1(disc) && sat_max2_with(disc, 1, 0, 0, 0) && sat_max3(disc) && sat_max4(disc)
+         && sat_m1_to_m5(conn)
+         && sat_max1(conn) && sat_max2_with(conn, 3, 2, 1, 0) && sat_max3(conn) && sat_max4(conn)
+         && !hom_nonempty(disc, 0, 1)
+         && hom_nonempty(conn, functor_ob(f, 0), functor_ob(f, 1))
+         && !is_full_functor(disc, conn, f)
+    proof {
+        have h_disc: sat_m1_to_m5(disc) && sat_max1(disc) && sat_max2_with(disc, 1, 0, 0, 0) && sat_max3(disc) && sat_max4(disc) by auto;
+        have h_conn: sat_m1_to_m5(conn) && sat_max1(conn) && sat_max2_with(conn, 3, 2, 1, 0) && sat_max3(conn) && sat_max4(conn) by auto;
+        have h_no_full: !hom_nonempty(disc, 0, 1)
+                     && hom_nonempty(conn, functor_ob(f, 0), functor_ob(f, 1))
+                     && !is_full_functor(disc, conn, f) by auto;
+        conclude by auto;
+    };

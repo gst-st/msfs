@@ -1,0 +1,11 @@
+public theorem afnt_alpha_zero_id_refutation(
+    obj: Type,
+    hom: fn(obj, obj) -> Type,
+    p: fn(obj) -> Type,
+    x: obj,
+    id_x: hom(x, x),
+    hx: p(x)
+): forall (bot: Type).
+   forall (naive_pi4: fn<y: meta obj>(p(y), hom(x, y)) -> bot).
+   bot
+proof by intro(bot, naive_pi4); exact(naive_pi4(x, hx, id_x));
