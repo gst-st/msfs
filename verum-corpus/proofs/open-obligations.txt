@@ -1,4 +1,4 @@
-MSFS source, formalization and library audit — updated 2026-11-25 (Wave 1 Iteration 2)
+MSFS source, formalization and library audit — updated 2026-11-26 (Wave 2 + M8 Lean 4 + B1-B6 Sync)
 
 Source-paper mathematical defects (O1–O3, plus AFN-T α/β scope, def:SSE/lem:SS-membership-E/thm:dual-afnt,
 universe/cardinality bounds, thm:subsumption, thm:lateral, prop:trajectory-space, prop:no-collapse,
@@ -11,30 +11,42 @@ In verum-corpus:
     and `Lifecycle.Postulate("unverified-schematic; aggregator")` in `src/theorems/msfs/mod.vr`.
     All 15 legacy `src/theorems/msfs/*.vr` modules and their `43` schematic `public axiom`
     placeholders remain QUARANTINED and carry zero proof-discharge authority.
-  - Wave 1 Track A (`src/theorems/msfs/wave1_*.vr`, 4 modules, 17 `theorem_multi_step`, 0 axioms):
-    Standalone zero-axiom finite / 2-categorical constructive cores verified by `verum check`
-    and `verum arch check --strict` (zero rubber-stamp Bool flags, zero propositional tautologies):
-      1. `src/theorems/msfs/wave1_meta_independence.vr` (3 theorems):
+  - Wave 1 Track A (`src/theorems/msfs/wave1_*.vr`, 4 modules, 17 `theorem_multi_step`, 0 axioms, 158/158 proved):
+    Standalone zero-axiom finite / 2-categorical constructive cores verified by `verum check`,
+    `verum verify`, and `verum arch check --strict` (zero rubber-stamp Bool flags, zero propositional tautologies):
+      1. `src/theorems/msfs/wave1_meta_independence.vr` (3 theorems, 42/42 proved):
          - `wave1_l_cls_not_maximal` (`M_not1` with full category/functoriality laws witnessing `L_Cls \ L_Cls_top != empty`)
          - `wave1_r11a_maximality_clauses_independent` (`R-11A` / `prop:max-independence-noncat` with explicit `Aut(C)` swap automorphisms and `B(Z_2)` functoriality)
          - `wave1_r11b_non_categorical_pair` (`R-11B` / `M_maxDisc` vs `M_maxConn` full-functor refutation over `CandidateFunctor`)
-      2. `src/theorems/msfs/wave1_grading_separation.vr` (5 theorems):
+      2. `src/theorems/msfs/wave1_grading_separation.vr` (5 theorems, 34/34 proved):
          - `wave1_r12_grade_monotone_and_iso_invariant` (`R-12` `ActCostGrade` monotonicity & iso-invariance)
          - `wave1_r12_strict_separation` (`R-12` strict separation of Reif-equivalent `BudgetedEnv`)
          - `wave1_cor_grade_collapse` (`cor:grade-collapse` coupled iso-seeded stage-0 collapse vs non-iso `fiber_height >= 2`)
          - `wave1_a4_comp_bound` (`A4` `Poset2Cat_Z2` finite poset axioms, non-thin `Z_2` 2-cells, `h(g o f) <= h(g)*h(f)`, and `2^(2^n)` composition bound)
          - `wave1_a4_exact_grade_witness` (`A4` exact display grade separation for finite `n = 0, 1, 2`)
-      3. `src/theorems/msfs/wave1_dual_enactment_core.vr` (6 theorems):
+      3. `src/theorems/msfs/wave1_dual_enactment_core.vr` (6 theorems, 47/47 proved):
          - `wave1_a1_ez2_bf4_nonvacuity` (`A1` `E_{Z2}` Pronk `(BF4)` non-vacuity & involution)
          - `wave1_a1_pronk_bf1_to_bf5` (`A1` finite 3-object `EnactFin3(BaseZ2)` Pronk `(BF1)-(BF5)` + Ore squares + 2-out-of-3 + `eta_r` non-invertibility)
          - `wave1_lawvere_diagonal_non_surjective` (`lem:lawvere-fp` finite Lawvere diagonal non-surjectivity on `Fin 2 -> (Fin 2 -> Fin 2)`)
          - `wave1_synseed_reif_act_adjunction` (`ReifActAdjunction` finite `SynSeed -| Reif -| Act` triangles & unit non-invertibility)
          - `wave1_lp_dialetheic_non_explosive` (`O3` Priest 3-valued `LP` LEM validity & dialetheic non-explosion witness)
          - `wave1_o3_classical_vs_lp_non_explosion` (`O3` classical `{0, 2}` explosion vs 3-valued `LP` non-explosion semantic separation)
-      4. `src/theorems/msfs/wave1_diakrisis_2cat_core.vr` (3 theorems):
+      4. `src/theorems/msfs/wave1_diakrisis_2cat_core.vr` (3 theorems, 35/35 proved):
          - `wave1_a3_shift2cat_all_13` (`A3` `Shift2Cat_Z2` 13-axiom non-thin witness with 13 distinct non-Bool predicates)
          - `wave1_a3_seven_countermodels` (`A3` 7 countermodels isolating `Axi-1,6,7,8,9,T-alpha,T-2f**`, with genuine 2-rail `CM_notAxi6` satisfying `Axi-5`, `Axi-7`, and all 12 non-target axioms on every countermodel)
          - `wave1_finite_slice_d1_to_d4` (`thm:I-existence` `FinPoset3` pullback `min(u, a)` universal property, `(D1)-(D4)`, and pseudofunctor laws)
+  - Wave 2 Track A (`src/theorems/msfs/wave2_*.vr`, 9 standalone `Lifecycle.Theorem("v0.2")` modules, 38 `theorem-multi-step` declarations, 0 axioms, 434/434 proved):
+    All 9 modules have zero `core.math.*` imports, zero `: Bool` struct fields, zero `ensures true`, zero `let`/`obtain` inside `proof { ... }`, are mounted 1-to-1 in `src/theorems/msfs/mod.vr`, and are verified by `tests/test_wave2_proofs.py`:
+      1. `src/theorems/msfs/wave2_b1_stabilization.vr` (4 theorems, 36/36 proved) — `B1`: `wave2_b1_adjoint_triple_separation`, `wave2_b1_tau0_breaks_rezk_completeness`, `wave2_b1_unbounded_depth_separation`, `wave2_b1_metric_exchange_law`.
+      2. `src/theorems/msfs/wave2_meta_stabilization.vr` (7 theorems, 93/93 proved) — `B2`: `wave2_b2_fin_meta2_gauge_equivalence`, `wave2_b2_exp_tower_and_pigeonhole_separation`, `wave2_b2_m2_base_id_obstruction`, `wave2_b2_m3_r_reflector_closure_laws`, `wave2_b2_m3_r_reflector_join_failure`, `wave2_b2_idem_joint_realizable`, `wave2_b2_idem_clauses_independent`.
+      3. `src/theorems/msfs/wave2_meta_fib_categoricity.vr` (2 theorems, 68/68 proved) — `B3 (Fib)`: `wave2_thm_meta_cat_fib_local_equiv`, `wave2_fib_independence_countermodels`.
+      4. `src/theorems/msfs/wave2_dual_actica_2cat_core.vr` (3 theorems, 28/28 proved) — `B3 (Actica)`: `wave2_actica_six_positive_implications`, `wave2_actica_shift2cat_all_13`, `wave2_actica_seven_countermodels`.
+      5. `src/theorems/msfs/wave2_subcanonical_sheaf_barrier.vr` (2 theorems, 21/21 proved) — `B3 (Sheaf)`: `wave2_subcanonical_preserves_cofinal_nonrep`, `wave2_coarse_topology_collapses_to_terminal`.
+      6. `src/theorems/msfs/wave2_ac_oc_2cat_perf.vr` (6 theorems, 68/68 proved) — `B4`: `wave2_cm1_bf3_ore_failure`, `wave2_cm2_bf4_cancellation_failure`, `wave2_cm3_r2_phi_iota1_refutation`, `wave2_perf2_ez2_gluing_and_bc`, `wave2_cm4_capped_2cat_obstruction`, `wave2_oac5_definitional_conservativity`.
+      7. `src/theorems/msfs/wave2_intensional_i_fragment.vr` (6 theorems, 48/48 proved) — `B5`: `wave2_i_fragment_w2_separation`, `wave2_i_fragment_w1_canonical_inclusion`, `wave2_t233_strict_vs_isocomma`, `wave2_i4a_diamond_no_right_adjoint`, `wave2_i4a_f_bang_breaks_pullback`, `wave2_i4a_strict_pb_bc_failure`.
+      8. `src/theorems/msfs/wave2_q2_completeness.vr` (4 theorems, 34/34 proved) — `B6 (Q2)`: `wave2_q2_candidates_plural_nonmax`, `wave2_q2_casm_realizer_obstruction`, `wave2_q2_diagonal_escape_4`, `wave2_q2_relative_completeness_basis4`.
+      9. `src/theorems/msfs/wave2_q3_witnesses.vr` (4 theorems, 38/38 proved) — `B6 (Q3)`: `wave2_q3_d3_strong_dialetheia_non_explosive`, `wave2_q3_d3_no_proper_subalgebra`, `wave2_q3_bz2_lawvere_counterexample`, `wave2_q3_precedence_partition_sound`.
+    - Combined Track A (Wave 1 + Wave 2): `13` standalone modules / `55` `@verify(formal)` theorems / `592/592` proved (`158` Wave 1 + `434` Wave 2); `tests/integration/proof_honesty_gate.sh` PASS (`axiom_placeholder = 43` quarantined, `0` ensures-true, `0` unquarantined axioms, `totals.theorem_multi_step = 74`, `by_lineage.msfs.theorem_multi_step = 71`, `by_lineage.msfs.theorem_axiom_only = 20`).
   - Wave 1 Track B (`proofs/`, unmounted from `src/lib.vr`):
       1. `proofs/ss-membership/{witness.vr, formal.vr}` (2 theorems, native kernel certificate).
       2. `proofs/afnt-alpha-id/{alpha_zero.vr, lawvere_fp.vr, route1a_retraction.vr}` (3 closed
@@ -43,19 +55,49 @@ In verum-corpus:
          Pi/Id/J/IdElim kernel at universe levels 0, 1, 2; external `verum-source-replay`
          and `noesis` binaries are absent from PATH).
 
-Remaining OPEN / QUARANTINED Obligations (NOT discharged in Wave 1):
+In sibling `math-foundations/lean4-mf-kernel/` (Milestone 8 verified state):
+  - `82` `.lean` modules (including `15` new `B1–B6` modules under `MathFoundations/Metatheory/`),
+    `25,777` `.olean` declarations, `915` `#guard_msgs in #print axioms` checks in `Audit.lean`,
+    `267` zero-axiom theorems, `115` `NonVacuity` witness instances, `0 Classical.choice`,
+    `0 sorry`, `0 admit`, `0 axiom`, `0 : Bool` struct fields, `{propext, Quot.sound}` only.
+
+Epistemic Status of `B1–B6` (Proved `[Т]` / Conditional `[С]` / Refuted `[✗]` vs. Open `[П]` Barriers) & Remaining Obligations:
   - `(alpha_diag)`: Strong diagonal anti-absoluteness in `thm:afnt-alpha` (ii) and
     `thm:dual-afnt` (ii) via canonical `Sigma_1`-binumeration, Solovay cut, and
-    Feferman-Pudlak Second Incompleteness for `T_S = PA + Con(S)`.
+    Feferman-Pudlak Second Incompleteness for `T_S = PA + Con(S)` (open in Verum).
   - `thm:afnt-beta`: Transfinite `Ord`-indexed colimit towers and `U_2`-class dichotomy.
   - `43` quarantined schematic `public axiom` placeholders across legacy `src/theorems/msfs/*.vr`.
-  - `B1`–`B6`:
-      * `B1`: Stabilization of `(infty, n)`-enrichment as `n -> infty` (`thm:bergner-lurie-stab`).
-      * `B2`: Idempotence of meta-classification (`thm:meta-stab`).
-      * `B3`: Full `(infty, 2)`-stack model of all 13 `Diakrisis` axioms (`131.T`) & `Q1` categoricity.
-      * `B4`: Higher `(infty, n)` AC/OC duality (`(O-AC1)–(O-AC5)`).
-      * `B5`: Syntactic 2-functor of interpretation `I` on `F` (`(I-1)–(I-4)`).
-      * `B6`: Completeness of `Q2` and `Q3`.
+  - `B1`–`B6` (sharply split into `[Т]`/`[С]`/`[✗]`/`[П]`; no longer wholly open):
+      * `B1` (`(infty, n)`-enrichment stabilization as `n -> infty`):
+        - `[Т]` Proved: `thm:enrichment-noncommutativity` (i)-(iii) (`Cat^{bdd} != Cat^{coind}, Cat^{tau-lim}`); `thm:cond-infty-stab` (i) finite-depth stabilization at `k = n_S < omega` and (ii-a) `Cat^{bdd-depth}(M_omega) ≃ Cat^{bdd}`; `lem:whitehead` diagram-limit tautology; `(Stab-1)` in hypercomplete `S` (`HTT Prop. 5.5.6.26`); `Alg_cat` `N^{op}`-limit commutation; fixed-point equivalence `Cat(Cat_{(infty,omega)}^{coind,GH}) ≃ Cat_{(infty,omega)}^{coind,GH}` via `Gamma_{V_n} o core_n ≃ Gamma_{V_{n+1}}` (reconciled with Henry's erratum to Goldthorpe). Formalized in `wave2_b1_stabilization.vr` and Lean 4 `EnrichmentTowerB1.lean`.
+        - `[С]` Conditional: `Cat(Cat_{(infty,omega)}^{coind}) ≃ Cat_{(infty,omega)}^{coind}` across general Barwick-Schommer-Pries models under coherent `(Z/2)^n`-orientation matching for all `n < omega`.
+        - `[✗]` Refuted: `(Stab-2')` in `Cat_{(infty,omega)}^{tau-lim}` (`(tau_{<=0})_*` destroys Rezk completeness on `Adj` and 6-arrow `A_{fin}`; walking `(k+1)`-truncated equivalences `E^{(k+1)}` + metric `P_{k+1}` give `|pi_0 Map(Psi(*), Psi(D))| >= |lim^1 F_{k>=n}| = 2^{aleph_0} != 1`); canonical colimit-to-limit functor `T : Cat^{coind,GH} -> Cat^{tau-lim}` (not FF); `(Stab-1)` in non-hypercomplete `infty`-topoi and `E^{coind}` in `Cat_{(infty,infty)}^{ind}`.
+        - `[П]` Open barriers (`thm:bergner-lurie-stab`): (1) absence of BSP21 unicity at `n = infty`; (2) external `(Stab-1)` hypercompleteness for independently supplied `(infty, omega)`-models; (3) bridging `Cat^{coind}` stabilization to MSFS moduli `M` (`B2`/`B3`) and unbounded `n_S = infty` syntax.
+      * `B2` (Idempotence of meta-classification):
+        - `[Т]` Proved: finite-stage quotient `M^{(Cls)}_{U_1} ∈ U_2` satisfying `(M1),(M4),(M5)` + automatic `(M2)/(M3)` obstructions (`prop:meta-quotient-finite` on repaired `def:meta-gauge-quotient`); stage cardinality separation & `ZFC + 2-inacc` independence barriers (`thm:meta-nonidempotence-obstruction`); `cor:iteration-closure`; consistency bracket `alpha-hyperinacc < T_{Sigma_2-refl} <= exists kappa Mahlo(kappa) < Con(ZFC + Mahlo)`; joint realizability & strict mutual non-redundancy of `(Idem-1)-(Idem-4)`; sharp `n`-stage separation chain. Formalized in `wave2_meta_stabilization.vr` and Lean 4 `MetaClassificationQuotient.lean`, `MetaClassificationSeparation.lean`, `MetaClassificationObstructions.lean`, `ConditionalIdempotenceIndependence.lean`.
+        - `[С]` Conditional: bounded `lambda`-accessible idempotence `M^{(Cls^2)}_lambda ≃_2 M^{(Cls)}_lambda` (`thm:meta-conditional-idem`) under `(Idem-1)-(Idem-4)` + `U_1 <_{Sigma_2} U_{refl}` and `U_2 subseteq U_{refl}`.
+        - `[✗]` Refuted: unstratified finite-rank `cor:meta-closure` inside any fixed finite universe `U_n = V_{kappa_n}` (`n >= 1`); withdrawn Diakrisis `134.T` (`kappa_2` lower bound, as `Syn(HoTT)` is countable/`aleph_0`-accessible in bare `ZFC`).
+        - `[П]` Open barriers: unconditional universal quotient `M^{(Cls)}` in bare `ZFC + 2-inacc`, unconditional open-ended `thm:meta-stab` / `102.T` / `cor:meta-closure`, and exact minimal consistency strength `Q4` / `42.C1`.
+      * `B3` (Full `(infty, 2)`-stack model `131.T` & `Q1` categoricity):
+        - `[Т]` Proved: `prop:max-independence-noncat` (`R-11A,B`); `131.L2**` Grothendieck coCartesian fibration `E_T = int_{B_T} Syn` over countable `Pi_1^1`-sound r.e. extensions of `ACA_0` and Feferman-Pakhomov `E_{prog, eps_0}` realizing all 13 axioms over `End_{adm}` (`rem:grothendieck-intermediate-model`); Dual Actica 13-axiom repair (`ActShift2Cat_Z2`, 6 implications, `7+1` CMs); subcanonical `J`-sheafification preserving cofinal non-representability. Formalized in `wave1_meta_independence.vr`, `wave1_diakrisis_2cat_core.vr`, `wave2_meta_fib_categoricity.vr`, `wave2_dual_actica_2cat_core.vr`, `wave2_subcanonical_sheaf_barrier.vr` and Lean 4 `MetaCatFibration.lean`, `DualActica13Axioms2Cat.lean`, `SubcanonicalCofinalObstruction.lean`.
+        - `[С]` Conditional: `thm:meta-cat` (`100.T`) and `thm:meta-cat-fib` (`129.T-fib`, `(Fib-1)-(Fib-3)` Street 2-fibration lifts).
+        - `[✗]` Refuted: non-subcanonical topology collapses (non-empty sieve / chaotic topologies), pre-audit `A-6 => A-5_inj`, and single-axiom countermodels (`7+1` CMs proving `[Т]` axiom independence).
+        - `[П]` Open barriers (`prob:131T`): `(B3-Obs1)` extending `End_{adm}` to `End_{lambda_0}(C)` with decoding; `(B3-Obs2)` preserving non-representability of `L_J(K_M)` after `(infty,2)`-stackification; `(B3-Obs3)` extending `Pi_1^1`-sound `ACA_0` to all `RS_Q`; `(B3-Obs4)` full `(infty,2)`-hyperdescent + `(I-1)-(I-4)` + `(Fib-1)-(Fib-3)`.
+      * `B4` (Higher `(infty, n)` AC/OC duality `(O-AC1)-(O-AC5)`):
+        - `[Т]` Proved: 1-cat `SynSeed -| Reif -| Act` & Gabriel-Zisman localization; strict 2-cat `Enact2Cat` (`eps2 -| alpha2`, `R_E2`, `(BF1)-(BF5)`, choice-free `CompStrict2Cat` span biequivalence, `BiPushout2Data` non-cyclic `Perf`); weak bicategorical & `kappa`-accessible `(infty,1)`-localization (`prop:ac-oc-accessible-loc`, `prop:perf-noncyclic-bc`); `thm:dual-afnt` Route 1a/1b. Formalized in `wave1_dual_enactment_core.vr`, `wave2_ac_oc_2cat_perf.vr`, and Lean 4 `Pronk2CatGeneral.lean`.
+        - `[С]` Conditional: `n = 2` and transfinite `gamma < kappa` `(infty,2)`-accessible localization under `(Loc2-1)-(Loc2-2)` and `(infty,2)`-bipushout `Perf` under `lambda`-colimit preservation.
+        - `[✗]` Refuted: countermodels `CM-1` (`(BF3)` failure), `CM-2` (`(BF4)` failure), `CM-3` (`eps2 o tau` breaks `r2 o phi o iota1`), `CM-4` / `F-6` (resource-capped Beck-Chevalley collapse), and Godel II equiconsistency barrier `(O-AC5b)`.
+        - `[П]` Open barriers: `(O-AC3)` global hyperdescent, `(O-AC4)` `n >= 3` / coinductive `(infty, omega)` Milnor `lim^1 = 0` coherences, and `(O-AC5b)` equiconsistency of `131.T` / `Axi-7`+`Axi-8`.
+      * `B5` (Syntactic 2-functor `I` on `F`, `(I-1)-(I-4)`):
+        - `[Т]` Proved: `thm:I-existence`, `thm:I-fragment` (`(I-1)-(I-3)` on `F_{MLTT}` via `(W2)`), `prop:grading`, `cor:grade-collapse`, non-collapse models `A4` (`Poset2Cat_Z2`) & `R-12` (`ActCostGrade`), strictness vs iso-comma repair (`T-233`). Formalized in `wave1_grading_separation.vr`, `wave2_intensional_i_fragment.vr`, and Lean 4 `IntensionalFragmentSeparation.lean`, `StrictVsBicategoricalCollapse.lean`, `VarianceObstructions.lean`, `RealPAOptionACollapse.lean`.
+        - `[С]` Conditional: `thm:slice-locality` / `cor:slice-level`; `(I-4a)` Grothendieck-span bivariance (pullbacks + BC mate iso); `(I-4b)` polarized/Dialectica display 2-categories.
+        - `[✗]` Refuted: naive `(I-4a)` variance inversions (diamond inclusion lacks right adjoint, `f_!` breaks pullbacks, strict pullback BC fails), naive `(I-4b)` proof-irrelevant extensions (functional implication 2-cells invert in `Syn_1(PA/ZFC)`), and naive global `(I-4c)` localization `S_int[W_Morita^{-1}] ≃ M`.
+        - `[П]` Open barriers (`rem:I4-isolation`): global `(I-4)` split into `(I-4a)` (global variance across non-definitional `F`-morphisms), `(I-4b)` (canonical normalizing Morita-compatible display 2-functor for impredicative `ZFC`), and `(I-4c)` (enriched/completed `(infty,2)` Morita-localization equivalence with `M`).
+      * `B6` (Completeness of `Q2` and `Q3`):
+        - `[Т]` Proved: `prop:q2-candidates` (`STC`, `CCTT`/`cAsm`, `sHoTT` plural non-maximal & `cAsm` realizer-obstruction), diagonal escape on 4-axis basis, `Q2` finite-enumeration decidability dichotomy on a finite basis; `thm:q3-exhaustiveness-boundary` Class (1)-(8) precedence partition soundness (`T_8`), Class (1) `(alpha_0)`, Class (5) acyclic modal, Class (6) `thm:dual-five-axis`, Class (7) `S`-definable STC Artin-gluing, Priest `LP`/`D3` strong dialetheia non-explosion & no proper subalgebra, `BZ2` Lawvere SMC counterexample. Formalized in `wave1_dual_enactment_core.vr`, `wave2_q2_completeness.vr`, `wave2_q3_witnesses.vr`, and Lean 4 `MetaCompletenessQ2.lean`, `Q3BypassPartition.lean`.
+        - `[С]` Conditional: `Q2` bounded relative completeness (`Thm Q2.3`) on a fixed finite invariant basis `(Q2-C1)-(Q2-C3)`; `(Q3)` Class (1) `(alpha_diag)` (`thm:afnt-alpha`(ii), `thm:dual-afnt`(ii)), Class (2) (`thm:universe`), Class (3) (`thm:meta-vertical` / `thm:reflective`), Class (4) (`thm:slice-locality` / `cor:slice-level`), Class (5) (cyclic modal rules via Class (1)), Class (7) (STC Artin-gluing over syntactic phase `◯` via `cor:slice-level`), Class (8a) (`thm:afnt-alpha`(ii) / `thm:dual-afnt`(ii)), Class (8b) (`thm:paraconsistent-afnt`) — while `thm:lateral` governs `(B-Q3.4)` (not Class (5)) and Class (7) is STC Artin-gluing (not `thm:paraconsistent-afnt`).
+        - `[✗]` Refuted: unconditional finite-list exhaustion of `Meta_Cls` / `M` (`Q2` diagonal escape), `BZ2` cartesian diagonal (`Q3` SMC vs CCC), and raw 8-class disjointness.
+        - `[П]` Open barriers: unbounded `(Q2)` completeness beyond bounded invariant signatures and open escape frontiers `(B-Q3.1)-(B-Q3.5)`.
   - `O4`–`O6`: Legacy host stdlib `core.math.s_definable`, `core.verify.kernel_v0`, and
     withdrawn reflection/stabilization markers.
 

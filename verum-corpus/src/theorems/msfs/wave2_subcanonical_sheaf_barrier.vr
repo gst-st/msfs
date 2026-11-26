@@ -1,0 +1,341 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive cores for MSFS `B3` / `(B3-Obs2)`:
+//   - `FiniteRankedSite3`: finite poset site `{0 <= 1 <= 2}` with Freyd
+//     rank `rk(x) = x`, step `M(0) = 1, M(1) = 2`, Grothendieck topology
+//     `(T1)-(T3)` axioms, genuine sheaf condition on sieves, and sheafification
+//     data for `K^{orb}`, `K^{coupl}`, and `y(0), y(1), y(2)`.
+//   - Theorem 4.2.1 (`wave2_subcanonical_preserves_cofinal_nonrep`): any
+//     subcanonical Grothendieck topology preserves non-representability of
+//     `L_J(K^{orb})` and `L_J(K^{coupl})` over `y_J(0), y_J(1)`.
+//   - Theorem 4.2.3 (`wave2_coarse_topology_collapses_to_terminal`): explicit
+//     non-subcanonical collapse countermodels `J_ne` (collapsing `K^{orb}` to
+//     terminal `1 = y_{J_ne}(0)` while keeping `L_{J_ne}(K^{coupl}) = 2 != 1`)
+//     and `J_ch` (collapsing `K^{coupl}` to terminal `1 = y_{J_ch}(0)`).
+// ZERO `mount`/`core.math.*`, ZERO `public axiom`, ZERO `ensures true`,
+// ZERO `: Bool` struct fields (strictly `Int`).
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LFnd,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_subcanonical_sheaf_barrier;
+
+/// Finite ranked site on poset `({0, 1, 2}, <=)` with `M(0) = 1, M(1) = 2`.
+/// Downward-closed sieves on `n in {0, 1, 2}` are uniquely determined by size
+/// `k in {0..n+1}`; topology `J` is given by minimal covering sizes `j_min_0..2`.
+/// Zero `: Bool` struct fields.
+public type FiniteRankedSite3 is {
+    j_min_0: Int,
+    j_min_1: Int,
+    j_min_2: Int,
+    rk_0: Int,
+    rk_1: Int,
+    rk_2: Int,
+    m_0: Int,
+    m_1: Int,
+    k_orb_0: Int,
+    k_orb_1: Int,
+    k_orb_2: Int,
+    k_coupl_0: Int,
+    k_coupl_1: Int,
+    k_coupl_2: Int,
+    l_orb_0: Int,
+    l_orb_1: Int,
+    l_orb_2: Int,
+    l_coupl_0: Int,
+    l_coupl_1: Int,
+    l_coupl_2: Int,
+    ly0_0: Int,
+    ly0_1: Int,
+    ly0_2: Int,
+    ly1_0: Int,
+    ly1_1: Int,
+    ly1_2: Int,
+    ly2_0: Int,
+    ly2_1: Int,
+    ly2_2: Int,
+};
+
+public pure fn j_min_at(s: FiniteRankedSite3, n: Int) -> Int {
+    if n == 0 { s.j_min_0 } else if n == 1 { s.j_min_1 } else { s.j_min_2 }
+}
+
+public pure fn rk_at(s: FiniteRankedSite3, n: Int) -> Int {
+    if n == 0 { s.rk_0 } else if n == 1 { s.rk_1 } else { s.rk_2 }
+}
+
+public pure fn min2(a: Int, b: Int) -> Int {
+    if a <= b { a } else { b }
+}
+
+public pure fn val3_at(v0: Int, v1: Int, v2: Int, x: Int) -> Int {
+    if x == 0 { v0 } else if x == 1 { v1 } else { v2 }
+}
+
+/// Hom-set cardinality `|Hom(x, a)|` in `({0, 1, 2}, <=)` (`1` if `x <= a`, `0` otherwise).
+public pure fn hom_card3(x: Int, a: Int) -> Int {
+    if x <= a { 1 } else { 0 }
+}
+
+/// Grothendieck topology `(T1)` maximality, `(T2)` pullback stability, `(T3)` transitivity.
+public pure fn valid_t1_max(s: FiniteRankedSite3) -> Bool {
+    s.j_min_0 >= 0 && s.j_min_0 <= 1
+        && s.j_min_1 >= 0 && s.j_min_1 <= 2
+        && s.j_min_2 >= 0 && s.j_min_2 <= 3
+}
+
+public pure fn valid_t2_pullback(s: FiniteRankedSite3) -> Bool {
+    min2(s.j_min_1, 1) >= s.j_min_0
+        && min2(s.j_min_2, 1) >= s.j_min_0
+        && min2(s.j_min_2, 2) >= s.j_min_1
+}
+
+public pure fn t3_trans_for(s: FiniteRankedSite3, n: Int, k: Int, r: Int) -> Bool {
+    !(k >= j_min_at(s, n) && k <= n + 1 && r >= 0 && r <= n + 1
+        && (k < 1 || min2(r, 1) >= s.j_min_0)
+        && (k < 2 || min2(r, 2) >= s.j_min_1)
+        && (k < 3 || min2(r, 3) >= s.j_min_2))
+        || r >= j_min_at(s, n)
+}
+
+public pure fn t3_trans_nk(s: FiniteRankedSite3, n: Int, k: Int) -> Bool {
+    t3_trans_for(s, n, k, 0)
+        && t3_trans_for(s, n, k, 1)
+        && t3_trans_for(s, n, k, 2)
+        && t3_trans_for(s, n, k, 3)
+}
+
+public pure fn valid_t3_trans(s: FiniteRankedSite3) -> Bool {
+    t3_trans_nk(s, 0, 0) && t3_trans_nk(s, 0, 1)
+        && t3_trans_nk(s, 1, 0) && t3_trans_nk(s, 1, 1) && t3_trans_nk(s, 1, 2)
+        && t3_trans_nk(s, 2, 0) && t3_trans_nk(s, 2, 1) && t3_trans_nk(s, 2, 2) && t3_trans_nk(s, 2, 3)
+}
+
+public pure fn valid_ranked_site3(s: FiniteRankedSite3) -> Bool {
+    valid_t1_max(s)
+        && valid_t2_pullback(s)
+        && valid_t3_trans(s)
+        && s.rk_0 == 0 && s.rk_1 == 1 && s.rk_2 == 2
+        && s.m_0 == 1 && s.m_1 == 2
+        && rk_at(s, 0) < rk_at(s, s.m_0)
+        && rk_at(s, 1) < rk_at(s, s.m_1)
+        && hom_card3(s.m_0, 0) == 0
+        && hom_card3(s.m_1, 1) == 0
+}
+
+/// Genuine `J`-sheaf condition on `({0, 1, 2}, <=)` for presheaf sizes `(p0, p1, p2)`.
+public pure fn sheaf_cond_at_nk(
+    s: FiniteRankedSite3,
+    n: Int,
+    k: Int,
+    p0: Int,
+    p1: Int,
+    p2: Int,
+) -> Bool {
+    !(k >= j_min_at(s, n) && k <= n + 1)
+        || (k == 0 && val3_at(p0, p1, p2, n) == 1)
+        || (k >= 1 && k <= n && val3_at(p0, p1, p2, n) == val3_at(p0, p1, p2, k - 1))
+        || k == n + 1
+}
+
+public pure fn is_sheaf_3(s: FiniteRankedSite3, p0: Int, p1: Int, p2: Int) -> Bool {
+    p0 >= 0 && p1 >= 0 && p2 >= 0
+        && sheaf_cond_at_nk(s, 0, 0, p0, p1, p2) && sheaf_cond_at_nk(s, 0, 1, p0, p1, p2)
+        && sheaf_cond_at_nk(s, 1, 0, p0, p1, p2) && sheaf_cond_at_nk(s, 1, 1, p0, p1, p2)
+        && sheaf_cond_at_nk(s, 1, 2, p0, p1, p2)
+        && sheaf_cond_at_nk(s, 2, 0, p0, p1, p2) && sheaf_cond_at_nk(s, 2, 1, p0, p1, p2)
+        && sheaf_cond_at_nk(s, 2, 2, p0, p1, p2) && sheaf_cond_at_nk(s, 2, 3, p0, p1, p2)
+}
+
+/// Subcanonical site: all Yoneda presheaves `y(0)=(1,0,0), y(1)=(1,1,0), y(2)=(1,1,1)` are `J`-sheaves.
+public pure fn is_subcanonical(s: FiniteRankedSite3) -> Bool {
+    is_sheaf_3(s, 1, 0, 0)
+        && is_sheaf_3(s, 1, 1, 0)
+        && is_sheaf_3(s, 1, 1, 1)
+}
+
+/// Genuine `J`-sheafification laws: `L_J(P)` is a `J`-sheaf, unit preserves
+/// inhabitedness (`P(x) >= 1 => L_J(P)(x) >= 1`), and `L_J(P) == P` when `P` is already a `J`-sheaf.
+public pure fn is_sheafification_of(
+    s: FiniteRankedSite3,
+    p0: Int,
+    p1: Int,
+    p2: Int,
+    lp0: Int,
+    lp1: Int,
+    lp2: Int,
+) -> Bool {
+    is_sheaf_3(s, lp0, lp1, lp2)
+        && (p0 < 1 || lp0 >= 1)
+        && (p1 < 1 || lp1 >= 1)
+        && (p2 < 1 || lp2 >= 1)
+        && (!is_sheaf_3(s, p0, p1, p2) || (lp0 == p0 && lp1 == p1 && lp2 == p2))
+}
+
+public pure fn same_presheaf3(
+    a0: Int,
+    a1: Int,
+    a2: Int,
+    b0: Int,
+    b1: Int,
+    b2: Int,
+) -> Bool {
+    a0 == b0 && a1 == b1 && a2 == b2
+}
+
+/// Canonical discrete subcanonical site `J_can` (`j_min = (1, 2, 3)`).
+public pure fn is_canonical_site3(s: FiniteRankedSite3) -> Bool {
+    s.j_min_0 == 1 && s.j_min_1 == 2 && s.j_min_2 == 3
+        && s.rk_0 == 0 && s.rk_1 == 1 && s.rk_2 == 2
+        && s.m_0 == 1 && s.m_1 == 2
+        && s.k_orb_0 == 1 && s.k_orb_1 == 1 && s.k_orb_2 == 1
+        && s.k_coupl_0 == 2 && s.k_coupl_1 == 2 && s.k_coupl_2 == 1
+        && s.l_orb_0 == 1 && s.l_orb_1 == 1 && s.l_orb_2 == 1
+        && s.l_coupl_0 == 2 && s.l_coupl_1 == 2 && s.l_coupl_2 == 1
+        && s.ly0_0 == 1 && s.ly0_1 == 0 && s.ly0_2 == 0
+        && s.ly1_0 == 1 && s.ly1_1 == 1 && s.ly1_2 == 0
+        && s.ly2_0 == 1 && s.ly2_1 == 1 && s.ly2_2 == 1
+}
+
+/// **MSFS Wave 2 (`(B3-Obs2)` Theorem 4.2.1 — Subcanonical preservation of non-representability):**
+/// For ANY subcanonical topology `J` on `FiniteRankedSite3` and ANY sheafifications
+/// `L_J(K^{orb})`, `L_J(K^{coupl})`, `y_J(0)`, `y_J(1)`, `y_J(2)`, subcanonicity
+/// forces `y_J(a) == y(a)` (`y_J(0)(M(0)) = 0`, `y_J(1)(M(1)) = 0`), while `L_J(K)`
+/// remains inhabited at `M(a)` (`>= 1`), proving `L_J(K^{orb})` and `L_J(K^{coupl})`
+/// are NOT representable by `y_J(0)` or `y_J(1)` (witnessed constructively on `J_can`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 (B3-Obs2) Thm 4.2.1 — subcanonical sheafification preserves cofinal non-representability")
+public theorem wave2_subcanonical_preserves_cofinal_nonrep(
+    s: FiniteRankedSite3,
+    w: FiniteRankedSite3,
+)
+    requires valid_ranked_site3(s)
+          && is_subcanonical(s)
+          && s.k_orb_0 >= 1 && s.k_orb_1 >= 1 && s.k_orb_2 >= 1
+          && s.k_coupl_0 >= 1 && s.k_coupl_1 >= 1 && s.k_coupl_2 >= 1
+          && is_sheafification_of(s, s.k_orb_0, s.k_orb_1, s.k_orb_2, s.l_orb_0, s.l_orb_1, s.l_orb_2)
+          && is_sheafification_of(s, s.k_coupl_0, s.k_coupl_1, s.k_coupl_2, s.l_coupl_0, s.l_coupl_1, s.l_coupl_2)
+          && is_sheafification_of(s, 1, 0, 0, s.ly0_0, s.ly0_1, s.ly0_2)
+          && is_sheafification_of(s, 1, 1, 0, s.ly1_0, s.ly1_1, s.ly1_2)
+          && is_sheafification_of(s, 1, 1, 1, s.ly2_0, s.ly2_1, s.ly2_2)
+          && is_canonical_site3(w)
+    ensures s.ly0_1 == 0 && s.ly1_2 == 0
+         && s.l_orb_1 >= 1 && s.l_orb_2 >= 1
+         && s.l_coupl_1 >= 1 && s.l_coupl_2 >= 1
+         && !same_presheaf3(s.l_orb_0, s.l_orb_1, s.l_orb_2, s.ly0_0, s.ly0_1, s.ly0_2)
+         && !same_presheaf3(s.l_orb_0, s.l_orb_1, s.l_orb_2, s.ly1_0, s.ly1_1, s.ly1_2)
+         && !same_presheaf3(s.l_coupl_0, s.l_coupl_1, s.l_coupl_2, s.ly0_0, s.ly0_1, s.ly0_2)
+         && !same_presheaf3(s.l_coupl_0, s.l_coupl_1, s.l_coupl_2, s.ly1_0, s.ly1_1, s.ly1_2)
+         && valid_ranked_site3(w)
+         && is_subcanonical(w)
+         && is_sheafification_of(w, w.k_orb_0, w.k_orb_1, w.k_orb_2, w.l_orb_0, w.l_orb_1, w.l_orb_2)
+         && is_sheafification_of(w, w.k_coupl_0, w.k_coupl_1, w.k_coupl_2, w.l_coupl_0, w.l_coupl_1, w.l_coupl_2)
+         && !same_presheaf3(w.l_orb_0, w.l_orb_1, w.l_orb_2, w.ly0_0, w.ly0_1, w.ly0_2)
+         && !same_presheaf3(w.l_coupl_0, w.l_coupl_1, w.l_coupl_2, w.ly1_0, w.ly1_1, w.ly1_2)
+    proof {
+        have h_counit: s.ly0_1 == 0 && s.ly1_2 == 0
+                    && s.l_orb_1 >= 1 && s.l_orb_2 >= 1
+                    && s.l_coupl_1 >= 1 && s.l_coupl_2 >= 1 by auto;
+        have h_nonrep: !same_presheaf3(s.l_orb_0, s.l_orb_1, s.l_orb_2, s.ly0_0, s.ly0_1, s.ly0_2)
+                    && !same_presheaf3(s.l_orb_0, s.l_orb_1, s.l_orb_2, s.ly1_0, s.ly1_1, s.ly1_2)
+                    && !same_presheaf3(s.l_coupl_0, s.l_coupl_1, s.l_coupl_2, s.ly0_0, s.ly0_1, s.ly0_2)
+                    && !same_presheaf3(s.l_coupl_0, s.l_coupl_1, s.l_coupl_2, s.ly1_0, s.ly1_1, s.ly1_2) by auto;
+        have h_wit: valid_ranked_site3(w) && is_subcanonical(w)
+                 && is_sheafification_of(w, w.k_orb_0, w.k_orb_1, w.k_orb_2, w.l_orb_0, w.l_orb_1, w.l_orb_2)
+                 && is_sheafification_of(w, w.k_coupl_0, w.k_coupl_1, w.k_coupl_2, w.l_coupl_0, w.l_coupl_1, w.l_coupl_2)
+                 && !same_presheaf3(w.l_orb_0, w.l_orb_1, w.l_orb_2, w.ly0_0, w.ly0_1, w.ly0_2)
+                 && !same_presheaf3(w.l_coupl_0, w.l_coupl_1, w.l_coupl_2, w.ly1_0, w.ly1_1, w.ly1_2) by auto;
+        conclude by auto;
+    };
+
+/// Non-empty-sieve topology `J_ne` (`j_min = (1, 1, 1)`): every non-empty sieve covers,
+/// collapsing `L_{J_ne}(K^{orb})` to terminal `1 = y_{J_ne}(0)` while keeping
+/// `L_{J_ne}(K^{coupl}) = (2, 2, 2) != (1, 1, 1)`.
+public pure fn is_j_ne_site3(s: FiniteRankedSite3) -> Bool {
+    s.j_min_0 == 1 && s.j_min_1 == 1 && s.j_min_2 == 1
+        && s.rk_0 == 0 && s.rk_1 == 1 && s.rk_2 == 2
+        && s.m_0 == 1 && s.m_1 == 2
+        && s.k_orb_0 == 1 && s.k_orb_1 == 1 && s.k_orb_2 == 1
+        && s.k_coupl_0 == 2 && s.k_coupl_1 == 2 && s.k_coupl_2 == 1
+        && s.l_orb_0 == 1 && s.l_orb_1 == 1 && s.l_orb_2 == 1
+        && s.l_coupl_0 == 2 && s.l_coupl_1 == 2 && s.l_coupl_2 == 2
+        && s.ly0_0 == 1 && s.ly0_1 == 1 && s.ly0_2 == 1
+        && s.ly1_0 == 1 && s.ly1_1 == 1 && s.ly1_2 == 1
+        && s.ly2_0 == 1 && s.ly2_1 == 1 && s.ly2_2 == 1
+}
+
+/// Chaotic topology `J_ch` (`j_min = (0, 0, 0)`): empty sieve covers, forcing EVERY
+/// `J_ch`-sheaf to terminal `1` and collapsing `L_{J_ch}(K^{coupl}) = (1, 1, 1) == y_{J_ch}(0)`.
+public pure fn is_j_ch_site3(s: FiniteRankedSite3) -> Bool {
+    s.j_min_0 == 0 && s.j_min_1 == 0 && s.j_min_2 == 0
+        && s.rk_0 == 0 && s.rk_1 == 1 && s.rk_2 == 2
+        && s.m_0 == 1 && s.m_1 == 2
+        && s.k_orb_0 == 1 && s.k_orb_1 == 1 && s.k_orb_2 == 1
+        && s.k_coupl_0 == 2 && s.k_coupl_1 == 2 && s.k_coupl_2 == 1
+        && s.l_orb_0 == 1 && s.l_orb_1 == 1 && s.l_orb_2 == 1
+        && s.l_coupl_0 == 1 && s.l_coupl_1 == 1 && s.l_coupl_2 == 1
+        && s.ly0_0 == 1 && s.ly0_1 == 1 && s.ly0_2 == 1
+        && s.ly1_0 == 1 && s.ly1_1 == 1 && s.ly1_2 == 1
+        && s.ly2_0 == 1 && s.ly2_1 == 1 && s.ly2_2 == 1
+}
+
+/// **MSFS Wave 2 (`(B3-Obs2)` Theorem 4.2.3 — Coarse non-subcanonical collapse):**
+/// Both `J_ne` and `J_ch` satisfy Grothendieck topology `(T1)-(T3)` and fail
+/// subcanonicity; `J_ne` collapses non-representable `K^{orb}` to terminal
+/// `y_{J_ne}(0) = 1` (while `L_{J_ne}(K^{coupl}) = 2 != 1`), and `J_ch`
+/// collapses non-representable `K^{coupl}` to terminal `y_{J_ch}(0) = 1`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 (B3-Obs2) Thm 4.2.3 — non-subcanonical J_ne and J_ch collapse to terminal")
+public theorem wave2_coarse_topology_collapses_to_terminal(
+    s_ne: FiniteRankedSite3,
+    s_ch: FiniteRankedSite3,
+)
+    requires is_j_ne_site3(s_ne)
+          && is_j_ch_site3(s_ch)
+    ensures valid_ranked_site3(s_ne)
+         && !is_subcanonical(s_ne)
+         && !same_presheaf3(s_ne.k_orb_0, s_ne.k_orb_1, s_ne.k_orb_2, 1, 0, 0)
+         && !same_presheaf3(s_ne.k_orb_0, s_ne.k_orb_1, s_ne.k_orb_2, 1, 1, 0)
+         && is_sheafification_of(s_ne, s_ne.k_orb_0, s_ne.k_orb_1, s_ne.k_orb_2, s_ne.l_orb_0, s_ne.l_orb_1, s_ne.l_orb_2)
+         && is_sheafification_of(s_ne, 1, 0, 0, s_ne.ly0_0, s_ne.ly0_1, s_ne.ly0_2)
+         && same_presheaf3(s_ne.l_orb_0, s_ne.l_orb_1, s_ne.l_orb_2, 1, 1, 1)
+         && same_presheaf3(s_ne.l_orb_0, s_ne.l_orb_1, s_ne.l_orb_2, s_ne.ly0_0, s_ne.ly0_1, s_ne.ly0_2)
+         && is_sheafification_of(s_ne, s_ne.k_coupl_0, s_ne.k_coupl_1, s_ne.k_coupl_2, s_ne.l_coupl_0, s_ne.l_coupl_1, s_ne.l_coupl_2)
+         && !same_presheaf3(s_ne.l_coupl_0, s_ne.l_coupl_1, s_ne.l_coupl_2, 1, 1, 1)
+         && valid_ranked_site3(s_ch)
+         && !is_subcanonical(s_ch)
+         && !same_presheaf3(s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, 1, 0, 0)
+         && !same_presheaf3(s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, 1, 1, 0)
+         && !same_presheaf3(s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, 1, 1, 1)
+         && is_sheafification_of(s_ch, s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, s_ch.l_coupl_0, s_ch.l_coupl_1, s_ch.l_coupl_2)
+         && is_sheafification_of(s_ch, 1, 0, 0, s_ch.ly0_0, s_ch.ly0_1, s_ch.ly0_2)
+         && same_presheaf3(s_ch.l_coupl_0, s_ch.l_coupl_1, s_ch.l_coupl_2, 1, 1, 1)
+         && same_presheaf3(s_ch.l_coupl_0, s_ch.l_coupl_1, s_ch.l_coupl_2, s_ch.ly0_0, s_ch.ly0_1, s_ch.ly0_2)
+    proof {
+        have h_jne: valid_ranked_site3(s_ne)
+                 && !is_subcanonical(s_ne)
+                 && !same_presheaf3(s_ne.k_orb_0, s_ne.k_orb_1, s_ne.k_orb_2, 1, 0, 0)
+                 && !same_presheaf3(s_ne.k_orb_0, s_ne.k_orb_1, s_ne.k_orb_2, 1, 1, 0)
+                 && is_sheafification_of(s_ne, s_ne.k_orb_0, s_ne.k_orb_1, s_ne.k_orb_2, s_ne.l_orb_0, s_ne.l_orb_1, s_ne.l_orb_2)
+                 && is_sheafification_of(s_ne, 1, 0, 0, s_ne.ly0_0, s_ne.ly0_1, s_ne.ly0_2)
+                 && same_presheaf3(s_ne.l_orb_0, s_ne.l_orb_1, s_ne.l_orb_2, 1, 1, 1)
+                 && same_presheaf3(s_ne.l_orb_0, s_ne.l_orb_1, s_ne.l_orb_2, s_ne.ly0_0, s_ne.ly0_1, s_ne.ly0_2)
+                 && is_sheafification_of(s_ne, s_ne.k_coupl_0, s_ne.k_coupl_1, s_ne.k_coupl_2, s_ne.l_coupl_0, s_ne.l_coupl_1, s_ne.l_coupl_2)
+                 && !same_presheaf3(s_ne.l_coupl_0, s_ne.l_coupl_1, s_ne.l_coupl_2, 1, 1, 1) by auto;
+        have h_jch: valid_ranked_site3(s_ch)
+                 && !is_subcanonical(s_ch)
+                 && !same_presheaf3(s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, 1, 0, 0)
+                 && !same_presheaf3(s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, 1, 1, 0)
+                 && !same_presheaf3(s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, 1, 1, 1)
+                 && is_sheafification_of(s_ch, s_ch.k_coupl_0, s_ch.k_coupl_1, s_ch.k_coupl_2, s_ch.l_coupl_0, s_ch.l_coupl_1, s_ch.l_coupl_2)
+                 && is_sheafification_of(s_ch, 1, 0, 0, s_ch.ly0_0, s_ch.ly0_1, s_ch.ly0_2)
+                 && same_presheaf3(s_ch.l_coupl_0, s_ch.l_coupl_1, s_ch.l_coupl_2, 1, 1, 1)
+                 && same_presheaf3(s_ch.l_coupl_0, s_ch.l_coupl_1, s_ch.l_coupl_2, s_ch.ly0_0, s_ch.ly0_1, s_ch.ly0_2) by auto;
+        conclude by auto;
+    };

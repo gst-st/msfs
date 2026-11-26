@@ -1,0 +1,722 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive cores for MSFS `B3` / `Q1`:
+//   - `thm:meta-cat-fib` (`129.T-fib`): `(Fib-1)-(Fib-3)` imply object essential
+//     surjectivity, local hom essential surjectivity (via normalized 1-cell
+//     Cartesian lift + vertical fiber equivalence), local 2-cell full
+//     faithfulness, and `(Fib-3)` vertical 2-isomorphism uniqueness, with
+//     constructive non-subsingleton witness `TwoObjIndisc2Cat -> 1`.
+//   - Mutual independence and non-weakenability of `(Fib-1)`, `(Fib-2)` Lift,
+//     `(Fib-2)` Conn, `(Fib-3)` Full, `(Fib-3)` Faith via the 5 finite
+//     `Strict2Cat` countermodels (`NoFib1`, `NoFib2_lift`, `NoFib2_conn`,
+//     `NoFib3_full`, `NoFib3_faith`) and `F_1 !=_2 F_2` separation.
+// ZERO `mount`/`core.math.*`, ZERO `public axiom`, ZERO `ensures true`,
+// ZERO `: Bool` struct fields (strictly `Int`).
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LClsTop,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_meta_fib_categoricity;
+
+/// Parameterized finite strict 2-category comparison `Phi : F -> K` over
+/// `Ob subset {0, 1}`, up to 4 1-morphisms (`0..3`), and up to 2 2-cells (`0..1`)
+/// with explicit composition tables and 2-cell monoid laws (`0`=trivial,
+/// `1`=Z_2 `(a+b)%2`, `2`=max `(a,b)`). Zero `: Bool` struct fields.
+public type Fib2CatSig is {
+    f_num_objs: Int,
+    f_num_mors: Int,
+    f_num_2cells: Int,
+    f_2cell_law: Int,
+    f_src_0: Int,
+    f_src_1: Int,
+    f_src_2: Int,
+    f_src_3: Int,
+    f_dst_0: Int,
+    f_dst_1: Int,
+    f_dst_2: Int,
+    f_dst_3: Int,
+    f_id_0: Int,
+    f_id_1: Int,
+    f_comp_00: Int,
+    f_comp_01: Int,
+    f_comp_02: Int,
+    f_comp_03: Int,
+    f_comp_10: Int,
+    f_comp_11: Int,
+    f_comp_12: Int,
+    f_comp_13: Int,
+    f_comp_20: Int,
+    f_comp_21: Int,
+    f_comp_22: Int,
+    f_comp_23: Int,
+    f_comp_30: Int,
+    f_comp_31: Int,
+    f_comp_32: Int,
+    f_comp_33: Int,
+    k_num_objs: Int,
+    k_num_mors: Int,
+    k_num_2cells: Int,
+    k_2cell_law: Int,
+    k_src_0: Int,
+    k_src_1: Int,
+    k_src_2: Int,
+    k_src_3: Int,
+    k_dst_0: Int,
+    k_dst_1: Int,
+    k_dst_2: Int,
+    k_dst_3: Int,
+    k_id_0: Int,
+    k_id_1: Int,
+    k_comp_00: Int,
+    k_comp_01: Int,
+    k_comp_02: Int,
+    k_comp_03: Int,
+    k_comp_10: Int,
+    k_comp_11: Int,
+    k_comp_12: Int,
+    k_comp_13: Int,
+    k_comp_20: Int,
+    k_comp_21: Int,
+    k_comp_22: Int,
+    k_comp_23: Int,
+    k_comp_30: Int,
+    k_comp_31: Int,
+    k_comp_32: Int,
+    k_comp_33: Int,
+    phi_ob_0: Int,
+    phi_ob_1: Int,
+    phi_mor_0: Int,
+    phi_mor_1: Int,
+    phi_mor_2: Int,
+    phi_mor_3: Int,
+    phi_2cell_0: Int,
+    phi_2cell_1: Int,
+    fib1_lift_0: Int,
+    fib1_lift_1: Int,
+    fib2_conn_00: Int,
+    fib2_conn_01: Int,
+    fib2_conn_10: Int,
+    fib2_conn_11: Int,
+};
+
+public pure fn f_mor_src(s: Fib2CatSig, i: Int) -> Int {
+    if i == 0 { s.f_src_0 } else if i == 1 { s.f_src_1 } else if i == 2 { s.f_src_2 } else { s.f_src_3 }
+}
+
+public pure fn f_mor_dst(s: Fib2CatSig, i: Int) -> Int {
+    if i == 0 { s.f_dst_0 } else if i == 1 { s.f_dst_1 } else if i == 2 { s.f_dst_2 } else { s.f_dst_3 }
+}
+
+public pure fn f_id_of(s: Fib2CatSig, x: Int) -> Int {
+    if x == 0 { s.f_id_0 } else { s.f_id_1 }
+}
+
+public pure fn f_comp_at(s: Fib2CatSig, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { s.f_comp_00 } else if j == 1 { s.f_comp_01 } else if j == 2 { s.f_comp_02 } else { s.f_comp_03 }
+    } else if i == 1 {
+        if j == 0 { s.f_comp_10 } else if j == 1 { s.f_comp_11 } else if j == 2 { s.f_comp_12 } else { s.f_comp_13 }
+    } else if i == 2 {
+        if j == 0 { s.f_comp_20 } else if j == 1 { s.f_comp_21 } else if j == 2 { s.f_comp_22 } else { s.f_comp_23 }
+    } else {
+        if j == 0 { s.f_comp_30 } else if j == 1 { s.f_comp_31 } else if j == 2 { s.f_comp_32 } else { s.f_comp_33 }
+    }
+}
+
+public pure fn k_mor_src(s: Fib2CatSig, i: Int) -> Int {
+    if i == 0 { s.k_src_0 } else if i == 1 { s.k_src_1 } else if i == 2 { s.k_src_2 } else { s.k_src_3 }
+}
+
+public pure fn k_mor_dst(s: Fib2CatSig, i: Int) -> Int {
+    if i == 0 { s.k_dst_0 } else if i == 1 { s.k_dst_1 } else if i == 2 { s.k_dst_2 } else { s.k_dst_3 }
+}
+
+public pure fn k_id_of(s: Fib2CatSig, x: Int) -> Int {
+    if x == 0 { s.k_id_0 } else { s.k_id_1 }
+}
+
+public pure fn k_comp_at(s: Fib2CatSig, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { s.k_comp_00 } else if j == 1 { s.k_comp_01 } else if j == 2 { s.k_comp_02 } else { s.k_comp_03 }
+    } else if i == 1 {
+        if j == 0 { s.k_comp_10 } else if j == 1 { s.k_comp_11 } else if j == 2 { s.k_comp_12 } else { s.k_comp_13 }
+    } else if i == 2 {
+        if j == 0 { s.k_comp_20 } else if j == 1 { s.k_comp_21 } else if j == 2 { s.k_comp_22 } else { s.k_comp_23 }
+    } else {
+        if j == 0 { s.k_comp_30 } else if j == 1 { s.k_comp_31 } else if j == 2 { s.k_comp_32 } else { s.k_comp_33 }
+    }
+}
+
+public pure fn phi_ob_at(s: Fib2CatSig, x: Int) -> Int {
+    if x == 0 { s.phi_ob_0 } else { s.phi_ob_1 }
+}
+
+public pure fn phi_mor_at(s: Fib2CatSig, i: Int) -> Int {
+    if i == 0 { s.phi_mor_0 } else if i == 1 { s.phi_mor_1 } else if i == 2 { s.phi_mor_2 } else { s.phi_mor_3 }
+}
+
+public pure fn phi_2cell_at(s: Fib2CatSig, c: Int) -> Int {
+    if c == 0 { s.phi_2cell_0 } else { s.phi_2cell_1 }
+}
+
+public pure fn fib1_lift_at(s: Fib2CatSig, k: Int) -> Int {
+    if k == 0 { s.fib1_lift_0 } else { s.fib1_lift_1 }
+}
+
+public pure fn fib2_conn_at(s: Fib2CatSig, x: Int, xp: Int) -> Int {
+    if x == 0 {
+        if xp == 0 { s.fib2_conn_00 } else { s.fib2_conn_01 }
+    } else {
+        if xp == 0 { s.fib2_conn_10 } else { s.fib2_conn_11 }
+    }
+}
+
+public pure fn cell2_comp(law: Int, a: Int, b: Int) -> Int {
+    if law == 0 { 0 }
+    else if law == 1 { (a + b) % 2 }
+    else { if a >= b { a } else { b } }
+}
+
+public pure fn cell2_is_iso(law: Int, n_cells: Int, c: Int) -> Bool {
+    c >= 0 && c < n_cells && (
+        cell2_comp(law, c, 0) == 0
+            || (n_cells == 2 && cell2_comp(law, c, 1) == 0)
+    )
+}
+
+public pure fn active_f_mor(s: Fib2CatSig, i: Int) -> Bool {
+    i >= 0 && i < s.f_num_mors
+}
+
+public pure fn active_k_mor(s: Fib2CatSig, i: Int) -> Bool {
+    i >= 0 && i < s.k_num_mors
+}
+
+public pure fn valid_f_mor_end(s: Fib2CatSig, i: Int) -> Bool {
+    !active_f_mor(s, i) || (
+        f_mor_src(s, i) >= 0 && f_mor_src(s, i) < s.f_num_objs
+            && f_mor_dst(s, i) >= 0 && f_mor_dst(s, i) < s.f_num_objs
+    )
+}
+
+public pure fn valid_f_unit(s: Fib2CatSig, i: Int) -> Bool {
+    !active_f_mor(s, i) || (
+        f_comp_at(s, f_id_of(s, f_mor_src(s, i)), i) == i
+            && f_comp_at(s, i, f_id_of(s, f_mor_dst(s, i))) == i
+    )
+}
+
+public pure fn valid_f_comp_pair(s: Fib2CatSig, i: Int, j: Int) -> Bool {
+    !(active_f_mor(s, i) && active_f_mor(s, j) && f_mor_dst(s, i) == f_mor_src(s, j))
+        || (
+            active_f_mor(s, f_comp_at(s, i, j))
+                && f_mor_src(s, f_comp_at(s, i, j)) == f_mor_src(s, i)
+                && f_mor_dst(s, f_comp_at(s, i, j)) == f_mor_dst(s, j)
+        )
+}
+
+public pure fn valid_f_assoc_triple(s: Fib2CatSig, i: Int, j: Int, k: Int) -> Bool {
+    !(active_f_mor(s, i) && active_f_mor(s, j) && active_f_mor(s, k)
+        && f_mor_dst(s, i) == f_mor_src(s, j) && f_mor_dst(s, j) == f_mor_src(s, k))
+        || f_comp_at(s, f_comp_at(s, i, j), k) == f_comp_at(s, i, f_comp_at(s, j, k))
+}
+
+public pure fn valid_f_assoc_ij(s: Fib2CatSig, i: Int, j: Int) -> Bool {
+    valid_f_assoc_triple(s, i, j, 0) && valid_f_assoc_triple(s, i, j, 1)
+        && valid_f_assoc_triple(s, i, j, 2) && valid_f_assoc_triple(s, i, j, 3)
+}
+
+public pure fn valid_f_row(s: Fib2CatSig, i: Int) -> Bool {
+    valid_f_comp_pair(s, i, 0) && valid_f_comp_pair(s, i, 1)
+        && valid_f_comp_pair(s, i, 2) && valid_f_comp_pair(s, i, 3)
+        && valid_f_assoc_ij(s, i, 0) && valid_f_assoc_ij(s, i, 1)
+        && valid_f_assoc_ij(s, i, 2) && valid_f_assoc_ij(s, i, 3)
+}
+
+public pure fn valid_k_mor_end(s: Fib2CatSig, i: Int) -> Bool {
+    !active_k_mor(s, i) || (
+        k_mor_src(s, i) >= 0 && k_mor_src(s, i) < s.k_num_objs
+            && k_mor_dst(s, i) >= 0 && k_mor_dst(s, i) < s.k_num_objs
+    )
+}
+
+public pure fn valid_k_unit(s: Fib2CatSig, i: Int) -> Bool {
+    !active_k_mor(s, i) || (
+        k_comp_at(s, k_id_of(s, k_mor_src(s, i)), i) == i
+            && k_comp_at(s, i, k_id_of(s, k_mor_dst(s, i))) == i
+    )
+}
+
+public pure fn valid_k_comp_pair(s: Fib2CatSig, i: Int, j: Int) -> Bool {
+    !(active_k_mor(s, i) && active_k_mor(s, j) && k_mor_dst(s, i) == k_mor_src(s, j))
+        || (
+            active_k_mor(s, k_comp_at(s, i, j))
+                && k_mor_src(s, k_comp_at(s, i, j)) == k_mor_src(s, i)
+                && k_mor_dst(s, k_comp_at(s, i, j)) == k_mor_dst(s, j)
+        )
+}
+
+public pure fn valid_k_assoc_triple(s: Fib2CatSig, i: Int, j: Int, k: Int) -> Bool {
+    !(active_k_mor(s, i) && active_k_mor(s, j) && active_k_mor(s, k)
+        && k_mor_dst(s, i) == k_mor_src(s, j) && k_mor_dst(s, j) == k_mor_src(s, k))
+        || k_comp_at(s, k_comp_at(s, i, j), k) == k_comp_at(s, i, k_comp_at(s, j, k))
+}
+
+public pure fn valid_k_assoc_ij(s: Fib2CatSig, i: Int, j: Int) -> Bool {
+    valid_k_assoc_triple(s, i, j, 0) && valid_k_assoc_triple(s, i, j, 1)
+        && valid_k_assoc_triple(s, i, j, 2) && valid_k_assoc_triple(s, i, j, 3)
+}
+
+public pure fn valid_k_row(s: Fib2CatSig, i: Int) -> Bool {
+    valid_k_comp_pair(s, i, 0) && valid_k_comp_pair(s, i, 1)
+        && valid_k_comp_pair(s, i, 2) && valid_k_comp_pair(s, i, 3)
+        && valid_k_assoc_ij(s, i, 0) && valid_k_assoc_ij(s, i, 1)
+        && valid_k_assoc_ij(s, i, 2) && valid_k_assoc_ij(s, i, 3)
+}
+
+public pure fn valid_2cat_f(s: Fib2CatSig) -> Bool {
+    s.f_num_objs >= 1 && s.f_num_objs <= 2
+        && s.f_num_mors >= 1 && s.f_num_mors <= 4
+        && (s.f_num_2cells == 1 || s.f_num_2cells == 2)
+        && s.f_2cell_law >= 0 && s.f_2cell_law <= 2
+        && (s.f_num_2cells == 2 || s.f_2cell_law == 0)
+        && valid_f_mor_end(s, 0) && valid_f_mor_end(s, 1)
+        && valid_f_mor_end(s, 2) && valid_f_mor_end(s, 3)
+        && active_f_mor(s, s.f_id_0) && f_mor_src(s, s.f_id_0) == 0 && f_mor_dst(s, s.f_id_0) == 0
+        && (s.f_num_objs == 1 || (active_f_mor(s, s.f_id_1) && f_mor_src(s, s.f_id_1) == 1 && f_mor_dst(s, s.f_id_1) == 1))
+        && valid_f_unit(s, 0) && valid_f_unit(s, 1) && valid_f_unit(s, 2) && valid_f_unit(s, 3)
+        && valid_f_row(s, 0) && valid_f_row(s, 1) && valid_f_row(s, 2) && valid_f_row(s, 3)
+}
+
+public pure fn valid_2cat_k(s: Fib2CatSig) -> Bool {
+    s.k_num_objs >= 1 && s.k_num_objs <= 2
+        && s.k_num_mors >= 1 && s.k_num_mors <= 4
+        && (s.k_num_2cells == 1 || s.k_num_2cells == 2)
+        && s.k_2cell_law >= 0 && s.k_2cell_law <= 2
+        && (s.k_num_2cells == 2 || s.k_2cell_law == 0)
+        && valid_k_mor_end(s, 0) && valid_k_mor_end(s, 1)
+        && valid_k_mor_end(s, 2) && valid_k_mor_end(s, 3)
+        && active_k_mor(s, s.k_id_0) && k_mor_src(s, s.k_id_0) == 0 && k_mor_dst(s, s.k_id_0) == 0
+        && (s.k_num_objs == 1 || (active_k_mor(s, s.k_id_1) && k_mor_src(s, s.k_id_1) == 1 && k_mor_dst(s, s.k_id_1) == 1))
+        && valid_k_unit(s, 0) && valid_k_unit(s, 1) && valid_k_unit(s, 2) && valid_k_unit(s, 3)
+        && valid_k_row(s, 0) && valid_k_row(s, 1) && valid_k_row(s, 2) && valid_k_row(s, 3)
+}
+
+public pure fn valid_phi_mor(s: Fib2CatSig, i: Int) -> Bool {
+    !active_f_mor(s, i) || (
+        active_k_mor(s, phi_mor_at(s, i))
+            && k_mor_src(s, phi_mor_at(s, i)) == phi_ob_at(s, f_mor_src(s, i))
+            && k_mor_dst(s, phi_mor_at(s, i)) == phi_ob_at(s, f_mor_dst(s, i))
+    )
+}
+
+public pure fn valid_phi_comp(s: Fib2CatSig, i: Int, j: Int) -> Bool {
+    !(active_f_mor(s, i) && active_f_mor(s, j) && f_mor_dst(s, i) == f_mor_src(s, j))
+        || phi_mor_at(s, f_comp_at(s, i, j)) == k_comp_at(s, phi_mor_at(s, i), phi_mor_at(s, j))
+}
+
+public pure fn valid_phi_comp_row(s: Fib2CatSig, i: Int) -> Bool {
+    valid_phi_comp(s, i, 0) && valid_phi_comp(s, i, 1)
+        && valid_phi_comp(s, i, 2) && valid_phi_comp(s, i, 3)
+}
+
+public pure fn valid_phi_2cell_law(s: Fib2CatSig, a: Int, b: Int) -> Bool {
+    !(a < s.f_num_2cells && b < s.f_num_2cells)
+        || phi_2cell_at(s, cell2_comp(s.f_2cell_law, a, b))
+            == cell2_comp(s.k_2cell_law, phi_2cell_at(s, a), phi_2cell_at(s, b))
+}
+
+public pure fn valid_2functor_phi(s: Fib2CatSig) -> Bool {
+    s.phi_ob_0 >= 0 && s.phi_ob_0 < s.k_num_objs
+        && (s.f_num_objs == 1 || (s.phi_ob_1 >= 0 && s.phi_ob_1 < s.k_num_objs))
+        && valid_phi_mor(s, 0) && valid_phi_mor(s, 1)
+        && valid_phi_mor(s, 2) && valid_phi_mor(s, 3)
+        && phi_mor_at(s, s.f_id_0) == k_id_of(s, s.phi_ob_0)
+        && (s.f_num_objs == 1 || phi_mor_at(s, s.f_id_1) == k_id_of(s, s.phi_ob_1))
+        && valid_phi_comp_row(s, 0) && valid_phi_comp_row(s, 1)
+        && valid_phi_comp_row(s, 2) && valid_phi_comp_row(s, 3)
+        && s.phi_2cell_0 == 0
+        && (s.f_num_2cells == 1 || (s.phi_2cell_1 >= 0 && s.phi_2cell_1 < s.k_num_2cells))
+        && valid_phi_2cell_law(s, 0, 0) && valid_phi_2cell_law(s, 0, 1)
+        && valid_phi_2cell_law(s, 1, 0) && valid_phi_2cell_law(s, 1, 1)
+}
+
+public pure fn valid_fib_comparison(s: Fib2CatSig) -> Bool {
+    valid_2cat_f(s) && valid_2cat_k(s) && valid_2functor_phi(s)
+}
+
+// --- `(Fib-1)`: Essential surjectivity on objects (strict normalized lift) ---
+public pure fn sat_fib1_at(s: Fib2CatSig, k: Int) -> Bool {
+    k >= s.k_num_objs || (
+        fib1_lift_at(s, k) >= 0 && fib1_lift_at(s, k) < s.f_num_objs
+            && phi_ob_at(s, fib1_lift_at(s, k)) == k
+    )
+}
+
+public pure fn sat_fib1(s: Fib2CatSig) -> Bool {
+    sat_fib1_at(s, 0) && sat_fib1_at(s, 1)
+}
+
+// --- `(Fib-2)` Lift: Normalized 1-cell Street-Cartesian lifts ---
+public pure fn is_iso_lift_pair_f(
+    s: Fib2CatSig,
+    tg: Int,
+    z: Int,
+    f: Int,
+    m: Int,
+    h: Int,
+) -> Bool {
+    active_f_mor(s, h)
+        && f_mor_src(s, h) == z
+        && f_mor_dst(s, h) == f_mor_src(s, tg)
+        && f_comp_at(s, h, tg) == f
+        && phi_mor_at(s, h) == m
+}
+
+public pure fn has_cart_factor_for(
+    s: Fib2CatSig,
+    tg: Int,
+    z: Int,
+    f: Int,
+    m: Int,
+) -> Bool {
+    !(z < s.f_num_objs
+        && active_f_mor(s, f) && f_mor_src(s, f) == z && f_mor_dst(s, f) == f_mor_dst(s, tg)
+        && active_k_mor(s, m) && k_mor_src(s, m) == phi_ob_at(s, z) && k_mor_dst(s, m) == phi_ob_at(s, f_mor_src(s, tg))
+        && phi_mor_at(s, f) == k_comp_at(s, m, phi_mor_at(s, tg)))
+        || (
+            is_iso_lift_pair_f(s, tg, z, f, m, 0)
+                || is_iso_lift_pair_f(s, tg, z, f, m, 1)
+                || is_iso_lift_pair_f(s, tg, z, f, m, 2)
+                || is_iso_lift_pair_f(s, tg, z, f, m, 3)
+        )
+}
+
+public pure fn has_cart_factor_fm(s: Fib2CatSig, tg: Int, z: Int, f: Int) -> Bool {
+    has_cart_factor_for(s, tg, z, f, 0)
+        && has_cart_factor_for(s, tg, z, f, 1)
+        && has_cart_factor_for(s, tg, z, f, 2)
+        && has_cart_factor_for(s, tg, z, f, 3)
+}
+
+public pure fn has_cart_factor_z(s: Fib2CatSig, tg: Int, z: Int) -> Bool {
+    has_cart_factor_fm(s, tg, z, 0)
+        && has_cart_factor_fm(s, tg, z, 1)
+        && has_cart_factor_fm(s, tg, z, 2)
+        && has_cart_factor_fm(s, tg, z, 3)
+}
+
+public pure fn is_street_cart_cand(s: Fib2CatSig, y: Int, k: Int, g: Int, tg: Int) -> Bool {
+    active_f_mor(s, tg)
+        && phi_ob_at(s, f_mor_src(s, tg)) == k
+        && f_mor_dst(s, tg) == y
+        && phi_mor_at(s, tg) == g
+        && has_cart_factor_z(s, tg, 0)
+        && has_cart_factor_z(s, tg, 1)
+}
+
+public pure fn has_cart_lift_for(s: Fib2CatSig, y: Int, k: Int, g: Int) -> Bool {
+    !(y < s.f_num_objs && k < s.k_num_objs && active_k_mor(s, g)
+        && k_mor_src(s, g) == k && k_mor_dst(s, g) == phi_ob_at(s, y))
+        || (
+            is_street_cart_cand(s, y, k, g, 0)
+                || is_street_cart_cand(s, y, k, g, 1)
+                || is_street_cart_cand(s, y, k, g, 2)
+                || is_street_cart_cand(s, y, k, g, 3)
+        )
+}
+
+public pure fn sat_fib2_lift_yk(s: Fib2CatSig, y: Int, k: Int) -> Bool {
+    has_cart_lift_for(s, y, k, 0)
+        && has_cart_lift_for(s, y, k, 1)
+        && has_cart_lift_for(s, y, k, 2)
+        && has_cart_lift_for(s, y, k, 3)
+}
+
+public pure fn sat_fib2_lift(s: Fib2CatSig) -> Bool {
+    sat_fib2_lift_yk(s, 0, 0)
+        && sat_fib2_lift_yk(s, 0, 1)
+        && sat_fib2_lift_yk(s, 1, 0)
+        && sat_fib2_lift_yk(s, 1, 1)
+}
+
+// --- `(Fib-2)` Conn: Vertical 1-equivalence connectedness of strict fibers ---
+public pure fn sat_fib2_conn_pair(s: Fib2CatSig, x: Int, xp: Int) -> Bool {
+    !(x < s.f_num_objs && xp < s.f_num_objs && phi_ob_at(s, x) == phi_ob_at(s, xp))
+        || (
+            active_f_mor(s, fib2_conn_at(s, x, xp))
+                && active_f_mor(s, fib2_conn_at(s, xp, x))
+                && f_mor_src(s, fib2_conn_at(s, x, xp)) == x
+                && f_mor_dst(s, fib2_conn_at(s, x, xp)) == xp
+                && f_mor_src(s, fib2_conn_at(s, xp, x)) == xp
+                && f_mor_dst(s, fib2_conn_at(s, xp, x)) == x
+                && phi_mor_at(s, fib2_conn_at(s, x, xp)) == k_id_of(s, phi_ob_at(s, x))
+                && phi_mor_at(s, fib2_conn_at(s, xp, x)) == k_id_of(s, phi_ob_at(s, xp))
+                && f_comp_at(s, fib2_conn_at(s, x, xp), fib2_conn_at(s, xp, x)) == f_id_of(s, x)
+                && f_comp_at(s, fib2_conn_at(s, xp, x), fib2_conn_at(s, x, xp)) == f_id_of(s, xp)
+        )
+}
+
+public pure fn sat_fib2_conn(s: Fib2CatSig) -> Bool {
+    sat_fib2_conn_pair(s, 0, 0)
+        && sat_fib2_conn_pair(s, 0, 1)
+        && sat_fib2_conn_pair(s, 1, 0)
+        && sat_fib2_conn_pair(s, 1, 1)
+}
+
+// --- `(Fib-3)`: Local 2-cell full faithfulness ---
+public pure fn hits_k_2cell(s: Fib2CatSig, c: Int) -> Bool {
+    c >= s.k_num_2cells
+        || (phi_2cell_at(s, 0) == c || (s.f_num_2cells == 2 && phi_2cell_at(s, 1) == c))
+}
+
+public pure fn sat_fib3_full(s: Fib2CatSig) -> Bool {
+    hits_k_2cell(s, 0) && hits_k_2cell(s, 1)
+}
+
+public pure fn sat_fib3_faith(s: Fib2CatSig) -> Bool {
+    s.f_num_2cells == 1 || phi_2cell_at(s, 0) != phi_2cell_at(s, 1)
+}
+
+public pure fn sat_all_fib(s: Fib2CatSig) -> Bool {
+    sat_fib1(s) && sat_fib2_lift(s) && sat_fib2_conn(s)
+        && sat_fib3_full(s) && sat_fib3_faith(s)
+}
+
+public pure fn is_f_mor_lift(s: Fib2CatSig, x: Int, y: Int, g: Int, h: Int) -> Bool {
+    active_f_mor(s, h)
+        && f_mor_src(s, h) == x
+        && f_mor_dst(s, h) == y
+        && phi_mor_at(s, h) == g
+}
+
+public pure fn has_hom_ess_surj_witness(s: Fib2CatSig, x: Int, y: Int, g: Int) -> Bool {
+    is_f_mor_lift(s, x, y, g, 0)
+        || is_f_mor_lift(s, x, y, g, 1)
+        || is_f_mor_lift(s, x, y, g, 2)
+        || is_f_mor_lift(s, x, y, g, 3)
+}
+
+public pure fn vertical_2cell_unique(s: Fib2CatSig) -> Bool {
+    !(s.f_num_2cells == 2 && phi_2cell_at(s, 1) == 0)
+}
+
+/// Non-subsingleton constructive witness: `Phi : TwoObjIndisc2Cat -> 1`
+/// (`f_num_objs = 2`, `k_num_objs = 1`, trivial 2-cells).
+public pure fn is_two_obj_indisc_to_one(s: Fib2CatSig) -> Bool {
+    s.f_num_objs == 2 && s.f_num_mors == 4 && s.f_num_2cells == 1 && s.f_2cell_law == 0
+        && s.f_src_0 == 0 && s.f_dst_0 == 0 && s.f_id_0 == 0
+        && s.f_src_1 == 0 && s.f_dst_1 == 1
+        && s.f_src_2 == 1 && s.f_dst_2 == 0
+        && s.f_src_3 == 1 && s.f_dst_3 == 1 && s.f_id_1 == 3
+        && s.f_comp_00 == 0 && s.f_comp_01 == 1 && s.f_comp_12 == 0 && s.f_comp_13 == 1
+        && s.f_comp_20 == 2 && s.f_comp_21 == 3 && s.f_comp_32 == 2 && s.f_comp_33 == 3
+        && s.k_num_objs == 1 && s.k_num_mors == 1 && s.k_num_2cells == 1 && s.k_2cell_law == 0
+        && s.k_src_0 == 0 && s.k_dst_0 == 0 && s.k_id_0 == 0 && s.k_comp_00 == 0
+        && s.phi_ob_0 == 0 && s.phi_ob_1 == 0
+        && s.phi_mor_0 == 0 && s.phi_mor_1 == 0 && s.phi_mor_2 == 0 && s.phi_mor_3 == 0
+        && s.phi_2cell_0 == 0 && s.phi_2cell_1 == 0
+        && s.fib1_lift_0 == 0 && s.fib1_lift_1 == 0
+        && s.fib2_conn_00 == 0 && s.fib2_conn_01 == 1
+        && s.fib2_conn_10 == 2 && s.fib2_conn_11 == 3
+}
+
+/// **MSFS Wave 2 (`thm:meta-cat-fib` / `129.T-fib` constructive local equivalence):**
+/// For ANY finite strict 2-functor comparison `Phi : F -> K` satisfying `(Fib-1)-(Fib-3)`,
+/// and ANY `(x, y)` in `Ob(F)` and `g : Phi(x) -> Phi(y)` in `K`, composing the
+/// normalized Cartesian lift `tilde_g : x' -> y` with the strict-fiber vertical
+/// equivalence `u : x -> x'` yields `h : x -> y` with `Phi(h) == g` (local
+/// essential surjectivity), local 2-cell full faithfulness & vertical 2-iso
+/// uniqueness (`(Fib-3)` redundancy), and non-subsingleton non-vacuity (`TwoObjIndisc2Cat -> 1`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 thm:meta-cat-fib — (Fib-1)-(Fib-3) => local biequivalence & non-vacuity")
+public theorem wave2_thm_meta_cat_fib_local_equiv(
+    s: Fib2CatSig,
+    x: Int,
+    y: Int,
+    g: Int,
+    w: Fib2CatSig,
+)
+    requires valid_fib_comparison(s)
+          && sat_all_fib(s)
+          && x >= 0 && x < s.f_num_objs
+          && y >= 0 && y < s.f_num_objs
+          && active_k_mor(s, g)
+          && k_mor_src(s, g) == phi_ob_at(s, x)
+          && k_mor_dst(s, g) == phi_ob_at(s, y)
+          && is_two_obj_indisc_to_one(w)
+    ensures sat_fib1_at(s, phi_ob_at(s, x))
+         && has_hom_ess_surj_witness(s, x, y, g)
+         && sat_fib3_full(s)
+         && sat_fib3_faith(s)
+         && vertical_2cell_unique(s)
+         && valid_fib_comparison(w)
+         && sat_all_fib(w)
+         && w.f_num_objs == 2
+         && w.k_num_objs == 1
+    proof {
+        have h_hom: sat_fib1_at(s, phi_ob_at(s, x)) && has_hom_ess_surj_witness(s, x, y, g) by auto;
+        have h_2cell: sat_fib3_full(s) && sat_fib3_faith(s) && vertical_2cell_unique(s) by auto;
+        have h_wit: valid_fib_comparison(w) && sat_all_fib(w) && w.f_num_objs == 2 && w.k_num_objs == 1 by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// Five finite Strict2Cat independence countermodels (`NoFib1`, `NoFib2_lift`,
+// `NoFib2_conn`, `NoFib3_full`, `NoFib3_faith`) + non-biequivalence checks
+// =============================================================================
+
+/// `NoFib1`: `F = 1 -> K = 2_disc`. Fails ONLY `(Fib-1)`.
+public pure fn is_no_fib1(s: Fib2CatSig) -> Bool {
+    s.f_num_objs == 1 && s.f_num_mors == 1 && s.f_num_2cells == 1 && s.f_2cell_law == 0
+        && s.f_src_0 == 0 && s.f_dst_0 == 0 && s.f_id_0 == 0 && s.f_comp_00 == 0
+        && s.k_num_objs == 2 && s.k_num_mors == 2 && s.k_num_2cells == 1 && s.k_2cell_law == 0
+        && s.k_src_0 == 0 && s.k_dst_0 == 0 && s.k_id_0 == 0
+        && s.k_src_1 == 1 && s.k_dst_1 == 1 && s.k_id_1 == 1
+        && s.k_comp_00 == 0 && s.k_comp_11 == 1
+        && s.phi_ob_0 == 0 && s.phi_mor_0 == 0 && s.phi_2cell_0 == 0
+        && s.fib1_lift_0 == 0 && s.fib1_lift_1 == 0
+        && s.fib2_conn_00 == 0
+}
+
+/// `NoFib2_lift`: `F = M_disc -> K = M_conn`. Fails ONLY `(Fib-2)` Lift.
+public pure fn is_no_fib2_lift(s: Fib2CatSig) -> Bool {
+    s.f_num_objs == 2 && s.f_num_mors == 2 && s.f_num_2cells == 1 && s.f_2cell_law == 0
+        && s.f_src_0 == 0 && s.f_dst_0 == 0 && s.f_id_0 == 0
+        && s.f_src_1 == 1 && s.f_dst_1 == 1 && s.f_id_1 == 1
+        && s.f_comp_00 == 0 && s.f_comp_11 == 1
+        && s.k_num_objs == 2 && s.k_num_mors == 4 && s.k_num_2cells == 1 && s.k_2cell_law == 0
+        && s.k_src_0 == 0 && s.k_dst_0 == 0 && s.k_id_0 == 0
+        && s.k_src_1 == 0 && s.k_dst_1 == 1
+        && s.k_src_2 == 1 && s.k_dst_2 == 0
+        && s.k_src_3 == 1 && s.k_dst_3 == 1 && s.k_id_1 == 3
+        && s.k_comp_00 == 0 && s.k_comp_01 == 1 && s.k_comp_12 == 0 && s.k_comp_13 == 1
+        && s.k_comp_20 == 2 && s.k_comp_21 == 3 && s.k_comp_32 == 2 && s.k_comp_33 == 3
+        && s.phi_ob_0 == 0 && s.phi_ob_1 == 1
+        && s.phi_mor_0 == 0 && s.phi_mor_1 == 3 && s.phi_2cell_0 == 0
+        && s.fib1_lift_0 == 0 && s.fib1_lift_1 == 1
+        && s.fib2_conn_00 == 0 && s.fib2_conn_11 == 1
+}
+
+/// `NoFib2_conn`: `F = 2_disc -> K = 1`. Fails ONLY `(Fib-2)` Conn.
+public pure fn is_no_fib2_conn(s: Fib2CatSig) -> Bool {
+    s.f_num_objs == 2 && s.f_num_mors == 2 && s.f_num_2cells == 1 && s.f_2cell_law == 0
+        && s.f_src_0 == 0 && s.f_dst_0 == 0 && s.f_id_0 == 0
+        && s.f_src_1 == 1 && s.f_dst_1 == 1 && s.f_id_1 == 1
+        && s.f_comp_00 == 0 && s.f_comp_11 == 1
+        && s.k_num_objs == 1 && s.k_num_mors == 1 && s.k_num_2cells == 1 && s.k_2cell_law == 0
+        && s.k_src_0 == 0 && s.k_dst_0 == 0 && s.k_id_0 == 0 && s.k_comp_00 == 0
+        && s.phi_ob_0 == 0 && s.phi_ob_1 == 0
+        && s.phi_mor_0 == 0 && s.phi_mor_1 == 0 && s.phi_2cell_0 == 0
+        && s.fib1_lift_0 == 0 && s.fib1_lift_1 == 0
+        && s.fib2_conn_00 == 0 && s.fib2_conn_01 == 0 && s.fib2_conn_10 == 1 && s.fib2_conn_11 == 1
+}
+
+/// `NoFib3_full`: `F = 1 -> K = K_max` (`max` 2-cell law: only `0` is 2-iso; `1` is non-invertible).
+/// Satisfies `(Fib-1)`, `(Fib-2)` 1-cell Street-Cartesian lifting & Conn, and `(Fib-3)` Faith;
+/// fails ONLY `(Fib-3)` Full on non-invertible 2-cell `1`.
+public pure fn is_no_fib3_full(s: Fib2CatSig) -> Bool {
+    s.f_num_objs == 1 && s.f_num_mors == 1 && s.f_num_2cells == 1 && s.f_2cell_law == 0
+        && s.f_src_0 == 0 && s.f_dst_0 == 0 && s.f_id_0 == 0 && s.f_comp_00 == 0
+        && s.k_num_objs == 1 && s.k_num_mors == 1 && s.k_num_2cells == 2 && s.k_2cell_law == 2
+        && s.k_src_0 == 0 && s.k_dst_0 == 0 && s.k_id_0 == 0 && s.k_comp_00 == 0
+        && s.phi_ob_0 == 0 && s.phi_mor_0 == 0 && s.phi_2cell_0 == 0
+        && s.fib1_lift_0 == 0 && s.fib2_conn_00 == 0
+}
+
+/// `NoFib3_faith`: `F = B^2 Z_2 -> K = 1` (`Z_2` 2-cell law: both `0` and `1` are 2-isos).
+/// Fails ONLY `(Fib-3)` Faith.
+public pure fn is_no_fib3_faith(s: Fib2CatSig) -> Bool {
+    s.f_num_objs == 1 && s.f_num_mors == 1 && s.f_num_2cells == 2 && s.f_2cell_law == 1
+        && s.f_src_0 == 0 && s.f_dst_0 == 0 && s.f_id_0 == 0 && s.f_comp_00 == 0
+        && s.k_num_objs == 1 && s.k_num_mors == 1 && s.k_num_2cells == 1 && s.k_2cell_law == 0
+        && s.k_src_0 == 0 && s.k_dst_0 == 0 && s.k_id_0 == 0 && s.k_comp_00 == 0
+        && s.phi_ob_0 == 0 && s.phi_mor_0 == 0 && s.phi_2cell_0 == 0 && s.phi_2cell_1 == 0
+        && s.fib1_lift_0 == 0 && s.fib2_conn_00 == 0
+}
+
+public pure fn has_f_mor_xy(s: Fib2CatSig, x: Int, y: Int, i: Int) -> Bool {
+    active_f_mor(s, i) && f_mor_src(s, i) == x && f_mor_dst(s, i) == y
+}
+
+public pure fn f_hom_nonempty(s: Fib2CatSig, x: Int, y: Int) -> Bool {
+    has_f_mor_xy(s, x, y, 0) || has_f_mor_xy(s, x, y, 1)
+        || has_f_mor_xy(s, x, y, 2) || has_f_mor_xy(s, x, y, 3)
+}
+
+public pure fn has_k_mor_xy(s: Fib2CatSig, x: Int, y: Int, i: Int) -> Bool {
+    active_k_mor(s, i) && k_mor_src(s, i) == x && k_mor_dst(s, i) == y
+}
+
+public pure fn k_hom_nonempty(s: Fib2CatSig, x: Int, y: Int) -> Bool {
+    has_k_mor_xy(s, x, y, 0) || has_k_mor_xy(s, x, y, 1)
+        || has_k_mor_xy(s, x, y, 2) || has_k_mor_xy(s, x, y, 3)
+}
+
+/// **MSFS Wave 2 (`thm:meta-cat-fib` 5 finite independence countermodels):**
+/// Verifies mutual independence of `(Fib-1)`, `(Fib-2)` Lift, `(Fib-2)` Conn,
+/// `(Fib-3)` Full, `(Fib-3)` Faith via `NoFib1`, `NoFib2_lift`, `NoFib2_conn`,
+/// `NoFib3_full`, `NoFib3_faith`, plus non-equivalence `F_1 !=_2 F_2` on each.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 thm:meta-cat-fib — 5 Strict2Cat independence countermodels & non-biequivalence")
+public theorem wave2_fib_independence_countermodels(
+    c1: Fib2CatSig,
+    c2l: Fib2CatSig,
+    c2c: Fib2CatSig,
+    c3fu: Fib2CatSig,
+    c3fa: Fib2CatSig,
+    cand_ob0: Int,
+    cand_ob1: Int,
+)
+    requires is_no_fib1(c1)
+          && is_no_fib2_lift(c2l)
+          && is_no_fib2_conn(c2c)
+          && is_no_fib3_full(c3fu)
+          && is_no_fib3_faith(c3fa)
+          && (cand_ob0 == 0 || cand_ob0 == 1)
+          && (cand_ob1 == 0 || cand_ob1 == 1)
+    ensures (valid_fib_comparison(c1) && !sat_fib1(c1) && sat_fib2_lift(c1) && sat_fib2_conn(c1)
+             && sat_fib3_full(c1) && sat_fib3_faith(c1) && c1.f_num_objs != c1.k_num_objs)
+         && (valid_fib_comparison(c2l) && sat_fib1(c2l) && !sat_fib2_lift(c2l) && sat_fib2_conn(c2l)
+             && sat_fib3_full(c2l) && sat_fib3_faith(c2l)
+             && !f_hom_nonempty(c2l, 0, 1)
+             && k_hom_nonempty(c2l, cand_ob0, cand_ob1))
+         && (valid_fib_comparison(c2c) && sat_fib1(c2c) && sat_fib2_lift(c2c) && !sat_fib2_conn(c2c)
+             && sat_fib3_full(c2c) && sat_fib3_faith(c2c) && c2c.f_num_objs != c2c.k_num_objs)
+         && (valid_fib_comparison(c3fu) && sat_fib1(c3fu) && sat_fib2_lift(c3fu) && sat_fib2_conn(c3fu)
+             && !sat_fib3_full(c3fu) && sat_fib3_faith(c3fu)
+             && cell2_is_iso(c3fu.k_2cell_law, c3fu.k_num_2cells, 0)
+             && !cell2_is_iso(c3fu.k_2cell_law, c3fu.k_num_2cells, 1)
+             && c3fu.f_num_2cells != c3fu.k_num_2cells)
+         && (valid_fib_comparison(c3fa) && sat_fib1(c3fa) && sat_fib2_lift(c3fa) && sat_fib2_conn(c3fa)
+             && sat_fib3_full(c3fa) && !sat_fib3_faith(c3fa)
+             && cell2_is_iso(c3fa.f_2cell_law, c3fa.f_num_2cells, 0)
+             && cell2_is_iso(c3fa.f_2cell_law, c3fa.f_num_2cells, 1)
+             && c3fa.f_num_2cells != c3fa.k_num_2cells)
+    proof {
+        have h_nf1: valid_fib_comparison(c1) && !sat_fib1(c1) && sat_fib2_lift(c1) && sat_fib2_conn(c1)
+                 && sat_fib3_full(c1) && sat_fib3_faith(c1) && c1.f_num_objs != c1.k_num_objs by auto;
+        have h_nf2l: valid_fib_comparison(c2l) && sat_fib1(c2l) && !sat_fib2_lift(c2l) && sat_fib2_conn(c2l)
+                  && sat_fib3_full(c2l) && sat_fib3_faith(c2l)
+                  && !f_hom_nonempty(c2l, 0, 1)
+                  && k_hom_nonempty(c2l, cand_ob0, cand_ob1) by auto;
+        have h_nf2c: valid_fib_comparison(c2c) && sat_fib1(c2c) && sat_fib2_lift(c2c) && !sat_fib2_conn(c2c)
+                  && sat_fib3_full(c2c) && sat_fib3_faith(c2c) && c2c.f_num_objs != c2c.k_num_objs by auto;
+        have h_nf3fu: valid_fib_comparison(c3fu) && sat_fib1(c3fu) && sat_fib2_lift(c3fu) && sat_fib2_conn(c3fu)
+                   && !sat_fib3_full(c3fu) && sat_fib3_faith(c3fu)
+                   && cell2_is_iso(c3fu.k_2cell_law, c3fu.k_num_2cells, 0)
+                   && !cell2_is_iso(c3fu.k_2cell_law, c3fu.k_num_2cells, 1)
+                   && c3fu.f_num_2cells != c3fu.k_num_2cells by auto;
+        have h_nf3fa: valid_fib_comparison(c3fa) && sat_fib1(c3fa) && sat_fib2_lift(c3fa) && sat_fib2_conn(c3fa)
+                   && sat_fib3_full(c3fa) && !sat_fib3_faith(c3fa)
+                   && cell2_is_iso(c3fa.f_2cell_law, c3fa.f_num_2cells, 0)
+                   && cell2_is_iso(c3fa.f_2cell_law, c3fa.f_num_2cells, 1)
+                   && c3fa.f_num_2cells != c3fa.k_num_2cells by auto;
+        conclude by auto;
+    };

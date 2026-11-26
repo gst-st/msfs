@@ -78,10 +78,14 @@ public axiom msfs_theorem_7_1_horizontal_reduction<S: RichS>(
     && candidate.cond_Pi_3_max().is_maximally_generative();
 
 /// **MSFS Theorem 7.2 axis-reduction citation.** Vertical-axis uniformity:
-/// the L_Abs candidacy at an arbitrary `n ∈ ℕ ∪ {∞}` reduces to the
-/// candidacy at the single n used in Theorem 5.1 because (R5b)
-/// Lambek–Scott applies levelwise and Barwick–Schommer-Pries unicity
-/// closes the limit n = ∞ case. Paper §7.2.
+/// by `thm:cond-infty-stab` (i) [Т], every finite-depth theory (`n_S < ω`)
+/// stabilizes at `k = n_S`, while `thm:enrichment-noncommutativity` [Т] separates
+/// `Cat_{(∞,ω)}^{bdd}` from `Cat_{(∞,ω)}^{coind}` and `Cat_{(∞,ω)}^{τ-lim}`.
+/// Fixed-point stabilization `Cat(Cat_{(∞,ω)}^{coind,GH}) ≃ Cat_{(∞,ω)}^{coind,GH}` [Т]
+/// (conditional `[С]` for arbitrary BSP21 models) contrasts with `(Stab-2')`
+/// refutation [✗] in `Cat_{(∞,ω)}^{τ-lim}`; global `n = ∞` lift retains `[П]`
+/// barriers (`thm:bergner-lurie-stab`: no BSP21 unicity at `n = ∞`, external
+/// `(Stab-1)`, bridge to `M` / `n_S = ∞` syntax). Paper §7.2 & Appendix A.8.
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
 @framework(msfs, "MSFS §7.2 reduction — vertical axis: L_Abs candidacy is n-uniform (Lambek–Scott levelwise + Barwick–Schommer-Pries at n=∞)")
@@ -178,9 +182,10 @@ public theorem msfs_theorem_7_1_horizontal<S: RichS>(
     apply msfs_theorem_5_1_afnt_alpha(candidate);
 };
 
-/// **MSFS Theorem 7.2 — vertical axis.** AFN-T holds uniformly over
-/// all `n ∈ ℕ ∪ {∞}`: (R5b) Lambek–Scott applies levelwise +
-/// Barwick–Schommer-Pries unicity at limit n = ∞.
+/// **MSFS Theorem 7.2 — vertical axis.** Finite-depth uniformity [Т] holds for
+/// `n_S < ω` (`thm:cond-infty-stab` (i)); unbounded `n = ∞` splits across
+/// `thm:enrichment-noncommutativity` [Т], `Cat(Cat_{(∞,ω)}^{coind,GH}) ≃ Cat_{(∞,ω)}^{coind,GH}` [Т],
+/// `(Stab-2')` refutation [✗] in `Cat_{(∞,ω)}^{τ-lim}`, and `thm:bergner-lurie-stab` [П].
 // UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
@@ -193,8 +198,12 @@ public theorem msfs_theorem_7_2_vertical(
     && candidate.cond_Pi_3_max().is_maximally_generative()
     ensures false
     proof {
-    // Step 1 — Cite per-axis vertical-reduction (paper §7.2):
-    // Lambek–Scott levelwise + Barwick–Schommer-Pries at n=∞.
+    // Step 1 — Cite per-axis vertical-reduction (paper §7.2 & App. A.8):
+    // finite non-invertible depth n_S < ω stabilizes at k = n_S [Т]
+    // (`thm:cond-infty-stab` (i)); unbounded n = ∞ encounters
+    // `thm:enrichment-noncommutativity` [Т], `(Stab-2')` refutation [✗] in
+    // `Cat^{τ-lim}`, `Cat(Cat^{coind,GH}) ≃ Cat^{coind,GH}` [Т], and
+    // remaining `thm:bergner-lurie-stab` [П] barriers.
     apply msfs_theorem_7_2_vertical_reduction(candidate);
     // Step 2 — Apply Theorem 5.1 to the level-reduced candidate.
     apply msfs_theorem_5_1_afnt_alpha(candidate);
@@ -214,11 +223,12 @@ public theorem msfs_theorem_7_3_meta_vertical(
     && candidate.cond_Pi_3_max().is_maximally_generative()
     ensures false
     proof {
-    // Step 1 — Cite per-axis meta-vertical-reduction (paper §7.3 +
-    // Theorem A.7): meta-stratum collapses via
-    // (∞,∞+1)-Cat = (∞,∞)-Cat stabilisation.
+    // Step 1 — Cite relative meta-vertical exclusion (`thm:meta-vertical` /
+    // `cor:iteration-closure` [Т] inside `S_S`, independent of `n = ∞`
+    // stabilization; former Theorem A.7 / `(∞,∞+1)-Cat = (∞,∞)-Cat`
+    // stabilization is withdrawn, `thm:bergner-lurie-stab` [П]).
     apply msfs_theorem_7_3_meta_vertical_reduction(candidate);
-    // Step 2 — Apply Theorem 5.1 in the (∞,∞)-Cat layer.
+    // Step 2 — Apply Theorem 5.1 at the formalized stage inside `S_S`.
     apply msfs_theorem_5_1_afnt_alpha(candidate);
 };
 

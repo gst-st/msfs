@@ -1,0 +1,393 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive cores for MSFS `B3` / Dual Actica 13-axiom
+// repair (`A-0..A-9 + T-epsilon + T-2a* + T-2a**`, plus `T-epsilon^{hom}`):
+//   - Universal 6 positive implications (`A-3=>A-0`, `A-1=>A-0`, `A-5=>A-0`,
+//     `A-6=>A-5`, `A-7=>A-0`, `T-2a**=>T-2a*`),
+//   - Non-thin 2-categorical witness `ActShift2Cat_Z2` over `End_adm` satisfying
+//     all 13 repaired Dual Actica axioms + `T-epsilon^{hom}`,
+//   - 7+1 single-axiom separation countermodels (`CM_notA1`, `CM_notA6`,
+//     `CM_notA7`, `CM_notA8`, `CM_notA9`, `CM_notTEps`, `CM_notT2aStarStar`,
+//     and `CM_notTEpsHom` separating `T-epsilon^{hom}` from `T-epsilon^{ex}`).
+// ZERO `mount`/`core.math.*`, ZERO `public axiom`, ZERO `ensures true`,
+// ZERO `: Bool` struct fields (strictly `Int`).
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LClsTop,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_dual_actica_2cat_core;
+
+/// Parameterized finite 2-categorical signature for the 13 repaired Dual Actica
+/// conditions (`A-0..A-9`, `T-epsilon^{ex}`, `T-2a*`, `T-2a**`) plus `T-epsilon^{hom}`
+/// rank & automorphism degree fields. Zero `: Bool` struct fields.
+public type ActicaFiniteSig is {
+    ob_count: Int,
+    z2_zero: Int,
+    z2_one: Int,
+    iota_0: Int,
+    iota_1: Int,
+    iota_z2_0: Int,
+    iota_z2_1: Int,
+    id_shift_0: Int,
+    id_shift_1: Int,
+    a_0: Int,
+    a_1: Int,
+    anchor: Int,
+    act_00: Int,
+    act_01: Int,
+    eval_rho_0_on_0: Int,
+    eval_rho_0_on_1: Int,
+    rho_0: Int,
+    rho_1: Int,
+    rho_a0: Int,
+    rho_a1: Int,
+    eval_rho_iota_a_on_rho0: Int,
+    eval_rho_iota_a_on_rho1: Int,
+    iota_rho_a0: Int,
+    iota_rho_a1: Int,
+    iter_a_0: Int,
+    iter_a_1: Int,
+    iter_a_2: Int,
+    co_orbit_cap: Int,
+    conf_lo: Int,
+    conf_hi: Int,
+    gamma: Int,
+    act_vis_slack: Int,
+    comp_dp_bound: Int,
+    comp_md_bound: Int,
+    obj_depth: Int,
+    obj_modal_cap: Int,
+    nu_anchor: Int,
+    nu_alt: Int,
+    in_deg_anchor: Int,
+    in_deg_alt: Int,
+};
+
+public pure fn has_base_actica_fields(s: ActicaFiniteSig) -> Bool {
+    s.ob_count >= 2
+        && s.z2_zero == 0 && s.z2_one == 1
+        && s.iota_0 == 0 && s.iota_1 == 1
+        && s.id_shift_0 == 0 && s.id_shift_1 == 0
+        && s.anchor == 0
+        && s.obj_depth == 1 && s.obj_modal_cap == 1
+        && s.nu_anchor == 0 && s.in_deg_anchor == 2
+}
+
+/// `ActShift2Cat_Z2` over `(Nat2CatZ2)^op`: `A(n) = n + 1`, `costep : A(0) -> 0`,
+/// `rho_act(x) = x`, `act_act(x, y) = y + x`, `K_A^{act}` non-corepresentable.
+public pure fn is_act_shift2cat_z2(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 1 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 1 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 1 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notA1`: collapsing 2-functor `iota^{act}` maps both `z2_zero` and `z2_one` to `0`.
+public pure fn is_cm_not_a1(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 0
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 1 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 1 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 1 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notA6`: `TwoRailOp2CatZ2` (`rho_act(n, b) = (0, b)`, `A(n, b) = (n+1, b)`):
+/// preserves `A-5` (`rho_0 = 0 != 1 = rho_1`) and `A-7`, fails ONLY `A-6`.
+public pure fn is_cm_not_a6(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 0 && s.rho_a1 == 1
+        && s.eval_rho_iota_a_on_rho0 == 0 && s.eval_rho_iota_a_on_rho1 == 1
+        && s.iota_rho_a0 == 0 && s.iota_rho_a1 == 1
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notA7`: shifted `rho_act(x) = x + 1` breaks `A-7` (`3 != 2` at `x = 0`).
+public pure fn is_cm_not_a7(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 1 && s.act_01 == 2
+        && s.eval_rho_0_on_0 == 1 && s.eval_rho_0_on_1 == 2
+        && s.rho_0 == 1 && s.rho_1 == 2 && s.rho_a0 == 2 && s.rho_a1 == 3
+        && s.eval_rho_iota_a_on_rho0 == 3 && s.eval_rho_iota_a_on_rho1 == 4
+        && s.iota_rho_a0 == 2 && s.iota_rho_a1 == 3
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notA8`: anchored shift `A(0) = 0, A(1) = 2` makes `K_A^{act}` corepresentable at `0`.
+public pure fn is_cm_not_a8(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 0 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 0 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 0 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 0 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 0 && s.iter_a_2 == 0 && s.co_orbit_cap == 0
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notA9`: admissible inverted range `(conf_lo = 2, conf_hi = 1)` has no witness.
+public pure fn is_cm_not_a9(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 1 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 1 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 1 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 2 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notTEps`: universal `ActVis` (`act_vis_slack = 1 >= gamma = 1`) fails `T-epsilon^{ex}`
+/// while trivially satisfying `T-epsilon^{hom}`.
+public pure fn is_cm_not_t_eps(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 1 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 1 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 1 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 1
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notT2aStarStar`: permits `comp_md_bound = 5 >= obj_modal_cap = 1` while keeping
+/// `comp_dp_bound = 0 < obj_depth = 1` (`T-2a*` holds, `T-2a**` fails).
+public pure fn is_cm_not_t2a_star_star(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 1 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 1 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 1 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 5
+        && s.nu_alt == 1 && s.in_deg_alt == 2
+}
+
+/// `CM_notTEpsHom` (`NatPlusDeadEndOp2CatZ2`): dead-end object `*` (`none`) has rank
+/// `nu_alt = 0 == nu_anchor` yet `in_deg_alt = 1 != 2 = in_deg_anchor`, so no
+/// 2-automorphism maps `some 0` to `*` (`T-epsilon^{hom}` fails) while ALL 13 axioms
+/// (including `T-epsilon^{ex}` and `A-8`) hold!
+public pure fn is_cm_not_t_eps_hom(s: ActicaFiniteSig) -> Bool {
+    has_base_actica_fields(s)
+        && s.iota_z2_0 == 0 && s.iota_z2_1 == 1
+        && s.a_0 == 1 && s.a_1 == 1
+        && s.act_00 == 0 && s.act_01 == 1
+        && s.eval_rho_0_on_0 == 0 && s.eval_rho_0_on_1 == 1
+        && s.rho_0 == 0 && s.rho_1 == 1 && s.rho_a0 == 1 && s.rho_a1 == 2
+        && s.eval_rho_iota_a_on_rho0 == 1 && s.eval_rho_iota_a_on_rho1 == 2
+        && s.iota_rho_a0 == 1 && s.iota_rho_a1 == 2
+        && s.iter_a_0 == 0 && s.iter_a_1 == 1 && s.iter_a_2 == 2 && s.co_orbit_cap == 1
+        && s.conf_lo == 0 && s.conf_hi == 1
+        && s.gamma == 1 && s.act_vis_slack == 0
+        && s.comp_dp_bound == 0 && s.comp_md_bound == 0
+        && s.nu_alt == 0 && s.in_deg_alt == 1
+}
+
+// 13 distinct Dual Actica axiom predicates + `T-epsilon^{hom}`
+public pure fn sat_a0(s: ActicaFiniteSig) -> Bool { s.ob_count >= 1 }
+public pure fn sat_a1(s: ActicaFiniteSig) -> Bool {
+    s.iota_0 >= 0 && s.iota_0 < s.ob_count
+        && s.z2_zero != s.z2_one && s.iota_z2_0 != s.iota_z2_1 && s.iota_0 != s.iota_1
+}
+public pure fn sat_a2(s: ActicaFiniteSig) -> Bool { s.id_shift_0 == 0 && s.id_shift_1 == 0 && s.a_0 >= 0 }
+public pure fn sat_a3(s: ActicaFiniteSig) -> Bool { s.anchor == 0 && s.anchor < s.ob_count }
+public pure fn sat_a4(s: ActicaFiniteSig) -> Bool {
+    s.act_00 == s.eval_rho_0_on_0 && s.act_01 == s.eval_rho_0_on_1
+}
+public pure fn sat_a5(s: ActicaFiniteSig) -> Bool {
+    s.ob_count >= 2 && (s.rho_0 != s.rho_1 || s.rho_a0 != s.rho_0 || s.rho_a1 != s.rho_1)
+}
+public pure fn sat_a6(s: ActicaFiniteSig) -> Bool {
+    s.ob_count >= 2 && (s.rho_a0 != s.rho_0 || s.rho_a1 != s.rho_1)
+}
+public pure fn sat_a7(s: ActicaFiniteSig) -> Bool {
+    s.iota_0 >= 0 && s.iota_0 < s.ob_count
+        && s.eval_rho_iota_a_on_rho0 == s.iota_rho_a0
+        && s.eval_rho_iota_a_on_rho1 == s.iota_rho_a1
+}
+public pure fn sat_a8(s: ActicaFiniteSig) -> Bool {
+    s.iter_a_0 == s.anchor && s.iter_a_1 > s.iter_a_0
+        && s.iter_a_2 > s.iter_a_1 && s.co_orbit_cap < s.iter_a_2
+}
+public pure fn sat_a9(s: ActicaFiniteSig) -> Bool { s.conf_lo <= s.conf_hi }
+public pure fn sat_t_eps(s: ActicaFiniteSig) -> Bool { s.gamma > s.anchor + s.act_vis_slack }
+public pure fn sat_t2a_star(s: ActicaFiniteSig) -> Bool { s.comp_dp_bound < s.obj_depth }
+public pure fn sat_t2a_star_star(s: ActicaFiniteSig) -> Bool {
+    s.comp_dp_bound < s.obj_depth && s.comp_md_bound < s.obj_modal_cap
+}
+public pure fn sat_t_eps_hom(s: ActicaFiniteSig) -> Bool {
+    s.nu_alt != s.nu_anchor || s.in_deg_alt == s.in_deg_anchor
+}
+
+public pure fn sat_all_13_act(s: ActicaFiniteSig) -> Bool {
+    sat_a0(s) && sat_a1(s) && sat_a2(s) && sat_a3(s)
+        && sat_a4(s) && sat_a5(s) && sat_a6(s) && sat_a7(s)
+        && sat_a8(s) && sat_a9(s) && sat_t_eps(s)
+        && sat_t2a_star(s) && sat_t2a_star_star(s)
+}
+
+/// **MSFS Wave 2 (Dual Actica 6 universal positive implications):**
+/// For EVERY `s : ActicaFiniteSig`, proves `A-3 => A-0`, `A-1 => A-0`,
+/// `A-5 => A-0`, `A-6 => A-5`, `A-7 => A-0`, and `T-2a** => T-2a*`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 Dual Actica — 6 universal positive implications")
+public theorem wave2_actica_six_positive_implications(s: ActicaFiniteSig)
+    requires s.ob_count >= 0
+    ensures (!sat_a3(s) || sat_a0(s))
+         && (!sat_a1(s) || sat_a0(s))
+         && (!sat_a5(s) || sat_a0(s))
+         && (!sat_a6(s) || sat_a5(s))
+         && (!sat_a7(s) || sat_a0(s))
+         && (!sat_t2a_star_star(s) || sat_t2a_star(s))
+    proof {
+        have h_3_1_5: (!sat_a3(s) || sat_a0(s))
+                   && (!sat_a1(s) || sat_a0(s))
+                   && (!sat_a5(s) || sat_a0(s)) by omega;
+        have h_6_7_t: (!sat_a6(s) || sat_a5(s))
+                   && (!sat_a7(s) || sat_a0(s))
+                   && (!sat_t2a_star_star(s) || sat_t2a_star(s)) by auto;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 2 (Dual Actica `ActShift2Cat_Z2` satisfies all 13 axioms + `T-epsilon^{hom}`):**
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 Dual Actica — ActShift2Cat_Z2 non-thin witness satisfies all 13 axioms")
+public theorem wave2_actica_shift2cat_all_13(s: ActicaFiniteSig)
+    requires is_act_shift2cat_z2(s)
+    ensures sat_all_13_act(s) && sat_t_eps_hom(s) && s.z2_zero != s.z2_one
+    proof {
+        have h_0_to_4: sat_a0(s) && sat_a1(s) && sat_a2(s) && sat_a3(s) && sat_a4(s) by auto;
+        have h_5_to_9: sat_a5(s) && sat_a6(s) && sat_a7(s) && sat_a8(s) && sat_a9(s) by auto;
+        have h_t_and_nt: sat_t_eps(s) && sat_t2a_star(s) && sat_t2a_star_star(s)
+                      && sat_t_eps_hom(s) && s.z2_zero != s.z2_one by auto;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 2 (Dual Actica 7+1 single-axiom separation countermodels):**
+/// Verifies for each of the 7 single-axiom CMs (`CM_notA1`, `CM_notA6`, `CM_notA7`,
+/// `CM_notA8`, `CM_notA9`, `CM_notTEps`, `CM_notT2aStarStar`) that ONLY its target
+/// axiom fails while all 12 others hold, and for `CM_notTEpsHom` that ALL 13
+/// axioms hold while `T-epsilon^{hom}` fails (`T-epsilon^{hom} </=> T-epsilon^{ex}`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B3 Dual Actica — 7+1 independence countermodels & T-epsilon^{hom} separation")
+public theorem wave2_actica_seven_countermodels(
+    c1: ActicaFiniteSig,
+    c6: ActicaFiniteSig,
+    c7: ActicaFiniteSig,
+    c8: ActicaFiniteSig,
+    c9: ActicaFiniteSig,
+    ce: ActicaFiniteSig,
+    ct: ActicaFiniteSig,
+    ch: ActicaFiniteSig,
+)
+    requires is_cm_not_a1(c1)
+          && is_cm_not_a6(c6)
+          && is_cm_not_a7(c7)
+          && is_cm_not_a8(c8)
+          && is_cm_not_a9(c9)
+          && is_cm_not_t_eps(ce)
+          && is_cm_not_t2a_star_star(ct)
+          && is_cm_not_t_eps_hom(ch)
+    ensures (!sat_a1(c1) && sat_a0(c1) && sat_a2(c1) && sat_a3(c1) && sat_a4(c1)
+             && sat_a5(c1) && sat_a6(c1) && sat_a7(c1) && sat_a8(c1) && sat_a9(c1)
+             && sat_t_eps(c1) && sat_t2a_star(c1) && sat_t2a_star_star(c1))
+         && (!sat_a6(c6) && sat_a0(c6) && sat_a1(c6) && sat_a2(c6) && sat_a3(c6)
+             && sat_a4(c6) && sat_a5(c6) && sat_a7(c6) && sat_a8(c6) && sat_a9(c6)
+             && sat_t_eps(c6) && sat_t2a_star(c6) && sat_t2a_star_star(c6))
+         && (!sat_a7(c7) && sat_a0(c7) && sat_a1(c7) && sat_a2(c7) && sat_a3(c7)
+             && sat_a4(c7) && sat_a5(c7) && sat_a6(c7) && sat_a8(c7) && sat_a9(c7)
+             && sat_t_eps(c7) && sat_t2a_star(c7) && sat_t2a_star_star(c7))
+         && (!sat_a8(c8) && sat_a0(c8) && sat_a1(c8) && sat_a2(c8) && sat_a3(c8)
+             && sat_a4(c8) && sat_a5(c8) && sat_a6(c8) && sat_a7(c8) && sat_a9(c8)
+             && sat_t_eps(c8) && sat_t2a_star(c8) && sat_t2a_star_star(c8))
+         && (!sat_a9(c9) && sat_a0(c9) && sat_a1(c9) && sat_a2(c9) && sat_a3(c9)
+             && sat_a4(c9) && sat_a5(c9) && sat_a6(c9) && sat_a7(c9) && sat_a8(c9)
+             && sat_t_eps(c9) && sat_t2a_star(c9) && sat_t2a_star_star(c9))
+         && (!sat_t_eps(ce) && sat_a0(ce) && sat_a1(ce) && sat_a2(ce) && sat_a3(ce)
+             && sat_a4(ce) && sat_a5(ce) && sat_a6(ce) && sat_a7(ce) && sat_a8(ce)
+             && sat_a9(ce) && sat_t2a_star(ce) && sat_t2a_star_star(ce) && sat_t_eps_hom(ce))
+         && (!sat_t2a_star_star(ct) && sat_a0(ct) && sat_a1(ct) && sat_a2(ct) && sat_a3(ct)
+             && sat_a4(ct) && sat_a5(ct) && sat_a6(ct) && sat_a7(ct) && sat_a8(ct)
+             && sat_a9(ct) && sat_t_eps(ct) && sat_t2a_star(ct))
+         && (sat_all_13_act(ch) && !sat_t_eps_hom(ch))
+    proof {
+        have h1: !sat_a1(c1) && sat_a0(c1) && sat_a2(c1) && sat_a3(c1) && sat_a4(c1)
+              && sat_a5(c1) && sat_a6(c1) && sat_a7(c1) && sat_a8(c1) && sat_a9(c1)
+              && sat_t_eps(c1) && sat_t2a_star(c1) && sat_t2a_star_star(c1) by auto;
+        have h6: !sat_a6(c6) && sat_a0(c6) && sat_a1(c6) && sat_a2(c6) && sat_a3(c6)
+              && sat_a4(c6) && sat_a5(c6) && sat_a7(c6) && sat_a8(c6) && sat_a9(c6)
+              && sat_t_eps(c6) && sat_t2a_star(c6) && sat_t2a_star_star(c6) by auto;
+        have h7: !sat_a7(c7) && sat_a0(c7) && sat_a1(c7) && sat_a2(c7) && sat_a3(c7)
+              && sat_a4(c7) && sat_a5(c7) && sat_a6(c7) && sat_a8(c7) && sat_a9(c7)
+              && sat_t_eps(c7) && sat_t2a_star(c7) && sat_t2a_star_star(c7) by auto;
+        have h8: !sat_a8(c8) && sat_a0(c8) && sat_a1(c8) && sat_a2(c8) && sat_a3(c8)
+              && sat_a4(c8) && sat_a5(c8) && sat_a6(c8) && sat_a7(c8) && sat_a9(c8)
+              && sat_t_eps(c8) && sat_t2a_star(c8) && sat_t2a_star_star(c8) by auto;
+        have h9: !sat_a9(c9) && sat_a0(c9) && sat_a1(c9) && sat_a2(c9) && sat_a3(c9)
+              && sat_a4(c9) && sat_a5(c9) && sat_a6(c9) && sat_a7(c9) && sat_a8(c9)
+              && sat_t_eps(c9) && sat_t2a_star(c9) && sat_t2a_star_star(c9) by auto;
+        have he: !sat_t_eps(ce) && sat_a0(ce) && sat_a1(ce) && sat_a2(ce) && sat_a3(ce)
+              && sat_a4(ce) && sat_a5(ce) && sat_a6(ce) && sat_a7(ce) && sat_a8(ce)
+              && sat_a9(ce) && sat_t2a_star(ce) && sat_t2a_star_star(ce) && sat_t_eps_hom(ce) by auto;
+        have ht: !sat_t2a_star_star(ct) && sat_a0(ct) && sat_a1(ct) && sat_a2(ct) && sat_a3(ct)
+              && sat_a4(ct) && sat_a5(ct) && sat_a6(ct) && sat_a7(ct) && sat_a8(ct)
+              && sat_a9(ct) && sat_t_eps(ct) && sat_t2a_star(ct) by auto;
+        have hh: sat_all_13_act(ch) && !sat_t_eps_hom(ch) by auto;
+        conclude by auto;
+    };

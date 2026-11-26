@@ -1,0 +1,845 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive cores for Obligation B4:
+//   1. `CM-1`: 3-object, 5-morphism countermodel satisfying Pronk (BF1), (BF2),
+//      (BF4), (BF5) while refuting (BF3) Right Ore over all d in 0..2, v,g in 0..4;
+//   2. `CM-2`: 2-object, 3-morphism countermodel with Z_2 2-cells on id_X
+//      satisfying (BF1)-(BF3) and (BF5) while refuting (BF4) cancellation;
+//   3. `CM-3`: BaseZ2 composition table verifying comp1(iota1, comp1(eps2Map1_F, r2))
+//      == iota_Z2 and refuting equivalence of iota_Z2 against any g_inv: Int;
+//   4. `Perf2`: BaseZ2 / E_Z2 bipushout gluing along u = swapAB (amb1 = oneC1),
+//      verifying tri_r1, tri_iota1, non-trivial involutive tau_Z2 via explicit
+//      `is_enact_vcomp`, invertible internal BC mate via `is_z2_vcomp`, and R_E2;
+//   5. `CM-4a`: 2-categorical resource-capped actuation obstruction separating
+//      R_{E,2}-equivalent E_rich(B=3) and E_poor(B=1) with Z_2 2-cell on b;
+//   6. `(O-AC5a)`: finite DefinitionalConservativityData witness verifying
+//      trans(embed(phi)) == phi and proof translation ext_proves -> base_proves.
+// Imports zero `core.math.*` axioms; all record fields are strictly `Int`-valued.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LFnd,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_ac_oc_2cat_perf;
+
+// =============================================================================
+// 1. CM-1: Failure of Pronk (BF3) Right Ore while (BF1), (BF2), (BF4), (BF5) hold
+// Objects: 0 = A, 1 = B, 2 = C
+// Morphisms: 0 = id_A (0->0), 1 = id_B (1->1), 2 = id_C (2->2),
+//            3 = w (0->2, in W), 4 = f (1->2, not in W)
+// =============================================================================
+
+public type CM1Table is {
+    id_0: Int,
+    id_1: Int,
+    id_2: Int,
+    w_m: Int,
+    f_m: Int,
+    src_0: Int, src_1: Int, src_2: Int, src_3: Int, src_4: Int,
+    dst_0: Int, dst_1: Int, dst_2: Int, dst_3: Int, dst_4: Int,
+    in_w_0: Int, in_w_1: Int, in_w_2: Int, in_w_3: Int, in_w_4: Int,
+    comp_00: Int, comp_03: Int,
+    comp_11: Int, comp_14: Int,
+    comp_22: Int,
+    comp_32: Int,
+    comp_42: Int,
+};
+
+public pure fn cm1_src(c: CM1Table, i: Int) -> Int {
+    if i == 0 { c.src_0 }
+    else if i == 1 { c.src_1 }
+    else if i == 2 { c.src_2 }
+    else if i == 3 { c.src_3 }
+    else if i == 4 { c.src_4 }
+    else { -1 }
+}
+
+public pure fn cm1_dst(c: CM1Table, i: Int) -> Int {
+    if i == 0 { c.dst_0 }
+    else if i == 1 { c.dst_1 }
+    else if i == 2 { c.dst_2 }
+    else if i == 3 { c.dst_3 }
+    else if i == 4 { c.dst_4 }
+    else { -1 }
+}
+
+public pure fn cm1_in_w_flag(c: CM1Table, i: Int) -> Int {
+    if i == 0 { c.in_w_0 }
+    else if i == 1 { c.in_w_1 }
+    else if i == 2 { c.in_w_2 }
+    else if i == 3 { c.in_w_3 }
+    else if i == 4 { c.in_w_4 }
+    else { 0 }
+}
+
+public pure fn cm1_in_w(c: CM1Table, i: Int) -> Bool {
+    i >= 0 && i <= 4 && cm1_in_w_flag(c, i) == 1
+}
+
+public pure fn cm1_id(c: CM1Table, ob: Int) -> Int {
+    if ob == 0 { c.id_0 } else if ob == 1 { c.id_1 } else { c.id_2 }
+}
+
+public pure fn cm1_comp(c: CM1Table, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { c.comp_00 } else if j == 3 { c.comp_03 } else { -1 }
+    } else if i == 1 {
+        if j == 1 { c.comp_11 } else if j == 4 { c.comp_14 } else { -1 }
+    } else if i == 2 {
+        if j == 2 { c.comp_22 } else { -1 }
+    } else if i == 3 {
+        if j == 2 { c.comp_32 } else { -1 }
+    } else if i == 4 {
+        if j == 2 { c.comp_42 } else { -1 }
+    } else {
+        -1
+    }
+}
+
+public pure fn is_cm1_table(c: CM1Table) -> Bool {
+    c.id_0 == 0 && c.id_1 == 1 && c.id_2 == 2 && c.w_m == 3 && c.f_m == 4
+        && c.src_0 == 0 && c.dst_0 == 0 && c.in_w_0 == 1
+        && c.src_1 == 1 && c.dst_1 == 1 && c.in_w_1 == 1
+        && c.src_2 == 2 && c.dst_2 == 2 && c.in_w_2 == 1
+        && c.src_3 == 0 && c.dst_3 == 2 && c.in_w_3 == 1
+        && c.src_4 == 1 && c.dst_4 == 2 && c.in_w_4 == 0
+        && c.comp_00 == 0 && c.comp_03 == 3
+        && c.comp_11 == 1 && c.comp_14 == 4
+        && c.comp_22 == 2
+        && c.comp_32 == 3
+        && c.comp_42 == 4
+}
+
+public pure fn cm1_valid_id(c: CM1Table, i: Int) -> Bool {
+    cm1_comp(c, cm1_id(c, cm1_src(c, i)), i) == i
+        && cm1_comp(c, i, cm1_id(c, cm1_dst(c, i))) == i
+}
+
+public pure fn cm1_is_iso_pair(c: CM1Table, i: Int, j: Int) -> Bool {
+    cm1_dst(c, i) == cm1_src(c, j)
+        && cm1_dst(c, j) == cm1_src(c, i)
+        && cm1_comp(c, i, j) == cm1_id(c, cm1_src(c, i))
+        && cm1_comp(c, j, i) == cm1_id(c, cm1_src(c, j))
+}
+
+public pure fn cm1_bf1_row(c: CM1Table, i: Int) -> Bool {
+    (!cm1_is_iso_pair(c, i, 0) || cm1_in_w(c, i))
+        && (!cm1_is_iso_pair(c, i, 1) || cm1_in_w(c, i))
+        && (!cm1_is_iso_pair(c, i, 2) || cm1_in_w(c, i))
+        && (!cm1_is_iso_pair(c, i, 3) || cm1_in_w(c, i))
+        && (!cm1_is_iso_pair(c, i, 4) || cm1_in_w(c, i))
+}
+
+public pure fn cm1_bf2_pair(c: CM1Table, i: Int, j: Int) -> Bool {
+    !(cm1_dst(c, i) == cm1_src(c, j) && cm1_in_w(c, i) && cm1_in_w(c, j))
+        || cm1_in_w(c, cm1_comp(c, i, j))
+}
+
+public pure fn cm1_bf2_row(c: CM1Table, i: Int) -> Bool {
+    cm1_bf2_pair(c, i, 0) && cm1_bf2_pair(c, i, 1) && cm1_bf2_pair(c, i, 2)
+        && cm1_bf2_pair(c, i, 3) && cm1_bf2_pair(c, i, 4)
+}
+
+public pure fn cm1_bf4_pair_w(c: CM1Table, g1: Int, g2: Int, w_in: Int) -> Bool {
+    !(cm1_in_w(c, w_in)
+        && cm1_dst(c, g1) == cm1_src(c, w_in)
+        && cm1_dst(c, g2) == cm1_src(c, w_in)
+        && cm1_src(c, g1) == cm1_src(c, g2)
+        && cm1_comp(c, g1, w_in) == cm1_comp(c, g2, w_in))
+        || g1 == g2
+}
+
+public pure fn cm1_bf4_for_w(c: CM1Table, w_in: Int) -> Bool {
+    cm1_bf4_pair_w(c, 0, 0, w_in) && cm1_bf4_pair_w(c, 0, 3, w_in)
+        && cm1_bf4_pair_w(c, 1, 1, w_in) && cm1_bf4_pair_w(c, 1, 4, w_in)
+        && cm1_bf4_pair_w(c, 2, 2, w_in) && cm1_bf4_pair_w(c, 3, 0, w_in)
+        && cm1_bf4_pair_w(c, 3, 3, w_in) && cm1_bf4_pair_w(c, 4, 1, w_in)
+        && cm1_bf4_pair_w(c, 4, 4, w_in)
+}
+
+public pure fn cm1_bf5_2of3_pair(c: CM1Table, i: Int, j: Int) -> Bool {
+    !(cm1_dst(c, i) == cm1_src(c, j)) || (
+        (!cm1_in_w(c, i) || !cm1_in_w(c, cm1_comp(c, i, j)) || cm1_in_w(c, j))
+            && (!cm1_in_w(c, j) || !cm1_in_w(c, cm1_comp(c, i, j)) || cm1_in_w(c, i))
+    )
+}
+
+public pure fn cm1_bf5_row(c: CM1Table, i: Int) -> Bool {
+    cm1_bf5_2of3_pair(c, i, 0) && cm1_bf5_2of3_pair(c, i, 1) && cm1_bf5_2of3_pair(c, i, 2)
+        && cm1_bf5_2of3_pair(c, i, 3) && cm1_bf5_2of3_pair(c, i, 4)
+}
+
+public pure fn is_ore_span_cm1(c: CM1Table, w: Int, f: Int, d: Int, v: Int, g: Int) -> Bool {
+    d >= 0 && d <= 2 && v >= 0 && v <= 4 && g >= 0 && g <= 4
+        && cm1_in_w(c, v)
+        && cm1_src(c, g) == d && cm1_dst(c, g) == cm1_src(c, w)
+        && cm1_src(c, v) == d && cm1_dst(c, v) == cm1_src(c, f)
+        && cm1_comp(c, g, w) == cm1_comp(c, v, f)
+}
+
+/// **MSFS Wave 2 (`B4` / `CM-1` Right Ore failure):**
+/// Verifies `(BF1)`, `(BF2)`, `(BF4)`, `(BF5)` on the 3-object, 5-morphism
+/// locally discrete `Strict2Cat` `CM-1`, and refutes `(BF3)` Right Ore across all
+/// objects `d in 0..2` and all morphisms `v, g in 0..4`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B4 — CM-1 Pronk (BF3) Right Ore failure")
+public theorem wave2_cm1_bf3_ore_failure(c: CM1Table, d: Int, v: Int, g: Int)
+    requires is_cm1_table(c)
+          && 0 <= d && d <= 2
+          && 0 <= v && v <= 4
+          && 0 <= g && g <= 4
+    ensures cm1_valid_id(c, 0) && cm1_valid_id(c, 1) && cm1_valid_id(c, 2)
+         && cm1_valid_id(c, 3) && cm1_valid_id(c, 4)
+         && cm1_in_w(c, c.id_0) && cm1_in_w(c, c.id_1) && cm1_in_w(c, c.id_2)
+         && cm1_bf1_row(c, 0) && cm1_bf1_row(c, 1) && cm1_bf1_row(c, 2)
+         && cm1_bf1_row(c, 3) && cm1_bf1_row(c, 4)
+         && cm1_bf2_row(c, 0) && cm1_bf2_row(c, 1) && cm1_bf2_row(c, 2)
+         && cm1_bf2_row(c, 3) && cm1_bf2_row(c, 4)
+         && cm1_bf4_for_w(c, 0) && cm1_bf4_for_w(c, 1) && cm1_bf4_for_w(c, 2)
+         && cm1_bf4_for_w(c, 3)
+         && cm1_bf5_row(c, 0) && cm1_bf5_row(c, 1) && cm1_bf5_row(c, 2)
+         && cm1_bf5_row(c, 3) && cm1_bf5_row(c, 4)
+         && !is_ore_span_cm1(c, c.w_m, c.f_m, d, v, g)
+    proof {
+        have h_bf1: cm1_valid_id(c, 0) && cm1_valid_id(c, 1) && cm1_valid_id(c, 2)
+                 && cm1_valid_id(c, 3) && cm1_valid_id(c, 4)
+                 && cm1_in_w(c, c.id_0) && cm1_in_w(c, c.id_1) && cm1_in_w(c, c.id_2)
+                 && cm1_bf1_row(c, 0) && cm1_bf1_row(c, 1) && cm1_bf1_row(c, 2)
+                 && cm1_bf1_row(c, 3) && cm1_bf1_row(c, 4) by auto;
+        have h_bf2: cm1_bf2_row(c, 0) && cm1_bf2_row(c, 1) && cm1_bf2_row(c, 2)
+                 && cm1_bf2_row(c, 3) && cm1_bf2_row(c, 4) by auto;
+        have h_bf4: cm1_bf4_for_w(c, 0) && cm1_bf4_for_w(c, 1)
+                 && cm1_bf4_for_w(c, 2) && cm1_bf4_for_w(c, 3) by auto;
+        have h_bf5: cm1_bf5_row(c, 0) && cm1_bf5_row(c, 1) && cm1_bf5_row(c, 2)
+                 && cm1_bf5_row(c, 3) && cm1_bf5_row(c, 4) by auto;
+        have h_no_ore: !is_ore_span_cm1(c, c.w_m, c.f_m, d, v, g) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 2. CM-2: Failure of Pronk (BF4) 2-Cell Cancellation / Equalization
+// Objects: 0 = X, 1 = Y
+// Morphisms: 0 = id_X (0->0), 1 = id_Y (1->1), 2 = w (0->1)
+// W = {0, 1, 2}; Hom2(id_X) = {0, 1} mod 2; Hom2(id_Y) = {0}; Hom2(w) = {0}
+// =============================================================================
+
+public type CM2Table is {
+    id_x: Int,
+    id_y: Int,
+    w_m: Int,
+    src_0: Int, src_1: Int, src_2: Int,
+    dst_0: Int, dst_1: Int, dst_2: Int,
+    in_w_0: Int, in_w_1: Int, in_w_2: Int,
+    comp_00: Int, comp_02: Int,
+    comp_11: Int,
+    comp_21: Int,
+    hom2_size_0: Int, hom2_size_1: Int, hom2_size_2: Int,
+    beta0: Int,
+    beta1: Int,
+};
+
+public pure fn mor_src(c: CM2Table, i: Int) -> Int {
+    if i == 0 { c.src_0 } else if i == 1 { c.src_1 } else if i == 2 { c.src_2 } else { -1 }
+}
+
+public pure fn mor_dst(c: CM2Table, i: Int) -> Int {
+    if i == 0 { c.dst_0 } else if i == 1 { c.dst_1 } else if i == 2 { c.dst_2 } else { -1 }
+}
+
+public pure fn cm2_in_w_flag(c: CM2Table, i: Int) -> Int {
+    if i == 0 { c.in_w_0 } else if i == 1 { c.in_w_1 } else if i == 2 { c.in_w_2 } else { 0 }
+}
+
+public pure fn cm2_in_w(c: CM2Table, i: Int) -> Bool {
+    i >= 0 && i <= 2 && cm2_in_w_flag(c, i) == 1
+}
+
+public pure fn cm2_id(c: CM2Table, ob: Int) -> Int {
+    if ob == 0 { c.id_x } else { c.id_y }
+}
+
+public pure fn cm2_comp(c: CM2Table, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { c.comp_00 } else if j == 2 { c.comp_02 } else { -1 }
+    } else if i == 1 {
+        if j == 1 { c.comp_11 } else { -1 }
+    } else if i == 2 {
+        if j == 1 { c.comp_21 } else { -1 }
+    } else {
+        -1
+    }
+}
+
+public pure fn cm2_vcomp_id_x(a: Int, b: Int) -> Int {
+    (a + b) % 2
+}
+
+public pure fn whisker_r(beta: Int, h: Int) -> Int {
+    if h == 0 { beta % 2 } else { 0 }
+}
+
+public pure fn whisker_l(u: Int, beta: Int) -> Int {
+    if u == 0 { beta % 2 } else { 0 }
+}
+
+public pure fn is_cm2_table(c: CM2Table) -> Bool {
+    c.id_x == 0 && c.id_y == 1 && c.w_m == 2
+        && c.src_0 == 0 && c.dst_0 == 0 && c.in_w_0 == 1
+        && c.src_1 == 1 && c.dst_1 == 1 && c.in_w_1 == 1
+        && c.src_2 == 0 && c.dst_2 == 1 && c.in_w_2 == 1
+        && c.comp_00 == 0 && c.comp_02 == 2
+        && c.comp_11 == 1
+        && c.comp_21 == 2
+        && c.hom2_size_0 == 2 && c.hom2_size_1 == 1 && c.hom2_size_2 == 1
+        && c.beta0 == 0 && c.beta1 == 1
+}
+
+public pure fn cm2_valid_id(c: CM2Table, i: Int) -> Bool {
+    cm2_comp(c, cm2_id(c, mor_src(c, i)), i) == i
+        && cm2_comp(c, i, cm2_id(c, mor_dst(c, i))) == i
+}
+
+public pure fn cm2_bf2_pair(c: CM2Table, i: Int, j: Int) -> Bool {
+    !(mor_dst(c, i) == mor_src(c, j) && cm2_in_w(c, i) && cm2_in_w(c, j))
+        || cm2_in_w(c, cm2_comp(c, i, j))
+}
+
+public pure fn cm2_bf2_all(c: CM2Table) -> Bool {
+    cm2_bf2_pair(c, 0, 0) && cm2_bf2_pair(c, 0, 2)
+        && cm2_bf2_pair(c, 1, 1) && cm2_bf2_pair(c, 2, 1)
+}
+
+public pure fn cm2_is_ore_square(c: CM2Table, w: Int, f: Int, v: Int, g: Int) -> Bool {
+    v >= 0 && v <= 2 && g >= 0 && g <= 2
+        && cm2_in_w(c, v)
+        && mor_src(c, g) == mor_src(c, v)
+        && mor_dst(c, g) == mor_src(c, w)
+        && mor_dst(c, v) == mor_src(c, f)
+        && cm2_comp(c, g, w) == cm2_comp(c, v, f)
+}
+
+public pure fn cm2_has_ore(c: CM2Table, w: Int, f: Int) -> Bool {
+    cm2_is_ore_square(c, w, f, 0, 0)
+        || cm2_is_ore_square(c, w, f, 0, 2)
+        || cm2_is_ore_square(c, w, f, 1, 1)
+        || cm2_is_ore_square(c, w, f, 2, 0)
+}
+
+public pure fn cm2_bf3_row(c: CM2Table, w: Int) -> Bool {
+    (!(mor_dst(c, w) == mor_dst(c, 0)) || cm2_has_ore(c, w, 0))
+        && (!(mor_dst(c, w) == mor_dst(c, 1)) || cm2_has_ore(c, w, 1))
+        && (!(mor_dst(c, w) == mor_dst(c, 2)) || cm2_has_ore(c, w, 2))
+}
+
+public pure fn cm2_bf5_all(c: CM2Table) -> Bool {
+    cm2_in_w(c, 0) && cm2_in_w(c, 1) && cm2_in_w(c, 2)
+}
+
+/// **MSFS Wave 2 (`B4` / `CM-2` Right 2-Cell Cancellation failure):**
+/// Verifies `(BF1)`, `(BF2)`, `(BF3)`, `(BF5)` and `Z_2` invertibility on `CM2Cat`,
+/// exhibits `beta0 != beta1` with `whisker_r(beta0, w) == whisker_r(beta1, w)`,
+/// and proves `whisker_l(u, beta0) != whisker_l(u, beta1)` for all `u` into `X = 0`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B4 — CM-2 Pronk (BF4) 2-cell equalization failure")
+public theorem wave2_cm2_bf4_cancellation_failure(c: CM2Table, u: Int)
+    requires is_cm2_table(c)
+          && 0 <= u && u < 3
+          && mor_dst(c, u) == 0
+    ensures cm2_valid_id(c, 0) && cm2_valid_id(c, 1) && cm2_valid_id(c, 2)
+         && cm2_in_w(c, c.id_x) && cm2_in_w(c, c.id_y)
+         && cm2_bf2_all(c)
+         && cm2_bf3_row(c, 0) && cm2_bf3_row(c, 1) && cm2_bf3_row(c, 2)
+         && cm2_bf5_all(c)
+         && cm2_vcomp_id_x(c.beta1, c.beta1) == c.beta0
+         && c.beta0 != c.beta1
+         && whisker_r(c.beta0, c.w_m) == whisker_r(c.beta1, c.w_m)
+         && cm2_in_w(c, u)
+         && whisker_l(u, c.beta0) != whisker_l(u, c.beta1)
+    proof {
+        have h_bf125: cm2_valid_id(c, 0) && cm2_valid_id(c, 1) && cm2_valid_id(c, 2)
+                   && cm2_in_w(c, c.id_x) && cm2_in_w(c, c.id_y)
+                   && cm2_bf2_all(c) && cm2_bf5_all(c) by auto;
+        have h_bf3: cm2_bf3_row(c, 0) && cm2_bf3_row(c, 1) && cm2_bf3_row(c, 2) by auto;
+        have h_wr: c.beta0 != c.beta1
+                && cm2_vcomp_id_x(c.beta1, c.beta1) == c.beta0
+                && whisker_r(c.beta0, c.w_m) == whisker_r(c.beta1, c.w_m) by omega;
+        have h_wl: cm2_in_w(c, u)
+                && whisker_l(u, c.beta0) != whisker_l(u, c.beta1) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 3. CM-3 & 4. Perf2: Shared BaseZ2 Composition Table + E_Z2 Bipushout Gluing
+// Objects of BaseZ2: 0 = zeroA, 1 = zeroB, 2 = oneC1
+// Morphisms of BaseZ2:
+//   0 = id_zeroA  (0->0),  1 = id_zeroB  (1->1),  2 = id_oneC1  (2->2),
+//   3 = swapAB    (0->1),  4 = swapBA    (1->0),
+//   5 = iota_Z2   (0->2),  6 = iota_b    (0->2),  7 = r_Z2      (2->0),
+//   8 = const_a   (2->2),  9 = const_b   (2->2),
+//  10 = iota_Z2_B (1->2), 11 = iota_b_B  (1->2), 12 = r_Z2_B    (2->1)
+// =============================================================================
+
+public pure fn base_z2_src(f: Int) -> Int {
+    if f == 0 { 0 } else if f == 1 { 1 } else if f == 2 { 2 }
+    else if f == 3 { 0 } else if f == 4 { 1 }
+    else if f == 5 { 0 } else if f == 6 { 0 } else if f == 7 { 2 }
+    else if f == 8 { 2 } else if f == 9 { 2 }
+    else if f == 10 { 1 } else if f == 11 { 1 } else if f == 12 { 2 }
+    else { -1 }
+}
+
+public pure fn base_z2_dst(f: Int) -> Int {
+    if f == 0 { 0 } else if f == 1 { 1 } else if f == 2 { 2 }
+    else if f == 3 { 1 } else if f == 4 { 0 }
+    else if f == 5 { 2 } else if f == 6 { 2 } else if f == 7 { 0 }
+    else if f == 8 { 2 } else if f == 9 { 2 }
+    else if f == 10 { 2 } else if f == 11 { 2 } else if f == 12 { 1 }
+    else { -1 }
+}
+
+public pure fn base_z2_id(ob: Int) -> Int {
+    if ob == 0 { 0 } else if ob == 1 { 1 } else if ob == 2 { 2 } else { -1 }
+}
+
+public pure fn base_z2_comp1(f: Int, g: Int) -> Int {
+    if f == 0 {
+        if g == 0 { 0 } else if g == 3 { 3 } else if g == 5 { 5 } else if g == 6 { 6 } else { -1 }
+    } else if f == 1 {
+        if g == 1 { 1 } else if g == 4 { 4 } else if g == 10 { 10 } else if g == 11 { 11 } else { -1 }
+    } else if f == 2 {
+        if g == 2 { 2 } else if g == 7 { 7 } else if g == 8 { 8 } else if g == 9 { 9 }
+        else if g == 12 { 12 } else { -1 }
+    } else if f == 3 {
+        if g == 1 { 3 } else if g == 4 { 0 } else if g == 10 { 5 } else if g == 11 { 6 } else { -1 }
+    } else if f == 4 {
+        if g == 0 { 4 } else if g == 3 { 1 } else if g == 5 { 10 } else if g == 6 { 11 } else { -1 }
+    } else if f == 5 {
+        if g == 2 { 5 } else if g == 7 { 0 } else if g == 8 { 5 } else if g == 9 { 6 }
+        else if g == 12 { 3 } else { -1 }
+    } else if f == 6 {
+        if g == 2 { 6 } else if g == 7 { 0 } else if g == 8 { 5 } else if g == 9 { 6 }
+        else if g == 12 { 3 } else { -1 }
+    } else if f == 7 {
+        if g == 0 { 7 } else if g == 3 { 12 } else if g == 5 { 8 } else if g == 6 { 9 } else { -1 }
+    } else if f == 8 {
+        if g == 2 { 8 } else if g == 7 { 7 } else if g == 8 { 8 } else if g == 9 { 9 }
+        else if g == 12 { 12 } else { -1 }
+    } else if f == 9 {
+        if g == 2 { 9 } else if g == 7 { 7 } else if g == 8 { 8 } else if g == 9 { 9 }
+        else if g == 12 { 12 } else { -1 }
+    } else if f == 10 {
+        if g == 2 { 10 } else if g == 7 { 4 } else if g == 8 { 10 } else if g == 9 { 11 }
+        else if g == 12 { 1 } else { -1 }
+    } else if f == 11 {
+        if g == 2 { 11 } else if g == 7 { 4 } else if g == 8 { 10 } else if g == 9 { 11 }
+        else if g == 12 { 1 } else { -1 }
+    } else if f == 12 {
+        if g == 1 { 12 } else if g == 4 { 7 } else if g == 10 { 8 } else if g == 11 { 9 } else { -1 }
+    } else {
+        -1
+    }
+}
+
+/// Hom-set cardinalities in `C_1 = {0: a, 1: b}`: `Hom(a, b)` is empty (`0`).
+public pure fn c1_hom_count(x: Int, y: Int) -> Int {
+    if x == 0 && y == 0 { 1 }
+    else if x == 1 && y == 0 { 1 }
+    else if x == 1 && y == 1 { 2 }
+    else { 0 }
+}
+
+public pure fn c1_are_iso(x: Int, y: Int) -> Bool {
+    c1_hom_count(x, y) > 0 && c1_hom_count(y, x) > 0
+}
+
+public pure fn base_fun_on_first(f: Int) -> Int {
+    if f == 2 || f == 5 || f == 8 || f == 10 { 0 }
+    else if f == 6 || f == 9 || f == 11 { 1 }
+    else { 0 }
+}
+
+public pure fn base_fun_on_second(f: Int) -> Int {
+    if f == 5 || f == 8 || f == 10 { 0 }
+    else if f == 2 || f == 6 || f == 9 || f == 11 { 1 }
+    else { 0 }
+}
+
+public pure fn base_are_2iso(f1: Int, f2: Int) -> Bool {
+    f1 >= 0 && f1 <= 12 && f2 >= 0 && f2 <= 12
+        && base_z2_src(f1) == base_z2_src(f2)
+        && base_z2_dst(f1) == base_z2_dst(f2)
+        && (base_z2_dst(f1) != 2 || (
+            c1_are_iso(base_fun_on_first(f1), base_fun_on_first(f2))
+                && c1_are_iso(base_fun_on_second(f1), base_fun_on_second(f2))
+        ))
+}
+
+public pure fn base_is_equiv(f: Int, g_inv: Int) -> Bool {
+    f >= 0 && f <= 12 && g_inv >= 0 && g_inv <= 12
+        && base_z2_dst(f) == base_z2_src(g_inv)
+        && base_z2_dst(g_inv) == base_z2_src(f)
+        && base_are_2iso(base_z2_comp1(f, g_inv), base_z2_id(base_z2_src(f)))
+        && base_are_2iso(base_z2_comp1(g_inv, f), base_z2_id(base_z2_dst(f)))
+}
+
+/// **MSFS Wave 2 (`B4` / `CM-3` Refutation of `IsEquiv(iota1 >> Phi >> r2)`):**
+/// In `BaseZ2`, for `E1 = eps2(zeroA)`, `E2 = eps2(oneC1)`, and `tau = iota_Z2`:
+/// verifies `comp1(iota1, comp1(eps2Map1_F, r2)) == iota_Z2` and refutes
+/// `base_is_equiv(iota_Z2, g_inv)` for EVERY `g_inv: Int` (while confirming
+/// `swapAB` with `swapBA` is a genuine equivalence).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B4 — CM-3 refutation of IsEquiv(iota_1 >> Phi >> r_2)")
+public theorem wave2_cm3_r2_phi_iota1_refutation(g_inv: Int)
+    requires true
+    ensures base_z2_comp1(base_z2_id(0), base_z2_comp1(5, base_z2_id(2))) == 5
+         && base_z2_comp1(7, 5) == 8
+         && !c1_are_iso(0, 1)
+         && base_is_equiv(3, 4)
+         && !base_is_equiv(5, g_inv)
+    proof {
+        have h_comp: base_z2_comp1(base_z2_id(0), base_z2_comp1(5, base_z2_id(2))) == 5
+                  && base_z2_comp1(7, 5) == 8 by auto;
+        have h_noniso: !c1_are_iso(0, 1) && base_is_equiv(3, 4) by auto;
+        have h_refute: !base_is_equiv(5, g_inv) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 4. Perf2: E_Z2 Bipushout Gluing along u = swapAB (amb1 = oneC1) & Internal BC
+// =============================================================================
+
+public type Perf2EZ2Table is {
+    e_base: Int,
+    e_amb: Int,
+    e_iota: Int,
+    e_r: Int,
+    m_base: Int,
+    u_mor: Int,
+    u_inv: Int,
+    amb1: Int,
+    phi_e: Int,
+    iota1: Int,
+    r1: Int,
+    eta_a: Int,
+    eta_b: Int,
+    eps_0: Int,
+    eta1_a: Int,
+    eta1_b: Int,
+    eps1: Int,
+    kappa: Int,
+    tau_base: Int,
+    tau_a: Int,
+    tau_b: Int,
+    id_base: Int,
+    id_a: Int,
+    id_b: Int,
+    bc_mate_a: Int,
+    bc_mate_b: Int,
+    bc_inv_a: Int,
+    bc_inv_b: Int,
+    bc_id_a: Int,
+    bc_id_b: Int,
+    sample_f: Int,
+    sample_f_inv: Int,
+};
+
+public pure fn is_enact_id2(base2: Int, amb2_a: Int, amb2_b: Int) -> Bool {
+    base2 == 0 && amb2_a == 0 && amb2_b == 0
+}
+
+public pure fn is_enact_vcomp(
+    b1: Int, a1_a: Int, a1_b: Int,
+    b2: Int, a2_a: Int, a2_b: Int,
+    rb: Int, ra_a: Int, ra_b: Int,
+) -> Bool {
+    rb == (b1 + b2) % 2
+        && ra_a == (a1_a + a2_a) % 2
+        && ra_b == (a1_b + a2_b) % 2
+}
+
+public pure fn is_z2_id_pair(comp_a: Int, comp_b: Int) -> Bool {
+    comp_a == 0 && comp_b == 0
+}
+
+public pure fn is_z2_vcomp(
+    ax: Int, bx: Int,
+    ay: Int, by: Int,
+    ar: Int, br: Int,
+) -> Bool {
+    ar == (ax + ay) % 2 && br == (bx + by) % 2
+}
+
+/// Evaluates `C_1` 2-cell component on `a` (`0 = id_a`, `2 = toA`) after whiskering by `iota^(1)` (`() |-> a`).
+public pure fn whisker_l_iota1(eta1_a: Int) -> Int {
+    if eta1_a == 0 { 0 } else { -1 }
+}
+
+/// Evaluates `zeroB` 2-cell components (`0 = id_()`) after whiskering by `r^(1)` (`a, b |-> ()`).
+public pure fn whisker_r_r1_a(eta1_a: Int, eta1_b: Int) -> Int {
+    if (eta1_a == 0) && (eta1_b == 0 || eta1_b == 2) { 0 } else { 1 }
+}
+
+public pure fn whisker_r_r1_b(eta1_a: Int, eta1_b: Int) -> Int {
+    if (eta1_a == 0) && (eta1_b == 0 || eta1_b == 2) { 0 } else { 1 }
+}
+
+public pure fn perf_map_base(f: Int) -> Int {
+    if f == 0 { 1 } else if f == 1 { 0 } else if f == 3 { 4 } else if f == 4 { 3 } else { -1 }
+}
+
+public pure fn is_valid_perf2_ez2_table(t: Perf2EZ2Table) -> Bool {
+    t.e_base == 0 && t.e_amb == 2 && t.e_iota == 5 && t.e_r == 7
+        && t.m_base == 1 && t.u_mor == 3 && t.u_inv == 4
+        && t.amb1 == 2 && t.phi_e == 2 && t.iota1 == 10 && t.r1 == 12
+        && t.eta_a == 0 && t.eta_b == 2 && t.eps_0 == 0
+        && t.eta1_a == 0 && t.eta1_b == 2 && t.eps1 == 0 && t.kappa == 0
+        && t.tau_base == 0 && t.tau_a == 0 && t.tau_b == 1
+        && t.id_base == 0 && t.id_a == 0 && t.id_b == 0
+        && t.bc_mate_a == 0 && t.bc_mate_b == 0
+        && t.bc_inv_a == 0 && t.bc_inv_b == 0
+        && t.bc_id_a == 0 && t.bc_id_b == 0
+        && (t.sample_f == 0 || t.sample_f == 3)
+        && t.sample_f_inv == (if t.sample_f == 0 { 0 } else { 4 })
+}
+
+/// **MSFS Wave 2 (`B4` / `Perf2` Non-Cyclic `E_Z2` Bipushout Gluing & Invertible BC Mate):**
+/// Encodes the bipushout of `E_Z2` along `u = swapAB` (`amb1 = oneC1`), verifies
+/// `iota ≫ phi_E == u ≫ iota1`, `tri_r1`, `tri_iota1`, non-trivial involutive
+/// `tau_Z2` via explicit `is_enact_vcomp`, invertible internal Beck-Chevalley mate
+/// via `is_z2_vcomp`, and `R_E2` equivalence preservation under `perf_map_base`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B4 — Perf2 E_Z2 bipushout gluing, triangles, and invertible BC mate")
+public theorem wave2_perf2_ez2_gluing_and_bc(t: Perf2EZ2Table)
+    requires is_valid_perf2_ez2_table(t)
+    ensures base_z2_comp1(t.e_iota, t.phi_e) == base_z2_comp1(t.u_mor, t.iota1)
+         && base_z2_comp1(t.iota1, t.r1) == base_z2_id(t.m_base)
+         && (whisker_l_iota1(t.eta1_a) + t.eps1) % 2 == 0
+         && is_z2_vcomp(
+                whisker_r_r1_a(t.eta1_a, t.eta1_b),
+                whisker_r_r1_b(t.eta1_a, t.eta1_b),
+                t.eps1,
+                t.eps1,
+                0,
+                0
+            )
+         && !is_enact_id2(t.tau_base, t.tau_a, t.tau_b)
+         && is_enact_vcomp(
+                t.tau_base, t.tau_a, t.tau_b,
+                t.tau_base, t.tau_a, t.tau_b,
+                t.id_base, t.id_a, t.id_b
+            )
+         && is_z2_id_pair(t.bc_id_a, t.bc_id_b)
+         && is_z2_vcomp(
+                t.bc_mate_a, t.bc_mate_b,
+                t.bc_inv_a, t.bc_inv_b,
+                t.bc_id_a, t.bc_id_b
+            )
+         && is_z2_vcomp(
+                t.bc_inv_a, t.bc_inv_b,
+                t.bc_mate_a, t.bc_mate_b,
+                t.bc_id_a, t.bc_id_b
+            )
+         && base_is_equiv(t.sample_f, t.sample_f_inv)
+         && base_is_equiv(perf_map_base(t.sample_f), perf_map_base(t.sample_f_inv))
+    proof {
+        have h_glue: base_z2_comp1(t.e_iota, t.phi_e) == base_z2_comp1(t.u_mor, t.iota1)
+                  && base_z2_comp1(t.iota1, t.r1) == base_z2_id(t.m_base) by auto;
+        have h_tri: (whisker_l_iota1(t.eta1_a) + t.eps1) % 2 == 0
+                 && is_z2_vcomp(
+                        whisker_r_r1_a(t.eta1_a, t.eta1_b),
+                        whisker_r_r1_b(t.eta1_a, t.eta1_b),
+                        t.eps1,
+                        t.eps1,
+                        0,
+                        0
+                    ) by omega;
+        have h_tau: !is_enact_id2(t.tau_base, t.tau_a, t.tau_b)
+                 && is_enact_vcomp(
+                        t.tau_base, t.tau_a, t.tau_b,
+                        t.tau_base, t.tau_a, t.tau_b,
+                        t.id_base, t.id_a, t.id_b
+                    ) by omega;
+        have h_bc: is_z2_id_pair(t.bc_id_a, t.bc_id_b)
+                && is_z2_vcomp(
+                       t.bc_mate_a, t.bc_mate_b,
+                       t.bc_inv_a, t.bc_inv_b,
+                       t.bc_id_a, t.bc_id_b
+                   )
+                && is_z2_vcomp(
+                       t.bc_inv_a, t.bc_inv_b,
+                       t.bc_mate_a, t.bc_mate_b,
+                       t.bc_id_a, t.bc_id_b
+                   ) by omega;
+        have h_re2: base_is_equiv(t.sample_f, t.sample_f_inv)
+                 && base_is_equiv(perf_map_base(t.sample_f), perf_map_base(t.sample_f_inv)) by auto;
+        conclude by omega;
+    };
+
+// =============================================================================
+// 5. CM-4a: Resource-Capped 2-Categorical Actuation Obstruction (`F-6` at n = 2)
+// E(P_2, B) with non-trivial Z_2 2-cell tau_b on b: E_rich(B=3) vs E_poor(B=1)
+// =============================================================================
+
+public type Capped2Env is {
+    budget: Int,
+    obs_count: Int,
+    init_obs: Int,
+    entails_01: Int,
+    entails_10: Int,
+    tau_b: Int,
+    tau_a: Int,
+};
+
+public pure fn is_e_p2_env(e: Capped2Env, b: Int) -> Bool {
+    e.budget == b
+        && e.obs_count == 2
+        && e.init_obs == 0
+        && e.entails_01 == 1
+        && e.entails_10 == 0
+        && e.tau_b == 1
+        && e.tau_a == 0
+}
+
+public pure fn same_alpha_shadow(e1: Capped2Env, e2: Capped2Env) -> Bool {
+    e1.obs_count == e2.obs_count
+        && e1.init_obs == e2.init_obs
+        && e1.entails_01 == e2.entails_01
+        && e1.entails_10 == e2.entails_10
+}
+
+public pure fn capped_2act_obs_count(e: Capped2Env, cost: Int) -> Int {
+    if e.budget >= cost { e.obs_count + 1 } else { e.obs_count }
+}
+
+public pure fn capped_2act_rem_budget(e: Capped2Env, cost: Int) -> Int {
+    if e.budget >= cost { e.budget - cost } else { e.budget }
+}
+
+/// **MSFS Wave 2 (`B4` / `CM-4a` Resource-Capped 2-Cat Descent Obstruction):**
+/// Exhibits `E_rich = E(P_2, 3)` and `E_poor = E(P_2, 1)` with identical `alpha`
+/// shadow (`obs_count = 2`, hence `R_{E,2}`-equivalent) and non-trivial involutive
+/// `Z_2` 2-cell `tau_b = 1` on `b`, separated by `capped_2act` at `cost = 2`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B4 — CM-4a resource-capped 2-categorical actuation obstruction")
+public theorem wave2_cm4_capped_2cat_obstruction(
+    e_rich: Capped2Env,
+    e_poor: Capped2Env,
+    cost: Int,
+)
+    requires is_e_p2_env(e_rich, 3)
+          && is_e_p2_env(e_poor, 1)
+          && cost == 2
+    ensures same_alpha_shadow(e_rich, e_poor)
+         && e_rich.tau_b != 0 && (e_rich.tau_b + e_rich.tau_b) % 2 == 0
+         && e_poor.tau_b != 0 && (e_poor.tau_b + e_poor.tau_b) % 2 == 0
+         && capped_2act_obs_count(e_rich, cost) == 3
+         && capped_2act_obs_count(e_poor, cost) == 2
+         && capped_2act_obs_count(e_rich, cost) != capped_2act_obs_count(e_poor, cost)
+         && capped_2act_rem_budget(e_rich, cost) == 1
+         && capped_2act_rem_budget(e_poor, cost) == 1
+    proof {
+        have h_equiv: same_alpha_shadow(e_rich, e_poor) by auto;
+        have h_z2: e_rich.tau_b != 0 && (e_rich.tau_b + e_rich.tau_b) % 2 == 0
+                && e_poor.tau_b != 0 && (e_poor.tau_b + e_poor.tau_b) % 2 == 0 by omega;
+        have h_sep: capped_2act_obs_count(e_rich, cost) == 3
+                 && capped_2act_obs_count(e_poor, cost) == 2
+                 && capped_2act_obs_count(e_rich, cost) != capped_2act_obs_count(e_poor, cost)
+                 && capped_2act_rem_budget(e_rich, cost) == 1
+                 && capped_2act_rem_budget(e_poor, cost) == 1 by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 6. (O-AC5a): Finite Definitional Conservativity Data Witness
+// BaseForm: 0 = bot (unprovable), 1 = ax_base (provable),
+//           2 = thm_base (provable), 3 = open_base (unprovable)
+// ExtForm:  0..3 (embedded base), 4 = def_syn_ax (~> 1), 5 = def_act_bot (~> 0)
+// =============================================================================
+
+public type DefConservFin is {
+    base_prov_0: Int, base_prov_1: Int, base_prov_2: Int, base_prov_3: Int,
+    ext_prov_0: Int, ext_prov_1: Int, ext_prov_2: Int,
+    ext_prov_3: Int, ext_prov_4: Int, ext_prov_5: Int,
+    emb_0: Int, emb_1: Int, emb_2: Int, emb_3: Int,
+    tr_0: Int, tr_1: Int, tr_2: Int, tr_3: Int, tr_4: Int, tr_5: Int,
+};
+
+public pure fn dc_base_proves(d: DefConservFin, phi: Int) -> Bool {
+    if phi == 0 { d.base_prov_0 == 1 }
+    else if phi == 1 { d.base_prov_1 == 1 }
+    else if phi == 2 { d.base_prov_2 == 1 }
+    else if phi == 3 { d.base_prov_3 == 1 }
+    else { false }
+}
+
+public pure fn dc_ext_proves(d: DefConservFin, psi: Int) -> Bool {
+    if psi == 0 { d.ext_prov_0 == 1 }
+    else if psi == 1 { d.ext_prov_1 == 1 }
+    else if psi == 2 { d.ext_prov_2 == 1 }
+    else if psi == 3 { d.ext_prov_3 == 1 }
+    else if psi == 4 { d.ext_prov_4 == 1 }
+    else if psi == 5 { d.ext_prov_5 == 1 }
+    else { false }
+}
+
+public pure fn dc_embed(d: DefConservFin, phi: Int) -> Int {
+    if phi == 0 { d.emb_0 }
+    else if phi == 1 { d.emb_1 }
+    else if phi == 2 { d.emb_2 }
+    else if phi == 3 { d.emb_3 }
+    else { -1 }
+}
+
+public pure fn dc_trans(d: DefConservFin, psi: Int) -> Int {
+    if psi == 0 { d.tr_0 }
+    else if psi == 1 { d.tr_1 }
+    else if psi == 2 { d.tr_2 }
+    else if psi == 3 { d.tr_3 }
+    else if psi == 4 { d.tr_4 }
+    else if psi == 5 { d.tr_5 }
+    else { -1 }
+}
+
+public pure fn is_valid_def_conserv(d: DefConservFin) -> Bool {
+    d.base_prov_0 == 0 && d.base_prov_1 == 1 && d.base_prov_2 == 1 && d.base_prov_3 == 0
+        && d.ext_prov_0 == 0 && d.ext_prov_1 == 1 && d.ext_prov_2 == 1
+        && d.ext_prov_3 == 0 && d.ext_prov_4 == 1 && d.ext_prov_5 == 0
+        && d.emb_0 == 0 && d.emb_1 == 1 && d.emb_2 == 2 && d.emb_3 == 3
+        && d.tr_0 == 0 && d.tr_1 == 1 && d.tr_2 == 2
+        && d.tr_3 == 3 && d.tr_4 == 1 && d.tr_5 == 0
+}
+
+/// **MSFS Wave 2 (`B4` / `(O-AC5a)` Definitional Conservativity):**
+/// Verifies `trans(embed(phi)) == phi` for all `phi in 0..3`, proof translation
+/// `ext_proves(psi) -> base_proves(trans(psi))` for all `psi in 0..5`, and base
+/// conservativity `ext_proves(embed(phi)) -> base_proves(phi)` with non-trivial witness.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B4 — (O-AC5a) finite definitional conservativity witness")
+public theorem wave2_oac5_definitional_conservativity(
+    d: DefConservFin,
+    phi: Int,
+    psi: Int,
+)
+    requires is_valid_def_conserv(d)
+          && 0 <= phi && phi <= 3
+          && 0 <= psi && psi <= 5
+    ensures dc_trans(d, dc_embed(d, phi)) == phi
+         && (!dc_ext_proves(d, psi) || dc_base_proves(d, dc_trans(d, psi)))
+         && (!dc_ext_proves(d, dc_embed(d, phi)) || dc_base_proves(d, phi))
+         && !dc_base_proves(d, 0)
+         && !dc_ext_proves(d, 0)
+         && dc_ext_proves(d, 4)
+         && dc_base_proves(d, dc_trans(d, 4))
+    proof {
+        have h_ret: dc_trans(d, dc_embed(d, phi)) == phi by auto;
+        have h_trans: !dc_ext_proves(d, psi) || dc_base_proves(d, dc_trans(d, psi)) by auto;
+        have h_cons: !dc_ext_proves(d, dc_embed(d, phi)) || dc_base_proves(d, phi) by auto;
+        have h_nonvac: !dc_base_proves(d, 0) && !dc_ext_proves(d, 0)
+                    && dc_ext_proves(d, 4) && dc_base_proves(d, dc_trans(d, 4)) by auto;
+        conclude by auto;
+    };

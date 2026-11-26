@@ -1,0 +1,455 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE — OBLIGATION B1 (ZERO AXIOMS)
+// Self-contained finite constructive cores for MSFS Obligation B1
+// ((infinity, omega)-enrichment stabilization):
+//   1. `wave2_b1_adjoint_triple_separation`: constructive adjoint triple
+//      tau_<=0 -| iota_0 -| core_0 on 2-element preorders (`Preorder2Sig`),
+//      proving unit/counit inclusions, symmetry commutation, strict separation
+//      core_0 o tau_<=0 != tau_<=0 o core_0 on D_1 (`4 != 2`), and agreement on
+//      the discrete groupoid S^0 (`2 == 2`).
+//   2. `wave2_b1_tau0_breaks_rezk_completeness`: finite 6-arrow strict
+//      2-category `A_fin` (`FiniteAdj2CatSig` raw poset/composition fields,
+//      M4-compliant with ZERO pre-baked tau0_* fields) proving Rezk
+//      completeness of `A_fin` while `(tau_<=0)_*` collapses `0 ~ 1` (`1 != 2`),
+//      contrasted against a partial witness lacking counit 2-cells that remains
+//      Rezk-complete under `(tau_<=0)_*`.
+//   3. `wave2_b1_unbounded_depth_separation`: unboundedness of non-invertible
+//      depth `{D_k}_{k >= 1}` (`thm:enrichment-noncommutativity`), exhibiting
+//      `k = bound_n + 1` escaping any finite depth bound `bound_n >= 0`.
+//   4. `wave2_b1_metric_exchange_law`: integer `2 * Delta` and `2 * tildeDelta`
+//      laws for the metric strictly symmetric monoidal (k+1)-categories P_m
+//      used in the repaired `(Stab-2')` refutation for `Cat_{(infty,omega)}^{tau-lim}`,
+//      including parity, non-negativity, associativity, middle-four exchange,
+//      and explicit E^(m) witness separation (`delta2(0,1,0) == 2` vs `0`).
+// Imports zero `core.math.*` axioms and zero `mount` statements.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LFnd,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_b1_stabilization;
+
+// =============================================================================
+// 1. Constructive Adjoint Triple `tau_<=0 -| iota_0 -| core_0` on `Preorder2Sig`
+// =============================================================================
+
+/// Binary relation matrix on `{0, 1}` with entries strictly in `{0, 1}`.
+public type Preorder2Sig is {
+    le_00: Int,
+    le_01: Int,
+    le_10: Int,
+    le_11: Int,
+};
+
+public pure fn po2_le(p: Preorder2Sig, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { p.le_00 } else { p.le_01 }
+    } else {
+        if j == 0 { p.le_10 } else { p.le_11 }
+    }
+}
+
+public pure fn is_binary_preorder2(p: Preorder2Sig) -> Bool {
+    p.le_00 == 1
+        && p.le_11 == 1
+        && (p.le_01 == 0 || p.le_01 == 1)
+        && (p.le_10 == 0 || p.le_10 == 1)
+}
+
+public pure fn is_symmetric_po2(p: Preorder2Sig) -> Bool {
+    p.le_01 == p.le_10
+}
+
+public pure fn is_d1_arrow(p: Preorder2Sig) -> Bool {
+    p.le_00 == 1 && p.le_01 == 1 && p.le_10 == 0 && p.le_11 == 1
+}
+
+public pure fn is_discrete_s0(p: Preorder2Sig) -> Bool {
+    p.le_00 == 1 && p.le_01 == 0 && p.le_10 == 0 && p.le_11 == 1
+}
+
+/// Reflexive-symmetric-transitive closure `tau_<=0` on `{0, 1}`.
+public pure fn tau0_le(p: Preorder2Sig, i: Int, j: Int) -> Int {
+    if i == j {
+        if i == 0 { p.le_00 } else { p.le_11 }
+    } else if p.le_01 == 1 || p.le_10 == 1 {
+        1
+    } else {
+        0
+    }
+}
+
+/// Symmetric interior `core_0` on `{0, 1}`: `le(i, j) && le(j, i)`.
+public pure fn core0_le(p: Preorder2Sig, i: Int, j: Int) -> Int {
+    if po2_le(p, i, j) == 1 && po2_le(p, j, i) == 1 { 1 } else { 0 }
+}
+
+/// Derived composite `(core_0 o tau_<=0)` entry on `{0, 1}`.
+public pure fn core0_tau0_le(p: Preorder2Sig, i: Int, j: Int) -> Int {
+    if tau0_le(p, i, j) == 1 && tau0_le(p, j, i) == 1 { 1 } else { 0 }
+}
+
+/// Derived composite `(tau_<=0 o core_0)` entry on `{0, 1}`.
+public pure fn tau0_core0_le(p: Preorder2Sig, i: Int, j: Int) -> Int {
+    if i == j {
+        core0_le(p, i, i)
+    } else if core0_le(p, 0, 1) == 1 || core0_le(p, 1, 0) == 1 {
+        1
+    } else {
+        0
+    }
+}
+
+public pure fn tau0_pair_count(p: Preorder2Sig) -> Int {
+    tau0_le(p, 0, 0) + tau0_le(p, 0, 1) + tau0_le(p, 1, 0) + tau0_le(p, 1, 1)
+}
+
+public pure fn core0_pair_count(p: Preorder2Sig) -> Int {
+    core0_le(p, 0, 0) + core0_le(p, 0, 1) + core0_le(p, 1, 0) + core0_le(p, 1, 1)
+}
+
+public pure fn core0_tau0_pair_count(p: Preorder2Sig) -> Int {
+    core0_tau0_le(p, 0, 0) + core0_tau0_le(p, 0, 1) + core0_tau0_le(p, 1, 0) + core0_tau0_le(p, 1, 1)
+}
+
+public pure fn tau0_core0_pair_count(p: Preorder2Sig) -> Int {
+    tau0_core0_le(p, 0, 0) + tau0_core0_le(p, 0, 1) + tau0_core0_le(p, 1, 0) + tau0_core0_le(p, 1, 1)
+}
+
+/// **MSFS Wave 2 (`B1` Adjoint Triple `tau_<=0 -| iota_0 -| core_0` Separation):**
+/// For any binary 2-element preorder `any_p`, proves counit/unit order inclusions
+/// `core0 <= any_p <= tau0` and symmetry of both `tau0(any_p)` and `core0(any_p)`;
+/// proves `core0 o tau0 == tau0 o core0` whenever `any_p` is symmetric;
+/// positively separates `core0(tau0(d1))` (`4` pairs) from `tau0(core0(d1))` (`2` pairs)
+/// on `D_1 = {0 -> 1}`; and contrasts against the discrete groupoid `S^0` (`2 == 2`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B1 — adjoint triple tau_0 -| iota_0 -| core_0 separation on Preorder2Sig")
+public theorem wave2_b1_adjoint_triple_separation(
+    d1: Preorder2Sig,
+    s0: Preorder2Sig,
+    any_p: Preorder2Sig,
+)
+    requires is_binary_preorder2(d1)
+          && is_d1_arrow(d1)
+          && is_binary_preorder2(s0)
+          && is_discrete_s0(s0)
+          && is_binary_preorder2(any_p)
+    ensures core0_le(any_p, 0, 1) <= po2_le(any_p, 0, 1)
+         && po2_le(any_p, 0, 1) <= tau0_le(any_p, 0, 1)
+         && core0_le(any_p, 1, 0) <= po2_le(any_p, 1, 0)
+         && po2_le(any_p, 1, 0) <= tau0_le(any_p, 1, 0)
+         && tau0_le(any_p, 0, 1) == tau0_le(any_p, 1, 0)
+         && core0_le(any_p, 0, 1) == core0_le(any_p, 1, 0)
+         && (!is_symmetric_po2(any_p) || core0_tau0_pair_count(any_p) == tau0_core0_pair_count(any_p))
+         && !is_symmetric_po2(d1)
+         && tau0_le(d1, 1, 0) == 1
+         && core0_le(d1, 0, 1) == 0
+         && core0_le(d1, 1, 0) == 0
+         && tau0_pair_count(d1) == 4
+         && core0_pair_count(d1) == 2
+         && core0_tau0_pair_count(d1) == 4
+         && tau0_core0_pair_count(d1) == 2
+         && core0_tau0_pair_count(d1) != tau0_core0_pair_count(d1)
+         && is_symmetric_po2(s0)
+         && core0_tau0_pair_count(s0) == 2
+         && tau0_core0_pair_count(s0) == 2
+    proof {
+        have h_adj_incl: core0_le(any_p, 0, 1) <= po2_le(any_p, 0, 1)
+                      && po2_le(any_p, 0, 1) <= tau0_le(any_p, 0, 1)
+                      && core0_le(any_p, 1, 0) <= po2_le(any_p, 1, 0)
+                      && po2_le(any_p, 1, 0) <= tau0_le(any_p, 1, 0)
+                      && tau0_le(any_p, 0, 1) == tau0_le(any_p, 1, 0)
+                      && core0_le(any_p, 0, 1) == core0_le(any_p, 1, 0) by omega;
+        have h_sym_agree: !is_symmetric_po2(any_p)
+                       || core0_tau0_pair_count(any_p) == tau0_core0_pair_count(any_p) by omega;
+        have h_d1_sep: !is_symmetric_po2(d1)
+                    && tau0_le(d1, 1, 0) == 1
+                    && core0_le(d1, 0, 1) == 0
+                    && core0_le(d1, 1, 0) == 0
+                    && tau0_pair_count(d1) == 4
+                    && core0_pair_count(d1) == 2
+                    && core0_tau0_pair_count(d1) == 4
+                    && tau0_core0_pair_count(d1) == 2
+                    && core0_tau0_pair_count(d1) != tau0_core0_pair_count(d1) by auto;
+        have h_s0_contrast: is_symmetric_po2(s0)
+                         && core0_tau0_pair_count(s0) == 2
+                         && tau0_core0_pair_count(s0) == 2 by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 2. `(tau_<=0)_*` Breaks Rezk Completeness on Finite 2-Category `A_fin` (M4)
+// =============================================================================
+
+/// Raw finite 2-category signature over `Ob = {0, 1}` (M4-compliant: zero
+/// pre-baked `tau0_*` output fields, strictly `Int`-valued fields):
+/// - `comp_fg` in `{0, 1}`: `0` iff `f o g == id_1`, `1` iff `f o g == e_1` in `Hom(1, 1)`.
+/// - `comp_gf` in `{0, 1}`: `0` iff `g o f == id_0`, `1` iff `g o f == e_0` in `Hom(0, 0)`.
+/// - `eta_0_e0`, `eta_e0_0`: `0/1` presence of 2-cells `id_0 => e_0` and `e_0 => id_0`.
+/// - `eps_e1_1`, `eps_1_e1`: `0/1` presence of 2-cells `e_1 => id_1` and `id_1 => e_1`.
+/// - `ob_count`: number of objects (`2` for `{0, 1}`).
+public type FiniteAdj2CatSig is {
+    comp_fg: Int,
+    comp_gf: Int,
+    eta_0_e0: Int,
+    eta_e0_0: Int,
+    eps_e1_1: Int,
+    eps_1_e1: Int,
+    ob_count: Int,
+};
+
+public pure fn is_valid_adj2cat(a: FiniteAdj2CatSig) -> Bool {
+    (a.comp_fg == 0 || a.comp_fg == 1)
+        && (a.comp_gf == 0 || a.comp_gf == 1)
+        && (a.eta_0_e0 == 0 || a.eta_0_e0 == 1)
+        && (a.eta_e0_0 == 0 || a.eta_e0_0 == 1)
+        && (a.eps_e1_1 == 0 || a.eps_e1_1 == 1)
+        && (a.eps_1_e1 == 0 || a.eps_1_e1 == 1)
+        && (a.ob_count == 1 || a.ob_count == 2)
+}
+
+/// Exact 6-arrow strict 2-category quotient `A_fin`: `g o f = e_0` with
+/// `id_0 => e_0` (no inverse), `f o g = e_1` with `e_1 => id_1` (no inverse).
+public pure fn is_a_fin_model(a: FiniteAdj2CatSig) -> Bool {
+    a.comp_fg == 1
+        && a.comp_gf == 1
+        && a.eta_0_e0 == 1
+        && a.eta_e0_0 == 0
+        && a.eps_e1_1 == 1
+        && a.eps_1_e1 == 0
+        && a.ob_count == 2
+}
+
+/// Contrast 2-category `A_partial`: lacks the counit 2-cell `e_1 => id_1`
+/// (analogous to `D_2`, where only one hom-poset carries a non-invertible 2-cell).
+public pure fn is_partial_no_counit(a: FiniteAdj2CatSig) -> Bool {
+    a.comp_fg == 1
+        && a.comp_gf == 1
+        && a.eta_0_e0 == 1
+        && a.eta_e0_0 == 0
+        && a.eps_e1_1 == 0
+        && a.eps_1_e1 == 0
+        && a.ob_count == 2
+}
+
+/// Derived strict/2-categorical invertibility of `g o f` with `id_0` in `A`.
+public pure fn gf_is_iso_to_id0(a: FiniteAdj2CatSig) -> Bool {
+    a.comp_gf == 0 || (a.comp_gf == 1 && a.eta_0_e0 == 1 && a.eta_e0_0 == 1)
+}
+
+/// Derived strict/2-categorical invertibility of `f o g` with `id_1` in `A`.
+public pure fn fg_is_iso_to_id1(a: FiniteAdj2CatSig) -> Bool {
+    a.comp_fg == 0 || (a.comp_fg == 1 && a.eps_e1_1 == 1 && a.eps_1_e1 == 1)
+}
+
+/// Derived equivalence `0 ~ 1` in the original 2-category `A`.
+public pure fn has_equiv_01(a: FiniteAdj2CatSig) -> Bool {
+    gf_is_iso_to_id0(a) && fg_is_iso_to_id1(a)
+}
+
+/// Derived object-space equivalence-class count in `A`.
+public pure fn ob_eq_classes(a: FiniteAdj2CatSig) -> Int {
+    if a.ob_count == 2 && has_equiv_01(a) { 1 } else { a.ob_count }
+}
+
+/// Derived Rezk completeness of `A`: object-space equivalence classes match `ob_count`.
+public pure fn is_rezk_complete(a: FiniteAdj2CatSig) -> Bool {
+    ob_eq_classes(a) == a.ob_count
+}
+
+/// Derived `tau_<=0` closure on `Hom(0, 0)`: `g o f` becomes equivalent to `id_0`
+/// iff `comp_gf == 0` or either 2-cell `id_0 => e_0` or `e_0 => id_0` exists.
+public pure fn tau0_star_gf_eq_id0(a: FiniteAdj2CatSig) -> Bool {
+    a.comp_gf == 0 || (a.comp_gf == 1 && (a.eta_0_e0 == 1 || a.eta_e0_0 == 1))
+}
+
+/// Derived `tau_<=0` closure on `Hom(1, 1)`: `f o g` becomes equivalent to `id_1`
+/// iff `comp_fg == 0` or either 2-cell `e_1 => id_1` or `id_1 => e_1` exists.
+public pure fn tau0_star_fg_eq_id1(a: FiniteAdj2CatSig) -> Bool {
+    a.comp_fg == 0 || (a.comp_fg == 1 && (a.eps_e1_1 == 1 || a.eps_1_e1 == 1))
+}
+
+/// Derived `(tau_<=0)_*`-induced isomorphism `0 ~ 1` in `tau0_star(A)`.
+public pure fn tau0_star_01_iso(a: FiniteAdj2CatSig) -> Bool {
+    tau0_star_gf_eq_id0(a) && tau0_star_fg_eq_id1(a)
+}
+
+/// Derived object-quotient cardinality in `tau0_star(A)`.
+public pure fn tau0_star_ob_eq_classes(a: FiniteAdj2CatSig) -> Int {
+    if a.ob_count == 2 && tau0_star_01_iso(a) { 1 } else { a.ob_count }
+}
+
+/// Derived Rezk completeness of `(tau_<=0)_*(A)`.
+public pure fn tau0_star_is_rezk_complete(a: FiniteAdj2CatSig) -> Bool {
+    tau0_star_ob_eq_classes(a) == a.ob_count
+}
+
+/// **MSFS Wave 2 (`B1` Failure of `(tau_<=0)_*` to Preserve Rezk Completeness):**
+/// Derives Rezk completeness and `(tau_<=0)_*` quotients purely from raw
+/// 2-category fields: `A_fin` is Rezk-complete (`ob_eq_classes == 2`), yet
+/// `tau0_star(A_fin)` collapses `0 ~ 1` (`tau0_star_ob_eq_classes == 1 != 2`),
+/// breaking Rezk completeness; contrasted against `A_partial` (missing counit
+/// 2-cell, like `D_2`), which stays Rezk-complete under `(tau_<=0)_*`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B1 — (tau_<=0)_* breaks Rezk completeness on finite adjunction A_fin")
+public theorem wave2_b1_tau0_breaks_rezk_completeness(
+    a_fin: FiniteAdj2CatSig,
+    a_partial: FiniteAdj2CatSig,
+)
+    requires is_valid_adj2cat(a_fin)
+          && is_a_fin_model(a_fin)
+          && is_valid_adj2cat(a_partial)
+          && is_partial_no_counit(a_partial)
+    ensures !has_equiv_01(a_fin)
+         && ob_eq_classes(a_fin) == 2
+         && is_rezk_complete(a_fin)
+         && tau0_star_gf_eq_id0(a_fin)
+         && tau0_star_fg_eq_id1(a_fin)
+         && tau0_star_01_iso(a_fin)
+         && tau0_star_ob_eq_classes(a_fin) == 1
+         && tau0_star_ob_eq_classes(a_fin) != a_fin.ob_count
+         && !tau0_star_is_rezk_complete(a_fin)
+         && is_rezk_complete(a_partial)
+         && !tau0_star_01_iso(a_partial)
+         && tau0_star_ob_eq_classes(a_partial) == 2
+         && tau0_star_is_rezk_complete(a_partial)
+    proof {
+        have h_complete: !has_equiv_01(a_fin)
+                      && ob_eq_classes(a_fin) == 2
+                      && is_rezk_complete(a_fin) by auto;
+        have h_tau0_collapse: tau0_star_gf_eq_id0(a_fin)
+                           && tau0_star_fg_eq_id1(a_fin)
+                           && tau0_star_01_iso(a_fin)
+                           && tau0_star_ob_eq_classes(a_fin) == 1
+                           && tau0_star_ob_eq_classes(a_fin) != a_fin.ob_count
+                           && !tau0_star_is_rezk_complete(a_fin) by auto;
+        have h_partial_contrast: is_rezk_complete(a_partial)
+                              && !tau0_star_01_iso(a_partial)
+                              && tau0_star_ob_eq_classes(a_partial) == 2
+                              && tau0_star_is_rezk_complete(a_partial) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 3. Unboundedness of Non-Invertible Depth `{D_k}_{k >= 1}`
+// =============================================================================
+
+/// In `V_n = (infty, n)-Cat`, every `cell_dim`-cell with `cell_dim > n` is invertible.
+public pure fn cell_is_invertible_in_vn(cell_dim: Int, vn_depth: Int) -> Bool {
+    cell_dim > vn_depth
+}
+
+/// Witness dimension `k = bound_n + 1` of the walking non-invertible `k`-cell `D_k`.
+public pure fn dk_witness(bound_n: Int) -> Int {
+    bound_n + 1
+}
+
+/// Whether a walking non-invertible `k`-cell `D_k` (`k >= 1`) embeds natively in `V_n`.
+public pure fn fits_in_vn(k: Int, vn_depth: Int) -> Bool {
+    k >= 1 && k <= vn_depth
+}
+
+/// **MSFS Wave 2 (`B1` Unbounded Depth Separation, `thm:enrichment-noncommutativity`):**
+/// For ANY proposed finite depth bound `bound_n >= 0`, `k = bound_n + 1` satisfies
+/// `k > bound_n`, fits in `V_k` (`!cell_is_invertible_in_vn(k, k)`), and fails to fit
+/// in `V_{bound_n}` (`cell_is_invertible_in_vn(k, bound_n)`), separating bounded-depth
+/// `V_{bound_n}` (which contains `D_{bound_n}` for `bound_n >= 1`) from unbounded `{D_k}`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B1 — unbounded non-invertible depth separation {D_k}_{k >= 1}")
+public theorem wave2_b1_unbounded_depth_separation(bound_n: Int)
+    requires bound_n >= 0
+    ensures dk_witness(bound_n) > bound_n
+         && dk_witness(bound_n) >= 1
+         && cell_is_invertible_in_vn(dk_witness(bound_n), bound_n)
+         && !cell_is_invertible_in_vn(dk_witness(bound_n), dk_witness(bound_n))
+         && !fits_in_vn(dk_witness(bound_n), bound_n)
+         && fits_in_vn(dk_witness(bound_n), dk_witness(bound_n))
+         && (bound_n == 0 || fits_in_vn(bound_n, bound_n))
+    proof {
+        have h_escape: dk_witness(bound_n) > bound_n
+                    && dk_witness(bound_n) >= 1 by omega;
+        have h_inv_sep: cell_is_invertible_in_vn(dk_witness(bound_n), bound_n)
+                     && !cell_is_invertible_in_vn(dk_witness(bound_n), dk_witness(bound_n))
+                     && !fits_in_vn(dk_witness(bound_n), bound_n)
+                     && fits_in_vn(dk_witness(bound_n), dk_witness(bound_n)) by omega;
+        have h_bdd_contrast: bound_n == 0 || fits_in_vn(bound_n, bound_n) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 4. Metric Strictly Symmetric Monoidal `(k+1)`-Category `P_m` Exchange Laws
+// =============================================================================
+
+public pure fn abs_diff(x: Int, y: Int) -> Int {
+    if x >= y { x - y } else { y - x }
+}
+
+/// Doubled composition metric defect `2 * Delta(a, b, c) = |a-b| + |b-c| - |a-c|`.
+public pure fn delta2(a: Int, b: Int, c: Int) -> Int {
+    abs_diff(a, b) + abs_diff(b, c) - abs_diff(a, c)
+}
+
+/// Doubled monoidal defect `2 * tildeDelta(a, b, c, d) = |a-b| + |c-d| - |(a+c)-(b+d)|`.
+public pure fn tilde_delta2(a: Int, b: Int, c: Int, d: Int) -> Int {
+    abs_diff(a, b) + abs_diff(c, d) - abs_diff(a + c, b + d)
+}
+
+/// **MSFS Wave 2 (`B1` Metric `P_m` Associativity & Exchange Law):**
+/// Proves in exact integer `2 * Delta` / `2 * tildeDelta` form (no `/ 2`):
+/// non-negativity, even parity (`% 2 == 0`), strict unitality, tensor symmetry,
+/// monotone vanishing, strict composition associativity, middle-four exchange law,
+/// and explicit positive vs. negative `E^(m)` witness separation (`delta2(0,1,0) == 2`
+/// vs. `delta2(0,1,2) == 0` and `tilde_delta2(0,1,1,0) == 2` vs. `0`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B1 — metric symmetric monoidal P_m associativity and exchange law")
+public theorem wave2_b1_metric_exchange_law(
+    a: Int,
+    b: Int,
+    c: Int,
+    d: Int,
+    e: Int,
+    f: Int,
+)
+    requires true
+    ensures delta2(a, b, c) >= 0
+         && tilde_delta2(a, b, c, d) >= 0
+         && delta2(a, b, c) % 2 == 0
+         && tilde_delta2(a, b, c, d) % 2 == 0
+         && delta2(a, a, b) == 0
+         && delta2(a, b, b) == 0
+         && tilde_delta2(a, a, b, b) == 0
+         && tilde_delta2(a, b, c, d) == tilde_delta2(c, d, a, b)
+         && (!(a <= b && b <= c) || delta2(a, b, c) == 0)
+         && delta2(a, b, c) + delta2(a, c, d) == delta2(b, c, d) + delta2(a, b, d)
+         && delta2(a, b, c) + delta2(d, e, f) + tilde_delta2(a, c, d, f)
+            == tilde_delta2(a, b, d, e) + tilde_delta2(b, c, e, f) + delta2(a + d, b + e, c + f)
+         && delta2(0, 1, 0) == 2
+         && delta2(1, 0, 1) == 2
+         && delta2(0, 1, 2) == 0
+         && tilde_delta2(0, 1, 1, 0) == 2
+         && tilde_delta2(0, 1, 0, 1) == 0
+    proof {
+        have h_nonneg_even: delta2(a, b, c) >= 0
+                         && tilde_delta2(a, b, c, d) >= 0
+                         && delta2(a, b, c) % 2 == 0
+                         && tilde_delta2(a, b, c, d) % 2 == 0 by omega;
+        have h_unit_sym: delta2(a, a, b) == 0
+                      && delta2(a, b, b) == 0
+                      && tilde_delta2(a, a, b, b) == 0
+                      && tilde_delta2(a, b, c, d) == tilde_delta2(c, d, a, b)
+                      && (!(a <= b && b <= c) || delta2(a, b, c) == 0) by omega;
+        have h_assoc: delta2(a, b, c) + delta2(a, c, d) == delta2(b, c, d) + delta2(a, b, d) by omega;
+        have h_exchange: delta2(a, b, c) + delta2(d, e, f) + tilde_delta2(a, c, d, f)
+                      == tilde_delta2(a, b, d, e) + tilde_delta2(b, c, e, f) + delta2(a + d, b + e, c + f) by omega;
+        have h_witness_sep: delta2(0, 1, 0) == 2
+                         && delta2(1, 0, 1) == 2
+                         && delta2(0, 1, 2) == 0
+                         && tilde_delta2(0, 1, 1, 0) == 2
+                         && tilde_delta2(0, 1, 0, 1) == 0 by auto;
+        conclude by auto;
+    };

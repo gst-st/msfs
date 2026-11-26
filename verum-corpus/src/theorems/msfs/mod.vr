@@ -1,12 +1,13 @@
 // =============================================================================
-// STATUS: MIXED — LEGACY STUBS QUARANTINED + WAVE 1 CONSTRUCTIVE CORES
+// STATUS: MIXED — LEGACY STUBS QUARANTINED + WAVE 1 & WAVE 2 CONSTRUCTIVE CORES
 // The 15 legacy schematic modules (`introduction`..`paraconsistent`) remain
 // NON-CERTIFIED SCHEMATIC SPECIFICATIONS / LEGACY STUBS (QUARANTINED) carrying
 // zero proof-discharge authority.
 // The 4 standalone Wave 1 modules (`wave1_meta_independence`,
 // `wave1_grading_separation`, `wave1_dual_enactment_core`,
-// `wave1_diakrisis_2cat_core`) are zero-axiom finite/2-categorical cores
-// machine-checked by `verum check`. Track B closed Pi/Id cores live in
+// `wave1_diakrisis_2cat_core`) and 9 standalone Wave 2 modules (`wave2_*`)
+// are zero-axiom finite/2-categorical cores machine-checked by `verum check`
+// and `verum verify`. Track B closed Pi/Id cores live in
 // `proofs/ss-membership/` and `proofs/afnt-alpha-id/`.
 // See `proofs/open-obligations.txt` and `paper-en/paper.tex` Appendix C.
 // =============================================================================
@@ -143,4 +144,62 @@ mount lib.theorems.msfs.wave1_diakrisis_2cat_core.{
     wave1_a3_shift2cat_all_13,
     wave1_a3_seven_countermodels,
     wave1_finite_slice_d1_to_d4,
+};
+
+// Wave 2 — Standalone zero-axiom machine-checked constructive cores (B1–B6)
+mount lib.theorems.msfs.wave2_b1_stabilization.{
+    wave2_b1_adjoint_triple_separation,
+    wave2_b1_tau0_breaks_rezk_completeness,
+    wave2_b1_unbounded_depth_separation,
+    wave2_b1_metric_exchange_law,
+};
+mount lib.theorems.msfs.wave2_meta_stabilization.{
+    wave2_b2_fin_meta2_gauge_equivalence,
+    wave2_b2_exp_tower_and_pigeonhole_separation,
+    wave2_b2_m2_base_id_obstruction,
+    wave2_b2_m3_r_reflector_closure_laws,
+    wave2_b2_m3_r_reflector_join_failure,
+    wave2_b2_idem_joint_realizable,
+    wave2_b2_idem_clauses_independent,
+};
+mount lib.theorems.msfs.wave2_meta_fib_categoricity.{
+    wave2_thm_meta_cat_fib_local_equiv,
+    wave2_fib_independence_countermodels,
+};
+mount lib.theorems.msfs.wave2_dual_actica_2cat_core.{
+    wave2_actica_six_positive_implications,
+    wave2_actica_shift2cat_all_13,
+    wave2_actica_seven_countermodels,
+};
+mount lib.theorems.msfs.wave2_subcanonical_sheaf_barrier.{
+    wave2_subcanonical_preserves_cofinal_nonrep,
+    wave2_coarse_topology_collapses_to_terminal,
+};
+mount lib.theorems.msfs.wave2_ac_oc_2cat_perf.{
+    wave2_cm1_bf3_ore_failure,
+    wave2_cm2_bf4_cancellation_failure,
+    wave2_cm3_r2_phi_iota1_refutation,
+    wave2_perf2_ez2_gluing_and_bc,
+    wave2_cm4_capped_2cat_obstruction,
+    wave2_oac5_definitional_conservativity,
+};
+mount lib.theorems.msfs.wave2_intensional_i_fragment.{
+    wave2_i_fragment_w2_separation,
+    wave2_i_fragment_w1_canonical_inclusion,
+    wave2_t233_strict_vs_isocomma,
+    wave2_i4a_diamond_no_right_adjoint,
+    wave2_i4a_f_bang_breaks_pullback,
+    wave2_i4a_strict_pb_bc_failure,
+};
+mount lib.theorems.msfs.wave2_q2_completeness.{
+    wave2_q2_candidates_plural_nonmax,
+    wave2_q2_casm_realizer_obstruction,
+    wave2_q2_diagonal_escape_4,
+    wave2_q2_relative_completeness_basis4,
+};
+mount lib.theorems.msfs.wave2_q3_witnesses.{
+    wave2_q3_d3_strong_dialetheia_non_explosive,
+    wave2_q3_d3_no_proper_subalgebra,
+    wave2_q3_bz2_lawvere_counterexample,
+    wave2_q3_precedence_partition_sound,
 };

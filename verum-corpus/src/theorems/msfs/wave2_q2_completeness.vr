@@ -1,0 +1,405 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive cores for MSFS Obligation B6 (`(Q2)`):
+//   1. `wave2_q2_candidates_plural_nonmax`: 6-point base `{0..5}` verifying
+//      `(M1)-(M5)` for `F_STC`, `F_CCTT`, `F_dir`, disjoint images, and failure
+//      of `(Max-1)` essential surjectivity.
+//   2. `wave2_q2_casm_realizer_obstruction`: 3-element assembly over 2 realizers
+//      proving pigeonhole collision and impossibility of separating tracked maps.
+//   3. `wave2_q2_diagonal_escape_4`: 4x4 binary matrix Cantor diagonal flip
+//      escaping every row `0..3`.
+//   4. `wave2_q2_relative_completeness_basis4`: 4-point invariant basis + 1-step
+//      closure proving full coverage under `(Q2-C1)-(Q2-C3)`.
+// Imports zero `core.math.*` axioms and zero `: Bool` struct fields.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LCls,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_q2_completeness;
+
+// =============================================================================
+// Part 1: Plurality & Non-Maximality of Post-2020 `(Q2)` Candidates
+// =============================================================================
+
+/// Finite partial classifier over `Ob subset {0, 1}` with up to 2 morphisms
+/// (`0..num_mors-1`) classifying into 6-point base `{0..5}` (`PA, CCTT, Cohesive,
+/// HA, STC, sHoTT`), accessible endofunctor `R`, and base metatheory `base_s`.
+/// All fields strictly `Int`.
+public type PartialClassifier6 is {
+    num_objs: Int,
+    num_mors: Int,
+    cl_0: Int,
+    cl_1: Int,
+    src_0: Int,
+    src_1: Int,
+    dst_0: Int,
+    dst_1: Int,
+    id_0: Int,
+    id_1: Int,
+    comp_00: Int,
+    comp_01: Int,
+    comp_10: Int,
+    comp_11: Int,
+    r_ob_0: Int,
+    r_ob_1: Int,
+    r_mor_0: Int,
+    r_mor_1: Int,
+    base_s: Int,
+};
+
+public pure fn pc_src(c: PartialClassifier6, i: Int) -> Int {
+    if i == 0 { c.src_0 } else { c.src_1 }
+}
+
+public pure fn pc_dst(c: PartialClassifier6, i: Int) -> Int {
+    if i == 0 { c.dst_0 } else { c.dst_1 }
+}
+
+public pure fn pc_id(c: PartialClassifier6, x: Int) -> Int {
+    if x == 0 { c.id_0 } else { c.id_1 }
+}
+
+public pure fn pc_comp(c: PartialClassifier6, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { c.comp_00 } else { c.comp_01 }
+    } else {
+        if j == 0 { c.comp_10 } else { c.comp_11 }
+    }
+}
+
+public pure fn pc_r_ob(c: PartialClassifier6, x: Int) -> Int {
+    if x == 0 { c.r_ob_0 } else { c.r_ob_1 }
+}
+
+public pure fn pc_r_mor(c: PartialClassifier6, i: Int) -> Int {
+    if i == 0 { c.r_mor_0 } else { c.r_mor_1 }
+}
+
+public pure fn pc_active(c: PartialClassifier6, i: Int) -> Bool {
+    i >= 0 && i < c.num_mors
+}
+
+public pure fn pc_valid_mor(c: PartialClassifier6, i: Int) -> Bool {
+    !pc_active(c, i) || (
+        pc_src(c, i) >= 0 && pc_src(c, i) < c.num_objs
+            && pc_dst(c, i) >= 0 && pc_dst(c, i) < c.num_objs
+            && pc_comp(c, pc_id(c, pc_src(c, i)), i) == i
+            && pc_comp(c, i, pc_id(c, pc_dst(c, i))) == i
+            && pc_r_mor(c, i) >= 0 && pc_r_mor(c, i) < c.num_mors
+            && pc_src(c, pc_r_mor(c, i)) == pc_r_ob(c, pc_src(c, i))
+            && pc_dst(c, pc_r_mor(c, i)) == pc_r_ob(c, pc_dst(c, i))
+    )
+}
+
+public pure fn pc_valid_comp_pair(c: PartialClassifier6, i: Int, j: Int) -> Bool {
+    !(pc_active(c, i) && pc_active(c, j) && pc_dst(c, i) == pc_src(c, j))
+        || (
+            pc_active(c, pc_comp(c, i, j))
+                && pc_src(c, pc_comp(c, i, j)) == pc_src(c, i)
+                && pc_dst(c, pc_comp(c, i, j)) == pc_dst(c, j)
+                && pc_r_mor(c, pc_comp(c, i, j)) == pc_comp(c, pc_r_mor(c, i), pc_r_mor(c, j))
+        )
+}
+
+public pure fn sat_m1_to_m5_6(c: PartialClassifier6) -> Bool {
+    c.num_objs >= 1 && c.num_objs <= 2
+        && c.num_mors >= 1 && c.num_mors <= 2
+        && c.cl_0 >= 0 && c.cl_0 <= 5
+        && (c.num_objs == 1 || (c.cl_1 >= 0 && c.cl_1 <= 5))
+        && pc_active(c, c.id_0) && pc_src(c, c.id_0) == 0 && pc_dst(c, c.id_0) == 0
+        && pc_r_ob(c, 0) >= 0 && pc_r_ob(c, 0) < c.num_objs
+        && pc_r_mor(c, c.id_0) == pc_id(c, pc_r_ob(c, 0))
+        && (c.num_objs == 1 || (
+            pc_active(c, c.id_1) && pc_src(c, c.id_1) == 1 && pc_dst(c, c.id_1) == 1
+                && pc_r_ob(c, 1) >= 0 && pc_r_ob(c, 1) < c.num_objs
+                && pc_r_mor(c, c.id_1) == pc_id(c, pc_r_ob(c, 1))
+        ))
+        && pc_valid_mor(c, 0) && pc_valid_mor(c, 1)
+        && pc_valid_comp_pair(c, 0, 0) && pc_valid_comp_pair(c, 0, 1)
+        && pc_valid_comp_pair(c, 1, 0) && pc_valid_comp_pair(c, 1, 1)
+        && c.base_s >= 0 && c.base_s <= 5
+}
+
+public pure fn covers_point6(c: PartialClassifier6, p: Int) -> Bool {
+    c.cl_0 == p || (c.num_objs == 2 && c.cl_1 == p)
+}
+
+public pure fn sat_max1_6(c: PartialClassifier6) -> Bool {
+    covers_point6(c, 0) && covers_point6(c, 1) && covers_point6(c, 2)
+        && covers_point6(c, 3) && covers_point6(c, 4) && covers_point6(c, 5)
+}
+
+public pure fn cl_images_disjoint6(c1: PartialClassifier6, c2: PartialClassifier6) -> Bool {
+    !(covers_point6(c1, 0) && covers_point6(c2, 0))
+        && !(covers_point6(c1, 1) && covers_point6(c2, 1))
+        && !(covers_point6(c1, 2) && covers_point6(c2, 2))
+        && !(covers_point6(c1, 3) && covers_point6(c2, 3))
+        && !(covers_point6(c1, 4) && covers_point6(c2, 4))
+        && !(covers_point6(c1, 5) && covers_point6(c2, 5))
+}
+
+public pure fn is_f_stc(c: PartialClassifier6) -> Bool {
+    c.num_objs == 2 && c.num_mors == 2
+        && c.cl_0 == 0 && c.cl_1 == 4
+        && c.src_0 == 0 && c.dst_0 == 0 && c.id_0 == 0
+        && c.src_1 == 1 && c.dst_1 == 1 && c.id_1 == 1
+        && c.comp_00 == 0 && c.comp_11 == 1
+        && c.r_ob_0 == 0 && c.r_ob_1 == 1 && c.r_mor_0 == 0 && c.r_mor_1 == 1
+        && c.base_s == 0
+}
+
+public pure fn is_f_cctt(c: PartialClassifier6) -> Bool {
+    c.num_objs == 1 && c.num_mors == 1
+        && c.cl_0 == 1 && c.cl_1 == 1
+        && c.src_0 == 0 && c.dst_0 == 0 && c.id_0 == 0
+        && c.comp_00 == 0
+        && c.r_ob_0 == 0 && c.r_mor_0 == 0
+        && c.base_s == 0
+}
+
+public pure fn is_f_dir(c: PartialClassifier6) -> Bool {
+    c.num_objs == 1 && c.num_mors == 1
+        && c.cl_0 == 5 && c.cl_1 == 5
+        && c.src_0 == 0 && c.dst_0 == 0 && c.id_0 == 0
+        && c.comp_00 == 0
+        && c.r_ob_0 == 0 && c.r_mor_0 == 0
+        && c.base_s == 0
+}
+
+/// **MSFS Wave 2 (`(Q2)` Candidate Plurality & Non-Maximality):**
+/// `F_STC` (`{0, 4}`), `F_CCTT` (`{1}`), and `F_dir` (`{5}`) satisfy `(M1)-(M5)`
+/// over the 6-point base `{0..5}`, have pairwise disjoint classified images, and
+/// each fails `(Max-1)` essential surjectivity.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B6 — Q2 candidate plurality, disjoint images, and non-maximality")
+public theorem wave2_q2_candidates_plural_nonmax(
+    f_stc: PartialClassifier6,
+    f_cctt: PartialClassifier6,
+    f_dir: PartialClassifier6,
+)
+    requires is_f_stc(f_stc) && is_f_cctt(f_cctt) && is_f_dir(f_dir)
+    ensures sat_m1_to_m5_6(f_stc) && !sat_max1_6(f_stc)
+         && sat_m1_to_m5_6(f_cctt) && !sat_max1_6(f_cctt)
+         && sat_m1_to_m5_6(f_dir) && !sat_max1_6(f_dir)
+         && cl_images_disjoint6(f_stc, f_cctt)
+         && cl_images_disjoint6(f_stc, f_dir)
+         && cl_images_disjoint6(f_cctt, f_dir)
+    proof {
+        have h_stc: sat_m1_to_m5_6(f_stc) && !sat_max1_6(f_stc) by auto;
+        have h_cctt: sat_m1_to_m5_6(f_cctt) && !sat_max1_6(f_cctt) by auto;
+        have h_dir: sat_m1_to_m5_6(f_dir) && !sat_max1_6(f_dir) by auto;
+        have h_disj: cl_images_disjoint6(f_stc, f_cctt)
+                  && cl_images_disjoint6(f_stc, f_dir)
+                  && cl_images_disjoint6(f_cctt, f_dir) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// Part 2: `cAsm` / `Asm` / `Eff` Realizer-Collision Non-Cocompleteness
+// =============================================================================
+
+public pure fn apply_tracker(t0: Int, t1: Int, r: Int) -> Int {
+    if r == 0 { t0 } else { t1 }
+}
+
+/// **MSFS Wave 2 (`Q2-Cnd.5` Realizer-Collision Obstruction):**
+/// Over a 2-realizer PCA `{0, 1}`, any 3-element assembly `(r0, r1, r2)` has a
+/// realizer collision (`r0 == r1 || r0 == r2 || r1 == r2`), forcing every tracked
+/// map `(t0, t1)` into the discrete Boolean assembly `{0, 1}` to collapse the
+/// colliding pair (`apply_tracker(t0, t1, r_i) == apply_tracker(t0, t1, r_j)`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B6 — Q2-Cnd.5 realizer pigeonhole blocks external coproducts in cAsm/Eff")
+public theorem wave2_q2_casm_realizer_obstruction(
+    r0: Int,
+    r1: Int,
+    r2: Int,
+    t0: Int,
+    t1: Int,
+)
+    requires (r0 == 0 || r0 == 1)
+          && (r1 == 0 || r1 == 1)
+          && (r2 == 0 || r2 == 1)
+          && (t0 == 0 || t0 == 1)
+          && (t1 == 0 || t1 == 1)
+    ensures (r0 == r1 || r0 == r2 || r1 == r2)
+         && (
+             (r0 == r1 && apply_tracker(t0, t1, r0) == apply_tracker(t0, t1, r1))
+                 || (r0 == r2 && apply_tracker(t0, t1, r0) == apply_tracker(t0, t1, r2))
+                 || (r1 == r2 && apply_tracker(t0, t1, r1) == apply_tracker(t0, t1, r2))
+         )
+    proof {
+        have h_pigeon: r0 == r1 || r0 == r2 || r1 == r2 by omega;
+        have h_track: (r0 == r1 && apply_tracker(t0, t1, r0) == apply_tracker(t0, t1, r1))
+                   || (r0 == r2 && apply_tracker(t0, t1, r0) == apply_tracker(t0, t1, r2))
+                   || (r1 == r2 && apply_tracker(t0, t1, r1) == apply_tracker(t0, t1, r2)) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// Part 3: Binary-Axis Cantor Diagonal Escape (4x4 Matrix)
+// =============================================================================
+
+public type BinaryMatrix4 is {
+    b00: Int, b01: Int, b02: Int, b03: Int,
+    b10: Int, b11: Int, b12: Int, b13: Int,
+    b20: Int, b21: Int, b22: Int, b23: Int,
+    b30: Int, b31: Int, b32: Int, b33: Int,
+};
+
+public pure fn mat4_at(m: BinaryMatrix4, i: Int, j: Int) -> Int {
+    if i == 0 {
+        if j == 0 { m.b00 } else if j == 1 { m.b01 } else if j == 2 { m.b02 } else { m.b03 }
+    } else if i == 1 {
+        if j == 0 { m.b10 } else if j == 1 { m.b11 } else if j == 2 { m.b12 } else { m.b13 }
+    } else if i == 2 {
+        if j == 0 { m.b20 } else if j == 1 { m.b21 } else if j == 2 { m.b22 } else { m.b23 }
+    } else {
+        if j == 0 { m.b30 } else if j == 1 { m.b31 } else if j == 2 { m.b32 } else { m.b33 }
+    }
+}
+
+public pure fn is_binary_bit(x: Int) -> Bool {
+    x == 0 || x == 1
+}
+
+public pure fn valid_binary_matrix4(m: BinaryMatrix4) -> Bool {
+    is_binary_bit(m.b00) && is_binary_bit(m.b01) && is_binary_bit(m.b02) && is_binary_bit(m.b03)
+        && is_binary_bit(m.b10) && is_binary_bit(m.b11) && is_binary_bit(m.b12) && is_binary_bit(m.b13)
+        && is_binary_bit(m.b20) && is_binary_bit(m.b21) && is_binary_bit(m.b22) && is_binary_bit(m.b23)
+        && is_binary_bit(m.b30) && is_binary_bit(m.b31) && is_binary_bit(m.b32) && is_binary_bit(m.b33)
+}
+
+public pure fn diag_flip4(m: BinaryMatrix4, j: Int) -> Int {
+    1 - mat4_at(m, j, j)
+}
+
+public pure fn differs_from_row4(m: BinaryMatrix4, i: Int) -> Bool {
+    diag_flip4(m, 0) != mat4_at(m, i, 0)
+        || diag_flip4(m, 1) != mat4_at(m, i, 1)
+        || diag_flip4(m, 2) != mat4_at(m, i, 2)
+        || diag_flip4(m, 3) != mat4_at(m, i, 3)
+}
+
+/// **MSFS Wave 2 (`Thm Q2.2(3)` Binary-Axis Diagonal Escape):**
+/// For any 4x4 binary profile matrix `m`, the flipped diagonal `j -> 1 - m[j, j]`
+/// is binary-valued and differs from every row `i in {0..3}` at coordinate `i`.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B6 — Thm Q2.2(3) binary-axis Cantor diagonal escape on 4x4 profiles")
+public theorem wave2_q2_diagonal_escape_4(m: BinaryMatrix4, i: Int)
+    requires valid_binary_matrix4(m) && i >= 0 && i <= 3
+    ensures is_binary_bit(diag_flip4(m, 0))
+         && is_binary_bit(diag_flip4(m, 1))
+         && is_binary_bit(diag_flip4(m, 2))
+         && is_binary_bit(diag_flip4(m, 3))
+         && diag_flip4(m, i) != mat4_at(m, i, i)
+         && differs_from_row4(m, i)
+    proof {
+        have h_bits: is_binary_bit(diag_flip4(m, 0))
+                  && is_binary_bit(diag_flip4(m, 1))
+                  && is_binary_bit(diag_flip4(m, 2))
+                  && is_binary_bit(diag_flip4(m, 3)) by omega;
+        have h_diag: diag_flip4(m, i) != mat4_at(m, i, i) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// Part 4: Bounded Relative Completeness (`Thm Q2.3`) on 4-Point Basis
+// =============================================================================
+
+/// 4-point invariant profile space `{0, 1, 2, 3}` with `{0, 1}`-encoded
+/// `basis_x`, `cov_x`, and `step_xy` relation. All fields strictly `Int`.
+public type InvariantQuotient4 is {
+    basis_0: Int, basis_1: Int, basis_2: Int, basis_3: Int,
+    cov_0: Int, cov_1: Int, cov_2: Int, cov_3: Int,
+    step_00: Int, step_01: Int, step_02: Int, step_03: Int,
+    step_10: Int, step_11: Int, step_12: Int, step_13: Int,
+    step_20: Int, step_21: Int, step_22: Int, step_23: Int,
+    step_30: Int, step_31: Int, step_32: Int, step_33: Int,
+};
+
+public pure fn iq_basis(q: InvariantQuotient4, i: Int) -> Int {
+    if i == 0 { q.basis_0 } else if i == 1 { q.basis_1 } else if i == 2 { q.basis_2 } else { q.basis_3 }
+}
+
+public pure fn iq_cov(q: InvariantQuotient4, i: Int) -> Int {
+    if i == 0 { q.cov_0 } else if i == 1 { q.cov_1 } else if i == 2 { q.cov_2 } else { q.cov_3 }
+}
+
+public pure fn iq_step(q: InvariantQuotient4, u: Int, v: Int) -> Int {
+    if u == 0 {
+        if v == 0 { q.step_00 } else if v == 1 { q.step_01 } else if v == 2 { q.step_02 } else { q.step_03 }
+    } else if u == 1 {
+        if v == 0 { q.step_10 } else if v == 1 { q.step_11 } else if v == 2 { q.step_12 } else { q.step_13 }
+    } else if u == 2 {
+        if v == 0 { q.step_20 } else if v == 1 { q.step_21 } else if v == 2 { q.step_22 } else { q.step_23 }
+    } else {
+        if v == 0 { q.step_30 } else if v == 1 { q.step_31 } else if v == 2 { q.step_32 } else { q.step_33 }
+    }
+}
+
+public pure fn iq_basis_covered(q: InvariantQuotient4) -> Bool {
+    (iq_basis(q, 0) == 0 || iq_cov(q, 0) == 1)
+        && (iq_basis(q, 1) == 0 || iq_cov(q, 1) == 1)
+        && (iq_basis(q, 2) == 0 || iq_cov(q, 2) == 1)
+        && (iq_basis(q, 3) == 0 || iq_cov(q, 3) == 1)
+}
+
+public pure fn iq_step_closed_pair(q: InvariantQuotient4, u: Int, v: Int) -> Bool {
+    !(iq_step(q, u, v) == 1 && iq_cov(q, u) == 1) || iq_cov(q, v) == 1
+}
+
+public pure fn iq_step_closed_row(q: InvariantQuotient4, u: Int) -> Bool {
+    iq_step_closed_pair(q, u, 0)
+        && iq_step_closed_pair(q, u, 1)
+        && iq_step_closed_pair(q, u, 2)
+        && iq_step_closed_pair(q, u, 3)
+}
+
+public pure fn iq_step_closed(q: InvariantQuotient4) -> Bool {
+    iq_step_closed_row(q, 0)
+        && iq_step_closed_row(q, 1)
+        && iq_step_closed_row(q, 2)
+        && iq_step_closed_row(q, 3)
+}
+
+public pure fn iq_generated_at(q: InvariantQuotient4, v: Int) -> Bool {
+    iq_basis(q, v) == 1
+        || (iq_basis(q, 0) == 1 && iq_step(q, 0, v) == 1)
+        || (iq_basis(q, 1) == 1 && iq_step(q, 1, v) == 1)
+        || (iq_basis(q, 2) == 1 && iq_step(q, 2, v) == 1)
+        || (iq_basis(q, 3) == 1 && iq_step(q, 3, v) == 1)
+}
+
+/// **MSFS Wave 2 (`Thm Q2.3` Bounded Relative Completeness):**
+/// Under `(Q2-C1)-(Q2-C3)` (basis covered, 1-step closure preserves coverage, and
+/// every profile in `{0..3}` lies in the 1-step closure of the basis), all 4
+/// invariant classes are covered (`cov_0..cov_3 == 1`).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B6 — Thm Q2.3 bounded relative completeness on 4-point invariant basis")
+public theorem wave2_q2_relative_completeness_basis4(
+    q: InvariantQuotient4,
+    v: Int,
+)
+    requires v >= 0 && v <= 3
+          && iq_basis_covered(q)
+          && iq_step_closed(q)
+          && iq_generated_at(q, 0)
+          && iq_generated_at(q, 1)
+          && iq_generated_at(q, 2)
+          && iq_generated_at(q, 3)
+    ensures iq_cov(q, 0) == 1
+         && iq_cov(q, 1) == 1
+         && iq_cov(q, 2) == 1
+         && iq_cov(q, 3) == 1
+         && iq_cov(q, v) == 1
+    proof {
+        have h_all: iq_cov(q, 0) == 1 && iq_cov(q, 1) == 1 && iq_cov(q, 2) == 1 && iq_cov(q, 3) == 1 by auto;
+        have h_v: iq_cov(q, v) == 1 by auto;
+        conclude by auto;
+    };

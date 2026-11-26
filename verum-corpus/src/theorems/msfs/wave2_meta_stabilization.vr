@@ -1,0 +1,854 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 2 CONSTRUCTIVE CORE (ZERO AXIOMS)
+// Self-contained finite constructive models for MSFS Obligation B2
+// (Meta-classification stabilization, obstructions, and conditional idempotence):
+//   - B2-1: FinMeta2 gauge equivalence (MG1)-(MG3), inverse/composition laws,
+//           and gauge-invariant descent functionals.
+//   - B2-2: Bounded exp_tower(k) (2 < 4 < 16) monotonicity and finite
+//           pigeonhole non-injectivity separation (no_inj).
+//   - B2-3: (M2) baseId collapse & non-invariance obstructions, plus (M3)
+//           closure reflector r_reflector over Int bitmasks (m = 1, 2, 3)
+//           proving monotonicity, inflation, idempotence, and join failure.
+//   - B2-4: FiniteSiteModel3 joint realizability (ToyIdemValid) and mutual
+//           non-redundancy (IdemNot1..IdemNot4) of (Idem-1)-(Idem-4).
+// Imports zero `core.math.*` axioms and zero quarantined stubs.
+// Strictly Int-valued struct fields, zero axioms, multi-step formal proofs.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LCls,
+    lifecycle: Lifecycle.Theorem("v0.2"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave2_proofs.py",
+)
+module lib.theorems.msfs.wave2_meta_stabilization;
+
+// =============================================================================
+// B2-1: Finite-Stage Meta-Gauge Quotient (MG1)-(MG3) on FinMeta2
+// =============================================================================
+
+/// Finite 2-object meta-classifier over Ob = {0, 1} with strictly Int-valued
+/// relation matrix `hom_xy` in {0, 1}, classifier labels `cl_x`, reflector
+/// endomap `r_op_x`, and non-gauge-invariant `base_id`.
+public type FinMeta2 is {
+    hom_00: Int,
+    hom_01: Int,
+    hom_10: Int,
+    hom_11: Int,
+    cl_0: Int,
+    cl_1: Int,
+    r_op_0: Int,
+    r_op_1: Int,
+    base_id: Int,
+};
+
+public pure fn fm2_hom(a: FinMeta2, x: Int, y: Int) -> Int {
+    if x == 0 {
+        if y == 0 { a.hom_00 } else { a.hom_01 }
+    } else {
+        if y == 0 { a.hom_10 } else { a.hom_11 }
+    }
+}
+
+public pure fn fm2_has_hom(a: FinMeta2, x: Int, y: Int) -> Bool {
+    fm2_hom(a, x, y) == 1
+}
+
+public pure fn fm2_cl(a: FinMeta2, x: Int) -> Int {
+    if x == 0 { a.cl_0 } else { a.cl_1 }
+}
+
+public pure fn fm2_rop(a: FinMeta2, x: Int) -> Int {
+    if x == 0 { a.r_op_0 } else { a.r_op_1 }
+}
+
+public pure fn fm2_rmono_pair(a: FinMeta2, x: Int, y: Int) -> Bool {
+    !fm2_has_hom(a, x, y) || fm2_has_hom(a, fm2_rop(a, x), fm2_rop(a, y))
+}
+
+public pure fn sat_fin_meta2(a: FinMeta2) -> Bool {
+    (a.hom_00 == 0 || a.hom_00 == 1)
+        && (a.hom_01 == 0 || a.hom_01 == 1)
+        && (a.hom_10 == 0 || a.hom_10 == 1)
+        && (a.hom_11 == 0 || a.hom_11 == 1)
+        && a.cl_0 >= 0 && a.cl_1 >= 0
+        && (a.r_op_0 == 0 || a.r_op_0 == 1)
+        && (a.r_op_1 == 0 || a.r_op_1 == 1)
+        && a.base_id >= 0
+        && fm2_rmono_pair(a, 0, 0)
+        && fm2_rmono_pair(a, 0, 1)
+        && fm2_rmono_pair(a, 1, 0)
+        && fm2_rmono_pair(a, 1, 1)
+}
+
+/// Explicit meta-gauge equivalence witness between FinMeta2 classifiers.
+public type MetaGaugeEquiv2 is {
+    to_0: Int,
+    to_1: Int,
+    inv_0: Int,
+    inv_1: Int,
+};
+
+public pure fn mge_to(e: MetaGaugeEquiv2, x: Int) -> Int {
+    if x == 0 { e.to_0 } else { e.to_1 }
+}
+
+public pure fn mge_inv(e: MetaGaugeEquiv2, y: Int) -> Int {
+    if y == 0 { e.inv_0 } else { e.inv_1 }
+}
+
+public pure fn is_meta_gauge_equiv2(a: FinMeta2, b: FinMeta2, e: MetaGaugeEquiv2) -> Bool {
+    (e.to_0 == 0 || e.to_0 == 1)
+        && (e.to_1 == 0 || e.to_1 == 1)
+        && (e.inv_0 == 0 || e.inv_0 == 1)
+        && (e.inv_1 == 0 || e.inv_1 == 1)
+        && mge_inv(e, mge_to(e, 0)) == 0
+        && mge_inv(e, mge_to(e, 1)) == 1
+        && mge_to(e, mge_inv(e, 0)) == 0
+        && mge_to(e, mge_inv(e, 1)) == 1
+        && fm2_has_hom(a, 0, 0) == fm2_has_hom(b, mge_to(e, 0), mge_to(e, 0))
+        && fm2_has_hom(a, 0, 1) == fm2_has_hom(b, mge_to(e, 0), mge_to(e, 1))
+        && fm2_has_hom(a, 1, 0) == fm2_has_hom(b, mge_to(e, 1), mge_to(e, 0))
+        && fm2_has_hom(a, 1, 1) == fm2_has_hom(b, mge_to(e, 1), mge_to(e, 1))
+        && fm2_cl(b, mge_to(e, 0)) == fm2_cl(a, 0)
+        && fm2_cl(b, mge_to(e, 1)) == fm2_cl(a, 1)
+        && mge_to(e, fm2_rop(a, 0)) == fm2_rop(b, mge_to(e, 0))
+        && mge_to(e, fm2_rop(a, 1)) == fm2_rop(b, mge_to(e, 1))
+}
+
+public pure fn is_id_gauge_equiv2(e: MetaGaugeEquiv2) -> Bool {
+    e.to_0 == 0 && e.to_1 == 1 && e.inv_0 == 0 && e.inv_1 == 1
+}
+
+public pure fn is_symm_gauge_equiv2(e: MetaGaugeEquiv2, es: MetaGaugeEquiv2) -> Bool {
+    es.to_0 == e.inv_0 && es.to_1 == e.inv_1 && es.inv_0 == e.to_0 && es.inv_1 == e.to_1
+}
+
+public pure fn is_comp_gauge_equiv2(
+    e1: MetaGaugeEquiv2,
+    e2: MetaGaugeEquiv2,
+    ec: MetaGaugeEquiv2,
+) -> Bool {
+    ec.to_0 == mge_to(e2, e1.to_0)
+        && ec.to_1 == mge_to(e2, e1.to_1)
+        && ec.inv_0 == mge_inv(e1, e2.inv_0)
+        && ec.inv_1 == mge_inv(e1, e2.inv_1)
+}
+
+public pure fn same_gauge_equiv2(e1: MetaGaugeEquiv2, e2: MetaGaugeEquiv2) -> Bool {
+    e1.to_0 == e2.to_0 && e1.to_1 == e2.to_1 && e1.inv_0 == e2.inv_0 && e1.inv_1 == e2.inv_1
+}
+
+/// Gauge-invariant descent observables on FinMeta2.
+public pure fn fm2_cl_sum(a: FinMeta2) -> Int {
+    a.cl_0 + a.cl_1
+}
+
+public pure fn fm2_hom_count(a: FinMeta2) -> Int {
+    a.hom_00 + a.hom_01 + a.hom_10 + a.hom_11
+}
+
+public pure fn fm2_rop_fix_count(a: FinMeta2) -> Int {
+    (if a.r_op_0 == 0 { 1 } else { 0 }) + (if a.r_op_1 == 1 { 1 } else { 0 })
+}
+
+/// **MSFS Wave 2 (B2-1):** Meta-gauge equivalence on FinMeta2 satisfies
+/// reflexivity, symmetry, transitivity, inverse laws, and descent invariance.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-1 — FinMeta2 gauge equivalence, inverse/comp laws, and descent invariance")
+public theorem wave2_b2_fin_meta2_gauge_equivalence(
+    a: FinMeta2,
+    b: FinMeta2,
+    c: FinMeta2,
+    e1: MetaGaugeEquiv2,
+    e2: MetaGaugeEquiv2,
+    e_id: MetaGaugeEquiv2,
+    e_symm: MetaGaugeEquiv2,
+    e_comp: MetaGaugeEquiv2,
+    e_rs: MetaGaugeEquiv2,
+    e_sr: MetaGaugeEquiv2,
+)
+    requires sat_fin_meta2(a)
+          && sat_fin_meta2(b)
+          && sat_fin_meta2(c)
+          && is_meta_gauge_equiv2(a, b, e1)
+          && is_meta_gauge_equiv2(b, c, e2)
+          && is_id_gauge_equiv2(e_id)
+          && is_symm_gauge_equiv2(e1, e_symm)
+          && is_comp_gauge_equiv2(e1, e2, e_comp)
+          && is_comp_gauge_equiv2(e1, e_symm, e_rs)
+          && is_comp_gauge_equiv2(e_symm, e1, e_sr)
+    ensures is_meta_gauge_equiv2(a, a, e_id)
+         && is_meta_gauge_equiv2(b, a, e_symm)
+         && is_meta_gauge_equiv2(a, c, e_comp)
+         && same_gauge_equiv2(e_rs, e_id)
+         && same_gauge_equiv2(e_sr, e_id)
+         && fm2_cl_sum(a) == fm2_cl_sum(b)
+         && fm2_hom_count(a) == fm2_hom_count(b)
+         && fm2_rop_fix_count(a) == fm2_rop_fix_count(b)
+    proof {
+        have h_refl: is_meta_gauge_equiv2(a, a, e_id) by auto;
+        have h_symm: is_meta_gauge_equiv2(b, a, e_symm) by auto;
+        have h_trans: is_meta_gauge_equiv2(a, c, e_comp) by auto;
+        have h_inv: same_gauge_equiv2(e_rs, e_id) && same_gauge_equiv2(e_sr, e_id) by auto;
+        have h_desc: fm2_cl_sum(a) == fm2_cl_sum(b)
+                  && fm2_hom_count(a) == fm2_hom_count(b)
+                  && fm2_rop_fix_count(a) == fm2_rop_fix_count(b) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// B2-2: Bounded exp_tower(k) Monotonicity & Finite Pigeonhole Separation
+// =============================================================================
+
+/// Bounded exponential tower exp_tower(k) = 2^^(k+1) for k in 0..2: 2, 4, 16.
+public pure fn exp_tower(k: Int) -> Int {
+    if k == 0 { 2 }
+    else if k == 1 { 4 }
+    else { 16 }
+}
+
+public type FinMap3 is {
+    f0: Int, f1: Int, f2: Int,
+};
+
+public type FinMap4 is {
+    f0: Int, f1: Int, f2: Int, f3: Int,
+};
+
+public type FinMap5 is {
+    f0: Int, f1: Int, f2: Int, f3: Int, f4: Int,
+};
+
+public type FinMap16 is {
+    f0: Int, f1: Int, f2: Int, f3: Int,
+    f4: Int, f5: Int, f6: Int, f7: Int,
+    f8: Int, f9: Int, f10: Int, f11: Int,
+    f12: Int, f13: Int, f14: Int, f15: Int,
+};
+
+public pure fn fm3_in_range(m: FinMap3, cod: Int) -> Bool {
+    m.f0 >= 0 && m.f0 < cod
+        && m.f1 >= 0 && m.f1 < cod
+        && m.f2 >= 0 && m.f2 < cod
+}
+
+public pure fn fm3_inj(m: FinMap3) -> Bool {
+    m.f0 != m.f1 && m.f0 != m.f2 && m.f1 != m.f2
+}
+
+public pure fn fm4_in_range(m: FinMap4, cod: Int) -> Bool {
+    m.f0 >= 0 && m.f0 < cod
+        && m.f1 >= 0 && m.f1 < cod
+        && m.f2 >= 0 && m.f2 < cod
+        && m.f3 >= 0 && m.f3 < cod
+}
+
+public pure fn fm4_inj(m: FinMap4) -> Bool {
+    m.f0 != m.f1 && m.f0 != m.f2 && m.f0 != m.f3
+        && m.f1 != m.f2 && m.f1 != m.f3 && m.f2 != m.f3
+}
+
+public pure fn fm5_in_range(m: FinMap5, cod: Int) -> Bool {
+    m.f0 >= 0 && m.f0 < cod
+        && m.f1 >= 0 && m.f1 < cod
+        && m.f2 >= 0 && m.f2 < cod
+        && m.f3 >= 0 && m.f3 < cod
+        && m.f4 >= 0 && m.f4 < cod
+}
+
+public pure fn fm5_inj(m: FinMap5) -> Bool {
+    m.f0 != m.f1 && m.f0 != m.f2 && m.f0 != m.f3 && m.f0 != m.f4
+        && m.f1 != m.f2 && m.f1 != m.f3 && m.f1 != m.f4
+        && m.f2 != m.f3 && m.f2 != m.f4 && m.f3 != m.f4
+}
+
+public pure fn fm16_at(m: FinMap16, i: Int) -> Int {
+    if i == 0 { m.f0 } else if i == 1 { m.f1 } else if i == 2 { m.f2 } else if i == 3 { m.f3 }
+    else if i == 4 { m.f4 } else if i == 5 { m.f5 } else if i == 6 { m.f6 } else if i == 7 { m.f7 }
+    else if i == 8 { m.f8 } else if i == 9 { m.f9 } else if i == 10 { m.f10 } else if i == 11 { m.f11 }
+    else if i == 12 { m.f12 } else if i == 13 { m.f13 } else if i == 14 { m.f14 } else { m.f15 }
+}
+
+public pure fn fm16_in_range(m: FinMap16, cod: Int) -> Bool {
+    m.f0 >= 0 && m.f0 < cod && m.f1 >= 0 && m.f1 < cod
+        && m.f2 >= 0 && m.f2 < cod && m.f3 >= 0 && m.f3 < cod
+        && m.f4 >= 0 && m.f4 < cod && m.f5 >= 0 && m.f5 < cod
+        && m.f6 >= 0 && m.f6 < cod && m.f7 >= 0 && m.f7 < cod
+        && m.f8 >= 0 && m.f8 < cod && m.f9 >= 0 && m.f9 < cod
+        && m.f10 >= 0 && m.f10 < cod && m.f11 >= 0 && m.f11 < cod
+        && m.f12 >= 0 && m.f12 < cod && m.f13 >= 0 && m.f13 < cod
+        && m.f14 >= 0 && m.f14 < cod && m.f15 >= 0 && m.f15 < cod
+}
+
+public pure fn fm16_prefix5_inj(m: FinMap16) -> Bool {
+    m.f0 != m.f1 && m.f0 != m.f2 && m.f0 != m.f3 && m.f0 != m.f4
+        && m.f1 != m.f2 && m.f1 != m.f3 && m.f1 != m.f4
+        && m.f2 != m.f3 && m.f2 != m.f4 && m.f3 != m.f4
+}
+
+public pure fn fm16_distinct_from(m: FinMap16, i: Int, j: Int) -> Bool {
+    fm16_at(m, i) != fm16_at(m, j)
+}
+
+public pure fn fm16_row_inj_0(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 0, 1) && fm16_distinct_from(m, 0, 2) && fm16_distinct_from(m, 0, 3) && fm16_distinct_from(m, 0, 4) && fm16_distinct_from(m, 0, 5) && fm16_distinct_from(m, 0, 6) && fm16_distinct_from(m, 0, 7) && fm16_distinct_from(m, 0, 8) && fm16_distinct_from(m, 0, 9) && fm16_distinct_from(m, 0, 10) && fm16_distinct_from(m, 0, 11) && fm16_distinct_from(m, 0, 12) && fm16_distinct_from(m, 0, 13) && fm16_distinct_from(m, 0, 14) && fm16_distinct_from(m, 0, 15)
+}
+
+public pure fn fm16_row_inj_1(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 1, 2) && fm16_distinct_from(m, 1, 3) && fm16_distinct_from(m, 1, 4) && fm16_distinct_from(m, 1, 5) && fm16_distinct_from(m, 1, 6) && fm16_distinct_from(m, 1, 7) && fm16_distinct_from(m, 1, 8) && fm16_distinct_from(m, 1, 9) && fm16_distinct_from(m, 1, 10) && fm16_distinct_from(m, 1, 11) && fm16_distinct_from(m, 1, 12) && fm16_distinct_from(m, 1, 13) && fm16_distinct_from(m, 1, 14) && fm16_distinct_from(m, 1, 15)
+}
+
+public pure fn fm16_row_inj_2(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 2, 3) && fm16_distinct_from(m, 2, 4) && fm16_distinct_from(m, 2, 5) && fm16_distinct_from(m, 2, 6) && fm16_distinct_from(m, 2, 7) && fm16_distinct_from(m, 2, 8) && fm16_distinct_from(m, 2, 9) && fm16_distinct_from(m, 2, 10) && fm16_distinct_from(m, 2, 11) && fm16_distinct_from(m, 2, 12) && fm16_distinct_from(m, 2, 13) && fm16_distinct_from(m, 2, 14) && fm16_distinct_from(m, 2, 15)
+}
+
+public pure fn fm16_row_inj_3(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 3, 4) && fm16_distinct_from(m, 3, 5) && fm16_distinct_from(m, 3, 6) && fm16_distinct_from(m, 3, 7) && fm16_distinct_from(m, 3, 8) && fm16_distinct_from(m, 3, 9) && fm16_distinct_from(m, 3, 10) && fm16_distinct_from(m, 3, 11) && fm16_distinct_from(m, 3, 12) && fm16_distinct_from(m, 3, 13) && fm16_distinct_from(m, 3, 14) && fm16_distinct_from(m, 3, 15)
+}
+
+public pure fn fm16_row_inj_4(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 4, 5) && fm16_distinct_from(m, 4, 6) && fm16_distinct_from(m, 4, 7) && fm16_distinct_from(m, 4, 8) && fm16_distinct_from(m, 4, 9) && fm16_distinct_from(m, 4, 10) && fm16_distinct_from(m, 4, 11) && fm16_distinct_from(m, 4, 12) && fm16_distinct_from(m, 4, 13) && fm16_distinct_from(m, 4, 14) && fm16_distinct_from(m, 4, 15)
+}
+
+public pure fn fm16_row_inj_5(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 5, 6) && fm16_distinct_from(m, 5, 7) && fm16_distinct_from(m, 5, 8) && fm16_distinct_from(m, 5, 9) && fm16_distinct_from(m, 5, 10) && fm16_distinct_from(m, 5, 11) && fm16_distinct_from(m, 5, 12) && fm16_distinct_from(m, 5, 13) && fm16_distinct_from(m, 5, 14) && fm16_distinct_from(m, 5, 15)
+}
+
+public pure fn fm16_row_inj_6(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 6, 7) && fm16_distinct_from(m, 6, 8) && fm16_distinct_from(m, 6, 9) && fm16_distinct_from(m, 6, 10) && fm16_distinct_from(m, 6, 11) && fm16_distinct_from(m, 6, 12) && fm16_distinct_from(m, 6, 13) && fm16_distinct_from(m, 6, 14) && fm16_distinct_from(m, 6, 15)
+}
+
+public pure fn fm16_row_inj_7(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 7, 8) && fm16_distinct_from(m, 7, 9) && fm16_distinct_from(m, 7, 10) && fm16_distinct_from(m, 7, 11) && fm16_distinct_from(m, 7, 12) && fm16_distinct_from(m, 7, 13) && fm16_distinct_from(m, 7, 14) && fm16_distinct_from(m, 7, 15)
+}
+
+public pure fn fm16_row_inj_8(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 8, 9) && fm16_distinct_from(m, 8, 10) && fm16_distinct_from(m, 8, 11) && fm16_distinct_from(m, 8, 12) && fm16_distinct_from(m, 8, 13) && fm16_distinct_from(m, 8, 14) && fm16_distinct_from(m, 8, 15)
+}
+
+public pure fn fm16_row_inj_9(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 9, 10) && fm16_distinct_from(m, 9, 11) && fm16_distinct_from(m, 9, 12) && fm16_distinct_from(m, 9, 13) && fm16_distinct_from(m, 9, 14) && fm16_distinct_from(m, 9, 15)
+}
+
+public pure fn fm16_row_inj_10(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 10, 11) && fm16_distinct_from(m, 10, 12) && fm16_distinct_from(m, 10, 13) && fm16_distinct_from(m, 10, 14) && fm16_distinct_from(m, 10, 15)
+}
+
+public pure fn fm16_row_inj_11(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 11, 12) && fm16_distinct_from(m, 11, 13) && fm16_distinct_from(m, 11, 14) && fm16_distinct_from(m, 11, 15)
+}
+
+public pure fn fm16_row_inj_12(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 12, 13) && fm16_distinct_from(m, 12, 14) && fm16_distinct_from(m, 12, 15)
+}
+
+public pure fn fm16_row_inj_13(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 13, 14) && fm16_distinct_from(m, 13, 15)
+}
+
+public pure fn fm16_row_inj_14(m: FinMap16) -> Bool {
+    fm16_distinct_from(m, 14, 15)
+}
+
+public pure fn fm16_inj(m: FinMap16) -> Bool {
+    fm16_prefix5_inj(m) && fm16_row_inj_0(m) && fm16_row_inj_1(m) && fm16_row_inj_2(m) && fm16_row_inj_3(m) && fm16_row_inj_4(m) && fm16_row_inj_5(m) && fm16_row_inj_6(m) && fm16_row_inj_7(m) && fm16_row_inj_8(m) && fm16_row_inj_9(m) && fm16_row_inj_10(m) && fm16_row_inj_11(m) && fm16_row_inj_12(m) && fm16_row_inj_13(m) && fm16_row_inj_14(m)
+}
+
+/// **MSFS Wave 2 (B2-2):** Bounded exponential tower monotonicity (2 < 4 < 16)
+/// and finite pigeonhole non-injectivity separation (no_inj) for stages 0, 1, 2.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-2 — exp_tower(k) strict monotonicity 2 < 4 < 16 and finite pigeonhole no_inj")
+public theorem wave2_b2_exp_tower_and_pigeonhole_separation(
+    f4: FinMap4,
+    f16_to_4: FinMap16,
+    f16_to_2: FinMap16,
+)
+    requires fm4_in_range(f4, exp_tower(0))
+          && fm16_in_range(f16_to_4, exp_tower(1))
+          && fm16_in_range(f16_to_2, exp_tower(0))
+    ensures exp_tower(0) == 2
+         && exp_tower(1) == 4
+         && exp_tower(2) == 16
+         && exp_tower(0) < exp_tower(1)
+         && exp_tower(1) < exp_tower(2)
+         && !fm4_inj(f4)
+         && !fm16_inj(f16_to_4)
+         && !fm16_inj(f16_to_2)
+    proof {
+        have h_tower: exp_tower(0) == 2
+                   && exp_tower(1) == 4
+                   && exp_tower(2) == 16
+                   && exp_tower(0) < exp_tower(1)
+                   && exp_tower(1) < exp_tower(2) by omega;
+        have h_php_4_2: !fm4_inj(f4) by omega;
+        have h_php_16_4: !fm16_prefix5_inj(f16_to_4) by omega;
+        have h_php_16_2: !fm16_prefix5_inj(f16_to_2) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// B2-3: (M2) baseId Obstructions & (M3) r_reflector Join Failure on Int Bitmasks
+// =============================================================================
+
+public pure fn is_m2_witness_a(a: FinMeta2) -> Bool {
+    a.hom_00 == 1 && a.hom_01 == 1 && a.hom_10 == 0 && a.hom_11 == 1
+        && a.cl_0 == 0 && a.cl_1 == 1
+        && a.r_op_0 == 0 && a.r_op_1 == 1
+        && a.base_id == 0
+}
+
+public pure fn is_m2_witness_b(b: FinMeta2) -> Bool {
+    b.hom_00 == 1 && b.hom_01 == 0 && b.hom_10 == 1 && b.hom_11 == 1
+        && b.cl_0 == 1 && b.cl_1 == 0
+        && b.r_op_0 == 0 && b.r_op_1 == 1
+        && b.base_id == 1
+}
+
+public pure fn is_m2_witness_c(c: FinMeta2) -> Bool {
+    c.hom_00 == 1 && c.hom_01 == 0 && c.hom_10 == 0 && c.hom_11 == 1
+        && c.cl_0 == 0 && c.cl_1 == 0
+        && c.r_op_0 == 0 && c.r_op_1 == 1
+        && c.base_id == 0
+}
+
+public pure fn is_swap_gauge_equiv2(e: MetaGaugeEquiv2) -> Bool {
+    e.to_0 == 1 && e.to_1 == 0 && e.inv_0 == 1 && e.inv_1 == 0
+}
+
+/// **MSFS Wave 2 (B2-3a / M2):** baseId is neither gauge-invariant nor injective
+/// across gauge classes, and no injective rMeta : Fin(2^m + 1) -> Fin(m) exists.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-3a — (M2) baseId non-invariance, collapse, and finite rMeta pigeonhole")
+public theorem wave2_b2_m2_base_id_obstruction(
+    a: FinMeta2,
+    b: FinMeta2,
+    c: FinMeta2,
+    e_swap: MetaGaugeEquiv2,
+    any_e: MetaGaugeEquiv2,
+    r1: FinMap3,
+    r2: FinMap5,
+)
+    requires is_m2_witness_a(a)
+          && is_m2_witness_b(b)
+          && is_m2_witness_c(c)
+          && is_swap_gauge_equiv2(e_swap)
+          && fm3_in_range(r1, 1)
+          && fm5_in_range(r2, 2)
+    ensures sat_fin_meta2(a)
+         && sat_fin_meta2(b)
+         && sat_fin_meta2(c)
+         && is_meta_gauge_equiv2(a, b, e_swap)
+         && a.base_id != b.base_id
+         && a.base_id == c.base_id
+         && !is_meta_gauge_equiv2(a, c, any_e)
+         && !fm3_inj(r1)
+         && !fm5_inj(r2)
+    proof {
+        have h_swap: sat_fin_meta2(a)
+                  && sat_fin_meta2(b)
+                  && is_meta_gauge_equiv2(a, b, e_swap)
+                  && a.base_id != b.base_id by auto;
+        have h_collapse: sat_fin_meta2(c)
+                      && a.base_id == c.base_id
+                      && !is_meta_gauge_equiv2(a, c, any_e) by auto;
+        have h_pigeon: !fm3_inj(r1) && !fm5_inj(r2) by omega;
+        conclude by auto;
+    };
+
+/// Subset bitmask operations over {0..m+1} for m in {1, 2, 3} (0 <= mask < 32).
+public pure fn full_mask(m: Int) -> Int {
+    if m == 1 { 7 } else if m == 2 { 15 } else { 31 }
+}
+
+public pure fn union_low_mask(m: Int) -> Int {
+    if m == 1 { 3 } else if m == 2 { 7 } else { 15 }
+}
+
+public pure fn singleton_mask(j: Int) -> Int {
+    if j == 0 { 1 }
+    else if j == 1 { 2 }
+    else if j == 2 { 4 }
+    else if j == 3 { 8 }
+    else { 16 }
+}
+
+public pure fn bit_in(mask: Int, i: Int) -> Bool {
+    if i == 0 { mask % 2 == 1 }
+    else if i == 1 { (mask / 2) % 2 == 1 }
+    else if i == 2 { (mask / 4) % 2 == 1 }
+    else if i == 3 { (mask / 8) % 2 == 1 }
+    else { (mask / 16) % 2 == 1 }
+}
+
+public pure fn valid_mask(m: Int, mask: Int) -> Bool {
+    m >= 1 && m <= 3 && mask >= 0 && mask <= full_mask(m)
+}
+
+public pure fn subset_le(m: Int, a: Int, b: Int) -> Bool {
+    (!bit_in(a, 0) || bit_in(b, 0))
+        && (!bit_in(a, 1) || bit_in(b, 1))
+        && (!bit_in(a, 2) || bit_in(b, 2))
+        && (m < 2 || !bit_in(a, 3) || bit_in(b, 3))
+        && (m < 3 || !bit_in(a, 4) || bit_in(b, 4))
+}
+
+public pure fn has_all_low(m: Int, mask: Int) -> Bool {
+    bit_in(mask, 0)
+        && bit_in(mask, 1)
+        && (m < 2 || bit_in(mask, 2))
+        && (m < 3 || bit_in(mask, 3))
+}
+
+public pure fn r_reflector(m: Int, mask: Int) -> Int {
+    if has_all_low(m, mask) { full_mask(m) } else { mask }
+}
+
+public pure fn mask_union(a: Int, b: Int) -> Int {
+    (if bit_in(a, 0) || bit_in(b, 0) { 1 } else { 0 })
+        + (if bit_in(a, 1) || bit_in(b, 1) { 2 } else { 0 })
+        + (if bit_in(a, 2) || bit_in(b, 2) { 4 } else { 0 })
+        + (if bit_in(a, 3) || bit_in(b, 3) { 8 } else { 0 })
+        + (if bit_in(a, 4) || bit_in(b, 4) { 16 } else { 0 })
+}
+
+public pure fn union_singletons_r(m: Int) -> Int {
+    if m == 1 {
+        mask_union(r_reflector(1, singleton_mask(0)), r_reflector(1, singleton_mask(1)))
+    } else if m == 2 {
+        mask_union(
+            mask_union(r_reflector(2, singleton_mask(0)), r_reflector(2, singleton_mask(1))),
+            r_reflector(2, singleton_mask(2)),
+        )
+    } else {
+        mask_union(
+            mask_union(r_reflector(3, singleton_mask(0)), r_reflector(3, singleton_mask(1))),
+            mask_union(r_reflector(3, singleton_mask(2)), r_reflector(3, singleton_mask(3))),
+        )
+    }
+}
+
+/// **MSFS Wave 2 (B2-3b / M3 closure laws):** r_reflector on bitmask subsets
+/// of {0..m+1} (m = 1, 2, 3) is valid, monotone, inflationary, and idempotent.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-3b — r_reflector bitmask monotonicity, inflation, and idempotence for m = 1..3")
+public theorem wave2_b2_m3_r_reflector_closure_laws(
+    m: Int,
+    a: Int,
+    b: Int,
+)
+    requires valid_mask(m, a) && valid_mask(m, b)
+    ensures valid_mask(m, r_reflector(m, a))
+         && (!subset_le(m, a, b) || subset_le(m, r_reflector(m, a), r_reflector(m, b)))
+         && subset_le(m, a, r_reflector(m, a))
+         && r_reflector(m, r_reflector(m, a)) == r_reflector(m, a)
+    proof {
+        have h_valid_infl: valid_mask(m, r_reflector(m, a)) && subset_le(m, a, r_reflector(m, a)) by omega;
+        have h_mono: !subset_le(m, a, b) || subset_le(m, r_reflector(m, a), r_reflector(m, b)) by omega;
+        have h_idem: r_reflector(m, r_reflector(m, a)) == r_reflector(m, a) by omega;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 2 (B2-3c / M3 join failure):** For m = 1, 2, 3, r_reflector
+/// maps every low singleton {j} (0 <= j <= m) to {j} (missing m+1), yet maps
+/// union_low = {0..m} to full_mask(m) (containing m+1), violating join preservation.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-3c — r_reflector join failure at index m+1 for m = 1, 2, 3")
+public theorem wave2_b2_m3_r_reflector_join_failure(
+    m: Int,
+    j: Int,
+)
+    requires m >= 1 && m <= 3 && j >= 0 && j <= m
+    ensures valid_mask(m, singleton_mask(j))
+         && valid_mask(m, union_low_mask(m))
+         && r_reflector(m, singleton_mask(j)) == singleton_mask(j)
+         && !bit_in(r_reflector(m, singleton_mask(j)), m + 1)
+         && !bit_in(union_singletons_r(m), m + 1)
+         && bit_in(r_reflector(m, union_low_mask(m)), m + 1)
+         && r_reflector(m, union_low_mask(m)) != union_singletons_r(m)
+    proof {
+        have h_single: r_reflector(m, singleton_mask(j)) == singleton_mask(j)
+                    && !bit_in(r_reflector(m, singleton_mask(j)), m + 1) by omega;
+        have h_join_lhs: bit_in(r_reflector(m, union_low_mask(m)), m + 1) by omega;
+        have h_join_rhs: !bit_in(union_singletons_r(m), m + 1) by omega;
+        conclude by omega;
+    };
+
+// =============================================================================
+// B2-4: (Idem-1)-(Idem-4) Joint Realizability & Mutual Independence
+// =============================================================================
+
+/// Finite site model with num_cls1 <= 3, num_cls2 <= 4, base_size <= 4,
+/// strictly Int {0, 1} matrices for hom1 and wmg1 (strictly Int-valued struct fields).
+public type FiniteSiteModel3 is {
+    num_cls1: Int,
+    num_cls2: Int,
+    base_size: Int,
+    rank_bound: Int,
+    actual_rank: Int,
+    hom_00: Int, hom_01: Int, hom_02: Int,
+    hom_10: Int, hom_11: Int, hom_12: Int,
+    hom_20: Int, hom_21: Int, hom_22: Int,
+    wmg_00: Int, wmg_01: Int, wmg_02: Int,
+    wmg_10: Int, wmg_11: Int, wmg_12: Int,
+    wmg_20: Int, wmg_21: Int, wmg_22: Int,
+    cl_0: Int, cl_1: Int, cl_2: Int,
+    r_meta_0: Int, r_meta_1: Int, r_meta_2: Int,
+    l_0: Int, l_1: Int, l_2: Int,
+    u_0: Int, u_1: Int, u_2: Int, u_3: Int,
+};
+
+public pure fn fsm_hom_val(m: FiniteSiteModel3, a: Int, b: Int) -> Int {
+    if a == 0 {
+        if b == 0 { m.hom_00 } else if b == 1 { m.hom_01 } else { m.hom_02 }
+    } else if a == 1 {
+        if b == 0 { m.hom_10 } else if b == 1 { m.hom_11 } else { m.hom_12 }
+    } else {
+        if b == 0 { m.hom_20 } else if b == 1 { m.hom_21 } else { m.hom_22 }
+    }
+}
+
+public pure fn fsm_wmg_val(m: FiniteSiteModel3, a: Int, b: Int) -> Int {
+    if a == 0 {
+        if b == 0 { m.wmg_00 } else if b == 1 { m.wmg_01 } else { m.wmg_02 }
+    } else if a == 1 {
+        if b == 0 { m.wmg_10 } else if b == 1 { m.wmg_11 } else { m.wmg_12 }
+    } else {
+        if b == 0 { m.wmg_20 } else if b == 1 { m.wmg_21 } else { m.wmg_22 }
+    }
+}
+
+public pure fn fsm_hom(m: FiniteSiteModel3, a: Int, b: Int) -> Bool {
+    fsm_hom_val(m, a, b) == 1
+}
+
+public pure fn fsm_wmg(m: FiniteSiteModel3, a: Int, b: Int) -> Bool {
+    fsm_wmg_val(m, a, b) == 1
+}
+
+public pure fn fsm_cl(m: FiniteSiteModel3, x: Int) -> Int {
+    if x == 0 { m.cl_0 } else if x == 1 { m.cl_1 } else { m.cl_2 }
+}
+
+public pure fn fsm_r_meta(m: FiniteSiteModel3, x: Int) -> Int {
+    if x == 0 { m.r_meta_0 } else if x == 1 { m.r_meta_1 } else { m.r_meta_2 }
+}
+
+public pure fn fsm_l(m: FiniteSiteModel3, x: Int) -> Int {
+    if x == 0 { m.l_0 } else if x == 1 { m.l_1 } else { m.l_2 }
+}
+
+public pure fn fsm_u(m: FiniteSiteModel3, y: Int) -> Int {
+    if y == 0 { m.u_0 } else if y == 1 { m.u_1 } else if y == 2 { m.u_2 } else { m.u_3 }
+}
+
+public pure fn is_01(v: Int) -> Bool {
+    v == 0 || v == 1
+}
+
+public pure fn valid_finite_site_model3(m: FiniteSiteModel3) -> Bool {
+    m.num_cls1 >= 1 && m.num_cls1 <= 3
+        && m.num_cls2 >= 1 && m.num_cls2 <= 4
+        && m.base_size >= 1 && m.base_size <= 4
+        && m.rank_bound >= 0 && m.actual_rank >= 0
+        && is_01(m.hom_00) && is_01(m.hom_01) && is_01(m.hom_02)
+        && is_01(m.hom_10) && is_01(m.hom_11) && is_01(m.hom_12)
+        && is_01(m.hom_20) && is_01(m.hom_21) && is_01(m.hom_22)
+        && is_01(m.wmg_00) && is_01(m.wmg_01) && is_01(m.wmg_02)
+        && is_01(m.wmg_10) && is_01(m.wmg_11) && is_01(m.wmg_12)
+        && is_01(m.wmg_20) && is_01(m.wmg_21) && is_01(m.wmg_22)
+        && m.cl_0 >= 0 && m.cl_0 < m.base_size
+        && (m.num_cls1 < 2 || (m.cl_1 >= 0 && m.cl_1 < m.base_size))
+        && (m.num_cls1 < 3 || (m.cl_2 >= 0 && m.cl_2 < m.base_size))
+        && m.r_meta_0 >= 0 && m.r_meta_0 < m.base_size
+        && (m.num_cls1 < 2 || (m.r_meta_1 >= 0 && m.r_meta_1 < m.base_size))
+        && (m.num_cls1 < 3 || (m.r_meta_2 >= 0 && m.r_meta_2 < m.base_size))
+        && m.l_0 >= 0 && m.l_0 < m.num_cls2
+        && (m.num_cls1 < 2 || (m.l_1 >= 0 && m.l_1 < m.num_cls2))
+        && (m.num_cls1 < 3 || (m.l_2 >= 0 && m.l_2 < m.num_cls2))
+        && m.u_0 >= 0 && m.u_0 < m.num_cls1
+        && (m.num_cls2 < 2 || (m.u_1 >= 0 && m.u_1 < m.num_cls1))
+        && (m.num_cls2 < 3 || (m.u_2 >= 0 && m.u_2 < m.num_cls1))
+        && (m.num_cls2 < 4 || (m.u_3 >= 0 && m.u_3 < m.num_cls1))
+}
+
+/// `(Idem-1)`: Bounded accessibility rank.
+public pure fn sat_idem1(m: FiniteSiteModel3) -> Bool {
+    m.actual_rank <= m.rank_bound
+}
+
+/// `(Idem-2)`: Ore cospan pull-back square for wmg1 along hom1.
+public pure fn has_ore_apex(m: FiniteSiteModel3, a: Int, b: Int) -> Bool {
+    (0 < m.num_cls1 && fsm_hom(m, 0, a) && fsm_hom(m, 0, b))
+        || (1 < m.num_cls1 && fsm_hom(m, 1, a) && fsm_hom(m, 1, b))
+        || (2 < m.num_cls1 && fsm_hom(m, 2, a) && fsm_hom(m, 2, b))
+}
+
+public pure fn idem2_triple(m: FiniteSiteModel3, a: Int, b: Int, c: Int) -> Bool {
+    !(a < m.num_cls1 && b < m.num_cls1 && c < m.num_cls1 && fsm_hom(m, a, c) && fsm_wmg(m, b, c))
+        || has_ore_apex(m, a, b)
+}
+
+public pure fn idem2_pair_ab(m: FiniteSiteModel3, a: Int, b: Int) -> Bool {
+    idem2_triple(m, a, b, 0) && idem2_triple(m, a, b, 1) && idem2_triple(m, a, b, 2)
+}
+
+public pure fn idem2_row_a(m: FiniteSiteModel3, a: Int) -> Bool {
+    idem2_pair_ab(m, a, 0) && idem2_pair_ab(m, a, 1) && idem2_pair_ab(m, a, 2)
+}
+
+public pure fn sat_idem2(m: FiniteSiteModel3) -> Bool {
+    idem2_row_a(m, 0) && idem2_row_a(m, 1) && idem2_row_a(m, 2)
+}
+
+/// `(Idem-3)`: Descent invariance of cl1 + pi0-injectivity of r_meta.
+public pure fn idem3a_pair(m: FiniteSiteModel3, a: Int, b: Int) -> Bool {
+    !(a < m.num_cls1 && b < m.num_cls1 && fsm_hom(m, a, b))
+        || fsm_cl(m, a) == fsm_cl(m, b)
+}
+
+public pure fn sat_idem3a(m: FiniteSiteModel3) -> Bool {
+    idem3a_pair(m, 0, 0) && idem3a_pair(m, 0, 1) && idem3a_pair(m, 0, 2)
+        && idem3a_pair(m, 1, 0) && idem3a_pair(m, 1, 1) && idem3a_pair(m, 1, 2)
+        && idem3a_pair(m, 2, 0) && idem3a_pair(m, 2, 1) && idem3a_pair(m, 2, 2)
+}
+
+public pure fn zigzag_conn(m: FiniteSiteModel3, x: Int, y: Int) -> Bool {
+    (0 < m.num_cls1 && ((fsm_hom(m, x, 0) && fsm_hom(m, y, 0)) || (fsm_hom(m, 0, x) && fsm_hom(m, 0, y))))
+        || (1 < m.num_cls1 && ((fsm_hom(m, x, 1) && fsm_hom(m, y, 1)) || (fsm_hom(m, 1, x) && fsm_hom(m, 1, y))))
+        || (2 < m.num_cls1 && ((fsm_hom(m, x, 2) && fsm_hom(m, y, 2)) || (fsm_hom(m, 2, x) && fsm_hom(m, 2, y))))
+}
+
+public pure fn idem3b_pair(m: FiniteSiteModel3, x: Int, y: Int) -> Bool {
+    !(x < m.num_cls1 && y < m.num_cls1 && fsm_r_meta(m, x) == fsm_r_meta(m, y))
+        || (x == y || zigzag_conn(m, x, y))
+}
+
+public pure fn sat_idem3b(m: FiniteSiteModel3) -> Bool {
+    idem3b_pair(m, 0, 1) && idem3b_pair(m, 0, 2) && idem3b_pair(m, 1, 2)
+}
+
+public pure fn sat_idem3(m: FiniteSiteModel3) -> Bool {
+    sat_idem3a(m) && sat_idem3b(m)
+}
+
+/// `(Idem-4)`: Idempotent adjunction/equivalence (L, U) between cls1 and cls2.
+public pure fn sat_idem4(m: FiniteSiteModel3) -> Bool {
+    fsm_u(m, m.l_0) == 0
+        && (m.num_cls1 < 2 || fsm_u(m, m.l_1) == 1)
+        && (m.num_cls1 < 3 || fsm_u(m, m.l_2) == 2)
+        && fsm_l(m, m.u_0) == 0
+        && (m.num_cls2 < 2 || fsm_l(m, m.u_1) == 1)
+        && (m.num_cls2 < 3 || fsm_l(m, m.u_2) == 2)
+        && (m.num_cls2 < 4 || fsm_l(m, m.u_3) == 3)
+}
+
+/// Exact structural predicates for ToyIdemValid and IdemNot1..IdemNot4.
+public pure fn is_diag_3x3(m: FiniteSiteModel3) -> Bool {
+    m.hom_00 == 1 && m.hom_01 == 0 && m.hom_02 == 0
+        && m.hom_10 == 0 && m.hom_11 == 1 && m.hom_12 == 0
+        && m.hom_20 == 0 && m.hom_21 == 0 && m.hom_22 == 1
+        && m.wmg_00 == 1 && m.wmg_01 == 0 && m.wmg_02 == 0
+        && m.wmg_10 == 0 && m.wmg_11 == 1 && m.wmg_12 == 0
+        && m.wmg_20 == 0 && m.wmg_21 == 0 && m.wmg_22 == 1
+}
+
+public pure fn is_toy_idem_valid(m: FiniteSiteModel3) -> Bool {
+    m.num_cls1 == 2 && m.num_cls2 == 2 && m.base_size == 2
+        && m.rank_bound == 2 && m.actual_rank == 1
+        && is_diag_3x3(m)
+        && m.cl_0 == 0 && m.cl_1 == 1 && m.cl_2 == 0
+        && m.r_meta_0 == 0 && m.r_meta_1 == 1 && m.r_meta_2 == 0
+        && m.l_0 == 0 && m.l_1 == 1 && m.l_2 == 0
+        && m.u_0 == 0 && m.u_1 == 1 && m.u_2 == 0 && m.u_3 == 0
+}
+
+public pure fn is_idem_not1(m: FiniteSiteModel3) -> Bool {
+    m.num_cls1 == 2 && m.num_cls2 == 2 && m.base_size == 2
+        && m.rank_bound == 2 && m.actual_rank == 3
+        && is_diag_3x3(m)
+        && m.cl_0 == 0 && m.cl_1 == 1 && m.cl_2 == 0
+        && m.r_meta_0 == 0 && m.r_meta_1 == 1 && m.r_meta_2 == 0
+        && m.l_0 == 0 && m.l_1 == 1 && m.l_2 == 0
+        && m.u_0 == 0 && m.u_1 == 1 && m.u_2 == 0 && m.u_3 == 0
+}
+
+public pure fn is_idem_not2(m: FiniteSiteModel3) -> Bool {
+    m.num_cls1 == 3 && m.num_cls2 == 3 && m.base_size == 1
+        && m.rank_bound == 2 && m.actual_rank == 1
+        && m.hom_00 == 1 && m.hom_01 == 0 && m.hom_02 == 1
+        && m.hom_10 == 0 && m.hom_11 == 1 && m.hom_12 == 1
+        && m.hom_20 == 0 && m.hom_21 == 0 && m.hom_22 == 1
+        && m.wmg_00 == 1 && m.wmg_01 == 0 && m.wmg_02 == 0
+        && m.wmg_10 == 0 && m.wmg_11 == 1 && m.wmg_12 == 1
+        && m.wmg_20 == 0 && m.wmg_21 == 0 && m.wmg_22 == 1
+        && m.cl_0 == 0 && m.cl_1 == 0 && m.cl_2 == 0
+        && m.r_meta_0 == 0 && m.r_meta_1 == 0 && m.r_meta_2 == 0
+        && m.l_0 == 0 && m.l_1 == 1 && m.l_2 == 2
+        && m.u_0 == 0 && m.u_1 == 1 && m.u_2 == 2 && m.u_3 == 0
+}
+
+public pure fn is_idem_not3(m: FiniteSiteModel3) -> Bool {
+    m.num_cls1 == 3 && m.num_cls2 == 3 && m.base_size == 2
+        && m.rank_bound == 2 && m.actual_rank == 1
+        && is_diag_3x3(m)
+        && m.cl_0 == 0 && m.cl_1 == 1 && m.cl_2 == 1
+        && m.r_meta_0 == 0 && m.r_meta_1 == 1 && m.r_meta_2 == 1
+        && m.l_0 == 0 && m.l_1 == 1 && m.l_2 == 2
+        && m.u_0 == 0 && m.u_1 == 1 && m.u_2 == 2 && m.u_3 == 0
+}
+
+public pure fn is_idem_not4(m: FiniteSiteModel3) -> Bool {
+    m.num_cls1 == 2 && m.num_cls2 == 4 && m.base_size == 4
+        && m.rank_bound == 2 && m.actual_rank == 1
+        && is_diag_3x3(m)
+        && m.cl_0 == 0 && m.cl_1 == 1 && m.cl_2 == 0
+        && m.r_meta_0 == 0 && m.r_meta_1 == 1 && m.r_meta_2 == 0
+        && m.l_0 == 0 && m.l_1 == 1 && m.l_2 == 0
+        && m.u_0 == 0 && m.u_1 == 1 && m.u_2 == 1 && m.u_3 == 1
+}
+
+/// **MSFS Wave 2 (B2-4a):** Joint realizability of (Idem-1)-(Idem-4) via ToyIdemValid.
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-4a — joint realizability of (Idem-1)-(Idem-4) via ToyIdemValid")
+public theorem wave2_b2_idem_joint_realizable(mv: FiniteSiteModel3)
+    requires is_toy_idem_valid(mv)
+    ensures valid_finite_site_model3(mv)
+         && sat_idem1(mv)
+         && sat_idem2(mv)
+         && sat_idem3(mv)
+         && sat_idem4(mv)
+    proof {
+        have h_valid: valid_finite_site_model3(mv) by auto;
+        have h_12: sat_idem1(mv) && sat_idem2(mv) by auto;
+        have h_34: sat_idem3(mv) && sat_idem4(mv) by auto;
+        conclude by auto;
+    };
+
+/// **MSFS Wave 2 (B2-4b):** Mutual logical independence of (Idem-1)-(Idem-4)
+/// via IdemNot1..IdemNot4 countermodels (each failing exactly one clause).
+@verify(formal)
+@framework(msfs, "MSFS Wave 2 B2-4b — mutual non-redundancy of (Idem-1)-(Idem-4) via IdemNot1..IdemNot4")
+public theorem wave2_b2_idem_clauses_independent(
+    m1: FiniteSiteModel3,
+    m2: FiniteSiteModel3,
+    m3: FiniteSiteModel3,
+    m4: FiniteSiteModel3,
+)
+    requires is_idem_not1(m1)
+          && is_idem_not2(m2)
+          && is_idem_not3(m3)
+          && is_idem_not4(m4)
+    ensures valid_finite_site_model3(m1) && !sat_idem1(m1) && sat_idem2(m1) && sat_idem3(m1) && sat_idem4(m1)
+         && valid_finite_site_model3(m2) && sat_idem1(m2) && !sat_idem2(m2) && sat_idem3(m2) && sat_idem4(m2)
+         && valid_finite_site_model3(m3) && sat_idem1(m3) && sat_idem2(m3) && !sat_idem3(m3) && sat_idem4(m3)
+         && valid_finite_site_model3(m4) && sat_idem1(m4) && sat_idem2(m4) && sat_idem3(m4) && !sat_idem4(m4)
+    proof {
+        have h_not1: valid_finite_site_model3(m1) && !sat_idem1(m1) && sat_idem2(m1) && sat_idem3(m1) && sat_idem4(m1) by auto;
+        have h_not2: valid_finite_site_model3(m2) && sat_idem1(m2) && !sat_idem2(m2) && sat_idem3(m2) && sat_idem4(m2) by auto;
+        have h_not3: valid_finite_site_model3(m3) && sat_idem1(m3) && sat_idem2(m3) && !sat_idem3(m3) && sat_idem4(m3) by auto;
+        have h_not4: valid_finite_site_model3(m4) && sat_idem1(m4) && sat_idem2(m4) && sat_idem3(m4) && !sat_idem4(m4) by auto;
+        conclude by auto;
+    };

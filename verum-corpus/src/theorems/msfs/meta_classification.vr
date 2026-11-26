@@ -86,19 +86,20 @@ ensures w.max_1_full_classification()
 // Theorem 9.3 — Meta-Categoricity
 // =============================================================================
 
-/// **MSFS Theorem 9.3 — Meta-Categoricity (paper label `thm:meta-cat`).**
+/// **MSFS Theorem 9.3 — Meta-Categoricity (paper label `thm:meta-cat`, conditional `[С]`).**
 ///
-/// Let `F_1, F_2 ∈ Meta_Cls^⊤` be parametrised by the same `S ∈ \RS`.
-/// Then `F_1 ≃_{(∞,∞)} F_2` via a canonical equivalence constructed
-/// through a common object `F_S^* := St(ρ) / gauge` (Grothendieck
-/// straightening + gauge quotient).
+/// Legacy quarantined stub (`Lifecycle.Postulate("unverified-schematic")`;
+/// carries zero proof-discharge authority and delegates purely for stdlib
+/// namespace compatibility).
 ///
-/// **Five-step proof body** (delegated to the stdlib full form):
-/// 1. Canonical maximal classifier `F_S^*`.
-/// 2. Construct `Φ_F : F → F_S^*` preserving (Cl_F, Aut_2, depth, I_F).
-/// 3. `Φ_F` essentially surjective via (Max-1) + (Max-2).
-/// 4. `Φ_F` fully faithful via (Cl_F, I_F) joint faithfulness.
-/// 5. Lift to (∞,∞) via Whitehead criterion + Theorem A.7.
+/// In `paper-en/paper.tex` §9, `thm:meta-cat` is a CONDITIONAL criterion `[С]`:
+/// given locally small 2-categories `F_1, F_2`, a common target `K`, and supplied
+/// comparison 2-functors `Φ_i : F_i → K` essentially surjective on objects and
+/// inducing equivalences on hom-categories, `F_1 ≃_2 F_2` (refined by
+/// `thm:meta-cat-fib` `[С]` via `(Fib-1)–(Fib-3)` Street 2-fibration lifts).
+/// The former unconditional `F_S^* := St(ρ) / gauge` / Theorem A.7 sketch is
+/// WITHDRAWN (`prop:max-independence-noncat` / `R-11A,B` `[Т]`; constructive
+/// cores in `wave1_meta_independence.vr` and `wave2_meta_fib_categoricity.vr`).
 // UNCERTIFIED STUB (removed @verify(certified) — schematic specification only)
 @accessibility(omega_1)
 @enact(epsilon = "ε_prove")
