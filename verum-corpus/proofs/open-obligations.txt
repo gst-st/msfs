@@ -1,4 +1,4 @@
-MSFS source, formalization and library audit — updated 2026-11-26 (Wave 2 + M8 Lean 4 + B1-B6 Sync)
+MSFS source, formalization and library audit — updated 2026-11-26 (Wave 3 + Axis 4 & Axis 2 §1 + B1-B6 Sync)
 
 Source-paper mathematical defects (O1–O3, plus AFN-T α/β scope, def:SSE/lem:SS-membership-E/thm:dual-afnt,
 universe/cardinality bounds, thm:subsumption, thm:lateral, prop:trajectory-space, prop:no-collapse,
@@ -46,7 +46,11 @@ In verum-corpus:
       7. `src/theorems/msfs/wave2_intensional_i_fragment.vr` (6 theorems, 48/48 proved) — `B5`: `wave2_i_fragment_w2_separation`, `wave2_i_fragment_w1_canonical_inclusion`, `wave2_t233_strict_vs_isocomma`, `wave2_i4a_diamond_no_right_adjoint`, `wave2_i4a_f_bang_breaks_pullback`, `wave2_i4a_strict_pb_bc_failure`.
       8. `src/theorems/msfs/wave2_q2_completeness.vr` (4 theorems, 34/34 proved) — `B6 (Q2)`: `wave2_q2_candidates_plural_nonmax`, `wave2_q2_casm_realizer_obstruction`, `wave2_q2_diagonal_escape_4`, `wave2_q2_relative_completeness_basis4`.
       9. `src/theorems/msfs/wave2_q3_witnesses.vr` (4 theorems, 38/38 proved) — `B6 (Q3)`: `wave2_q3_d3_strong_dialetheia_non_explosive`, `wave2_q3_d3_no_proper_subalgebra`, `wave2_q3_bz2_lawvere_counterexample`, `wave2_q3_precedence_partition_sound`.
-    - Combined Track A (Wave 1 + Wave 2): `13` standalone modules / `55` `@verify(formal)` theorems / `592/592` proved (`158` Wave 1 + `434` Wave 2); `tests/integration/proof_honesty_gate.sh` PASS (`axiom_placeholder = 43` quarantined, `0` ensures-true, `0` unquarantined axioms, `totals.theorem_multi_step = 74`, `by_lineage.msfs.theorem_multi_step = 71`, `by_lineage.msfs.theorem_axiom_only = 20`).
+  - Wave 3 Track A (`src/theorems/msfs/wave3_*.vr`, 2 standalone `Lifecycle.Theorem("v0.3")` modules, 12 `theorem-multi-step` declarations, 0 axioms, 96/96 proved):
+    Both modules have zero `core.math.*` imports, zero `mount` statements, zero `: Bool` struct fields, zero `ensures true`, zero `ensures { let ... }`, zero `let`/`obtain` inside `proof { ... }`, `>= 2` explicit `have`/`conclude` steps per theorem, zero physics prose, are mounted 1-to-1 in `src/theorems/msfs/mod.vr`, and are verified by `tests/test_wave3_proofs.py`:
+      1. `src/theorems/msfs/wave3_certificate_adequacy.vr` (5 theorems, 45/45 proved) — Axis 4 (`A2`/`B4`/`B5`/`R-12`/`R-17`): `wave3_tariff_semilattice_and_diag_pb_obstruction`, `wave3_adeq2cat_conical_noncancellation_and_w2`, `wave3_cm_adeq_1_to_4_independence`, `wave3_letbind_dag_vs_tree_actcost_gap`, `wave3_php_exact_crossovers`.
+      2. `src/theorems/msfs/wave3_left_null_ips.vr` (7 theorems, 51/51 proved) — Axis 2 §1 (pure Left-Null / Bareiss / IPS certificate theory): `wave3_general_left_null_refutation`, `wave3_parametric_bezout_variety_elimination`, `wave3_ordered_tuple_cofactor_left_null`, `wave3_ordered_tuple_cramer_and_sign`, `wave3_pivoted_bareiss_zero_leading_minor`, `wave3_degree1_ips_alggate_bounds`, `wave3_rabinowitsch_parametric_ips_no_inversion`.
+    - Combined Track A (Wave 1 + Wave 2 + Wave 3): `15` standalone modules / `67` `@verify(formal)` theorems / `688/688` proved (`158` Wave 1 + `434` Wave 2 + `96` Wave 3); `tests/integration/proof_honesty_gate.sh` PASS (`axiom_placeholder = 43` quarantined, `0` ensures-true, `0` unquarantined axioms, `totals.theorem_multi_step = 86`, `by_lineage.msfs.theorem_multi_step = 83`, `by_lineage.msfs.theorem_axiom_only = 20`).
   - Wave 1 Track B (`proofs/`, unmounted from `src/lib.vr`):
       1. `proofs/ss-membership/{witness.vr, formal.vr}` (2 theorems, native kernel certificate).
       2. `proofs/afnt-alpha-id/{alpha_zero.vr, lawvere_fp.vr, route1a_retraction.vr}` (3 closed
@@ -55,11 +59,15 @@ In verum-corpus:
          Pi/Id/J/IdElim kernel at universe levels 0, 1, 2; external `verum-source-replay`
          and `noesis` binaries are absent from PATH).
 
-In sibling `math-foundations/lean4-mf-kernel/` (Milestone 8 verified state):
-  - `82` `.lean` modules (including `15` new `B1–B6` modules under `MathFoundations/Metatheory/`),
-    `25,777` `.olean` declarations, `915` `#guard_msgs in #print axioms` checks in `Audit.lean`,
-    `267` zero-axiom theorems, `115` `NonVacuity` witness instances, `0 Classical.choice`,
-    `0 sorry`, `0 admit`, `0 axiom`, `0 : Bool` struct fields, `{propext, Quot.sound}` only.
+In sibling `math-foundations/lean4-mf-kernel/` (Wave 3B verified state — `lake build` 96 jobs EXIT=0, `lean_axiom_audit.py` 7/7):
+  - `94` `.lean` modules (+12 new choice-free modules beyond the 82-module baseline:
+    Axes 1–4 `NullConeQGBoundaries` [67], `LeftNullCertificates` [162], `DyadicIntervalCert` [236], `CertificateAdequacy2Cat` [368];
+    M2 `CutEliminationHerbrand` [1,576], `AsymptoticCircuitBarriers` [921], `ConstructiveTierILifts` [676], `RealArithGodelCoding` [684];
+    M3 `ConstructiveC` [356], `PAdicCore` [407], `ModularFormsCore` [360], `ProofMiningCAT0` [247]),
+    `31,837` `.olean` declarations, `1,027` `#guard_msgs in #print axioms` checks centralized in `Audit.lean`,
+    `280` strictly zero-axiom theorems, `145` `NonVacuity` witness instances, `0 Classical.choice`,
+    `0 sorry`, `0 admit`, `0 axiom`, `0 unsafe`, `0 extern`, `0 native_decide`, `0 Lean.ofReduceBool`,
+    `0 : Bool` struct fields, `{propext, Quot.sound}` only.
 
 Epistemic Status of `B1–B6` (Proved `[Т]` / Conditional `[С]` / Refuted `[✗]` vs. Open `[П]` Barriers) & Remaining Obligations:
   - `(alpha_diag)`: Strong diagonal anti-absoluteness in `thm:afnt-alpha` (ii) and

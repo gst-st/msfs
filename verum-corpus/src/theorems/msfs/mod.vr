@@ -1,12 +1,13 @@
 // =============================================================================
-// STATUS: MIXED — LEGACY STUBS QUARANTINED + WAVE 1 & WAVE 2 CONSTRUCTIVE CORES
+// STATUS: MIXED — LEGACY STUBS QUARANTINED + WAVE 1, WAVE 2, & WAVE 3 CONSTRUCTIVE CORES
 // The 15 legacy schematic modules (`introduction`..`paraconsistent`) remain
 // NON-CERTIFIED SCHEMATIC SPECIFICATIONS / LEGACY STUBS (QUARANTINED) carrying
 // zero proof-discharge authority.
 // The 4 standalone Wave 1 modules (`wave1_meta_independence`,
 // `wave1_grading_separation`, `wave1_dual_enactment_core`,
-// `wave1_diakrisis_2cat_core`) and 9 standalone Wave 2 modules (`wave2_*`)
-// are zero-axiom finite/2-categorical cores machine-checked by `verum check`
+// `wave1_diakrisis_2cat_core`), 9 standalone Wave 2 modules (`wave2_*`), and
+// 2 standalone Wave 3 modules (`wave3_certificate_adequacy`, `wave3_left_null_ips`)
+// are zero-axiom finite/2-categorical/algebraic cores machine-checked by `verum check`
 // and `verum verify`. Track B closed Pi/Id cores live in
 // `proofs/ss-membership/` and `proofs/afnt-alpha-id/`.
 // See `proofs/open-obligations.txt` and `paper-en/paper.tex` Appendix C.
@@ -202,4 +203,22 @@ mount lib.theorems.msfs.wave2_q3_witnesses.{
     wave2_q3_d3_no_proper_subalgebra,
     wave2_q3_bz2_lawvere_counterexample,
     wave2_q3_precedence_partition_sound,
+};
+
+// Wave 3 — Standalone zero-axiom machine-checked constructive cores (Axis 4 & Axis 2 §1)
+mount lib.theorems.msfs.wave3_certificate_adequacy.{
+    wave3_tariff_semilattice_and_diag_pb_obstruction,
+    wave3_adeq2cat_conical_noncancellation_and_w2,
+    wave3_cm_adeq_1_to_4_independence,
+    wave3_letbind_dag_vs_tree_actcost_gap,
+    wave3_php_exact_crossovers,
+};
+mount lib.theorems.msfs.wave3_left_null_ips.{
+    wave3_general_left_null_refutation,
+    wave3_parametric_bezout_variety_elimination,
+    wave3_ordered_tuple_cofactor_left_null,
+    wave3_ordered_tuple_cramer_and_sign,
+    wave3_pivoted_bareiss_zero_leading_minor,
+    wave3_degree1_ips_alggate_bounds,
+    wave3_rabinowitsch_parametric_ips_no_inversion,
 };

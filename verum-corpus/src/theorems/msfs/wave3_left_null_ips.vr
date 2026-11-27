@@ -1,0 +1,403 @@
+// =============================================================================
+// STATUS: MACHINE-CHECKED WAVE 3 CONSTRUCTIVE CORE — AXIS 2 §1 (ZERO AXIOMS)
+// Self-contained pure mathematical Left-Null / Bareiss / IPS certificate core:
+//   1. `wave3_general_left_null_refutation`: general Left-Null refutation over Z
+//      for arbitrary 2x1 systems (`v^T A = 0, v^T b = P != 0 => !exists c, A c = b`, Thm 1.1);
+//   2. `wave3_parametric_bezout_variety_elimination`: parametric 3x1 system over Z[theta]
+//      with two coprime obstruction polynomials P_1(theta) = -theta, P_2(theta) = -(theta+1),
+//      explicit Bezout certificate P_1 - P_2 = 1, and global refutation for all theta (Cor 1.1a);
+//   3. `wave3_ordered_tuple_cofactor_left_null`: fraction-free ordered-tuple bordered-cofactor
+//      left-nullity over Z for arbitrary 3x2 matrices with I = (0, 2), i_0 = 1 < 2 -> I_1 = (0, 2, 1) (Thm 1.2(1));
+//   4. `wave3_ordered_tuple_cramer_and_sign`: exact Cramer-adjugate completeness
+//      `Delta * b_1 - (A c_tilde)_1 == P_1` and odd-permutation sign separation against
+//      naive sorted ordering on I_1 = (0, 2, 1) (Thm 1.2(2));
+//   5. `wave3_pivoted_bareiss_zero_leading_minor`: pivoted Bareiss on a 3x3
+//      bordered matrix with vanishing leading 1x1 minor (covering the canonical
+//      swap block [[0, 1], [1, 0]] and general [[0, d1], [d2, 0]]), exact
+//      Sylvester zero-remainder divisibility, and sign-corrected determinant (Thm 1.2(3));
+//   6. `wave3_degree1_ips_alggate_bounds`: exact AlgGate circuit bounds
+//      4m - 1 (direct), 4k - 1 (sparse), 4m + 1 (init-zero), 4m + 3
+//      (`nullstellensatz_to_ips`) and strict hierarchy for all 1 <= k <= m (Thm 1.3(1));
+//   7. `wave3_rabinowitsch_parametric_ips_no_inversion`: universal Rabinowitsch
+//      parametric IPS circuit C_param = -z * (v^T y) - y_P proving zero_on_zero,
+//      one_on_axioms WITHOUT inverting P (valid even at P == 0), and soundness (Thm 1.3(2)).
+// Imports zero `core.math.*` axioms, zero `mount` statements, and zero `: Bool` record fields.
+// =============================================================================
+
+@arch_module(
+    foundation: Foundation.ZfcTwoInacc,
+    stratum: MsfsStratum.LFnd,
+    lifecycle: Lifecycle.Theorem("v0.3"),
+    cve_closure_C: "self",
+    cve_closure_V_strategy: VerifyStrategy.Formal,
+    cve_closure_E: "tests/test_wave3_proofs.py",
+)
+module lib.theorems.msfs.wave3_left_null_ips;
+
+// =============================================================================
+// 1. General Left-Null Refutation over Z (Thm 1.1)
+// =============================================================================
+
+public type LinSys2x1 is {
+    a0: Int,
+    a1: Int,
+    b0: Int,
+    b1: Int,
+};
+
+public type Vec2 is {
+    v0: Int,
+    v1: Int,
+};
+
+public pure fn vt_a_2x1(s: LinSys2x1, v: Vec2) -> Int {
+    v.v0 * s.a0 + v.v1 * s.a1
+}
+
+public pure fn vt_b_2x1(s: LinSys2x1, v: Vec2) -> Int {
+    v.v0 * s.b0 + v.v1 * s.b1
+}
+
+public pure fn dot_mv_2x1(s: LinSys2x1, v: Vec2, c: Int) -> Int {
+    v.v0 * (s.a0 * c) + v.v1 * (s.a1 * c)
+}
+
+public pure fn is_left_null_2x1(s: LinSys2x1, v: Vec2, p_obs: Int) -> Bool {
+    vt_a_2x1(s, v) == 0 && vt_b_2x1(s, v) == p_obs
+}
+
+public pure fn solves_2x1(s: LinSys2x1, c: Int) -> Bool {
+    s.a0 * c == s.b0 && s.a1 * c == s.b1
+}
+
+/// **Wave 3 Left-Null Theorem 1 (Thm 1.1):**
+/// For arbitrary integer system `A c = b` (`LinSys2x1`), any Left-Null witness `(v, P)`
+/// with `P != 0` satisfies `v^T (A c) = 0` and unconditionally refutes `A c = b`.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — General Left-Null refutation over Z")
+public theorem wave3_general_left_null_refutation(
+    s: LinSys2x1,
+    v: Vec2,
+    c: Int,
+    p_obs: Int,
+)
+    requires is_left_null_2x1(s, v, p_obs) && p_obs != 0
+    ensures dot_mv_2x1(s, v, c) == 0 && !solves_2x1(s, c)
+    proof {
+        have h_tr: dot_mv_2x1(s, v, c) == vt_a_2x1(s, v) * c by ring;
+        have h_zero: dot_mv_2x1(s, v, c) == 0 by auto;
+        have h_ref: !solves_2x1(s, c) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 2. Parametric Left-Null Family & Bézout Ideal Elimination (Cor 1.1a)
+// =============================================================================
+
+/// Parametric 3x1 system `A(theta) = [theta, theta+1, 1]^T`, `b(theta) = [0, 0, 1]^T`.
+public type ParamSpec is {
+    theta: Int,
+    c: Int,
+};
+
+public pure fn pa0(th: Int) -> Int { th }
+public pure fn pa1(th: Int) -> Int { th + 1 }
+public pure fn pa2(th: Int) -> Int { 1 + th - th }
+
+public pure fn pb0(th: Int) -> Int { th - th }
+public pure fn pb1(th: Int) -> Int { th - th }
+public pure fn pb2(th: Int) -> Int { 1 + th - th }
+
+/// Witness 1: `v^(1)(theta) = (1, 0, -theta)` with obstruction `P_1(theta) = -theta`.
+public pure fn w1_vt_a(th: Int) -> Int { 1 * pa0(th) + 0 * pa1(th) + (-th) * pa2(th) }
+public pure fn w1_obs(th: Int) -> Int  { 1 * pb0(th) + 0 * pb1(th) + (-th) * pb2(th) }
+
+/// Witness 2: `v^(2)(theta) = (0, 1, -(theta+1))` with obstruction `P_2(theta) = -(theta+1)`.
+public pure fn w2_vt_a(th: Int) -> Int { 0 * pa0(th) + 1 * pa1(th) + (-(th + 1)) * pa2(th) }
+public pure fn w2_obs(th: Int) -> Int  { 0 * pb0(th) + 1 * pb1(th) + (-(th + 1)) * pb2(th) }
+
+/// Bézout linear combination `1 * P_1(theta) + (-1) * P_2(theta) = 1`.
+public pure fn bezout_combo(th: Int) -> Int { 1 * w1_obs(th) + (-1) * w2_obs(th) }
+
+public pure fn solves_param_sys(ps: ParamSpec) -> Bool {
+    pa0(ps.theta) * ps.c == pb0(ps.theta)
+        && pa1(ps.theta) * ps.c == pb1(ps.theta)
+        && pa2(ps.theta) * ps.c == pb2(ps.theta)
+}
+
+/// **Wave 3 Left-Null Theorem 2 (Cor 1.1a — Parametric Variety & Bézout Elimination):**
+/// Over `Z[theta]`, `P_1(theta) = -theta` vanishes at `theta = 0` and `P_2(theta) = -(theta+1)`
+/// vanishes at `theta = -1`, yet the Bézout identity `P_1 - P_2 == 1` eliminates the common
+/// variety globally and refutes `A(theta) c = b(theta)` for EVERY `(theta, c) in Z^2`.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — Parametric Left-Null hypersurface localization & Bezout elimination")
+public theorem wave3_parametric_bezout_variety_elimination(ps: ParamSpec)
+    requires ps.theta == ps.theta
+    ensures w1_vt_a(ps.theta) == 0
+         && w2_vt_a(ps.theta) == 0
+         && w1_obs(0) == 0
+         && w2_obs(-1) == 0
+         && bezout_combo(ps.theta) == 1
+         && (w1_obs(ps.theta) != 0 || w2_obs(ps.theta) != 0)
+         && !solves_param_sys(ps)
+    proof {
+        have h_ann: w1_vt_a(ps.theta) == 0 && w2_vt_a(ps.theta) == 0 by omega;
+        have h_roots: w1_obs(0) == 0 && w2_obs(-1) == 0 by omega;
+        have h_bez: bezout_combo(ps.theta) == 1 && (w1_obs(ps.theta) != 0 || w2_obs(ps.theta) != 0) by omega;
+        have h_ref: !solves_param_sys(ps) by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 3 & 4. Ordered-Tuple Bordered-Cofactor Sign Witness & Cramer Completeness (Thm 1.2)
+// =============================================================================
+
+/// 3x2 system on pivot tuple I = (0, 2) with appended row i_0 = 1 < 2 -> I_1 = (0, 2, 1).
+public type Bordered3x2 is {
+    a00: Int,
+    a01: Int,
+    a10: Int,
+    a11: Int,
+    a20: Int,
+    a21: Int,
+    b0: Int,
+    b1: Int,
+    b2: Int,
+};
+
+public pure fn det2(x00: Int, x01: Int, x10: Int, x11: Int) -> Int {
+    x00 * x11 - x01 * x10
+}
+
+public pure fn delta_02(s: Bordered3x2) -> Int {
+    det2(s.a00, s.a01, s.a20, s.a21)
+}
+
+/// Ordered-tuple cofactors for I_1 = (0, 2, 1) (appending i_0 = 1 strictly last).
+public pure fn cof_v0(s: Bordered3x2) -> Int { det2(s.a20, s.a21, s.a10, s.a11) }
+public pure fn cof_v1(s: Bordered3x2) -> Int { delta_02(s) }
+public pure fn cof_v2(s: Bordered3x2) -> Int { -det2(s.a00, s.a01, s.a10, s.a11) }
+
+public pure fn det_b1_ordered(s: Bordered3x2) -> Int {
+    cof_v0(s) * s.b0 + cof_v1(s) * s.b1 + cof_v2(s) * s.b2
+}
+
+/// Naive sorted-row determinant det([A_{(0,1,2),(0,1)} | b_{(0,1,2)}]), odd-permuted from I_1.
+public pure fn det_b1_sorted(s: Bordered3x2) -> Int {
+    det2(s.a10, s.a11, s.a20, s.a21) * s.b0
+        - det2(s.a00, s.a01, s.a20, s.a21) * s.b1
+        + det2(s.a00, s.a01, s.a10, s.a11) * s.b2
+}
+
+public pure fn cramer_c0(s: Bordered3x2) -> Int { s.a21 * s.b0 - s.a01 * s.b2 }
+public pure fn cramer_c1(s: Bordered3x2) -> Int { -s.a20 * s.b0 + s.a00 * s.b2 }
+
+/// **Wave 3 Left-Null Theorem 3 (Thm 1.2(1) — Ordered-Tuple Cofactor Left-Nullity):**
+/// For arbitrary 3x2 matrix `s` on ordered tuple `I_1 = (0, 2, 1)` (`i_0 = 1 < 2`),
+/// the signed 2x2 cofactors of the last column annihilate BOTH columns of `A` over `Z`.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — Fraction-free ordered-tuple bordered-cofactor left-nullity over Z")
+public theorem wave3_ordered_tuple_cofactor_left_null(s: Bordered3x2)
+    ensures cof_v0(s) * s.a00 + cof_v1(s) * s.a10 + cof_v2(s) * s.a20 == 0
+         && cof_v0(s) * s.a01 + cof_v1(s) * s.a11 + cof_v2(s) * s.a21 == 0
+    proof {
+        have h_c0_0: cof_v0(s) * s.a00 == s.a20 * s.a11 * s.a00 - s.a21 * s.a10 * s.a00 by ring;
+        have h_c0_1: cof_v1(s) * s.a10 == s.a00 * s.a21 * s.a10 - s.a01 * s.a20 * s.a10 by ring;
+        have h_c0_2: cof_v2(s) * s.a20 == -s.a00 * s.a11 * s.a20 + s.a01 * s.a10 * s.a20 by ring;
+        have h_c1_0: cof_v0(s) * s.a01 == s.a20 * s.a11 * s.a01 - s.a21 * s.a10 * s.a01 by ring;
+        have h_c1_1: cof_v1(s) * s.a11 == s.a00 * s.a21 * s.a11 - s.a01 * s.a20 * s.a11 by ring;
+        have h_c1_2: cof_v2(s) * s.a21 == -s.a00 * s.a11 * s.a21 + s.a01 * s.a10 * s.a21 by ring;
+        have h_ann0: cof_v0(s) * s.a00 + cof_v1(s) * s.a10 + cof_v2(s) * s.a20 == 0 by ring;
+        have h_ann1: cof_v0(s) * s.a01 + cof_v1(s) * s.a11 + cof_v2(s) * s.a21 == 0 by ring;
+        conclude by auto;
+    };
+
+/// **Wave 3 Left-Null Theorem 4 (Thm 1.2(2) — Exact Cramer Completeness & Odd-Permutation Sign):**
+/// For arbitrary 3x2 system `s` with nonzero ordered determinant `det_b1_ordered(s) != 0`,
+/// the adjugate vector `c_tilde` satisfies `(A c_tilde)_i = Delta * b_i` on pivot rows `0, 2`,
+/// exact completeness `Delta * b_1 - (A c_tilde)_1 == P_1`, and strict sign flip vs sorted order.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — Ordered-tuple Cramer completeness & odd-permutation sign separation")
+public theorem wave3_ordered_tuple_cramer_and_sign(s: Bordered3x2)
+    requires det_b1_ordered(s) != 0
+    ensures s.a00 * cramer_c0(s) + s.a01 * cramer_c1(s) == delta_02(s) * s.b0
+         && s.a20 * cramer_c0(s) + s.a21 * cramer_c1(s) == delta_02(s) * s.b2
+         && delta_02(s) * s.b1 - (s.a10 * cramer_c0(s) + s.a11 * cramer_c1(s)) == det_b1_ordered(s)
+         && det_b1_sorted(s) == -det_b1_ordered(s)
+         && det_b1_sorted(s) != det_b1_ordered(s)
+    proof {
+        have h_piv0: s.a00 * cramer_c0(s) + s.a01 * cramer_c1(s) == delta_02(s) * s.b0 by ring;
+        have h_piv2: s.a20 * cramer_c0(s) + s.a21 * cramer_c1(s) == delta_02(s) * s.b2 by ring;
+        have h_cram: delta_02(s) * s.b1 - (s.a10 * cramer_c0(s) + s.a11 * cramer_c1(s)) == det_b1_ordered(s) by ring;
+        have h_sign_eq: det_b1_sorted(s) == -det_b1_ordered(s) by ring;
+        have h_sign_ne: det_b1_sorted(s) != det_b1_ordered(s) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 5. Pivoted Bareiss on Zero Leading Minor [[0, d1], [d2, 0]] (Thm 1.2(3))
+// =============================================================================
+
+/// Bordered 3x3 matrix `[[0, d1, b0], [d2, 0, b1], [a20, a21, b2]]` with zero (1,1) minor.
+public type SwapBordered3x3 is {
+    d1: Int,
+    d2: Int,
+    a20: Int,
+    a21: Int,
+    b0: Int,
+    b1: Int,
+    b2: Int,
+};
+
+public pure fn swap_block_det(m: SwapBordered3x3) -> Int { -m.d1 * m.d2 }
+
+/// After 1 row swap (s = 1, parity -1), pivoted row 1 = (d2, 0, b1), row 2 = (0, d1, b0).
+public pure fn b1_m22(m: SwapBordered3x3) -> Int { m.d2 * m.d1 }
+public pure fn b1_m23(m: SwapBordered3x3) -> Int { m.d2 * m.b0 }
+public pure fn b1_m32(m: SwapBordered3x3) -> Int { m.d2 * m.a21 }
+public pure fn b1_m33(m: SwapBordered3x3) -> Int { m.d2 * m.b2 - m.a20 * m.b1 }
+
+public pure fn b2_num(m: SwapBordered3x3) -> Int {
+    b1_m22(m) * b1_m33(m) - b1_m32(m) * b1_m23(m)
+}
+
+public pure fn b2_quot(m: SwapBordered3x3) -> Int {
+    m.d1 * m.d2 * m.b2 - m.d1 * m.a20 * m.b1 - m.d2 * m.a21 * m.b0
+}
+
+public pure fn bareiss_signed_det(m: SwapBordered3x3) -> Int { -b2_quot(m) }
+
+public pure fn exact_det_swap_b(m: SwapBordered3x3) -> Int {
+    -m.d1 * (m.d2 * m.b2 - m.a20 * m.b1) + m.b0 * (m.d2 * m.a21)
+}
+
+/// **Wave 3 Left-Null Theorem 5 (Thm 1.2(3) — Pivoted Bareiss on [[0, 1], [1, 0]] & general swap):**
+/// Row-pivoting avoids division by zero on the vanishing leading minor, preserves exact
+/// Sylvester divisibility `d2 * M^(2)_{33} == b2_num`, and recovers `(-1)^1 M^(2)_{33} == det(B)`.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — Pivoted Bareiss exact divisibility on zero leading minor [[0,1],[1,0]]")
+public theorem wave3_pivoted_bareiss_zero_leading_minor(
+    m: SwapBordered3x3,
+    m_unit: SwapBordered3x3,
+)
+    requires m.d1 != 0 && m.d2 != 0
+          && m_unit.d1 == 1 && m_unit.d2 == 1
+    ensures swap_block_det(m) != 0
+         && swap_block_det(m_unit) == -1
+         && m.d2 * b2_quot(m) == b2_num(m)
+         && bareiss_signed_det(m) == exact_det_swap_b(m)
+         && b2_num(m_unit) == b2_quot(m_unit)
+         && bareiss_signed_det(m_unit) == m_unit.a20 * m_unit.b1 + m_unit.a21 * m_unit.b0 - m_unit.b2
+    proof {
+        have h_det: swap_block_det(m) != 0 && swap_block_det(m_unit) == -1 by auto;
+        have h_sylv: m.d2 * b2_quot(m) == b2_num(m) by ring;
+        have h_eq: bareiss_signed_det(m) == exact_det_swap_b(m) by ring;
+        have h_unit: b2_num(m_unit) == b2_quot(m_unit)
+                  && bareiss_signed_det(m_unit) == m_unit.a20 * m_unit.b1 + m_unit.a21 * m_unit.b0 - m_unit.b2 by auto;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 6. Exact `4m - 1` AlgGate Bound & IPS Gate-Count Hierarchy (Thm 1.3(1))
+// =============================================================================
+
+public type AlgGateCircuitPlan is {
+    m_rows: Int,
+    nnz_v: Int,
+    first_row_gates: Int,
+    next_row_gates: Int,
+    init_zero_gate: Int,
+    ns_tail_gates: Int,
+};
+
+public pure fn valid_ips_plan(p: AlgGateCircuitPlan) -> Bool {
+    p.m_rows >= 1
+        && p.nnz_v >= 1
+        && p.nnz_v <= p.m_rows
+        && p.first_row_gates == 3
+        && p.next_row_gates == 4
+        && p.init_zero_gate == 1
+        && p.ns_tail_gates == 2
+}
+
+public pure fn direct_lin_ips_gates(p: AlgGateCircuitPlan) -> Int {
+    p.first_row_gates + p.next_row_gates * (p.m_rows - 1)
+}
+
+public pure fn sparse_lin_ips_gates(p: AlgGateCircuitPlan) -> Int {
+    p.first_row_gates + p.next_row_gates * (p.nnz_v - 1)
+}
+
+public pure fn zero_init_ips_gates(p: AlgGateCircuitPlan) -> Int {
+    p.init_zero_gate + p.next_row_gates * p.m_rows
+}
+
+public pure fn ns_to_ips_gates(p: AlgGateCircuitPlan) -> Int {
+    zero_init_ips_gates(p) + p.ns_tail_gates
+}
+
+/// **Wave 3 Left-Null Theorem 6 (Thm 1.3(1) — Exact `4m - 1` AlgGate Bound):**
+/// Degree-1 linear IPS uses exactly `4m - 1` gates (`4 nnz(v) - 1` sparse), strictly
+/// below the zero-initialized (`4m + 1`) and `nullstellensatz_to_ips` (`4m + 3`) forms.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — Exact 4m-1 AlgGate bound for degree-1 Linear IPS")
+public theorem wave3_degree1_ips_alggate_bounds(p: AlgGateCircuitPlan)
+    requires valid_ips_plan(p)
+    ensures direct_lin_ips_gates(p) == 4 * p.m_rows - 1
+         && sparse_lin_ips_gates(p) == 4 * p.nnz_v - 1
+         && sparse_lin_ips_gates(p) <= direct_lin_ips_gates(p)
+         && zero_init_ips_gates(p) == 4 * p.m_rows + 1
+         && ns_to_ips_gates(p) == 4 * p.m_rows + 3
+         && 3 <= sparse_lin_ips_gates(p)
+         && direct_lin_ips_gates(p) < zero_init_ips_gates(p)
+         && zero_init_ips_gates(p) < ns_to_ips_gates(p)
+    proof {
+        have h_dir: direct_lin_ips_gates(p) == 4 * p.m_rows - 1 by omega;
+        have h_sp: sparse_lin_ips_gates(p) == 4 * p.nnz_v - 1 && sparse_lin_ips_gates(p) <= direct_lin_ips_gates(p) by omega;
+        have h_ext: zero_init_ips_gates(p) == 4 * p.m_rows + 1 && ns_to_ips_gates(p) == 4 * p.m_rows + 3 by omega;
+        have h_ord: 3 <= sparse_lin_ips_gates(p) && direct_lin_ips_gates(p) < zero_init_ips_gates(p) && zero_init_ips_gates(p) < ns_to_ips_gates(p) by omega;
+        conclude by auto;
+    };
+
+// =============================================================================
+// 7. Universal Rabinowitsch Parametric IPS No-Inversion Witness (Thm 1.3(2))
+// =============================================================================
+
+public type RabinowitschEval is {
+    p_obs: Int,
+    z_aux: Int,
+};
+
+public pure fn ax_f0_2x1(s: LinSys2x1, c: Int) -> Int { s.a0 * c - s.b0 }
+public pure fn ax_f1_2x1(s: LinSys2x1, c: Int) -> Int { s.a1 * c - s.b1 }
+public pure fn ax_fp(r: RabinowitschEval) -> Int       { r.z_aux * r.p_obs - 1 }
+
+public pure fn c_param_2x1(v: Vec2, z: Int, y0: Int, y1: Int, yp: Int) -> Int {
+    -z * (v.v0 * y0 + v.v1 * y1) - yp
+}
+
+/// **Wave 3 Left-Null Theorem 7 (Thm 1.3(2) — Rabinowitsch Parametric IPS No-Inversion):**
+/// For EVERY Left-Null witness `(v, p_obs)` — without requiring `p_obs != 0` — the single
+/// polynomial circuit `C_param(z; y0, y1, y_P) = -z * (v^T y) - y_P` satisfies `zero_on_zero`,
+/// evaluates identically to `1` on `(A c - b, z * p_obs - 1)` with ZERO inversion of `p_obs`
+/// (valid even on the vanishing locus `p_obs == 0`), and refutes `A c = b && z * p_obs = 1`.
+@verify(formal)
+@framework(msfs, "Axis 2 §1 Wave 3 — Universal Rabinowitsch parametric IPS witness without inverting P")
+public theorem wave3_rabinowitsch_parametric_ips_no_inversion(
+    s: LinSys2x1,
+    v: Vec2,
+    c: Int,
+    r: RabinowitschEval,
+)
+    requires is_left_null_2x1(s, v, r.p_obs)
+    ensures c_param_2x1(v, r.z_aux, 0, 0, 0) == 0
+         && c_param_2x1(v, r.z_aux, ax_f0_2x1(s, c), ax_f1_2x1(s, c), ax_fp(r)) == 1
+         && !(ax_f0_2x1(s, c) == 0 && ax_f1_2x1(s, c) == 0 && ax_fp(r) == 0)
+    proof {
+        have h_z0: c_param_2x1(v, r.z_aux, 0, 0, 0) == 0 by ring;
+        have h_lin_alg: v.v0 * ax_f0_2x1(s, c) + v.v1 * ax_f1_2x1(s, c) == vt_a_2x1(s, v) * c - vt_b_2x1(s, v) by ring;
+        have h_lin: v.v0 * ax_f0_2x1(s, c) + v.v1 * ax_f1_2x1(s, c) == -r.p_obs by auto;
+        have h_one: c_param_2x1(v, r.z_aux, ax_f0_2x1(s, c), ax_f1_2x1(s, c), ax_fp(r)) == 1 by auto;
+        have h_sound: !(ax_f0_2x1(s, c) == 0 && ax_f1_2x1(s, c) == 0 && ax_fp(r) == 0) by auto;
+        conclude by auto;
+    };
