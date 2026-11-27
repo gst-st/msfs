@@ -59,16 +59,17 @@ In verum-corpus:
          Pi/Id/J/IdElim kernel at universe levels 0, 1, 2; external `verum-source-replay`
          and `noesis` binaries are absent from PATH).
 
-In sibling `math-foundations/lean4-mf-kernel/` (Sync 4B verified state — `lake build` 96/96 jobs EXIT=0, `lean_axiom_audit.py` 7/7):
-  - `94` `.lean` modules (+12 new choice-free modules beyond the 82-module baseline:
+In sibling `math-foundations/lean4-mf-kernel/` (Autogeny v2 / M5.1 verified state — `lake build` 109/109 jobs EXIT=0, `lean_axiom_audit.py` 7/7):
+  - `107` `.lean` modules (`32` in `MathFoundations/Autogeny/`, `32/32` = `100%` `NonVacuity` coverage; `+25` new choice-free modules beyond the 82-module baseline:
     Axes 1–4 `NullConeQGBoundaries` [67], `LeftNullCertificates` [322: incl. constructive sparse `AlgDAGCircuit` compiler `left_null_to_sparse_ips` / `left_null_to_active_sparse_ips` achieving `4*nnz(v)-1 <= 4m-1` + 11-gate witness], `DyadicIntervalCert` [413: incl. `FinPerm`, `PivotedSDDCongruenceCert`, `pivoted_sdd_impossible_on_0110`, exact-dyadic `InvertibleSDDCongruenceCert` certifying `n0 = 0` on zero-diagonal `[[0,1],[1,0]]`], `CertificateAdequacy2Cat` [368];
     M2 `CutEliminationHerbrand` [1,576], `AsymptoticCircuitBarriers` [921], `ConstructiveTierILifts` [676], `RealArithGodelCoding` [684: unconditional `[T]` `fullPAAx_nonvacuity_and_refutes_incomplete_countermodel` separated from conditional `[C]` `godel_I_and_II_realPA` on `DiagRepInPA`/`HBLProvability`];
-    M3 `ConstructiveC` [356], `PAdicCore` [407], `ModularFormsCore` [360], `ProofMiningCAT0` [247]),
-    `32,174` compiled `.olean` `env.constants` entries (`7,336` top-level `.lean` source declarations),
-    `1,062` `#guard_msgs in #print axioms` checks centralized in `Audit.lean`,
-    `280` strictly zero-axiom theorems, `149` `NonVacuity` witness instances, `0 Classical.choice`,
+    M3 `ConstructiveC` [356], `PAdicCore` [407], `ModularFormsCore` [360], `ProofMiningCAT0` [247];
+    Autogeny v2 Spine M1–M4 `+13`: `AutReal2` [542], `Autopoiema` [400], `Autoplex` [220], `AutInv` [408], `HigherOrderLibrary` [1,167], `DPOSlottedRewriting` [1,225], `AlgebraicOpenSynthesis` [534], `NonstationaryTracking` [310], `AdaptiveProofMining` [133], `FloatFreeControlBridge` [255], `HolonSheaf` [303], `CausalAlignmentBridge` [50], `AutogenicLanguage` [495]),
+    `38,316` compiled `.olean` `env.constants` entries (`10,606` in `MathFoundations.Autogeny.*`; `8,550` top-level `.lean` source declarations, `2,213` in `Autogeny/`),
+    `1,454` `#guard_msgs in #print axioms` checks centralized in `Audit.lean` (`650` in `Autogeny/`),
+    `342` strictly zero-axiom theorems, `227` `NonVacuity` witness instances (`32/32` `Autogeny/` modules), `0 Classical.choice`,
     `0 sorry`, `0 admit`, `0 axiom`, `0 unsafe`, `0 extern`, `0 native_decide`, `0 Lean.ofReduceBool`,
-    `0 : Bool` struct fields, `{propext, Quot.sound}` only.
+    `0 : Bool` struct fields, `{propext, Quot.sound}` only (also documented in `math-foundations` Part XVIII `docs/18-autogeny/` [35 chapters] and *Foundations of Autogeny* `papers/foundations-of-autogeny/`).
 
 Epistemic Status of `B1–B6` (Proved `[Т]` / Conditional `[С]` / Refuted `[✗]` vs. Open `[П]` Barriers) & Remaining Obligations:
   - `(alpha_diag)`: Strong diagonal anti-absoluteness in `thm:afnt-alpha` (ii) and

@@ -125,9 +125,10 @@ def build(language, output_dir):
         if node["t"] == "Figure":
             attributes, caption, blocks = node["c"]
             # Pandoc's Markdown writer otherwise discards a Figure whose body
-            # is TikZ source rather than an Image. Preserve body AND caption.
+            # is TikZ source rather than an Image. Preserve body AND captions.
+            short_caption = [{"t": "Para", "c": caption[0]}] if caption[0] else []
             node["t"] = "Div"
-            node["c"] = [attributes, blocks + caption[1]]
+            node["c"] = [attributes, blocks + short_caption + caption[1]]
         elif node["t"] == "RawBlock" and node["c"][0] in {"latex", "tex"}:
             content = node["c"][1]
             if content.strip() in {"\\maketitle", "\\newpage", "\\tableofcontents", "\\appendix"}:
@@ -148,11 +149,16 @@ def build(language, output_dir):
     # Keep title/author/abstract in ordinary body Markdown, not hidden metadata.
     title = ast["meta"]["title"]
     title_inline = title["c"] if title["t"] == "MetaInlines" else title["c"][0]["c"]
-    abstract = ast["meta"]["abstract"]
-    abstract_blocks = abstract["c"] if abstract["t"] == "MetaBlocks" else [{"t": "Para", "c": abstract["c"]}]
-    prefix = [{"t": "Header", "c": [1, ["msfs-document", [], []], title_inline]},
-              {"t": "Para", "c": [{"t": "Str", "c": "Max Sereda"}]},
-              {"t": "Header", "c": [2, ["abstract", [], []], [{"t": "Str", "c": "Abstract" if language == "en" else "Аннотация"}]]}]
+    abstract = ast["meta"].get("abstract")
+    if abstract is not None:
+        abstract_blocks = abstract["c"] if abstract["t"] == "MetaBlocks" else [{"t": "Para", "c": abstract["c"]}]
+        prefix = [{"t": "Header", "c": [1, ["msfs-document", [], []], title_inline]},
+                  {"t": "Para", "c": [{"t": "Str", "c": "Max Sereda"}]},
+                  {"t": "Header", "c": [2, ["abstract", [], []], [{"t": "Str", "c": "Abstract" if language == "en" else "Аннотация"}]]}]
+    else:
+        abstract_blocks = []
+        prefix = [{"t": "Header", "c": [1, ["msfs-document", [], []], title_inline]},
+                  {"t": "Para", "c": [{"t": "Str", "c": "Max Sereda"}]}]
     ast["blocks"] = prefix + abstract_blocks + ast["blocks"]
     ast["meta"] = {}
     if [node["c"] for node in nodes(ast) if node["t"] == "Math"] != original_math:
