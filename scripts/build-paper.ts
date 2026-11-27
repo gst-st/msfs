@@ -55,51 +55,57 @@ const MSFS_CONFIG: PaperConfig = {
   title:
     "The Moduli Space of Formal Systems: Classification, Stabilization, and a No-Go Theorem for Absolute Foundations",
   zenodoAbstract: `
-<p>The moduli space of Rich-foundations $\\mathfrak{M}$ is studied as the
-classifying $(\\infty, 2)$-stack of Morita-equivalence classes of formal
-systems. Four structural results establish the interior — plurality at
-the classifier stratum, conditional categoricity at the maximal
-sub-class, slice-local intensional refinement via Hyland's effective
-topos, and theory-level meta-stabilization with universe-ascent — and
-one boundary corollary (AFN-T) establishes that the absolute foundation
-stratum is empty, uniformly across all Rich-metatheories and all
-$(\\infty, n)$-levels. The classical no-go series (Cantor, Russell,
-Gödel, Tarski, Lawvere, Ernst) is subsumed as specializations of the
-boundary lemma.</p>
+<p>This work develops a categorical framework for comparing formal theories,
+type systems, and executable realizations up to interpretation and equivalence:
+the classifying 2-prestack M := F[gauge^-1] (the Moduli Space of Formal
+Systems, MSFS) together with associated 2-categories of resource-bearing
+realizations and proof certificates. Its practical goal is to supply checkable
+criteria for what is preserved—and what is inevitably lost—when theorems,
+specifications, and correctness guarantees are transported across heterogeneous
+formal systems.</p>
 
-<p>Three bypass paths — universe polymorphism, reflective towers,
-intensional refinement through extensional collapse — are formally
-closed. Three pairwise-non-equivalent partial classifiers
-($\\infty$-cosmoi, Univalent Foundations, cohesive higher topoi)
-witness the structural plurality of the classifier stratum.</p>
+<p>Four groups of structural theorems and sharp obstructions are established:
+(i) classification and stabilization boundaries (unconditional refutation of
+unstratified finite-rank meta-closure vs. conditional meta-idempotence below a
+Mahlo threshold); (ii) intensional refinement and tight non-collapsing resource
+gradings (including exponential execution-cost separation via syntactic
+let-sharing at invariant provenance tier); (iii) two-stage theory–realization
+duality (strict 2-categorical Pronk localization and constructive bipushouts vs.
+higher-categorical descent conditions and Gödel II equiconsistency separation);
+and (iv) conical translation adequacy (Adeq2Cat, 4x4 independent validity gates
+CM-Adeq-1..4, diagonal positive-tariff pullback obstruction) together with
+sparse Left-Null to IPS algebraic refutation compilation.</p>
 
-<p>Consistency strength: Con(ZFC + 2 inaccessibles). Bibliography is
-embedded in the source; no BibTeX run required.</p>
+<p>As a boundary consequence, the Absolute Foundation No-Go Theorem (AFN-T)
+establishes that the stratum of formally definable, Morita-irreducible,
+maximally generative foundations is empty—both directly and via Feferman–Pudlák
+diagonalization, with a direct dual among realizations. In practice, the
+framework applies to cross-prover library translation, cost-aware verified
+compilation and refactoring, modular safety-critical specification, and
+soundness auditing of machine-generated proofs. Key finite, 2-categorical,
+resource, and certificate cores are machine-checked without Classical.choice in
+a companion constructive Lean 4 kernel and standalone zero-axiom Verum modules.</p>
 `.trim(),
   zenodoKeywords: [
-    "foundations of mathematics",
     "moduli space of formal systems",
-    "no-go theorems",
+    "formal verification",
+    "translation adequacy",
+    "resource grading",
+    "proof certificates",
     "categorical logic",
     "(∞, n)-categories",
-    "higher topos theory",
-    "classifying 2-stacks",
+    "classifying 2-prestacks",
     "intensional type theory",
     "meta-classification",
-    "univalent foundations",
-    "∞-cosmoi",
-    "cohesive higher topoi",
-    "Lawvere fixed-point theorem",
     "display map categories",
     "bicategory of fractions",
-    "Rich-metatheory",
+    "no-go theorems",
     "AFN-T",
   ],
   zenodoNotes:
-    "Self-contained. Consistency strength: Con(ZFC + 2 inaccessibles). " +
-    "Source LaTeX and compiled PDF are included.",
+    "Self-contained EN/RU preprint with embedded bibliography and companion choice-free Lean 4 / zero-axiom Verum verification ledgers.",
   arxivPrimary: "math.LO",
-  arxivCross: ["math.CT", "math.AG"],
+  arxivCross: ["math.CT", "cs.LO"],
 };
 
 const MSFS_RU_CONFIG: PaperConfig = {
@@ -110,25 +116,31 @@ const MSFS_RU_CONFIG: PaperConfig = {
   title:
     "Пространство модулей формальных систем: Классификация, стабилизация и no-go-теорема для абсолютных оснований",
   zenodoAbstract: `
-<p>Русский 1:1-перевод препринта MSFS: изучается $(\\infty, n)$-категорное
-пространство модулей формальных систем $\\mathfrak{M}$; четыре структурные
-теоремы о его интерьере и граничная теорема AFN-T (страта абсолютных
-оснований пуста, равномерно по пяти осям). Все 65 результатов с полными
-доказательствами; метки синхронизированы с английским оригиналом.</p>
+<p>Русская 1:1-редакция работы MSFS: строится категорный аппарат сравнения
+формальных теорий, систем типов и исполняемых реализаций по модулю интерпретаций
+и эквивалентностей (классифицирующий 2-предстек M := F[gauge^-1], сопряжённые
+2-категории ресурсных реализаций, адекватности трансляции Adeq2Cat и
+алгебраических сертификатов Left-Null/IPS), а также граничная no-go-теорема для
+абсолютных оснований (AFN-T) и её дуал для реализаций. Применима к переносу
+библиотек между пруф-ассистентами, верификации компиляторов с контролем
+стоимости, модульной спецификации критического ПО и аудиту машинных доказательств.
+Ключевые конечные и 2-категорные ядра проверены без Classical.choice в Lean 4 и
+автономных модулях Verum; метки и окружения синхронизированы 1-к-1 с английской версией.</p>
 `.trim(),
   zenodoKeywords: [
     "moduli space of formal systems",
     "MSFS",
     "AFN-T",
-    "no-go theorems",
+    "formal verification",
+    "translation adequacy",
     "categorical logic",
+    "no-go theorems",
     "Russian translation",
   ],
   zenodoNotes:
-    "Russian 1-to-1 translation of the MSFS preprint. " +
-    "Labels are byte-identical to the English original.",
+    "Russian 1-to-1 translation of the MSFS preprint with exact label, environment, figure, and bibliography parity.",
   arxivPrimary: "math.LO",
-  arxivCross: ["math.CT"],
+  arxivCross: ["math.CT", "cs.LO"],
 };
 
 const PAPERS: Record<string, PaperConfig> = {

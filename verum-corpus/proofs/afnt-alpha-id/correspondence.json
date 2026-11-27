@@ -2,19 +2,19 @@
   "profile": "msfs-source-correspondence/1",
   "source": {
     "path": "paper-en/paper.tex",
-    "sha256": "578f6ca5c95d28838a32c8b7f399fd81a7906432a41789c889ccca36f5b0fd2c",
+    "sha256": "48c1349422d67c0bb06273d151aaf36d4959af8c3b25c258e85ecac34f3dfeee",
     "fragments": [
       {
         "anchor": "thm:afnt-alpha",
-        "start": 66701,
-        "end": 68715,
+        "start": 67714,
+        "end": 69728,
         "quote": "\\begin{theorem}[Boundary Lemma: emptiness of $\\LAbs$; AFN-T $(\\alpha)$-part]\\label{thm:afnt-alpha}\nLet $S \\in \\RS$ and $n \\in \\mathbb{N} \\cup \\{\\infty\\}$, and let $X$ be a pointed $(\\infty, n)$-categorical object satisfying $(F_S)$ via $\\iota_F : F \\hookrightarrow S$ and $(\\Syn(F), [\\phi_X]_F) \\simeq_{(\\infty, n)} X$:\n\\begin{enumerate}[nosep,label=(\\roman*)]\n\\item \\emph{Direct / slice-conservative mechanism $(\\alpha_0)$}: whenever the $(F_S)$-presentation is direct ($F = S$) or slice-conservative, already the sub-pair $(F_S) \\wedge (\\Pi_{4, S, n})$ is inconsistent (for every $S \\in \\RS$ and $n \\in \\mathbb{N} \\cup \\{\\infty\\}$, without further hypotheses).\n\\item \\emph{Strong diagonal anti-absoluteness $(\\alpha_{\\mathrm{diag}})$}: suppose in addition that (a) the r.e.\\ axiom set of $S$ is fixed by a canonical $\\Sigma_1$-binumeration $\\sigma_S$ in $\\mathsf{Q}$ (stronger than bare (R4), determining the canonical $\\Pi_1^0$ consistency sentence $\\Con_{\\sigma_S}(S)$), and (b) the composite interpretation $J := \\iota_F \\circ \\tau : \\PA + \\Con_{\\sigma_S}(S) \\to S$ induced by any witness $\\tau$ of $(\\Pi_{3\\text{-max}, S, n})$ is a classical first-order relative interpretation --- or, for intuitionistic, linear, or type-theoretic systems in $\\RS$ (such as $\\MLTT$, $\\CIC$, $\\HoTT$, $\\mathsf{ILL}_{\\mathsf{PA}}$, $\\mathsf{HA}+\\mathsf{MP}$, or topos internal languages from \\S\\ref{sec:rs}), is equipped with an explicit negative translation $(\\cdot)^N$ of classical first-order arithmetic into $S$ together with a primitive-recursive proof-translation (verifiable in $\\PA$) sending classical first-order derivations of $0 = 1$ in the arithmetic pullback to derivations of $\\bot$ in $S$. Then for \\emph{every} faithful subtheory inclusion $\\iota_F : F \\hookrightarrow S$ (without assuming slice-conservativity of $\\Syn(\\iota_F)$, and even if $(\\Pi_{4, S, n})$ is omitted or punctured to exclude self-equivalences), the generative pair $(F_S) \\wedge (\\Pi_{3\\text{-max}, S, n})$ is inconsistent.\n\\end{enumerate}",
         "sha256": "5a78ae68e57fe718e002979420e351f9e8734a4418fdbc7ea5640c636021f3cc"
       },
       {
         "anchor": "thm:dual-afnt",
-        "start": 254809,
-        "end": 256006,
+        "start": 264268,
+        "end": 265465,
         "quote": "\\begin{theorem}[Dual Boundary Lemma; Dual-AFN-T $(\\alpha)$-part]\\label{thm:dual-afnt}\nLet $S \\in \\RS$ and $n \\in \\mathbb{N} \\cup \\{\\infty\\}$, and let $(F, \\cC, \\iota, r) \\in \\cE$ satisfy $(\\tilde{F}_S)$ via faithful relative interpretations $\\iota_F : F \\hookrightarrow F' \\hookrightarrow S$:\n\\begin{enumerate}[nosep,label=(\\roman*)]\n\\item \\emph{Direct / slice-conservative retraction branch}: whenever the presentation satisfies hypotheses (i)--(iii) of Lemma~\\ref{lem:SS-membership-E}, already the sub-pair $(\\tilde{F}_S) \\wedge (\\tilde{\\Pi}_{4, S, n})$ is inconsistent.\n\\item \\emph{General diagonal branch}: whenever $S$ satisfies the canonical $\\Sigma_1$-binumeration and classical relative (or negative-translation plus primitive-recursive proof-translation) hypotheses (a)--(b) of Theorem~\\ref{thm:afnt-alpha}~(ii), the receptive pair $(\\tilde{F}_S) \\wedge (\\tilde{\\Pi}_{3\\text{-max}, S, n})$ is inconsistent for \\emph{every} faithful relative interpretation $F \\hookrightarrow F' \\hookrightarrow S$ (without assuming slice-conservativity, without invoking Lemma~\\ref{lem:SS-membership-E}, and independently of the localization hypotheses of Theorem~\\ref{thm:ac-oc-duality}).\n\\end{enumerate}",
         "sha256": "c2ea87971feff7654c41e00ff0b0da6592438826b93a4f957c9425ecc11bbc72"
       }

@@ -23,6 +23,21 @@
 \usepackage{fancyvrb}
 \usepackage{ragged2e}
 \usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=teal!55!black,
+  urlcolor=blue!60!black,
+  bookmarksopen=true,
+  bookmarksnumbered=true,
+  bookmarksdepth=3,
+  linktoc=all,
+  pdfencoding=auto,
+  pdftitle={The Moduli Space of Formal Systems: Classification, Stabilization, and a No-Go Theorem for Absolute Foundations},
+  pdfauthor={Max Sereda},
+  pdfsubject={Categorical logic, formal verification, moduli space of formal systems, translation adequacy, AFN-T},
+  pdfkeywords={moduli space of formal systems, formal verification, translation adequacy, resource grading, proof certificates, categorical logic, (infinity,n)-categories, no-go theorems}
+}
 \usepackage{xurl}
 \usepackage{tikz}
 \usepackage{tikz-cd}
@@ -102,6 +117,29 @@
 \DeclareMathOperator{\Trace}{Trace}
 \DeclareMathOperator{\dep}{depth}
 
+\makeatletter
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip -1.1cm%
+  \begin{center}%
+    {\Large \@title \par}%
+    \vskip 0.7em%
+    {\@author \par}%
+    \vskip 0.45em%
+    {\@date \par}%
+  \end{center}%
+  \par
+  \vskip 0.35em}
+\makeatother
+
+\renewenvironment{abstract}{%
+  \small
+  \begin{center}\bfseries \abstractname\end{center}\vspace{-0.55em}%
+  \list{}{\leftmargin=0.45em \rightmargin=0.45em \topsep=0pt \partopsep=0pt \parsep=1.5pt \listparindent=1.2em}%
+  \item\relax
+}{\endlist}
+
 \title{The Moduli Space of Formal Systems:\\
 Classification, Stabilization, and a No-Go Theorem for Absolute Foundations}
 
@@ -117,22 +155,20 @@ Classification, Stabilization, and a No-Go Theorem for Absolute Foundations}
 \maketitle
 
 \begin{abstract}
-I study the $(\infty, n)$-categorical moduli space $\fM$ of formal systems (hereafter \textbf{MSFS}): the classifying $2$-stack of Morita-equivalence classes of Rich-foundations ($\LFnd$ theories satisfying (R1)--(R5)). I distinguish structural constructions, conditional comparison criteria, open stabilization obligations, and a relative boundary lemma.
+This work develops a categorical framework for comparing formal theories, type systems, and executable realizations up to interpretation and equivalence: the classifying $2$-prestack $\fM := \cF[\mathrm{gauge}^{-1}]$ (the \emph{Moduli Space of Formal Systems}, \textbf{MSFS}) together with associated $2$-categories of resource-bearing realizations and proof certificates. Its practical goal is to supply checkable criteria for what is preserved---and what is inevitably lost---when theorems, specifications, and correctness guarantees are transported across heterogeneous formal systems.
 
-\emph{(i) Conditional plurality at $\LCls$.} Classifiers over a common base with distinct essential classification images cannot be equivalent over that base. Applying this criterion to $\infty$-cosmoi, Univalent Foundations, and cohesive frameworks requires explicit classifiers and verification of their images.
+Four groups of structural theorems and sharp obstructions are established:
+\emph{(i)~Classification and stabilization:} unstratified finite-rank meta-closure inside any fixed Grothendieck universe is unconditionally refuted, whereas conditional meta-idempotence holds under accessible stratification and a reflecting universe below a Mahlo threshold; classifier comparison and plurality criteria are stated with explicit lifting hypotheses.
+\emph{(ii)~Intensional refinement and resource grading:} any display filtration generated solely by equivalences collapses at grade zero, whereas directed $2$-cells on the $\MLTT$ fragment, explicit resource models, and non-thin display $2$-categories yield tight non-collapsing cost scales; in particular, syntactic term sharing (\texttt{let}-binding) exponentially separates execution cost while keeping the axiomatic provenance tier invariant.
+\emph{(iii)~Two-stage theory--realization duality (AC/OC):} before localization, the adjunction between theories and pointed reflective enactments is strictly asymmetric because the fibre over a single theory retains distinct semantic models and resource budgets; at the strict $2$-categorical level (via Pronk fractions) and on accessible $(\infty, 1)$-fragments, localization unconditionally yields $\fM \simeq \fM_\cE$ and constructive bipushouts, while for $n \ge 2$ it remains conditional and definitional conservativity separates strictly from G\"odel~II equiconsistency.
+\emph{(iv)~Translation adequacy and algebraic certificates:} we construct a conical $2$-category of translation adequacy with a non-cancelling drift pair, four mutually independent validity components, and a diagonal pullback obstruction at every positive provenance tier, alongside a constructive compilation of algebraic left-null witnesses into sparse ideal-proof-system ($\mathrm{IPS}$) refutations.
 
-\emph{(ii) Conditional meta-categoricity.} Comparison with a common classifier gives a biequivalence when essential surjectivity and equivalences on all hom-categories are supplied. Deriving these lifting conditions from (Max-1)--(Max-4) remains open.
+As a boundary consequence, we prove the \emph{Absolute Foundation No-Go Theorem} (\textbf{AFN-T}): the stratum $\LAbs$ of formally definable, Morita-irreducible, maximally generative foundations is empty---both via a direct slice-conservative identity argument and, for arbitrary faithful subtheory inclusions, via a diagonal argument using the Feferman--Pudl\'ak form of G\"odel's Second Incompleteness Theorem; dually, $\LAbs^\cE = \emptyset$ holds directly among realizations. Rather than restricting the creation of new formalisms, this boundary establishes why no single final formalism can subsume all others and motivates explicit multi-formal transport contracts.
 
-\emph{(iii) Conditional intensional refinement.} A supplied compatible comparison makes a refinement fibre over its chosen base image. An ordinary slice construction exists, but its equivalence-generated display filtration collapses at grade zero. On the syntactic fragment $\mathcal{F}_{\MLTT}$, Theorem~\ref{thm:I-fragment} constructively discharges \textup{(I-1)--(I-3)} via directed $2$-cells \textup{(W2)}, while Proposition~\ref{prop:resource-grading-model} and Remark~\ref{rem:grading-open} exhibit non-collapsing resource and strict $2$-categorical gradings; global \textup{(I-4)} decomposes into proved bridges, sharp variance/collapse obstructions, and remaining open frontiers (Remark~\ref{rem:I4-isolation}).
-
-\emph{(iv) Meta-stabilization problem.} Unstratified finite-rank closure inside any fixed universe $\mathbf{U}_n$ is unconditionally refuted (Theorem~\ref{thm:b2-finite-rank-nogo}), and fixed-finite-$n$ unicity does not yield stabilization. Under $\lambda$-accessible stratification, a reflecting universe below a Mahlo threshold, and \textup{(Idem-1)--(Idem-4)}, idempotency holds conditionally (Theorem~\ref{thm:meta-conditional-idem}), while universal meta-stabilization remains open (Remark~\ref{thm:meta-stab}).
-
-\emph{(v) Two-stage AC/OC duality.} Before localization, the section--forgetful adjunction $\varepsilon \dashv \alpha$ between theories and pointed reflective enactments is strictly asymmetric ($\alpha \circ \varepsilon = \id_\cF$, while each enactment fibre $\alpha^{-1}(F)$ retains distinct semantic realizations and resource budgets). At the strict $2$-categorical level (for any computably equivalence-equipped base) and on $\kappa$-accessible $(\infty, 1)$-fragments, inverting reflection morphisms yields $\fM \simeq \fM_\cE$ unconditionally, and non-cyclic $\mathrm{Perf}$ lifts constructively to $2$-categorical bipushouts; at $(\infty, n)$ ($n \ge 2$), localization and $\mathrm{Perf}$ remain conditional on saturation and homotopy-pullback descent, and definitional conservativity \textup{(O-AC5a)} separates sharply from G\"odel~II equiconsistency \textup{(O-AC5b)}. Independently of localization, the Dual Boundary Lemma $\LAbs^\cE = \emptyset$ holds directly in $\cE$.
-
-\emph{Boundary corollary: the Absolute Foundation No-Go Theorem (AFN-T).} The defined $\LAbs$ stratum (formally definable, non-reducible, and maximally generative foundation) is empty --- both via the direct/slice-conservative identity mechanism $(\alpha_0)$ across all $S \in \RS$ and, for arbitrary faithful subtheory inclusions $\iota_F : F \hookrightarrow S$, via strong diagonal anti-absoluteness $(\alpha_{\mathrm{diag}})$ under a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative interpretability. AFN-T stands alongside the classical no-go series Cantor~\cite{Cantor1891}, Russell~\cite{Russell1903}, G\"odel~\cite{Godel1931}, Tarski~\cite{Tarski1936}, Lawvere~\cite{Lawvere1969}, Ernst~\cite{Ernst2015} as a categorical boundary schema (without reproving their domain-specific diagonals) and extends dually to the enactment-absolute stratum $\LAbs^\cE$.
+In practice, the framework applies to cross-prover library translation and audit, cost-aware verified compilation and program refactoring, modular specification of safety-critical software, and soundness auditing of machine-generated proofs (guarding against specification drift). The finite, strict $2$-categorical, resource-grading, and certificate cores are machine-checked without \texttt{Classical.choice} in a companion constructive Lean~4 kernel and standalone zero-axiom Verum modules, with proved theorems explicitly separated from conditional criteria and open higher-categorical obligations.
 
 \smallskip
-\noindent\textbf{Keywords:} moduli space of formal systems, classifying $2$-stacks, categorical logic, $(\infty, n)$-categories, higher topos theory, intensional type theory, meta-classification, effective topos, no-go theorems.
+\noindent\textbf{Keywords:} moduli space of formal systems, formal verification, translation adequacy, resource grading, proof certificates, categorical logic, $(\infty, n)$-categories, classifying $2$-prestacks, intensional type theory, no-go theorems.
 
 \smallskip
 \noindent\textbf{MSC2020:} 03A05, 03B30, 03C45, 03F40, 18A05, 18N10, 18N50, 18N60, 18N65.
@@ -141,6 +177,8 @@ I study the $(\infty, n)$-categorical moduli space $\fM$ of formal systems (here
 
 \newpage
 \tableofcontents
+\smallskip
+\listoffigures
 \newpage
 
 \section{Introduction}
@@ -238,10 +276,10 @@ I stratify $\fM$ into four formal strata distinguished by the two structurally d
 \draw[horizmeta] (L5.north) -- (L5plus.south) node[midway, right, font=\scriptsize, blue!60!black] {$\,\mathrm{Cls}$};
 \draw[novelty] (L5plus.north) -- (L5max.south) node[midway, right, font=\scriptsize] {$\,\mathrm{max}$};
 \draw[vertmeta] (L5max.north) -- (L6.south) node[midway, right, font=\scriptsize, red] {$\,\mathrm{Gen}$};
-\draw[red, very thick] ($(L6.north west)+(0.4,-0.2)$) -- ($(L6.south east)+(-0.4,0.2)$);
-\draw[red, very thick] ($(L6.north east)+(-0.4,-0.2)$) -- ($(L6.south west)+(0.4,0.2)$);
+\draw[red!65, line width=1.1pt, opacity=0.35] ($(L6.north west)+(0.25,-0.12)$) -- ($(L6.south east)+(-0.25,0.12)$);
+\draw[red!65, line width=1.1pt, opacity=0.35] ($(L6.north east)+(-0.25,-0.12)$) -- ($(L6.south west)+(0.25,0.12)$);
 \end{tikzpicture}
-\caption{The proposed formal stratification of $\fM$. Classification and maximal generation are distinct operations. The maximality conditions define $\LClsMax\subseteq\LCls$; they do not by themselves prove categoricity, existence of maximal classifiers, or strictness of the inclusion. The AFN-T argument excludes the explicitly defined $\LAbs$ conjunction. Transport of coarse moduli equivalence to enactment-centric moduli is conditional on the comparison and localization data of Theorem~\ref{thm:ac-oc-duality}, whereas $\LAbsE = \emptyset$ holds directly in $\cE$ (Theorem~\ref{thm:dual-afnt}).}
+\caption[Formal stratification of the moduli space $\fM$]{The proposed formal stratification of $\fM$. Classification and maximal generation are distinct operations. The maximality conditions define $\LClsMax\subseteq\LCls$; they do not by themselves prove categoricity, existence of maximal classifiers, or strictness of the inclusion. The AFN-T argument excludes the explicitly defined $\LAbs$ conjunction. Transport of coarse moduli equivalence to enactment-centric moduli is conditional on the comparison and localization data of Theorem~\ref{thm:ac-oc-duality}, whereas $\LAbsE = \emptyset$ holds directly in $\cE$ (Theorem~\ref{thm:dual-afnt}).}
 \label{fig:hierarchy}
 \end{figure}
 
@@ -628,11 +666,11 @@ I call this the \emph{five-axis absoluteness} property of AFN-T. Figure~\ref{fig
 \draw[axis] (C) -- (M);
 \draw[axis] (C) -- (L);
 \draw[axis] (C) -- (K);
-\draw[dep] (K.west) to[bend right=12] node[pos=0.35, above right=2pt and 6pt, font=\scriptsize, text=gray, inner sep=1pt] {subsumes} (H.east);
-\draw[dep] (L.south) to[bend left=20] node[midway, right, font=\scriptsize, text=gray, inner sep=1pt] {$\sim$ vertical} (V.east);
-\draw[dep] (M.south) to[bend right=20] node[midway, left, font=\scriptsize, text=gray, inner sep=1pt] {$\mu$-closure} (V.west);
+\draw[dep] (K.west) to[bend right=18] node[pos=0.48, above=5pt, fill=white, font=\scriptsize, text=gray!80!black, inner sep=1.5pt] {subsumes} (H.east);
+\draw[dep] (L.south) to[bend left=22] node[midway, below right=2pt and 3pt, fill=white, font=\scriptsize, text=gray!80!black, inner sep=1.5pt] {$\sim$ vertical} (V.east);
+\draw[dep] (M.south) to[bend right=22] node[midway, below left=2pt and 3pt, fill=white, font=\scriptsize, text=gray!80!black, inner sep=1.5pt] {$\mu$-closure} (V.west);
 \end{tikzpicture}
-\caption{Five proposed axes of variation. The relative identity obstruction applies at each stage where its definability and categorical hypotheses have been established. The diagram does not prove that these axes exhaust all extensions or that meta-vertical iteration is a stabilized closure of finite categorical levels. Those are additional construction and scope obligations.}
+\caption[Five axes of variation and structural dependencies]{Five proposed axes of variation. The relative identity obstruction applies at each stage where its definability and categorical hypotheses have been established. The diagram does not prove that these axes exhaust all extensions or that meta-vertical iteration is a stabilized closure of finite categorical levels. Those are additional construction and scope obligations.}
 \label{fig:five-axis}
 \end{figure}
 
@@ -936,6 +974,43 @@ satisfying $C_{\mathrm{param}}(\cdot; \vec{0}, 0) \equiv 0$ and $C_{\mathrm{para
 For (i), if $\varphi(A)c = \varphi(b)$, ring-homomorphism linearity and finite-sum reindexing yield $\varphi(P) = \varphi(v^\top b) = \varphi(v)^\top \varphi(A) c = \varphi(v^\top A) c = 0_S$, contradicting $\varphi(P) \neq 0_S$; under $\sum U_k P^{(k)} = \Delta$, vanishing of all $\varphi(P^{(k)})$ forces $\varphi(\Delta) = 0_S$. For (ii), expanding $\det([A_{I_{i_0}, J} \mid A_{I_{i_0}, j}])$ along its last column equals $(v^{(i_0)\top} A)_j$ because row $i_0$ sits at position $r+1$ in $I_{i_0}$, vanishing for $j \in J$ by repeated columns and for $j \notin J$ by $\operatorname{rank}_{\mathrm{Frac}(D)}(A) = r$; subtracting $v^{(i_0)\top}(A\tilde{c}) = 0$ from $\Delta P_{i_0}$ and cancelling $\Delta \neq 0_D$ in the domain $D$ gives $\Delta b_{i_0} - (A\tilde{c})_{i_0} = P_{i_0}$; row-pivoting within $\{1,\dots,r\}$ preserves $\det(A_{I,J}) \neq 0_D$ so Sylvester's determinant identity makes every Bareiss division exact in $D$ with final value $(-1)^s \det(B_{i_0})$. For (iii), over the four-gate basis $\{\mathrm{gConst}, \mathrm{gVar}, \mathrm{gMul}, \mathrm{gAdd}\}$ (no dedicated scalar-multiply gate), the first nonzero row uses $3$ gates and each remaining row uses $4$ gates, giving $3 + 4(m-1) = 4m - 1$ (resp.\ $4\operatorname{nnz}(v) - 1$); substituting $y_i = f_i$ and $y_P = z P(\vec{\theta}) - 1$ into $C_{\mathrm{param}}$ yields $-z(0 - P(\vec{\theta})) - (z P(\vec{\theta}) - 1) = 1$ identically with zero division by $P(\vec{\theta})$.
 \end{proof}
 
+\begin{figure}[ht]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2.5pt, align=center, font=\footnotesize, inner sep=4.5pt},
+  hdr/.style={font=\bfseries\small, align=center},
+  arr/.style={-{Stealth[length=2.2mm]}, thick},
+  darr/.style={-{Stealth[length=2.2mm]}, thick, blue!55!black, densely dashed},
+  panel/.style={draw=gray!50, rounded corners=4pt, inner sep=7pt}
+]
+% Left panel: CertSys2Cat & letBind separation (strict relative positioning)
+\node[box, fill=yellow!12, text width=3.35cm, minimum height=1.25cm, anchor=north] (TDAG) at (-6.45, 0) {$T_{\mathrm{DAG}}(k)$ (\texttt{letBind}) \\[-1pt] \scriptsize $\mathrm{pvSteps} = 4k+1$};
+\node[box, fill=red!6, text width=3.35cm, minimum height=1.25cm, anchor=north] (TTREE) at (-2.55, 0) {$U(k)$ (unfolded tree) \\[-1pt] \scriptsize $\mathrm{pvSteps} = 2^{k+1}-1$};
+\node[hdr, above=0.30cm of {$(TDAG.north)!0.5!(TTREE.north)$}] (LH) {$\mathbf{CertSys2Cat}$: orthogonal cost vs.\ tariff};
+\node[box, fill=blue!6, text width=7.25cm, below=0.45cm of {$(TDAG.south)!0.5!(TTREE.south)$}, anchor=north] (REIF) {Identical shadow $\mathsf{Reif} = P_2$ \& same $\mathrm{evalPV} = 2^k \rho(0)$ \\[-1pt] \scriptsize \textbf{Invariant:} $\mathrm{TariffTier} \in \mathcal{T}_{12}$ \;\textbar\; \textbf{Separated:} $\mathbf{ActEnv}_{4k+1}$ ($k \ge 4$)};
+\node[box, fill=violet!8, text width=7.25cm, below=0.45cm of REIF] (LAX) {$\mathcal{K}_{\mathrm{free}}$ strict vs.\ $\mathcal{K}_{\mathrm{opt}}$ normal lax ($p^*(g\circ f) \le p^*(g)\circ p^*(f)$) \\[-1pt] \scriptsize $\mathrm{Frege} \to \mathrm{EF} \to \mathrm{IPS}_{\mathsf{CQ}}$ ($O(n^3)$) vs.\ no poly $\mathrm{IPS} \to \mathrm{DAGRes}$ ($2^{\Omega(s^{1/3})}$)};
+\draw[arr] (TDAG.south) -- (REIF.north -| TDAG.south);
+\draw[arr] (TTREE.south) -- (REIF.north -| TTREE.south);
+\draw[darr] (REIF.south) -- (LAX.north);
+\node[panel, fit=(LH)(TDAG)(TTREE)(REIF)(LAX)] {};
+
+% Right panel: Left-Null -> Bareiss -> Sparse IPS (strict relative positioning)
+\node[box, fill=green!10, text width=7.25cm, minimum height=1.25cm, anchor=north] (SYS) at (4.50, 0) {Linear / parametric system $A(\vec{\theta})c = b(\vec{\theta})$ over domain $D$};
+\node[hdr, above=0.30cm of SYS.north] (RH) {Choice-free Left-Null $\to$ Sparse $\mathrm{IPS}$};
+\node[box, fill=blue!6, text width=7.25cm, below=0.45cm of SYS] (WIT) {Pivoted Bareiss / ordered-tuple cofactors ($O(r^3)$ in $D$) \\[-1pt] \scriptsize witness $(v, P)$: $v^\top A = 0$,\; $v^\top b = P \neq 0$ (B\'ezout clears $V(P)$)};
+\node[box, fill=teal!10, text width=3.35cm, minimum height=1.45cm, below=0.45cm of WIT.south west, anchor=north west] (SP) {Pointwise sparse $\mathrm{IPS}$ \\[-1pt] \scriptsize $\mathrm{AlgDAGCircuit}$ size \\[-1pt] \scriptsize $= 4\operatorname{nnz}(v)-1 \le 4m-1$};
+\node[box, fill=violet!8, text width=3.35cm, minimum height=1.45cm, below=0.45cm of WIT.south east, anchor=north east] (RP) {Rabinowitsch $C_{\mathrm{param}}$ \\[-1pt] \scriptsize $-z\sum v_i y_i - y_P \equiv 1$ \\[-1pt] \scriptsize zero inversion of $P(\vec{\theta})$};
+\draw[arr] (SYS.south) -- (WIT.north);
+\draw[arr] (WIT.south -| SP.north) -- (SP.north);
+\draw[arr] (WIT.south -| RP.north) -- (RP.north);
+\node[panel, fit=(RH)(SYS)(WIT)(SP)(RP)] {};
+\end{tikzpicture}%
+}
+\caption[Cost-tariff certificate $2$-category $\mathbf{CertSys2Cat}$ and Left-Null $\to$ Sparse $\mathrm{IPS}$ pipeline]{Cost-tariff certificate $2$-category $\mathbf{CertSys2Cat}$ and choice-free algebraic refutation pipeline (Theorems~\ref{thm:cert-sys-2cat-and-sharing} and~\ref{thm:left-null-bareiss-ips}). \emph{Left:} syntactic term sharing (\texttt{letBind}) separates execution cost $\mathbf{ActEnv}_n$ exponentially while preserving the observable shadow $\mathsf{Reif}$ and the axiomatic tier $\mathcal{T}_{12}$, alongside strict vs.\ normal-lax overhead coupling and $\mathrm{PHP}_n^{n+1}$ proof-complexity barriers. \emph{Right:} fraction-free Bareiss/Left-Null witnesses compile directly into sparse degree-$1$ $\mathrm{IPS}$ circuits of exact size $4\operatorname{nnz}(v)-1$ and division-free parametric Rabinowitsch refutations.}
+\label{fig:cert-leftnull-2cat}
+\end{figure}
+
 \subsection{Bypass Exhaustiveness Boundary}\label{sec:bypass-boundary}
 
 \begin{theorem}[Eight-class bypass exhaustiveness boundary, precedence partition, and open frontiers]\label{thm:q3-exhaustiveness-boundary}
@@ -1228,7 +1303,7 @@ Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\
 \node[stack] (ME) at (3.6, 1.6) {$\fME$ \\[-1pt] \scriptsize\itshape $= \cE / \mathrm{gauge}_\cE$};
 \draw[func, dashed, gray!60!black] (F) -- node[midway, left, font=\scriptsize, gray!60!black] {quotient} (M);
 \draw[func, dashed, gray!60!black] (E) -- node[midway, right, font=\scriptsize, gray!60!black] {quotient} (ME);
-\draw[equiv] (M.east) -- node[midway, above, font=\footnotesize] {$\simeq$ (cond.)} node[midway, below, font=\scriptsize, gray!60!black] {Thm.~\ref{thm:ac-oc-duality}} (ME.west);
+\draw[equiv] (M.east) -- node[midway, above=2pt, font=\footnotesize] {$\simeq$ (cond.)} node[midway, below=3pt, font=\scriptsize, gray!60!black] {Thm.~\ref{thm:ac-oc-duality}} (ME.west);
 
 % Bottom rows: strata correspondence
 \node[strat] (L5F) at (-3.6, 0.3) {$\LFnd$};
@@ -1243,7 +1318,7 @@ Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\
 \draw[equiv, gray!50!black, shorten >=2pt, shorten <=2pt] (L5F) -- (L5E);
 \draw[equiv, gray!50!black, shorten >=2pt, shorten <=2pt] (LCF) -- (LCE);
 \draw[equiv, gray!50!black, shorten >=2pt, shorten <=2pt] (LMF) -- (LME);
-\draw[equiv, red!60!black, shorten >=2pt, shorten <=2pt] (L6F) -- node[midway, above, font=\scriptsize, red!60!black] {Thm.~\ref{thm:dual-afnt}} (L6E);
+\draw[equiv, red!60!black, shorten >=2pt, shorten <=2pt] (L6F) -- node[midway, above=2pt, font=\scriptsize, red!60!black] {Thm.~\ref{thm:dual-afnt}} (L6E);
 
 % Connect stacks to strata
 \draw[gray!40, densely dotted] (M.south) -- (L5F.north);
@@ -1256,7 +1331,7 @@ Comparing theory-centric foundations $\cF$ with pointed reflective enactments $\
 \draw[gray!40, densely dotted] (LME.south) -- (L6E.north);
 
 \end{tikzpicture}
-\caption{Two-stage AC/OC architecture. At the $2$-category level before localization (top row), the asymmetric adjoint pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) embeds theory-centric $\cF$ into enactment-centric $\cE$ as a coreflective section ($\alpha \circ \varepsilon = \id_\cF$ strictly), while each enactment fiber $\alpha^{-1}(F)$ carries non-isomorphic realizations and operational costs: the counit $(\id_F, \iota) : \varepsilon(F) \to E$ of $\varepsilon \dashv \alpha$ and the retraction $(\id_F, r) : E \to \varepsilon(F)$ satisfy $(\id_F, r) \circ (\id_F, \iota) \simeq \id_{\varepsilon(F)}$, whereas the internal reflector unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ is not invertible in $\cE$. Passing to localized moduli (middle row), whenever the localization and descent hypotheses of Theorem~\ref{thm:ac-oc-duality} hold at a specified categorical level, inverting $\mathcal{R}_\cE$ collapses each fiber $\alpha^{-1}(F)$ onto $\varepsilon(F)$ and yields a coarse equivalence $\fM \simeq \fME$ under which invariant strata correspond (bottom rows). Regardless of localization, $\LAbs = \emptyset$ and $\LAbsE = \emptyset$ hold directly within the scope of Theorems~\ref{thm:afnt-alpha} and~\ref{thm:dual-afnt}.}
+\caption[Two-stage AC/OC theory--realization duality architecture]{Two-stage AC/OC architecture. At the $2$-category level before localization (top row), the asymmetric adjoint pair $\varepsilon \dashv \alpha$ (Definition~\ref{def:enactments}) embeds theory-centric $\cF$ into enactment-centric $\cE$ as a coreflective section ($\alpha \circ \varepsilon = \id_\cF$ strictly), while each enactment fiber $\alpha^{-1}(F)$ carries non-isomorphic realizations and operational costs: the counit $(\id_F, \iota) : \varepsilon(F) \to E$ of $\varepsilon \dashv \alpha$ and the retraction $(\id_F, r) : E \to \varepsilon(F)$ satisfy $(\id_F, r) \circ (\id_F, \iota) \simeq \id_{\varepsilon(F)}$, whereas the internal reflector unit $\eta_r : \id_\cC \Rightarrow \iota \circ r$ is not invertible in $\cE$. Passing to localized moduli (middle row), whenever the localization and descent hypotheses of Theorem~\ref{thm:ac-oc-duality} hold at a specified categorical level, inverting $\mathcal{R}_\cE$ collapses each fiber $\alpha^{-1}(F)$ onto $\varepsilon(F)$ and yields a coarse equivalence $\fM \simeq \fME$ under which invariant strata correspond (bottom rows). Regardless of localization, $\LAbs = \emptyset$ and $\LAbsE = \emptyset$ hold directly within the scope of Theorems~\ref{thm:afnt-alpha} and~\ref{thm:dual-afnt}.}
 \label{fig:ac-oc-duality}
 \end{figure}
 
@@ -1422,6 +1497,42 @@ Formally refine the translation-adequacy barrier of Theorem~\ref{thm:cert-inv-se
 For (i), composing \textup{(C1)}, $\pi$, and \textup{(C3)} gives runtime soundness, \textup{(C2)} gives realizability, and \textup{(C4)} paired with \textup{(C1)} gives both $\neg\forall r\,\mathrm{Conc}_R(r)$ and $\neg\mathrm{Hyp}_R(r_{\mathrm{adv}})$; the four finite models \texttt{CM-Adeq-1} (offset $\delta = +1$ on $\mathrm{Fin}\,4$), \texttt{CM-Adeq-2} (empty antecedent on $\mathrm{Fin}\,2$), \texttt{CM-Adeq-3} (forged proxy $1 \le b$ vs.\ $2 \le b$ on $\mathrm{Fin}\,4$), and \texttt{CM-Adeq-4} (tautological conclusion $0 \le x$ on $\mathrm{Fin}\,2$) each satisfy $\mathrm{Kernel} = \mathrm{PASS}$ and three components while breaking the fourth and its runtime guarantee. For (ii), conicality $a + b = 0 \implies a = b = 0$ in $\mathbb{N}$ composes the adequacy guard and forbids any $2$-cell between $(1,0)$ and $(0,1)$ or from $(0,0)$ into $(1,1)$, while $\mathsf{OpaqueAI} \sqcup t = \mathsf{OpaqueAI}$ absorbs tariffs. For (iii), $\mathcal{D}_{\mathrm{adeq}}^{\mathrm{strict}}$ pulls back strictly on $\{(x,z) \mid f(x) = d(z)\}$ with inherited $(H_1, C_1, \tau_{0,1})$ and unique mediating $1$- and $2$-cells. For the diagonal obstruction on $t \neq \mathsf{LinAct}$, suppose $(\mathrm{PB}, \pi_1, \pi_2)$ were a strict $2$-pullback of $(F_t, F_t)$: applying the universal property to Cone~1 $(u_1, v_1) = (\id_{S_0}, \id_{S_0})$ yields $k_1.\mathrm{tier} \sqcup \pi_i.\mathrm{tier} = \mathsf{LinAct}$, forcing $\pi_1.\mathrm{tier} = \pi_2.\mathrm{tier} = \mathsf{LinAct}$; applying it to Cone~2 $(u_2, v_2) = (\id_{S_0}, F_t)$ (which commutes strictly by join idempotence $\mathsf{LinAct} \sqcup t = t = t \sqcup t$) forces $k_2.\mathrm{tier} = \mathsf{LinAct}$ from $\pi_1$ and then $\mathsf{LinAct} = k_2.\mathrm{tier} \sqcup \pi_2.\mathrm{tier} = t$, contradicting $t \neq \mathsf{LinAct}$.
 \end{proof}
 
+\begin{figure}[ht]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners=2.5pt, align=center, font=\footnotesize, inner sep=4.5pt},
+  hdr/.style={font=\bfseries\small, align=center},
+  arr/.style={-{Stealth[length=2.2mm]}, thick},
+  blk/.style={-{Stealth[length=2.2mm]}, thick, red!70!black, dashed},
+  panel/.style={draw=gray!50, rounded corners=4pt, inner sep=7pt}
+]
+% Left panel: Conical drift & non-cancellation (strict relative positioning)
+\node[box, fill=yellow!12, text width=2.95cm, minimum height=1.0cm, anchor=north east] (FP) at (-0.80, 0) {$F_+ = (1,0)$ \\[-1pt] \scriptsize $\delta = +1$};
+\node[box, fill=yellow!12, text width=2.95cm, minimum height=1.0cm, below=0.45cm of FP] (GM) {$G_- = (0,1)$ \\[-1pt] \scriptsize $\delta = -1$};
+\node[box, fill=red!6, text width=6.9cm, below=0.48cm of GM.south east, anchor=north east] (COMP) {Composite $F_+ \gg G_-$ has $(d^+, d^-) = (1, 1)$ \\[-1pt] \scriptsize signed $\delta = 0$, yet total drift $d = 2 > 0$ (no cancellation!)};
+\node[box, fill=green!10, text width=2.75cm, minimum height=1.05cm, anchor=west] (Z0) at ($(COMP.west |- {$(FP.north)!0.5!(GM.south)$})$) {$F_{\mathrm{cert}}$ \\[-1pt] \scriptsize $(0,0),\; d=0$};
+\node[box, fill=blue!6, text width=6.9cm, below=0.48cm of COMP] (PB) {Tariff $2$-pullbacks in $\mathcal{T}_{12}^2$: \textbf{$91/144$} asymmetric OK \\[-1pt] \scriptsize \textbf{$11/11$} diagonal $(F_t, F_t)$ ($t > \mathsf{LinAct}$) blocked $\Rightarrow$ lax / iso-comma};
+\node[hdr, above=0.32cm of {$(COMP.center |- FP.north)$}] (AL) {$\mathbf{Adeq2Cat}$: conical drift $(d^+, d^-) \in \mathbb{N}^2$};
+\draw[blk] (Z0.south) -- node[midway, left=2pt, font=\scriptsize, red!70!black] {blocked} (COMP.north -| Z0.south);
+\draw[arr] (FP.south) -- node[midway, right=2pt, font=\scriptsize] {$\gg$} (GM.north);
+\draw[arr] (GM.south) -- (COMP.north -| GM.south);
+\draw[arr, gray!60!black, densely dotted] (COMP.south) -- (PB.north);
+\node[panel, fit=(AL)(Z0)(FP)(GM)(COMP)(PB)] {};
+
+% Right panel: AdequacyCert_4 & 4x4 CM-Adeq-1..4 (strict relative positioning)
+\node[box, fill=violet!8, text width=6.9cm, anchor=north] (C1) at (4.45, 0) {\textbf{(C1) Carrier Binding} $\beta : \mathrm{Inst}_R \to \mathrm{Inst}_F$ \\[-1pt] \scriptsize dropped by \texttt{CM-Adeq-1} ($\mathrm{Fin}\,4$, $\delta=+1$, $\mathrm{Kernel}=\mathrm{PASS}$)};
+\node[hdr, above=0.32cm of C1.north] (AR) {$4$-component $\mathsf{AdequacyCert}_4$ \& \texttt{CM-Adeq-1}--\texttt{4}};
+\node[box, fill=violet!8, text width=6.9cm, below=0.32cm of C1] (C2) {\textbf{(C2) Non-Vacuity} $\mathrm{NonVacuity}\,\mathrm{Inst}_F + \exists r_0$ \\[-1pt] \scriptsize dropped by \texttt{CM-Adeq-2} ($\mathrm{Fin}\,2$, $x < x \to 0=1$)};
+\node[box, fill=violet!8, text width=6.9cm, below=0.32cm of C2] (C3) {\textbf{(C3) Proxy Faithfulness} $\mathrm{Conc}_F(\beta(r)) \to \mathrm{Conc}_R(r)$ \\[-1pt] \scriptsize dropped by \texttt{CM-Adeq-3} ($\mathrm{Fin}\,4$, $1\le b$ vs.\ $2\le b$)};
+\node[box, fill=violet!8, text width=6.9cm, below=0.32cm of C3] (C4) {\textbf{(C4) Adversarial Control} $\exists r_{\mathrm{adv}},\, \neg\mathrm{Hyp}_F \wedge \neg\mathrm{Conc}_R$ \\[-1pt] \scriptsize dropped by \texttt{CM-Adeq-4} ($\mathrm{Fin}\,2$, tautological $0 \le x$)};
+\node[panel, fit=(AR)(C1)(C2)(C3)(C4)] {};
+\end{tikzpicture}%
+}
+\caption[Conical translation adequacy $\mathbf{Adeq2Cat}$ and $\mathsf{AdequacyCert}_4$ independence]{Conical translation adequacy and mutual independence of validity gates (Theorem~\ref{thm:adeq2cat-and-cm-adeq}). \emph{Left:} storing positive and negative Clock-Trap budgets separately in $\mathbb{N}\times\mathbb{N}$ prevents opposite shifts from cancelling into a fake zero-drift equivalence; meanwhile, strict $2$-pullbacks fail universally on every positive-tariff diagonal $(F_t, F_t)$, forcing lax/iso-comma squares. \emph{Right:} each of the four components of $\mathsf{AdequacyCert}_4$ is strictly non-redundant, witnessed by zero-axiom countermodels \texttt{CM-Adeq-1}--\texttt{4} that all pass internal kernel checking.}
+\label{fig:adeq-2cat-conical}
+\end{figure}
+
 \begin{corollary}[Conditional definitional conservativity]\label{cor:ac-oc-conservativity}
 If the enactment apparatus and all its structure maps are introduced by explicit definitions whose existence and uniqueness are proved in a fixed base $B$, adjoining their names is conservative over $B$ for sentences of its original language.
 \end{corollary}
@@ -1531,6 +1642,70 @@ AFN-T imposes a uniform structural bound on candidate absolute foundations: with
 
 \paragraph{Diagnostic for a specified candidate.} First specify the formal object, its metatheory, and the relevant interpretation relation. If the candidate belongs to the derived class $\cS_S$, its identity morphism violates $\Pi_4$ via $(\alpha_0)$; if it is presented in a faithful subtheory $\iota_F : F \hookrightarrow S$ satisfying hypotheses (a)--(b) of $(\alpha_{\mathrm{diag}})$ and claims internal interpretability of all Rich-foundations $(\Pi_{3\text{-max}})$, it is refuted by diagonalization via $T_S = \PA + \Con_{\sigma_S}(S)$. Assigning particular research programmes to $\LCls\setminus\LClsMax$ additionally requires the classifier constructions and essential-image checks of Theorem~\ref{thm:meta-mult}; absence of a syntactic presentation in one language is not proof of absence of a Morita-equivalent presentation.
 
+\paragraph{Practical domain applications.} Because $\LAbs = \emptyset$, heterogeneous formalisms cannot be replaced by a single universal foundation; instead, cross-domain formal engineering relies on explicit transport contracts whose invariants and obstructions are organized in Table~\ref{tab:domain-applications} and Figure~\ref{fig:domain-applications}.
+
+\begin{table}[ht]
+\centering
+\caption{Practical domains addressed by the MSFS categorical and certificate apparatus, with exact invariants preserved and failure modes prevented.}
+\label{tab:domain-applications}
+\footnotesize
+\begin{tabular}{@{}>{\RaggedRight\arraybackslash}p{3.25cm} >{\RaggedRight\arraybackslash}p{3.4cm} >{\RaggedRight\arraybackslash}p{3.8cm} >{\RaggedRight\arraybackslash}p{3.95cm}@{}}
+\toprule
+\textbf{Application \mbox{domain}} & \textbf{MSFS mechanism} & \textbf{Invariant / guarantee} & \textbf{Failure mode prevented} \\ \midrule
+Cross-prover library translation & Pronk $2$-localization (\S\ref{sec:ac-oc-duality}), $\mathbf{Adeq2Cat}$ & Faithful transport up to equivalence with explicit conical drift & Silent specification shift (Clock-Trap) and false cancellation of opposite drifts \\ \addlinespace[3pt]
+Cost-aware verified compilation & $\mathbf{ActEnv}_n$, $\mathbf{CertSys2Cat}$, \texttt{letBind} separation (\S\ref{sec:cert-2cat-adequacy}) & Execution-cost separation ($4k+1$ vs.\ $2^{k+1}-1$) at invariant provenance tier & Collapsing operational cost under extensional/Morita equivalence \\ \addlinespace[3pt]
+Modular safety-critical specification & Strict vs.\ lax tariff $2$-pullbacks (\S\ref{sec:ac-oc-duality}), $\mathcal{T}_8$ partition & Explicit composition of modules across heterogeneous axiom tiers & Unsound strict pullback on positive-tariff diagonals ($11/11$ blocked) \\ \addlinespace[3pt]
+Auditing machine-generated proofs & $\mathsf{AdequacyCert}_4$, $12$-tier provenance, sparse $\mathrm{IPS}$ (\S\ref{sec:cert-2cat-adequacy}, \S\ref{sec:provenance}) & Grounded DAG root, non-vacuity, adversarial control, $4\operatorname{nnz}-1$ refutations & Vacuous antecedents, forged proxies, fossil citation cycles, hidden choice \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  mech/.style={draw, rounded corners=2.5pt, fill=blue!7, text width=3.95cm, minimum height=1.22cm, align=center, font=\footnotesize, inner sep=4.5pt},
+  dom/.style={draw, rounded corners=2.5pt, fill=green!10, text width=3.95cm, minimum height=1.18cm, align=center, font=\footnotesize, inner sep=4.5pt},
+  ep/.style={draw, rounded corners=2pt, text width=3.95cm, minimum height=1.25cm, align=center, font=\scriptsize, inner sep=4.5pt},
+  arr/.style={-{Stealth[length=2.2mm]}, thick, gray!75!black},
+  crossarr/.style={-{Stealth[length=2.1mm]}, thick, blue!55!black, densely dashed, rounded corners=3.5pt, preaction={draw=white, line width=3.2pt}}
+]
+% Top row: formal mechanisms (strict uniform grid)
+\node[mech] (M1) at (-6.9, 2.85) {\textbf{Pronk $2$-Localization} \\[-1pt] \scriptsize $\fM \simeq \fME$ \& $\mathrm{Perf}$ (\S\ref{sec:ac-oc-duality})};
+\node[mech] (M2) at (-2.3, 2.85) {\textbf{Resource Grading} \\[-1pt] \scriptsize $\mathbf{ActEnv}_n$, \texttt{letBind} (\S\ref{sec:cert-2cat-adequacy})};
+\node[mech] (M3) at (2.3, 2.85) {\textbf{Conical $\mathbf{Adeq2Cat}$} \\[-1pt] \scriptsize $\mathsf{AdequacyCert}_4$, $91/53$ (\S\ref{sec:ac-oc-duality})};
+\node[mech] (M4) at (6.9, 2.85) {\textbf{Sparse $\mathrm{IPS}$ \& Tariffs} \\[-1pt] \scriptsize $4\operatorname{nnz}-1$, $\mathcal{T}_{12}$ (\S\ref{sec:cert-2cat-adequacy}, \S\ref{sec:provenance})};
+
+% Middle row: practical domains (strict uniform grid)
+\node[dom] (D1) at (-6.9, 0.55) {\textbf{Cross-Prover} \\[-1pt] \scriptsize library migration};
+\node[dom] (D2) at (-2.3, 0.55) {\textbf{Verified Compilers} \\[-1pt] \scriptsize cost-aware refactoring};
+\node[dom] (D3) at (2.3, 0.55) {\textbf{Modular Specs} \\[-1pt] \scriptsize safety-critical systems};
+\node[dom] (D4) at (6.9, 0.55) {\textbf{Proof Auditing} \\[-1pt] \scriptsize anti-vacuity \& provenance};
+
+% Primary vertical mappings
+\draw[arr] (M1.south) -- (D1.north);
+\draw[arr] (M2.south) -- (D2.north);
+\draw[arr] (M3.south) -- (D3.north);
+\draw[arr] (M4.south) -- (D4.north);
+
+% Orthogonal cross-domain adequacy bus (90-degree lanes, white bridge over M2->D2)
+\draw[crossarr] ([xshift=-0.65cm]M3.south) -- ++(0,-0.55) -| ([xshift=0.65cm]D1.north);
+\draw[crossarr] ([xshift=0.65cm]M3.south) -- ++(0,-0.55) -| ([xshift=-0.65cm]D4.north);
+
+% Subtle divider separating domain mapping from epistemic stratification bar
+\draw[gray!55, densely dashed] (-9.035, -0.52) -- (9.035, -0.52);
+\node[fill=white, inner sep=3pt, font=\scriptsize\itshape, text=gray!75!black] at (0, -0.52) {Epistemic stratification across all mechanisms};
+
+% Bottom row: epistemic separation bar (strict uniform grid & uniform height)
+\node[ep, fill=teal!10] (E1) at (-6.9, -1.52) {\textbf{[T] Checked Core} \\[-1pt] choice-free Lean~4 \\[-1pt] + Verum W1--3};
+\node[ep, fill=yellow!12] (E2) at (-2.3, -1.52) {\textbf{[C] Conditional Bridges} \\[-1pt] $(\infty,2)$ descent, \\[-1pt] stratified idempotence};
+\node[ep, fill=red!8] (E3) at (2.3, -1.52) {\textbf{[$\times$] Proved Refutations} \\[-1pt] $\LAbs=\emptyset$, \texttt{CM-1}--\texttt{4b}, \\[-1pt] \texttt{CM-Adeq-1}--\texttt{4}};
+\node[ep, fill=violet!8] (E4) at (6.9, -1.52) {\textbf{[$\Pi$] Open Frontiers} \\[-1pt] global \textup{(I-4)}, \texttt{131.T}, \\[-1pt] $n=\infty$ stabilization};
+\end{tikzpicture}%
+}
+\caption[Practical architecture map of MSFS mechanisms, engineering domains, and epistemic status]{Practical architecture map connecting the four formal MSFS mechanisms (top) to engineering domains (middle; solid: primary mechanism, dashed: cross-domain adequacy checks) under explicit epistemic stratification (bottom: proved machine-checked core vs.\ conditional bridges, refuted shortcuts, and open higher-categorical frontiers).}
+\label{fig:domain-applications}
+\end{figure}
+
 \subsection{Deductive Provenance, Ontological Floor Stratification, and Tariffed Reconstruction}\label{sec:provenance}
 
 Because AFN-T (Theorem~\ref{thm:afnt-alpha}) establishes $\LAbs = \emptyset$, mathematical practice cannot collapse onto a single absolute foundation; instead it unfolds inside the stratified $2$-category $\fM$ of Rich-foundations $\LFnd$ and their classifiers $\LCls$. A structural pathology of contemporary and AI-assisted proofs of long-standing mathematical problems is that they frequently sever \emph{local certificate checking} (an opaque SAT/DRAT trace, a proof-assistant script importing uncalibrated classical choice, or a multi-hundred-page citation chain resting on unverified external black boxes) from \emph{foundational provenance} inside $\LFnd$. To turn this diagnosis into a formal invariant on proof practice over $\fM$, we introduce a provenance-graded tariff calculus.
@@ -1592,7 +1767,7 @@ For (i), set $P(n) := 1$ identically and $Q(n) := 1$ if $n < N_0$ and $0$ otherw
 \end{proof}
 
 \paragraph{Choice-free Lean~4 witness ledger and honest translation-adequacy boundary.}
-All clauses of Proposition~\ref{prop:provenance-grounding} and Theorem~\ref{thm:cert-inv-separation}~(i)--(ii) are formally verified with \emph{zero axioms} (not even \texttt{propext} or \texttt{Classical.choice}) in \texttt{FoundationalReconstruction.lean} (Theorems~R-1--R-3 and R-10), while clause~(iii) and its end-to-end certificates are verified choice-free in \texttt{TranslationAdequacy.lean}. In strict compliance with Theorem~\ref{thm:cert-inv-separation}~(iii), we separate our choice-free Lean~4 reconstructions cleanly into \emph{end-to-end certified theorems} vs.\ \emph{structural/algebraic spine lemmas} (full itemized ledger in Appendix~\ref{app:verification-ledger}): (a) \emph{End-to-end certified}: Huang's Sensitivity Theorem (R-4D, \texttt{huang\_\allowbreak end\_\allowbreak to\_\allowbreak end\_\allowbreak certified}: bridged via \texttt{hypercubeEdge\_\allowbreak iff\_\allowbreak hammingDist\_\allowbreak one}, non-vacuity on $n = 1,2,3$, and bipartite $2^{n-1}$-vertex $\Delta = 0$ counterexample for every $n \ge 1$), the Kahn--Kalai / Park--Pham Threshold Theorem (R-7F, \texttt{park\_\allowbreak pham\_\allowbreak end\_\allowbreak to\_\allowbreak end\_\allowbreak certified}: bridged via independent bit-index \texttt{RefSubset}/\texttt{RefIsCover} with non-vacuity witness and cover-cost counterexample), operational grading \texttt{ActCostGrade} (R-12), repaired $1$-categorical (Q1) (R-11), constructive term/Parikh bounds (R-13/R-13B), the four metatheory $2$-category modules (A1--A4), dyadic Bishop real analysis \texttt{ConstructiveR} (R-14A--E, including certified \texttt{shannonEntropyCR} and $1$D Krawczyk), algebraic/proof complexity lower bounds (R-15A--D, R-16A, R-16C: general-$n$ Mignon--Ressayre $\mathrm{dc}(\mathrm{perm}_n)\ge n^2/2$, finite Razborov--Rudich, and zero-axiom $2^n$ tree-Resolution $\mathrm{PHP}_n^{n+1}$), zero-axiom $12$-tier tariff join-semilattice with \texttt{OpaqueAI} tier and Herbrand/$\varepsilon$-dichotomy (R-17A, R-17C), and $\Pi^0_1$ Riemann/Chebyshev bounds (R-18A--C); (b) \emph{Structural/algebraic spine lemmas}: GGMT PFR Ruzsa/fibring identities over scalar $\mathsf{CQ}$ (R-5A,B --- noting explicitly that R-5B is satisfied even at unphysical $H(X) = -100$), Cohn--Elkies LP spine (R-6), Fermat--Wiles--Taylor arithmetic/patching spines (R-8A--D), Hamilton--Perelman Riccati/$\mathcal{W}$ spines (R-9A--E), $4$-quadrant logical-vs-RR witness model (R-16B), and the conservation-lowering calculus with G\"odel-II $\Pi^0_1\not\Rightarrow\mathsf{PRA}$ obstruction (R-17B). By design, we draw a sharp honest line at what remains open (Question~Q6 below): global Galois deformation cohomology $R = T$ and Ribet's geometric level-lowering on $J_0(Np)$, DeTurck parabolic PDE existence and Perelman's Ricci-flow surgery, the $\infty$-categorical $D$-module machinery of Geometric Langlands, and conceptual/decompression audits of the November~2026 large AI-generated Lean~4 artifacts (\texttt{2611.vp-vnp} and RH/GRH) have not yet been tariff-lowered to choice-free constructive arithmetic.
+All clauses of Proposition~\ref{prop:provenance-grounding} and Theorem~\ref{thm:cert-inv-separation}~(i)--(ii) are formally verified with \emph{zero axioms} (not even \texttt{propext} or \texttt{Classical.choice}) in \texttt{FoundationalReconstruction.lean} (Theorems~R-1--R-3 and R-10), while clause~(iii) and its end-to-end certificates are verified choice-free in \texttt{TranslationAdequacy.lean}. In strict compliance with Theorem~\ref{thm:cert-inv-separation}~(iii), we separate our choice-free Lean~4 reconstructions cleanly into \emph{end-to-end certified theorems} vs.\ \emph{structural/algebraic spine lemmas} (full itemized ledger in Appendix~\ref{app:verification-ledger}): (a) \emph{End-to-end certified}: Huang's Sensitivity Theorem (R-4D, \texttt{huang\_\allowbreak end\_\allowbreak to\_\allowbreak end\_\allowbreak certified}: bridged via \texttt{hypercubeEdge\_\allowbreak iff\_\allowbreak hammingDist\_\allowbreak one}, non-vacuity on $n = 1,2,3$, and bipartite $2^{n-1}$-vertex $\Delta = 0$ counterexample for every $n \ge 1$), the Kahn--Kalai / Park--Pham Threshold Theorem (R-7F, \texttt{park\_\allowbreak pham\_\allowbreak end\_\allowbreak to\_\allowbreak end\_\allowbreak certified}: bridged via independent bit-index \texttt{RefSubset}/\texttt{RefIsCover} with non-vacuity witness and cover-cost counterexample), operational grading \texttt{ActCostGrade} (R-12), repaired $1$-categorical (Q1) (R-11), constructive term/Parikh bounds (R-13/R-13B), the four metatheory $2$-category modules (A1--A4), dyadic Bishop real analysis \texttt{ConstructiveR} (R-14A--E, including certified \texttt{shannonEntropyCR} and $1$D Krawczyk), algebraic/proof complexity lower bounds (R-15A--D, R-16A, R-16C: general-$n$ Mignon--Ressayre $\mathrm{dc}(\mathrm{perm}_n)\ge n^2/2$, finite Razborov--Rudich, and zero-axiom $2^n$ tree-Resolution $\mathrm{PHP}_n^{n+1}$), zero-axiom $12$-tier tariff join-semilattice with \texttt{OpaqueAI} tier and Herbrand/$\varepsilon$-dichotomy (R-17A, R-17C), and $\Pi^0_1$ Riemann/Chebyshev bounds (R-18A--C); (b) \emph{Structural/algebraic spine lemmas}: GGMT PFR Ruzsa/fibring identities over scalar $\mathsf{CQ}$ (R-5A,B --- noting explicitly that R-5B is satisfied even at unphysical $H(X) = -100$), Cohn--Elkies LP spine (R-6), Fermat--Wiles--Taylor arithmetic/patching spines (R-8A--D), Hamilton--Perelman Riccati/$\mathcal{W}$ spines (R-9A--E), $4$-quadrant logical-vs-RR witness model (R-16B), and the conservation-lowering calculus with G\"odel-II $\Pi^0_1\not\Rightarrow\mathsf{PRA}$ obstruction (R-17B). By design, we draw a sharp honest line at what remains open (Question~Q6 below): global Galois deformation cohomology $R = T$ and Ribet's geometric level-lowering on $J_0(Np)$, DeTurck parabolic PDE existence and Perelman's Ricci-flow surgery, the $\infty$-categorical $D$-module machinery of Geometric Langlands, and conceptual/decompression audits of large-scale machine-generated formal proof artifacts built over classical libraries (including non-constructive complexity-theoretic and analytic-number-theoretic proof scripts) have not yet been tariff-lowered to choice-free constructive arithmetic.
 
 \subsection{Open Questions}
 
@@ -1606,7 +1781,7 @@ All clauses of Proposition~\ref{prop:provenance-grounding} and Theorem~\ref{thm:
 
 \paragraph{(Q5) Sub-stack of weak Rich-metatheories ($\RS_{\mathsf{Q}}$ vs.\ $\RS_{\PA}$).} As established in \S\ref{sec:rs}, the baseline class $\RS_{\mathsf{Q}}$ (interpreting Robinson's $\mathsf{Q}$) strictly contains the polynomial-bounded sub-class $\RS_{\mathrm{poly}}$ ($\mathsf{I\Delta_0}$, $\mathsf{S}_2^i$, $\mathsf{T}_2^i$), the elementary-exponential intermediate theory $\mathrm{EFA} = \mathsf{I\Delta_0} + \exp \in \RS_{\exp} \setminus \RS_{\mathrm{poly}}$, and the full-induction class $\RS_{\PA} \subsetneq \RS_{\exp} \subsetneq \RS_{\mathsf{Q}}$. Constructive term polynomial bounding (\texttt{arithTerm\_\allowbreak poly\_\allowbreak bound} in \texttt{RealArithmeticPA.lean}) combined with Parikh dominance ($\forall c, d \in \mathbb{N},\; \exists n = 2^{c+d+4},\; c \cdot n^d < 2^n$, machine-checked with zero \texttt{Classical.choice} in \texttt{FoundationalReconstructionV2.lean}, \texttt{exp\_\allowbreak dominates\_\allowbreak every\_\allowbreak poly\_\allowbreak za} and \texttt{arithTerm\_\allowbreak strictly\_\allowbreak dominated\_\allowbreak by\_\allowbreak exp}, R-13/R-13B) strictly separates $\RS_{\mathrm{poly}}$ from $\RS_{\exp}$ (and a fortiori yields $\RS_{\mathrm{poly}} \cap \RS_{\PA} = \emptyset$ on provably-total $\Sigma_1$ growth classes). Crucially, Parikh's polynomial ceiling does \emph{not} separate $\mathrm{EFA}$ from $\PA$ (since $\mathrm{EFA}$ already proves totality of $2^n$); $\mathrm{EFA}$ is separated from $\PA$ only at the Kalm\'ar-elementary super-exponential tower threshold $F_3 \approx H_{\omega^3}$ (proof-theoretic ordinal $\omega^3$) vs.\ $F_\alpha$ for $\alpha < \varepsilon_0$. Whether $\RS_{\mathrm{poly}}$ or $\RS_{\exp} \setminus \RS_{\PA}$ forms a Morita-closed sub-prestack under broader non-definable interpretations or reverse-mathematical encodings~\cite{Simpson2009} remains open.
 
-\paragraph{(Q6) Minimal-floor reconstruction and AI proof decompression.} With Huang (R-4D), Park--Pham (R-7F), \texttt{ConstructiveR} (R-14), general-$n$ Mignon--Ressayre and zero-axiom $2^n$ tree-Resolution $\mathrm{PHP}_n^{n+1}$ (R-15--R-16C), $12$-tier tariff decompression (R-17), and $\Pi^0_1$ Riemann/Chebyshev interfaces (R-18) verified choice-free, determine the exact minimal Morita stratum $F_{\min} \in \LFnd$ for global Galois cohomology $R = T$, Ricci-flow PDE/surgery, Geometric Langlands universe lowering, structural-invariant compression of DRAT proofs (Keller, $\mathrm{BB}(5)$), and constructive decompression of the November~2026 \texttt{Mathlib}-based AI proof artifacts (\texttt{2611.vp-vnp} $5$-locus non-constructive debt and RH/GRH unitary theta-lifts).
+\paragraph{(Q6) Minimal-floor reconstruction and AI proof decompression.} With Huang (R-4D), Park--Pham (R-7F), \texttt{ConstructiveR} (R-14), general-$n$ Mignon--Ressayre and zero-axiom $2^n$ tree-Resolution $\mathrm{PHP}_n^{n+1}$ (R-15--R-16C), $12$-tier tariff decompression (R-17), and $\Pi^0_1$ Riemann/Chebyshev interfaces (R-18) verified choice-free, determine the exact minimal Morita stratum $F_{\min} \in \LFnd$ for global Galois cohomology $R = T$, Ricci-flow PDE/surgery, Geometric Langlands universe lowering, structural-invariant compression of DRAT proofs (Keller, $\mathrm{BB}(5)$), and constructive decompression of large-scale machine-generated formal proof artifacts built over classical libraries (isolating non-constructive choice/analytic debt into explicit bounded witnesses).
 
 \appendix
 

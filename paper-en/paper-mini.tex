@@ -11,6 +11,18 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{enumitem}
 \usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=teal!55!black,
+  urlcolor=blue!60!black,
+  bookmarksopen=true,
+  bookmarksnumbered=true,
+  pdfencoding=auto,
+  pdftitle={The Absolute Foundation No-Go Theorem},
+  pdfauthor={Max Sereda},
+  pdfkeywords={no-go theorems, categorical logic, formal verification, multi-formal systems, (infinity,n)-categories}
+}
 \usepackage{xurl}
 \usepackage{tikz-cd}
 
@@ -74,10 +86,10 @@
 \maketitle
 
 \begin{abstract}
-We present a concise statement of the Absolute Foundation No-Go Theorem (AFN-T) and its boundary mechanisms in a specified metatheory $S \in \RS$: (i) for direct or slice-conservative presentations in the selected derived class $\cS_S$, the identity functor is an interpretation into $\cS_S$, refuting the non-reducibility predicate $\Pi_4$; (ii) for arbitrary faithful subtheory inclusions $\iota_F : F \hookrightarrow S$ equipped with a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative proof-translation, testing maximal generativity $\Pi_{3\text{-max}}$ against $T_S = \PA + \Con_{\sigma_S}(S)$ refutes $(F_S) \wedge (\Pi_{3\text{-max}})$ via Feferman--Pudl\'ak Second Incompleteness. Neither mechanism excludes new foundations or operational refinements. We distinguish these boundary results from conditional classifier-comparison criteria, fragment-level intensional separation (\texttt{thm:I-fragment}), and sharp epistemic splits across the six frontier obligations \textup{(B1)--(B6)}: finite-rank unstratified meta-closure and $(\mathrm{Stab}\text{-}2')$ for $\Cat_{(\infty,\omega)}^{\tau\text{-}\mathrm{lim}}$ are refuted, $\Cat(\Cat_{(\infty,\omega)}^{\mathrm{coind, GH}}) \simeq \Cat_{(\infty,\omega)}^{\mathrm{coind, GH}}$ and strict $2$-categorical Pronk/\texttt{Perf} hold constructively, while full $(\infty,2)$-hyperstack existence (\texttt{131.T}), global \textup{(I-4)}, unbounded meta-stabilization, and exact consistency-strength determinations remain open construction obligations. This summary matches the main MSFS paper.
+We present a concise, self-contained proof of the \emph{Absolute Foundation No-Go Theorem} (\textbf{AFN-T}) and its operational scope in any Rich-metatheory $S \in \RS$: (i)~for direct or slice-conservative presentations in a derived class $\cS_S$, the identity interpretation refutes Morita-irreducibility $\Pi_4$; (ii)~for arbitrary faithful subtheory inclusions $\iota_F : F \hookrightarrow S$ equipped with a canonical $\Sigma_1$-binumeration and classical (or negative-translated) relative proof-translation, diagonalization via the Feferman--Pudl\'ak form of G\"odel's Second Incompleteness Theorem against $T_S = \PA + \Con_{\sigma_S}(S)$ refutes maximal generativity $(F_S) \wedge (\Pi_{3\text{-max}})$. The theorem does not restrict new formalisms or verified refinements; practically, it establishes that cross-domain formal verification, proof-assistant interoperability, and resource-aware specification transport require explicit multi-formal translation contracts rather than a single universal foundation. We cleanly separate these boundary theorems from conditional classifier-comparison criteria, tight intensional/resource gradings, proved strict $2$-categorical obstructions across \textup{(B1)--(B6)}, and remaining open higher-categorical obligations, backed by companion choice-free Lean~4 and standalone zero-axiom Verum artifacts.
 
 \medskip
-\noindent\textbf{Keywords:} no-go theorems, categorical logic, $(\infty, n)$-categories, Lambek--Scott semantics, meta-classification.
+\noindent\textbf{Keywords:} no-go theorems, formal verification, multi-formal systems, categorical logic, $(\infty, n)$-categories, translation adequacy, meta-classification.
 
 \noindent\textbf{MSC2020:} 03A05, 03B30, 18A05, 18N10, 18N50, 18N60, 18N65.
 \end{abstract}

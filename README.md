@@ -2,7 +2,7 @@
 
 *The Moduli Space of Formal Systems: Classification, Stabilization, and a No-Go Theorem for Absolute Foundations.*
 
-Max Sereda, 2026 · [Zenodo DOI 10.5281/zenodo.19755781](https://doi.org/10.5281/zenodo.19755781) · 41 pages as initially deposited (`paper-en/zenodo/`); current revision: **`paper-en/msfs-paper.pdf` (74 pages, 2,195 LaTeX lines)** and **`paper-ru/msfs-paper-ru.pdf` (80 pages, 2,114 LaTeX lines, 1-to-1 Russian edition)** · **102 formal environments** (25 definitions, 7 lemmas, 33 theorems, 8 corollaries, 13 propositions, 14 remarks, 2 conventions; 12 numbered sections, 3 appendices, 39 subsections, 54 proofs, 67 bibliography entries, 124 preserved labels) · companion [Verum corpus](./verum-corpus/) (Wave 1–3: **15** standalone zero-axiom modules, **67** multi-step theorems, **688/688** proved assertions, Track B correspondence proofs `proofs/ss-membership/` + `proofs/afnt-alpha-id/`, and **43** quarantined legacy schematic axioms) and sibling constructive Lean 4 kernel `lean4-mf-kernel` (**94** modules, **32,174** compiled `.olean` `env.constants` entries / **7,336** top-level `.lean` source declarations, **1,062** audited `#print axioms`, **280** strictly zero-axiom theorems, **149** `NonVacuity` instances, `0 Classical.choice`).
+Max Sereda, 2026 · [Zenodo DOI 10.5281/zenodo.19755781](https://doi.org/10.5281/zenodo.19755781) · 41 pages as initially deposited (`paper-en/zenodo/`); current revision: **`paper-en/msfs-paper.pdf` (75 pages, 2,370 LaTeX lines)** and **`paper-ru/msfs-paper-ru.pdf` (81 pages, 2,290 LaTeX lines, 1-to-1 Russian edition)** · **102 formal environments** (25 definitions, 7 lemmas, 33 theorems, 8 corollaries, 13 propositions, 14 remarks, 2 conventions; 12 numbered sections, 3 appendices, 39 subsections, 54 proofs, 6 TikZ figures, 1 practical-domain table, 67 bibliography entries, 128 preserved labels) · companion [Verum corpus](./verum-corpus/) (Wave 1–3: **15** standalone zero-axiom modules, **67** multi-step theorems, **688/688** proved assertions, Track B correspondence proofs `proofs/ss-membership/` + `proofs/afnt-alpha-id/`, and **43** quarantined legacy schematic axioms) and sibling constructive Lean 4 kernel `lean4-mf-kernel` (**94** modules, **32,174** compiled `.olean` `env.constants` entries / **7,336** top-level `.lean` source declarations, **1,062** audited `#print axioms`, **280** strictly zero-axiom theorems, **149** `NonVacuity` instances, `0 Classical.choice`).
 
 ## The question this work changes
 
@@ -66,10 +66,10 @@ flowchart LR
 ## Build
 
 ```bash
-# English edition → paper-en/msfs-paper.pdf (74 pages)
+# English edition → paper-en/msfs-paper.pdf (75 pages)
 bun scripts/build-paper.ts
 
-# Russian 1-to-1 edition → paper-ru/msfs-paper-ru.pdf (80 pages)
+# Russian 1-to-1 edition → paper-ru/msfs-paper-ru.pdf (81 pages)
 bun scripts/build-paper.ts --paper msfs-ru
 
 # Pandoc Markdown export & EN/RU parity verification
