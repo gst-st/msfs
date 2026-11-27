@@ -2,7 +2,7 @@
   "profile": "msfs-source-correspondence/1",
   "source": {
     "path": "paper-en/paper.tex",
-    "sha256": "82249c0785ca0ba833bc7455e108b579a3173cf5ac965f9a03c8c64aa4075837",
+    "sha256": "b42bfaf73b3e5ec0874819c085e9484e0d6900fc0878cba52ee4603ec6e48f83",
     "fragments": [
       {
         "anchor": "thm:afnt-alpha",
